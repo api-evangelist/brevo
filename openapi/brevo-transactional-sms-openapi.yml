@@ -1,0 +1,491 @@
+openapi: 3.1.0
+info:
+  title: Brevo Transactional SMS API
+  description: >-
+    The Brevo Transactional SMS API allows developers to send non-promotional
+    SMS messages such as order confirmations, delivery notifications, and
+    verification codes using recipients' phone numbers. It supports sending
+    individual messages with customizable sender names and provides endpoints
+    for tracking SMS delivery status and activity. The API is designed for
+    time-sensitive notifications that require immediate delivery to mobile
+    devices.
+  version: '3.0'
+  contact:
+    name: Brevo Support
+    url: https://help.brevo.com
+  termsOfService: https://www.brevo.com/legal/termsofuse/
+externalDocs:
+  description: Brevo Transactional SMS Documentation
+  url: https://developers.brevo.com/docs/transactional-sms-endpoints
+servers:
+  - url: https://api.brevo.com/v3
+    description: Brevo Production API Server
+tags:
+  - name: Transactional SMS
+    description: >-
+      Send transactional SMS messages for notifications, verifications,
+      and alerts.
+  - name: SMS Statistics
+    description: >-
+      Retrieve delivery reports and activity statistics for transactional
+      SMS messages.
+security:
+  - apiKeyAuth: []
+paths:
+  /transactionalSMS/sms:
+    post:
+      operationId: sendTransactionalSms
+      summary: Send a transactional SMS
+      description: >-
+        Sends a transactional SMS message to a recipient phone number.
+        Supports customizable sender names and message content. The
+        message is delivered immediately for time-sensitive notifications.
+      tags:
+        - Transactional SMS
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendTransactionalSms'
+      responses:
+        '201':
+          description: SMS sent successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendSmsResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /transactionalSMS/statistics/events:
+    get:
+      operationId: getSmsEvents
+      summary: Get transactional SMS activity events
+      description: >-
+        Retrieves detailed event-level data for transactional SMS messages
+        including delivery status, bounces, and recipient interactions.
+      tags:
+        - SMS Statistics
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+        - name: startDate
+          in: query
+          description: >-
+            Start date for the event query in YYYY-MM-DD format.
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          description: >-
+            End date for the event query in YYYY-MM-DD format.
+          schema:
+            type: string
+            format: date
+        - name: phoneNumber
+          in: query
+          description: >-
+            Filter events by recipient phone number.
+          schema:
+            type: string
+        - name: event
+          in: query
+          description: >-
+            Filter by event type such as delivered, sent, softBounce,
+            hardBounce, or unsubscribed.
+          schema:
+            type: string
+            enum:
+              - sent
+              - accepted
+              - delivered
+              - replied
+              - softBounce
+              - hardBounce
+              - subscribe
+              - unsubscribe
+              - skip
+              - rejected
+        - name: tags
+          in: query
+          description: >-
+            Filter events by tag assigned to the SMS.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: SMS events retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmsEventReport'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /transactionalSMS/statistics/reports:
+    get:
+      operationId: getSmsReports
+      summary: Get transactional SMS statistics reports
+      description: >-
+        Retrieves detailed delivery reports for transactional SMS messages
+        over a specified date range. Returns per-day statistics for sent,
+        delivered, and bounced messages.
+      tags:
+        - SMS Statistics
+      parameters:
+        - name: startDate
+          in: query
+          description: >-
+            Start date for the report in YYYY-MM-DD format.
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          description: >-
+            End date for the report in YYYY-MM-DD format.
+          schema:
+            type: string
+            format: date
+        - name: days
+          in: query
+          description: >-
+            Number of days for the report, starting from today.
+          schema:
+            type: integer
+        - name: tag
+          in: query
+          description: >-
+            Filter reports by tag.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: SMS reports retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmsStatisticsReport'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /transactionalSMS/statistics/aggregatedReport:
+    get:
+      operationId: getAggregatedSmsReport
+      summary: Get aggregated transactional SMS statistics
+      description: >-
+        Retrieves aggregated statistics for transactional SMS activity
+        over a specified period. Returns totals for sent, delivered,
+        and bounced messages.
+      tags:
+        - SMS Statistics
+      parameters:
+        - name: startDate
+          in: query
+          description: >-
+            Start date for the report in YYYY-MM-DD format.
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          description: >-
+            End date for the report in YYYY-MM-DD format.
+          schema:
+            type: string
+            format: date
+        - name: days
+          in: query
+          description: >-
+            Number of days for the report, starting from today.
+          schema:
+            type: integer
+        - name: tag
+          in: query
+          description: >-
+            Filter by tag.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Aggregated SMS statistics retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AggregatedSmsReport'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: api-key
+      description: >-
+        Brevo API key passed in the api-key request header for
+        authentication.
+  parameters:
+    limitParam:
+      name: limit
+      in: query
+      description: >-
+        Maximum number of results to return per request.
+      schema:
+        type: integer
+        format: int64
+        default: 50
+    offsetParam:
+      name: offset
+      in: query
+      description: >-
+        Number of results to skip for pagination.
+      schema:
+        type: integer
+        format: int64
+        default: 0
+  schemas:
+    SendTransactionalSms:
+      type: object
+      required:
+        - sender
+        - recipient
+        - content
+      properties:
+        sender:
+          type: string
+          description: >-
+            Name or number displayed as the SMS sender. Must be between
+            3 and 11 characters for alphanumeric senders.
+          minLength: 3
+          maxLength: 11
+        recipient:
+          type: string
+          description: >-
+            Recipient phone number in international format with country
+            code prefix.
+        content:
+          type: string
+          description: >-
+            Text content of the SMS message.
+          maxLength: 160
+        type:
+          type: string
+          description: >-
+            Type of SMS message to send.
+          enum:
+            - transactional
+            - marketing
+          default: transactional
+        tag:
+          type: string
+          description: >-
+            Tag for categorizing the SMS for reporting purposes.
+        webUrl:
+          type: string
+          format: uri
+          description: >-
+            Webhook URL to receive delivery status notifications.
+    SendSmsResponse:
+      type: object
+      properties:
+        reference:
+          type: string
+          description: >-
+            Unique reference identifier for the sent SMS message.
+        messageId:
+          type: integer
+          format: int64
+          description: >-
+            Unique message ID assigned to the SMS.
+        smsCount:
+          type: integer
+          description: >-
+            Number of SMS segments used to send the message.
+        usedCredits:
+          type: number
+          format: float
+          description: >-
+            Number of SMS credits consumed.
+        remainingCredits:
+          type: number
+          format: float
+          description: >-
+            Remaining SMS credits in the account.
+    SmsEventReport:
+      type: object
+      properties:
+        events:
+          type: array
+          description: >-
+            List of transactional SMS activity events.
+          items:
+            type: object
+            properties:
+              phoneNumber:
+                type: string
+                description: >-
+                  Recipient phone number.
+              date:
+                type: string
+                format: date-time
+                description: >-
+                  UTC date-time when the event occurred.
+              messageId:
+                type: string
+                description: >-
+                  Unique identifier of the SMS message.
+              event:
+                type: string
+                description: >-
+                  Type of SMS event that occurred.
+                enum:
+                  - sent
+                  - accepted
+                  - delivered
+                  - replied
+                  - softBounce
+                  - hardBounce
+                  - subscribe
+                  - unsubscribe
+                  - skip
+                  - rejected
+              reason:
+                type: string
+                description: >-
+                  Reason for the event if applicable.
+              tag:
+                type: string
+                description: >-
+                  Tag assigned to the SMS.
+    SmsStatisticsReport:
+      type: object
+      properties:
+        reports:
+          type: array
+          description: >-
+            Daily SMS statistics reports.
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date
+                description: >-
+                  Date for the statistics.
+              requests:
+                type: integer
+                format: int64
+                description: >-
+                  Number of SMS send requests.
+              delivered:
+                type: integer
+                format: int64
+                description: >-
+                  Number of successfully delivered SMS.
+              hardBounces:
+                type: integer
+                format: int64
+                description: >-
+                  Number of hard bounces.
+              softBounces:
+                type: integer
+                format: int64
+                description: >-
+                  Number of soft bounces.
+              blocked:
+                type: integer
+                format: int64
+                description: >-
+                  Number of blocked SMS.
+              unsubscribed:
+                type: integer
+                format: int64
+                description: >-
+                  Number of unsubscribes.
+    AggregatedSmsReport:
+      type: object
+      properties:
+        range:
+          type: string
+          description: >-
+            Date range for the aggregated statistics.
+        requests:
+          type: integer
+          format: int64
+          description: >-
+            Total SMS send requests.
+        delivered:
+          type: integer
+          format: int64
+          description: >-
+            Total successfully delivered SMS.
+        hardBounces:
+          type: integer
+          format: int64
+          description: >-
+            Total hard bounces.
+        softBounces:
+          type: integer
+          format: int64
+          description: >-
+            Total soft bounces.
+        blocked:
+          type: integer
+          format: int64
+          description: >-
+            Total blocked SMS.
+        unsubscribed:
+          type: integer
+          format: int64
+          description: >-
+            Total unsubscribes.
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: >-
+            Error code identifying the type of error.
+        message:
+          type: string
+          description: >-
+            Human-readable description of the error.

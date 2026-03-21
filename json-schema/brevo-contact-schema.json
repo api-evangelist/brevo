@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://brevo.com/schemas/brevo/contact.json",
+  "title": "Brevo Contact",
+  "description": "Represents a contact in the Brevo platform with email, phone, attributes, and list memberships used for transactional and marketing messaging.",
+  "type": "object",
+  "required": ["email"],
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique internal identifier of the contact."
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Primary email address of the contact."
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number of the contact in international format.",
+      "pattern": "^\\+?[1-9]\\d{1,14}$"
+    },
+    "emailBlacklisted": {
+      "type": "boolean",
+      "description": "Whether the contact's email address is blacklisted from receiving messages.",
+      "default": false
+    },
+    "smsBlacklisted": {
+      "type": "boolean",
+      "description": "Whether the contact's phone number is blacklisted from receiving SMS.",
+      "default": false
+    },
+    "listIds": {
+      "type": "array",
+      "description": "IDs of contact lists the contact belongs to.",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "attributes": {
+      "type": "object",
+      "description": "Custom attribute values for the contact profile as key-value pairs. Keys correspond to attribute names defined in the account.",
+      "additionalProperties": true
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC date-time when the contact was created."
+    },
+    "modifiedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC date-time when the contact was last modified."
+    },
+    "statistics": {
+      "type": "object",
+      "description": "Email campaign interaction statistics for the contact.",
+      "properties": {
+        "messagesSent": {
+          "type": "integer",
+          "description": "Total number of emails sent to the contact.",
+          "minimum": 0
+        },
+        "hardBounces": {
+          "type": "integer",
+          "description": "Total number of hard bounces for the contact.",
+          "minimum": 0
+        },
+        "softBounces": {
+          "type": "integer",
+          "description": "Total number of soft bounces for the contact.",
+          "minimum": 0
+        },
+        "opened": {
+          "type": "integer",
+          "description": "Total number of emails opened by the contact.",
+          "minimum": 0
+        },
+        "clicked": {
+          "type": "integer",
+          "description": "Total number of email links clicked by the contact.",
+          "minimum": 0
+        },
+        "unsubscriptions": {
+          "type": "integer",
+          "description": "Total number of unsubscription actions by the contact.",
+          "minimum": 0
+        }
+      }
+    }
+  },
+  "$defs": {
+    "ContactAttribute": {
+      "type": "object",
+      "description": "Defines a custom contact attribute used to extend contact profiles with additional data fields.",
+      "required": ["name", "category", "type"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the attribute.",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "category": {
+          "type": "string",
+          "description": "Category grouping for the attribute.",
+          "enum": ["normal", "transactional", "category", "calculated", "global"]
+        },
+        "type": {
+          "type": "string",
+          "description": "Data type of the attribute value.",
+          "enum": ["text", "date", "float", "boolean", "id"]
+        },
+        "enumeration": {
+          "type": "array",
+          "description": "Possible enumeration values for category-type attributes.",
+          "items": {
+            "type": "object",
+            "required": ["value", "label"],
+            "properties": {
+              "value": {
+                "type": "integer",
+                "description": "Numeric value of the enum option."
+              },
+              "label": {
+                "type": "string",
+                "description": "Display label for the enum option."
+              }
+            }
+          }
+        }
+      }
+    },
+    "ContactList": {
+      "type": "object",
+      "description": "Represents a contact list used to organize contacts into groups for targeted campaign sending.",
+      "required": ["name", "folderId"],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Unique identifier of the list."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the contact list.",
+          "minLength": 1
+        },
+        "totalSubscribers": {
+          "type": "integer",
+          "description": "Total number of subscribed contacts in the list.",
+          "minimum": 0
+        },
+        "totalBlacklisted": {
+          "type": "integer",
+          "description": "Total number of blacklisted contacts in the list.",
+          "minimum": 0
+        },
+        "folderId": {
+          "type": "integer",
+          "description": "ID of the folder containing the list."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "UTC date-time when the list was created."
+        }
+      }
+    }
+  }
+}

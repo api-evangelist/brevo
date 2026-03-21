@@ -1,0 +1,1203 @@
+openapi: 3.1.0
+info:
+  title: Brevo Contacts API
+  description: >-
+    The Brevo Contacts API provides programmatic access to contact management
+    features including creating, updating, and deleting contacts. Developers
+    can organize contacts into lists, apply attributes and tags, import
+    contacts in bulk, and build audience segments for targeted campaigns. The
+    API also supports managing folders, contact attributes, and custom fields
+    to structure contact data according to business needs.
+  version: '3.0'
+  contact:
+    name: Brevo Support
+    url: https://help.brevo.com
+  termsOfService: https://www.brevo.com/legal/termsofuse/
+externalDocs:
+  description: Brevo Contacts Documentation
+  url: https://developers.brevo.com/docs/how-it-works
+servers:
+  - url: https://api.brevo.com/v3
+    description: Brevo Production API Server
+tags:
+  - name: Contacts
+    description: >-
+      Create, retrieve, update, and delete individual contacts.
+  - name: Contact Lists
+    description: >-
+      Manage contact lists for organizing and segmenting audiences.
+  - name: Contact Attributes
+    description: >-
+      Define and manage custom attributes for contact profiles.
+  - name: Folders
+    description: >-
+      Organize contact lists into folders for better management.
+  - name: Import
+    description: >-
+      Bulk import contacts from files or data payloads.
+security:
+  - apiKeyAuth: []
+paths:
+  /contacts:
+    get:
+      operationId: listContacts
+      summary: Get all contacts
+      description: >-
+        Retrieves a paginated list of contacts from the account. Supports
+        filtering by modification date and sorting. The response includes
+        contact attributes and list memberships.
+      tags:
+        - Contacts
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+        - name: modifiedSince
+          in: query
+          description: >-
+            Filter contacts modified since this date-time in ISO 8601 format.
+          schema:
+            type: string
+            format: date-time
+        - name: sort
+          in: query
+          description: >-
+            Sort direction for the results.
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+      responses:
+        '200':
+          description: Contacts retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactList'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      operationId: createContact
+      summary: Create a contact
+      description: >-
+        Creates a new contact with the specified email address and optional
+        attributes. The contact can be immediately added to one or more
+        lists. Duplicate email addresses will result in an update of the
+        existing contact if updateEnabled is set.
+      tags:
+        - Contacts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateContact'
+      responses:
+        '201':
+          description: Contact created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    description: >-
+                      Unique identifier of the newly created contact.
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /contacts/{identifier}:
+    get:
+      operationId: getContactInfo
+      summary: Get a contact's details
+      description: >-
+        Retrieves detailed information about a specific contact including
+        all attributes, list memberships, and email campaign statistics.
+        The contact can be identified by email address, phone number, or
+        internal ID.
+      tags:
+        - Contacts
+      parameters:
+        - $ref: '#/components/parameters/contactIdentifierParam'
+        - name: startDate
+          in: query
+          description: >-
+            Start date for retrieving contact statistics.
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          description: >-
+            End date for retrieving contact statistics.
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Contact details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Contact not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      operationId: updateContact
+      summary: Update a contact
+      description: >-
+        Updates an existing contact's attributes and list memberships.
+        The contact is identified by email address, phone number, or
+        internal ID.
+      tags:
+        - Contacts
+      parameters:
+        - $ref: '#/components/parameters/contactIdentifierParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateContact'
+      responses:
+        '204':
+          description: Contact updated successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Contact not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      operationId: deleteContact
+      summary: Delete a contact
+      description: >-
+        Permanently deletes a contact from the account. The contact is
+        identified by email address, phone number, or internal ID.
+      tags:
+        - Contacts
+      parameters:
+        - $ref: '#/components/parameters/contactIdentifierParam'
+      responses:
+        '204':
+          description: Contact deleted successfully
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Contact not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /contacts/lists:
+    get:
+      operationId: listContactLists
+      summary: Get all contact lists
+      description: >-
+        Retrieves all contact lists in the account with their subscriber
+        counts and folder assignments.
+      tags:
+        - Contact Lists
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+        - name: sort
+          in: query
+          description: >-
+            Sort direction for the results.
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+      responses:
+        '200':
+          description: Contact lists retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactListCollection'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      operationId: createContactList
+      summary: Create a contact list
+      description: >-
+        Creates a new contact list within a specified folder. Lists are
+        used to organize contacts for targeted campaign sending.
+      tags:
+        - Contact Lists
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateContactList'
+      responses:
+        '201':
+          description: List created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    description: >-
+                      Unique identifier of the newly created list.
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /contacts/lists/{listId}:
+    get:
+      operationId: getContactList
+      summary: Get a contact list
+      description: >-
+        Retrieves the details of a specific contact list including
+        subscriber count and configuration.
+      tags:
+        - Contact Lists
+      parameters:
+        - $ref: '#/components/parameters/listIdParam'
+      responses:
+        '200':
+          description: Contact list retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactListDetail'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: List not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      operationId: updateContactList
+      summary: Update a contact list
+      description: >-
+        Updates the name or folder assignment of an existing contact list.
+      tags:
+        - Contact Lists
+      parameters:
+        - $ref: '#/components/parameters/listIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateContactList'
+      responses:
+        '204':
+          description: List updated successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: List not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      operationId: deleteContactList
+      summary: Delete a contact list
+      description: >-
+        Permanently deletes a contact list. Contacts in the list are
+        not deleted but are removed from the list membership.
+      tags:
+        - Contact Lists
+      parameters:
+        - $ref: '#/components/parameters/listIdParam'
+      responses:
+        '204':
+          description: List deleted successfully
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: List not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /contacts/lists/{listId}/contacts/add:
+    post:
+      operationId: addContactsToList
+      summary: Add contacts to a list
+      description: >-
+        Adds one or more existing contacts to a contact list using their
+        email addresses or internal IDs.
+      tags:
+        - Contact Lists
+      parameters:
+        - $ref: '#/components/parameters/listIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                emails:
+                  type: array
+                  description: >-
+                    List of email addresses to add to the list.
+                  items:
+                    type: string
+                    format: email
+                ids:
+                  type: array
+                  description: >-
+                    List of contact IDs to add to the list.
+                  items:
+                    type: integer
+                    format: int64
+      responses:
+        '201':
+          description: Contacts added to list successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  contacts:
+                    type: object
+                    description: >-
+                      Summary of contacts added and failed.
+                    properties:
+                      success:
+                        type: array
+                        description: >-
+                          Successfully added contact identifiers.
+                        items:
+                          type: string
+                      failure:
+                        type: array
+                        description: >-
+                          Failed contact identifiers.
+                        items:
+                          type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: List not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /contacts/lists/{listId}/contacts/remove:
+    post:
+      operationId: removeContactsFromList
+      summary: Remove contacts from a list
+      description: >-
+        Removes one or more contacts from a contact list. The contacts
+        themselves are not deleted from the account.
+      tags:
+        - Contact Lists
+      parameters:
+        - $ref: '#/components/parameters/listIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                emails:
+                  type: array
+                  description: >-
+                    List of email addresses to remove from the list.
+                  items:
+                    type: string
+                    format: email
+                ids:
+                  type: array
+                  description: >-
+                    List of contact IDs to remove from the list.
+                  items:
+                    type: integer
+                    format: int64
+      responses:
+        '201':
+          description: Contacts removed from list successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  contacts:
+                    type: object
+                    description: >-
+                      Summary of contacts removed and failed.
+                    properties:
+                      success:
+                        type: array
+                        description: >-
+                          Successfully removed contact identifiers.
+                        items:
+                          type: string
+                      failure:
+                        type: array
+                        description: >-
+                          Failed contact identifiers.
+                        items:
+                          type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: List not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /contacts/attributes:
+    get:
+      operationId: listContactAttributes
+      summary: List all contact attributes
+      description: >-
+        Retrieves all custom contact attributes defined in the account
+        including their types and enumeration values.
+      tags:
+        - Contact Attributes
+      responses:
+        '200':
+          description: Contact attributes retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactAttributeList'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /contacts/attributes/{attributeCategory}/{attributeName}:
+    post:
+      operationId: createContactAttribute
+      summary: Create a contact attribute
+      description: >-
+        Creates a new custom contact attribute in the specified category.
+        Attributes extend the contact profile with additional data fields.
+      tags:
+        - Contact Attributes
+      parameters:
+        - name: attributeCategory
+          in: path
+          required: true
+          description: >-
+            Category of the attribute such as normal, transactional,
+            category, calculated, or global.
+          schema:
+            type: string
+            enum:
+              - normal
+              - transactional
+              - category
+              - calculated
+              - global
+        - name: attributeName
+          in: path
+          required: true
+          description: >-
+            Name for the new attribute.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateContactAttribute'
+      responses:
+        '201':
+          description: Attribute created successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      operationId: deleteContactAttribute
+      summary: Delete a contact attribute
+      description: >-
+        Permanently deletes a custom contact attribute from the account.
+      tags:
+        - Contact Attributes
+      parameters:
+        - name: attributeCategory
+          in: path
+          required: true
+          description: >-
+            Category of the attribute to delete.
+          schema:
+            type: string
+            enum:
+              - normal
+              - transactional
+              - category
+              - calculated
+              - global
+        - name: attributeName
+          in: path
+          required: true
+          description: >-
+            Name of the attribute to delete.
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Attribute deleted successfully
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Attribute not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /contacts/folders:
+    get:
+      operationId: listFolders
+      summary: Get all folders
+      description: >-
+        Retrieves all folders used to organize contact lists.
+      tags:
+        - Folders
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: Folders retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderList'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      operationId: createFolder
+      summary: Create a folder
+      description: >-
+        Creates a new folder for organizing contact lists.
+      tags:
+        - Folders
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  description: >-
+                    Name for the new folder.
+      responses:
+        '201':
+          description: Folder created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    description: >-
+                      Unique identifier of the newly created folder.
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /contacts/import:
+    post:
+      operationId: importContacts
+      summary: Import contacts
+      description: >-
+        Imports contacts in bulk from a file URL or inline data. Supports
+        CSV and other structured formats. Contacts can be assigned to
+        lists and have attributes mapped during import.
+      tags:
+        - Import
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImportContacts'
+      responses:
+        '202':
+          description: Import process started
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  processId:
+                    type: integer
+                    format: int64
+                    description: >-
+                      Identifier for the import process.
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: api-key
+      description: >-
+        Brevo API key passed in the api-key request header for
+        authentication.
+  parameters:
+    limitParam:
+      name: limit
+      in: query
+      description: >-
+        Maximum number of results to return per request.
+      schema:
+        type: integer
+        format: int64
+        default: 50
+    offsetParam:
+      name: offset
+      in: query
+      description: >-
+        Number of results to skip for pagination.
+      schema:
+        type: integer
+        format: int64
+        default: 0
+    contactIdentifierParam:
+      name: identifier
+      in: path
+      required: true
+      description: >-
+        Contact identifier which can be an email address, phone number,
+        or internal contact ID.
+      schema:
+        type: string
+    listIdParam:
+      name: listId
+      in: path
+      required: true
+      description: >-
+        Unique identifier of the contact list.
+      schema:
+        type: integer
+        format: int64
+  schemas:
+    ContactList:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: >-
+            Total number of contacts in the account.
+        contacts:
+          type: array
+          description: >-
+            List of contact records.
+          items:
+            $ref: '#/components/schemas/Contact'
+    Contact:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: >-
+            Unique identifier of the contact.
+        email:
+          type: string
+          format: email
+          description: >-
+            Email address of the contact.
+        emailBlacklisted:
+          type: boolean
+          description: >-
+            Whether the contact's email is blacklisted.
+        smsBlacklisted:
+          type: boolean
+          description: >-
+            Whether the contact's phone number is blacklisted for SMS.
+        modifiedAt:
+          type: string
+          format: date-time
+          description: >-
+            UTC date-time when the contact was last modified.
+        createdAt:
+          type: string
+          format: date-time
+          description: >-
+            UTC date-time when the contact was created.
+        listIds:
+          type: array
+          description: >-
+            IDs of lists the contact belongs to.
+          items:
+            type: integer
+            format: int64
+        attributes:
+          type: object
+          description: >-
+            Custom attribute values for the contact as key-value pairs.
+          additionalProperties: true
+    CreateContact:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: >-
+            Email address of the new contact.
+        attributes:
+          type: object
+          description: >-
+            Custom attribute values as key-value pairs.
+          additionalProperties: true
+        listIds:
+          type: array
+          description: >-
+            IDs of lists to add the contact to.
+          items:
+            type: integer
+            format: int64
+        updateEnabled:
+          type: boolean
+          description: >-
+            Whether to update the contact if a duplicate email exists.
+          default: false
+        smtpBlacklistSender:
+          type: array
+          description: >-
+            Sender email addresses to blacklist for this contact.
+          items:
+            type: string
+            format: email
+    UpdateContact:
+      type: object
+      properties:
+        attributes:
+          type: object
+          description: >-
+            Custom attribute values to update as key-value pairs.
+          additionalProperties: true
+        listIds:
+          type: array
+          description: >-
+            IDs of lists to set for the contact.
+          items:
+            type: integer
+            format: int64
+        unlinkListIds:
+          type: array
+          description: >-
+            IDs of lists to remove the contact from.
+          items:
+            type: integer
+            format: int64
+        emailBlacklisted:
+          type: boolean
+          description: >-
+            Whether to blacklist the contact's email.
+        smsBlacklisted:
+          type: boolean
+          description: >-
+            Whether to blacklist the contact's phone for SMS.
+    ContactListCollection:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: >-
+            Total number of contact lists.
+        lists:
+          type: array
+          description: >-
+            List of contact list summaries.
+          items:
+            $ref: '#/components/schemas/ContactListDetail'
+    ContactListDetail:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: >-
+            Unique identifier of the list.
+        name:
+          type: string
+          description: >-
+            Name of the list.
+        totalSubscribers:
+          type: integer
+          format: int64
+          description: >-
+            Total number of subscribers in the list.
+        totalBlacklisted:
+          type: integer
+          format: int64
+          description: >-
+            Total number of blacklisted contacts in the list.
+        folderId:
+          type: integer
+          format: int64
+          description: >-
+            ID of the folder containing the list.
+        createdAt:
+          type: string
+          format: date-time
+          description: >-
+            UTC date-time when the list was created.
+    CreateContactList:
+      type: object
+      required:
+        - name
+        - folderId
+      properties:
+        name:
+          type: string
+          description: >-
+            Name for the new contact list.
+        folderId:
+          type: integer
+          format: int64
+          description: >-
+            ID of the folder to place the list in.
+    UpdateContactList:
+      type: object
+      properties:
+        name:
+          type: string
+          description: >-
+            Updated name for the list.
+        folderId:
+          type: integer
+          format: int64
+          description: >-
+            Updated folder assignment.
+    ContactAttributeList:
+      type: object
+      properties:
+        attributes:
+          type: array
+          description: >-
+            List of contact attributes.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: >-
+                  Name of the attribute.
+              category:
+                type: string
+                description: >-
+                  Category of the attribute.
+                enum:
+                  - normal
+                  - transactional
+                  - category
+                  - calculated
+                  - global
+              type:
+                type: string
+                description: >-
+                  Data type of the attribute value.
+                enum:
+                  - text
+                  - date
+                  - float
+                  - boolean
+                  - id
+              enumeration:
+                type: array
+                description: >-
+                  Enumeration values for category attributes.
+                items:
+                  type: object
+                  properties:
+                    value:
+                      type: integer
+                      description: >-
+                        Numeric value of the enum option.
+                    label:
+                      type: string
+                      description: >-
+                        Display label for the enum option.
+    CreateContactAttribute:
+      type: object
+      properties:
+        value:
+          type: string
+          description: >-
+            Default or computed value for the attribute.
+        enumeration:
+          type: array
+          description: >-
+            Enum values for category-type attributes.
+          items:
+            type: object
+            properties:
+              value:
+                type: integer
+                description: >-
+                  Numeric value.
+              label:
+                type: string
+                description: >-
+                  Display label.
+        type:
+          type: string
+          description: >-
+            Data type of the attribute.
+          enum:
+            - text
+            - date
+            - float
+            - boolean
+            - id
+    FolderList:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: >-
+            Total number of folders.
+        folders:
+          type: array
+          description: >-
+            List of folder records.
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int64
+                description: >-
+                  Unique identifier of the folder.
+              name:
+                type: string
+                description: >-
+                  Name of the folder.
+              totalSubscribers:
+                type: integer
+                format: int64
+                description: >-
+                  Total subscribers across all lists in the folder.
+              totalBlacklisted:
+                type: integer
+                format: int64
+                description: >-
+                  Total blacklisted contacts across all lists.
+              uniqueSubscribers:
+                type: integer
+                format: int64
+                description: >-
+                  Unique subscribers across all lists in the folder.
+    ImportContacts:
+      type: object
+      properties:
+        fileUrl:
+          type: string
+          format: uri
+          description: >-
+            URL of the file to import contacts from.
+        fileBody:
+          type: string
+          description: >-
+            Inline CSV data for contact import.
+        listIds:
+          type: array
+          description: >-
+            IDs of lists to add imported contacts to.
+          items:
+            type: integer
+            format: int64
+        notifyUrl:
+          type: string
+          format: uri
+          description: >-
+            URL to receive notification when the import completes.
+        newList:
+          type: object
+          description: >-
+            Create a new list and add imported contacts to it.
+          properties:
+            listName:
+              type: string
+              description: >-
+                Name of the new list.
+            folderId:
+              type: integer
+              format: int64
+              description: >-
+                Folder ID for the new list.
+        emailBlacklist:
+          type: boolean
+          description: >-
+            Whether to blacklist imported contacts' email addresses.
+        smsBlacklist:
+          type: boolean
+          description: >-
+            Whether to blacklist imported contacts' phone numbers.
+        updateExistingContacts:
+          type: boolean
+          description: >-
+            Whether to update existing contacts during import.
+        emptyContactsAttributes:
+          type: boolean
+          description: >-
+            Whether to empty existing attributes not in the import file.
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: >-
+            Error code identifying the type of error.
+        message:
+          type: string
+          description: >-
+            Human-readable description of the error.

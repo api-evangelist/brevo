@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://brevo.com/schemas/brevo/email-event.json",
+  "title": "Brevo Email Event",
+  "description": "Represents a webhook event payload delivered by Brevo when an email interaction occurs, including delivery status changes, opens, clicks, bounces, and spam reports.",
+  "type": "object",
+  "required": ["event", "email", "date"],
+  "properties": {
+    "event": {
+      "type": "string",
+      "description": "Type of email event that occurred.",
+      "enum": [
+        "sent",
+        "request",
+        "delivered",
+        "hardBounce",
+        "softBounce",
+        "blocked",
+        "spam",
+        "invalid",
+        "deferred",
+        "opened",
+        "uniqueOpened",
+        "clicked",
+        "unsubscribed",
+        "proxyOpen",
+        "uniqueProxyOpen"
+      ]
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Recipient email address associated with the event."
+    },
+    "id": {
+      "type": "integer",
+      "description": "Internal Brevo event identifier."
+    },
+    "date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC date-time when the event occurred."
+    },
+    "messageId": {
+      "type": "string",
+      "description": "Unique identifier of the email message that triggered the event."
+    },
+    "subject": {
+      "type": "string",
+      "description": "Subject line of the email message."
+    },
+    "tag": {
+      "type": "string",
+      "description": "Tag assigned to the email for categorization and tracking."
+    },
+    "sendingIp": {
+      "type": "string",
+      "format": "ipv4",
+      "description": "IP address of the server used to send the email."
+    },
+    "ts": {
+      "type": "integer",
+      "description": "Unix timestamp in seconds when the event occurred."
+    },
+    "ts_epoch": {
+      "type": "integer",
+      "description": "Unix timestamp in milliseconds when the event occurred."
+    },
+    "reason": {
+      "type": "string",
+      "description": "Reason for the event if applicable, such as bounce error codes or spam filter details."
+    },
+    "link": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL of the link that was clicked, present only for click events."
+    },
+    "templateId": {
+      "type": "integer",
+      "description": "ID of the template used for the email if applicable."
+    },
+    "campaignId": {
+      "type": "integer",
+      "description": "ID of the marketing campaign if the event is for a campaign email."
+    }
+  },
+  "$defs": {
+    "TransactionalEmailEvent": {
+      "type": "object",
+      "description": "Event payload specific to transactional email events.",
+      "allOf": [
+        { "$ref": "#" },
+        {
+          "properties": {
+            "event": {
+              "enum": [
+                "sent",
+                "request",
+                "delivered",
+                "hardBounce",
+                "softBounce",
+                "blocked",
+                "spam",
+                "invalid",
+                "deferred",
+                "opened",
+                "uniqueOpened",
+                "clicked",
+                "unsubscribed"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "MarketingEmailEvent": {
+      "type": "object",
+      "description": "Event payload specific to marketing campaign email events.",
+      "allOf": [
+        { "$ref": "#" },
+        {
+          "properties": {
+            "event": {
+              "enum": [
+                "delivered",
+                "opened",
+                "clicked",
+                "hardBounce",
+                "softBounce",
+                "spam",
+                "unsubscribed",
+                "proxyOpen"
+              ]
+            }
+          },
+          "required": ["campaignId"]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,223 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "brevo": "https://api.brevo.com/v3/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+
+    "Contact": {
+      "@id": "brevo:Contact",
+      "@context": {
+        "email": "schema:email",
+        "phone": "schema:telephone",
+        "emailBlacklisted": "brevo:emailBlacklisted",
+        "smsBlacklisted": "brevo:smsBlacklisted",
+        "listIds": {
+          "@id": "brevo:listIds",
+          "@container": "@set"
+        },
+        "attributes": "brevo:attributes",
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "modifiedAt": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "ContactList": {
+      "@id": "brevo:ContactList",
+      "@context": {
+        "name": "schema:name",
+        "totalSubscribers": "brevo:totalSubscribers",
+        "totalBlacklisted": "brevo:totalBlacklisted",
+        "folderId": "brevo:folderId",
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "EmailCampaign": {
+      "@id": "brevo:EmailCampaign",
+      "@context": {
+        "name": "schema:name",
+        "subject": "brevo:subject",
+        "status": "brevo:status",
+        "type": "brevo:campaignType",
+        "sender": "schema:sender",
+        "scheduledAt": {
+          "@id": "brevo:scheduledAt",
+          "@type": "xsd:dateTime"
+        },
+        "recipients": {
+          "@id": "brevo:recipients",
+          "@container": "@set"
+        },
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "modifiedAt": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "TransactionalEmail": {
+      "@id": "brevo:TransactionalEmail",
+      "@context": {
+        "sender": "schema:sender",
+        "to": "schema:recipient",
+        "subject": "brevo:subject",
+        "htmlContent": "brevo:htmlContent",
+        "templateId": "brevo:templateId",
+        "messageId": "schema:identifier",
+        "scheduledAt": {
+          "@id": "brevo:scheduledAt",
+          "@type": "xsd:dateTime"
+        },
+        "tags": {
+          "@id": "brevo:tags",
+          "@container": "@set"
+        }
+      }
+    },
+
+    "EmailEvent": {
+      "@id": "brevo:EmailEvent",
+      "@context": {
+        "event": "schema:actionStatus",
+        "email": "schema:email",
+        "messageId": "schema:identifier",
+        "subject": "brevo:subject",
+        "tag": "brevo:tag",
+        "reason": "brevo:reason",
+        "link": {
+          "@id": "brevo:clickedLink",
+          "@type": "@id"
+        },
+        "date": {
+          "@id": "dcterms:date",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "Product": {
+      "@id": "schema:Product",
+      "@context": {
+        "name": "schema:name",
+        "url": {
+          "@id": "schema:url",
+          "@type": "@id"
+        },
+        "imageUrl": {
+          "@id": "schema:image",
+          "@type": "@id"
+        },
+        "sku": "schema:sku",
+        "price": "schema:price",
+        "categories": {
+          "@id": "schema:category",
+          "@container": "@set"
+        }
+      }
+    },
+
+    "Order": {
+      "@id": "schema:Order",
+      "@context": {
+        "email": "schema:email",
+        "status": "schema:orderStatus",
+        "amount": "schema:totalPrice",
+        "products": {
+          "@id": "schema:orderedItem",
+          "@container": "@set"
+        },
+        "coupons": {
+          "@id": "schema:discount",
+          "@container": "@set"
+        },
+        "createdAt": {
+          "@id": "schema:orderDate",
+          "@type": "xsd:dateTime"
+        },
+        "updatedAt": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "Webhook": {
+      "@id": "brevo:Webhook",
+      "@context": {
+        "url": {
+          "@id": "brevo:webhookUrl",
+          "@type": "@id"
+        },
+        "description": "schema:description",
+        "type": "brevo:webhookType",
+        "events": {
+          "@id": "brevo:subscribedEvents",
+          "@container": "@set"
+        },
+        "isActive": "brevo:isActive",
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "modifiedAt": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "Conversation": {
+      "@id": "brevo:Conversation",
+      "@context": {
+        "visitorId": "brevo:visitorId",
+        "text": "schema:text",
+        "agentId": "brevo:agentId",
+        "agentName": "schema:name",
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "WhatsAppCampaign": {
+      "@id": "brevo:WhatsAppCampaign",
+      "@context": {
+        "campaignName": "schema:name",
+        "campaignStatus": "brevo:status",
+        "templateId": "brevo:templateId",
+        "scheduledAt": {
+          "@id": "brevo:scheduledAt",
+          "@type": "xsd:dateTime"
+        },
+        "recipients": {
+          "@id": "brevo:recipients",
+          "@container": "@set"
+        },
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "modifiedAt": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        }
+      }
+    }
+  }
+}

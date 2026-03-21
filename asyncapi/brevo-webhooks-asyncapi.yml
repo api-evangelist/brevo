@@ -1,0 +1,661 @@
+asyncapi: 2.6.0
+info:
+  title: Brevo Webhook Events
+  description: >-
+    Brevo delivers real-time event notifications via webhooks for
+    transactional emails, marketing campaigns, transactional SMS, and
+    conversations. When configured, Brevo sends HTTP POST requests to
+    your specified endpoint URL with event payloads describing delivery
+    status changes, recipient interactions, and contact list updates.
+  version: '3.0'
+  contact:
+    name: Brevo Support
+    url: https://help.brevo.com
+servers:
+  webhookEndpoint:
+    url: '{webhookUrl}'
+    protocol: https
+    description: >-
+      Your application's webhook endpoint that receives event
+      notifications from Brevo via HTTP POST requests.
+    variables:
+      webhookUrl:
+        description: >-
+          The HTTPS URL configured in your Brevo webhook subscription.
+    security:
+      - apiKeyAuth: []
+channels:
+  /transactional-email-events:
+    description: >-
+      Transactional email event notifications including delivery status,
+      opens, clicks, bounces, spam reports, and unsubscribes.
+    publish:
+      operationId: receiveTransactionalEmailEvent
+      summary: Receive transactional email event
+      description: >-
+        Brevo sends a POST request to your webhook URL when a
+        transactional email event occurs such as delivery, open,
+        click, bounce, spam report, or unsubscribe.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/EmailDeliveredEvent'
+          - $ref: '#/components/messages/EmailOpenedEvent'
+          - $ref: '#/components/messages/EmailClickedEvent'
+          - $ref: '#/components/messages/EmailHardBounceEvent'
+          - $ref: '#/components/messages/EmailSoftBounceEvent'
+          - $ref: '#/components/messages/EmailSpamEvent'
+          - $ref: '#/components/messages/EmailBlockedEvent'
+          - $ref: '#/components/messages/EmailInvalidEvent'
+          - $ref: '#/components/messages/EmailDeferredEvent'
+          - $ref: '#/components/messages/EmailUnsubscribedEvent'
+  /marketing-email-events:
+    description: >-
+      Marketing campaign event notifications including delivery,
+      opens, clicks, bounces, spam reports, unsubscribes, and
+      contact list changes.
+    publish:
+      operationId: receiveMarketingEmailEvent
+      summary: Receive marketing email event
+      description: >-
+        Brevo sends a POST request to your webhook URL when a
+        marketing campaign event occurs such as delivery, unsubscribe,
+        or contact list addition.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/MarketingDeliveredEvent'
+          - $ref: '#/components/messages/MarketingOpenedEvent'
+          - $ref: '#/components/messages/MarketingClickedEvent'
+          - $ref: '#/components/messages/MarketingHardBounceEvent'
+          - $ref: '#/components/messages/MarketingSoftBounceEvent'
+          - $ref: '#/components/messages/MarketingSpamEvent'
+          - $ref: '#/components/messages/MarketingUnsubscribedEvent'
+          - $ref: '#/components/messages/MarketingListAdditionEvent'
+          - $ref: '#/components/messages/ContactDeletedEvent'
+          - $ref: '#/components/messages/ContactUpdatedEvent'
+  /transactional-sms-events:
+    description: >-
+      Transactional SMS event notifications including delivery status,
+      bounces, and subscriber changes.
+    publish:
+      operationId: receiveTransactionalSmsEvent
+      summary: Receive transactional SMS event
+      description: >-
+        Brevo sends a POST request to your webhook URL when a
+        transactional SMS event occurs such as delivery, bounce,
+        or unsubscribe.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/SmsSentEvent'
+          - $ref: '#/components/messages/SmsDeliveredEvent'
+          - $ref: '#/components/messages/SmsSoftBounceEvent'
+          - $ref: '#/components/messages/SmsHardBounceEvent'
+          - $ref: '#/components/messages/SmsUnsubscribeEvent'
+  /inbound-email-events:
+    description: >-
+      Inbound email processing event notifications when incoming
+      emails are received and processed.
+    publish:
+      operationId: receiveInboundEmailEvent
+      summary: Receive inbound email processed event
+      description: >-
+        Brevo sends a POST request to your webhook URL when an
+        inbound email is received and processed.
+      message:
+        $ref: '#/components/messages/InboundEmailProcessedEvent'
+  /conversations-events:
+    description: >-
+      Conversations event notifications for chat messages and
+      visitor interactions.
+    publish:
+      operationId: receiveConversationsEvent
+      summary: Receive conversations event
+      description: >-
+        Brevo sends a POST request to your webhook URL when a
+        conversation event occurs such as a new message from a
+        visitor or agent.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/ConversationMessageEvent'
+          - $ref: '#/components/messages/ConversationPushEvent'
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: httpApiKey
+      in: header
+      name: api-key
+      description: >-
+        Brevo API key used to authenticate webhook configurations.
+  messages:
+    EmailDeliveredEvent:
+      name: emailDelivered
+      title: Email Delivered
+      summary: >-
+        Fired when a transactional email is successfully delivered
+        to the recipient's mail server.
+      payload:
+        $ref: '#/components/schemas/TransactionalEmailEvent'
+    EmailOpenedEvent:
+      name: emailOpened
+      title: Email Opened
+      summary: >-
+        Fired when a recipient opens a transactional email.
+      payload:
+        $ref: '#/components/schemas/TransactionalEmailEvent'
+    EmailClickedEvent:
+      name: emailClicked
+      title: Email Link Clicked
+      summary: >-
+        Fired when a recipient clicks a link in a transactional email.
+      payload:
+        $ref: '#/components/schemas/TransactionalEmailClickEvent'
+    EmailHardBounceEvent:
+      name: emailHardBounce
+      title: Email Hard Bounce
+      summary: >-
+        Fired when a transactional email permanently bounces due to
+        an invalid or non-existent email address.
+      payload:
+        $ref: '#/components/schemas/TransactionalEmailEvent'
+    EmailSoftBounceEvent:
+      name: emailSoftBounce
+      title: Email Soft Bounce
+      summary: >-
+        Fired when a transactional email temporarily bounces due to
+        a full mailbox or temporary server issue.
+      payload:
+        $ref: '#/components/schemas/TransactionalEmailEvent'
+    EmailSpamEvent:
+      name: emailSpam
+      title: Email Marked as Spam
+      summary: >-
+        Fired when a recipient marks a transactional email as spam.
+      payload:
+        $ref: '#/components/schemas/TransactionalEmailEvent'
+    EmailBlockedEvent:
+      name: emailBlocked
+      title: Email Blocked
+      summary: >-
+        Fired when a transactional email is blocked from sending.
+      payload:
+        $ref: '#/components/schemas/TransactionalEmailEvent'
+    EmailInvalidEvent:
+      name: emailInvalid
+      title: Invalid Email
+      summary: >-
+        Fired when a transactional email is sent to an invalid
+        email address.
+      payload:
+        $ref: '#/components/schemas/TransactionalEmailEvent'
+    EmailDeferredEvent:
+      name: emailDeferred
+      title: Email Deferred
+      summary: >-
+        Fired when delivery of a transactional email is temporarily
+        deferred by the receiving mail server.
+      payload:
+        $ref: '#/components/schemas/TransactionalEmailEvent'
+    EmailUnsubscribedEvent:
+      name: emailUnsubscribed
+      title: Email Unsubscribed
+      summary: >-
+        Fired when a recipient unsubscribes from transactional emails.
+      payload:
+        $ref: '#/components/schemas/TransactionalEmailEvent'
+    MarketingDeliveredEvent:
+      name: marketingDelivered
+      title: Marketing Email Delivered
+      summary: >-
+        Fired when a marketing campaign email is successfully delivered.
+      payload:
+        $ref: '#/components/schemas/MarketingEmailEvent'
+    MarketingOpenedEvent:
+      name: marketingOpened
+      title: Marketing Email Opened
+      summary: >-
+        Fired when a recipient opens a marketing campaign email.
+      payload:
+        $ref: '#/components/schemas/MarketingEmailEvent'
+    MarketingClickedEvent:
+      name: marketingClicked
+      title: Marketing Email Link Clicked
+      summary: >-
+        Fired when a recipient clicks a link in a marketing campaign email.
+      payload:
+        $ref: '#/components/schemas/MarketingEmailClickEvent'
+    MarketingHardBounceEvent:
+      name: marketingHardBounce
+      title: Marketing Email Hard Bounce
+      summary: >-
+        Fired when a marketing campaign email permanently bounces.
+      payload:
+        $ref: '#/components/schemas/MarketingEmailEvent'
+    MarketingSoftBounceEvent:
+      name: marketingSoftBounce
+      title: Marketing Email Soft Bounce
+      summary: >-
+        Fired when a marketing campaign email temporarily bounces.
+      payload:
+        $ref: '#/components/schemas/MarketingEmailEvent'
+    MarketingSpamEvent:
+      name: marketingSpam
+      title: Marketing Email Marked as Spam
+      summary: >-
+        Fired when a recipient marks a marketing campaign email as spam.
+      payload:
+        $ref: '#/components/schemas/MarketingEmailEvent'
+    MarketingUnsubscribedEvent:
+      name: marketingUnsubscribed
+      title: Marketing Email Unsubscribed
+      summary: >-
+        Fired when a recipient unsubscribes from marketing emails.
+      payload:
+        $ref: '#/components/schemas/MarketingEmailEvent'
+    MarketingListAdditionEvent:
+      name: marketingListAddition
+      title: Contact Added to List
+      summary: >-
+        Fired when a contact is added to a marketing list.
+      payload:
+        $ref: '#/components/schemas/ContactListEvent'
+    ContactDeletedEvent:
+      name: contactDeleted
+      title: Contact Deleted
+      summary: >-
+        Fired when a contact is deleted from the account.
+      payload:
+        $ref: '#/components/schemas/ContactEvent'
+    ContactUpdatedEvent:
+      name: contactUpdated
+      title: Contact Updated
+      summary: >-
+        Fired when a contact's attributes are updated.
+      payload:
+        $ref: '#/components/schemas/ContactEvent'
+    SmsSentEvent:
+      name: smsSent
+      title: SMS Sent
+      summary: >-
+        Fired when a transactional SMS is sent to the carrier.
+      payload:
+        $ref: '#/components/schemas/SmsEvent'
+    SmsDeliveredEvent:
+      name: smsDelivered
+      title: SMS Delivered
+      summary: >-
+        Fired when a transactional SMS is delivered to the recipient.
+      payload:
+        $ref: '#/components/schemas/SmsEvent'
+    SmsSoftBounceEvent:
+      name: smsSoftBounce
+      title: SMS Soft Bounce
+      summary: >-
+        Fired when a transactional SMS temporarily bounces.
+      payload:
+        $ref: '#/components/schemas/SmsEvent'
+    SmsHardBounceEvent:
+      name: smsHardBounce
+      title: SMS Hard Bounce
+      summary: >-
+        Fired when a transactional SMS permanently bounces.
+      payload:
+        $ref: '#/components/schemas/SmsEvent'
+    SmsUnsubscribeEvent:
+      name: smsUnsubscribe
+      title: SMS Unsubscribe
+      summary: >-
+        Fired when a recipient unsubscribes from SMS messages.
+      payload:
+        $ref: '#/components/schemas/SmsEvent'
+    InboundEmailProcessedEvent:
+      name: inboundEmailProcessed
+      title: Inbound Email Processed
+      summary: >-
+        Fired when an inbound email is received and processed by Brevo.
+      payload:
+        $ref: '#/components/schemas/InboundEmailEvent'
+    ConversationMessageEvent:
+      name: conversationMessage
+      title: Conversation Message Received
+      summary: >-
+        Fired when a new message is sent in a conversation by a
+        visitor, agent, or bot.
+      payload:
+        $ref: '#/components/schemas/ConversationEvent'
+    ConversationPushEvent:
+      name: conversationPush
+      title: Conversation Push Notification
+      summary: >-
+        Fired when a pushed or automated message is delivered to a
+        visitor in the chat widget.
+      payload:
+        $ref: '#/components/schemas/ConversationEvent'
+  schemas:
+    TransactionalEmailEvent:
+      type: object
+      properties:
+        event:
+          type: string
+          description: >-
+            Type of transactional email event.
+          enum:
+            - sent
+            - request
+            - delivered
+            - hardBounce
+            - softBounce
+            - blocked
+            - spam
+            - invalid
+            - deferred
+            - opened
+            - uniqueOpened
+            - unsubscribed
+        email:
+          type: string
+          format: email
+          description: >-
+            Recipient email address.
+        id:
+          type: integer
+          format: int64
+          description: >-
+            Internal event identifier.
+        date:
+          type: string
+          format: date-time
+          description: >-
+            UTC date-time when the event occurred.
+        messageId:
+          type: string
+          description: >-
+            Unique identifier of the email message.
+        subject:
+          type: string
+          description: >-
+            Subject line of the email.
+        tag:
+          type: string
+          description: >-
+            Tag assigned to the email for categorization.
+        sendingIp:
+          type: string
+          description: >-
+            IP address used to send the email.
+        ts:
+          type: integer
+          format: int64
+          description: >-
+            Unix timestamp in seconds when the event occurred.
+        ts_epoch:
+          type: integer
+          format: int64
+          description: >-
+            Unix timestamp in milliseconds when the event occurred.
+        reason:
+          type: string
+          description: >-
+            Reason for the event if applicable, such as bounce details.
+        templateId:
+          type: integer
+          format: int64
+          description: >-
+            Template ID used for the email if applicable.
+    TransactionalEmailClickEvent:
+      allOf:
+        - $ref: '#/components/schemas/TransactionalEmailEvent'
+        - type: object
+          properties:
+            link:
+              type: string
+              format: uri
+              description: >-
+                URL of the link that was clicked.
+    MarketingEmailEvent:
+      type: object
+      properties:
+        event:
+          type: string
+          description: >-
+            Type of marketing email event.
+          enum:
+            - delivered
+            - opened
+            - clicked
+            - hardBounce
+            - softBounce
+            - spam
+            - unsubscribed
+            - proxyOpen
+        email:
+          type: string
+          format: email
+          description: >-
+            Recipient email address.
+        id:
+          type: integer
+          format: int64
+          description: >-
+            Internal event identifier.
+        date:
+          type: string
+          format: date-time
+          description: >-
+            UTC date-time when the event occurred.
+        messageId:
+          type: string
+          description: >-
+            Unique identifier of the campaign message.
+        campaignId:
+          type: integer
+          format: int64
+          description: >-
+            ID of the email campaign.
+        ts:
+          type: integer
+          format: int64
+          description: >-
+            Unix timestamp in seconds when the event occurred.
+        ts_epoch:
+          type: integer
+          format: int64
+          description: >-
+            Unix timestamp in milliseconds when the event occurred.
+    MarketingEmailClickEvent:
+      allOf:
+        - $ref: '#/components/schemas/MarketingEmailEvent'
+        - type: object
+          properties:
+            link:
+              type: string
+              format: uri
+              description: >-
+                URL of the link that was clicked.
+    ContactListEvent:
+      type: object
+      properties:
+        event:
+          type: string
+          description: >-
+            Type of contact list event.
+          enum:
+            - listAddition
+        email:
+          type: string
+          format: email
+          description: >-
+            Email address of the contact added to the list.
+        id:
+          type: integer
+          format: int64
+          description: >-
+            Internal event identifier.
+        date:
+          type: string
+          format: date-time
+          description: >-
+            UTC date-time when the event occurred.
+        listId:
+          type: integer
+          format: int64
+          description: >-
+            ID of the list the contact was added to.
+        ts:
+          type: integer
+          format: int64
+          description: >-
+            Unix timestamp in seconds when the event occurred.
+    ContactEvent:
+      type: object
+      properties:
+        event:
+          type: string
+          description: >-
+            Type of contact event.
+          enum:
+            - contactDeleted
+            - contactUpdated
+        email:
+          type: string
+          format: email
+          description: >-
+            Email address of the affected contact.
+        id:
+          type: integer
+          format: int64
+          description: >-
+            Internal event identifier.
+        date:
+          type: string
+          format: date-time
+          description: >-
+            UTC date-time when the event occurred.
+        ts:
+          type: integer
+          format: int64
+          description: >-
+            Unix timestamp in seconds when the event occurred.
+    SmsEvent:
+      type: object
+      properties:
+        event:
+          type: string
+          description: >-
+            Type of SMS event.
+          enum:
+            - sent
+            - accepted
+            - delivered
+            - replied
+            - softBounce
+            - hardBounce
+            - subscribe
+            - unsubscribe
+            - skip
+            - rejected
+        phoneNumber:
+          type: string
+          description: >-
+            Recipient phone number in international format.
+        date:
+          type: string
+          format: date-time
+          description: >-
+            UTC date-time when the event occurred.
+        messageId:
+          type: string
+          description: >-
+            Unique identifier of the SMS message.
+        tag:
+          type: string
+          description: >-
+            Tag assigned to the SMS.
+        reason:
+          type: string
+          description: >-
+            Reason for the event if applicable.
+        ts:
+          type: integer
+          format: int64
+          description: >-
+            Unix timestamp in seconds when the event occurred.
+    InboundEmailEvent:
+      type: object
+      properties:
+        event:
+          type: string
+          description: >-
+            Type of inbound email event.
+          enum:
+            - inboundEmailProcessed
+        sender:
+          type: string
+          format: email
+          description: >-
+            Email address of the inbound email sender.
+        recipient:
+          type: string
+          format: email
+          description: >-
+            Email address the inbound email was sent to.
+        subject:
+          type: string
+          description: >-
+            Subject line of the inbound email.
+        date:
+          type: string
+          format: date-time
+          description: >-
+            UTC date-time when the email was processed.
+        messageId:
+          type: string
+          description: >-
+            Unique identifier of the inbound email.
+        ts:
+          type: integer
+          format: int64
+          description: >-
+            Unix timestamp in seconds when the event occurred.
+    ConversationEvent:
+      type: object
+      properties:
+        event:
+          type: string
+          description: >-
+            Type of conversation event.
+          enum:
+            - message
+            - push
+        visitorId:
+          type: string
+          description: >-
+            Unique identifier of the visitor.
+        messageId:
+          type: string
+          description: >-
+            Unique identifier of the message.
+        text:
+          type: string
+          description: >-
+            Text content of the message.
+        type:
+          type: string
+          description: >-
+            Type of message sender.
+          enum:
+            - agent
+            - visitor
+            - bot
+        agentId:
+          type: string
+          description: >-
+            Identifier of the agent if the message was sent by an agent.
+        date:
+          type: string
+          format: date-time
+          description: >-
+            UTC date-time when the event occurred.
+        ts:
+          type: integer
+          format: int64
+          description: >-
+            Unix timestamp in seconds when the event occurred.
