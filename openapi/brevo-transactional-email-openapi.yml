@@ -21,20 +21,20 @@ servers:
   - url: https://api.brevo.com/v3
     description: Brevo Production API Server
 tags:
-  - name: Transactional Emails
-    description: >-
-      Send and manage transactional emails including order confirmations,
-      password resets, and account notifications.
-  - name: Email Templates
-    description: >-
-      Create and manage reusable email templates for transactional messaging.
   - name: Email Activity
     description: >-
       Track and retrieve transactional email activity including delivery
       status, opens, clicks, and bounces.
+  - name: Email Templates
+    description: >-
+      Create and manage reusable email templates for transactional messaging.
   - name: Senders
     description: >-
       Manage sender identities used for transactional email sending.
+  - name: Transactional Emails
+    description: >-
+      Send and manage transactional emails including order confirmations,
+      password resets, and account notifications.
 security:
   - apiKeyAuth: []
 paths:

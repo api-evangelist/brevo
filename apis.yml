@@ -1,16 +1,14 @@
 aid: brevo
-url: 
-  https://raw.githubusercontent.com/api-evangelist/brevo/refs/heads/main/apis.yml
+url: https://raw.githubusercontent.com/api-evangelist/brevo/refs/heads/main/apis.yml
 apis:
   - aid: brevo:transactional-email-api
     name: Brevo Transactional Email API
     tags:
       - Email
-      - Transactional
-      - SMTP
       - Messaging
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - SMTP
+      - Transactional
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.brevo.com/v3
     humanURL: https://developers.brevo.com/docs/send-a-transactional-email
     properties:
@@ -29,12 +27,11 @@ apis:
   - aid: brevo:email-campaigns-api
     name: Brevo Email Campaigns API
     tags:
+      - Automation
+      - Campaigns
       - Email
       - Marketing
-      - Campaigns
-      - Automation
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.brevo.com/v3
     humanURL: https://developers.brevo.com/docs/getting-started
     properties:
@@ -56,8 +53,7 @@ apis:
       - CRM
       - Lists
       - Segmentation
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.brevo.com/v3
     humanURL: https://developers.brevo.com/docs/how-it-works
     properties:
@@ -75,12 +71,11 @@ apis:
   - aid: brevo:transactional-sms-api
     name: Brevo Transactional SMS API
     tags:
-      - SMS
-      - Transactional
       - Messaging
       - Mobile
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - SMS
+      - Transactional
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.brevo.com/v3
     humanURL: https://developers.brevo.com/docs/transactional-sms-endpoints
     properties:
@@ -99,12 +94,11 @@ apis:
   - aid: brevo:whatsapp-api
     name: Brevo WhatsApp API
     tags:
-      - WhatsApp
       - Messaging
-      - Transactional
       - Mobile
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - Transactional
+      - WhatsApp
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.brevo.com/v3
     humanURL: https://developers.brevo.com/docs/whatsapp-messages
     properties:
@@ -123,12 +117,11 @@ apis:
   - aid: brevo:ecommerce-api
     name: Brevo eCommerce API
     tags:
-      - Ecommerce
-      - Products
-      - Orders
       - Categories
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - Ecommerce
+      - Orders
+      - Products
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.brevo.com/v3
     humanURL: https://developers.brevo.com/docs/import-your-products
     properties:
@@ -151,8 +144,7 @@ apis:
       - Conversations
       - Live Chat
       - Support
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.brevo.com/v3
     humanURL: https://developers.brevo.com/docs/getting-started
     properties:
@@ -171,12 +163,11 @@ apis:
   - aid: brevo:webhooks-api
     name: Brevo Webhooks API
     tags:
-      - Webhooks
+      - Automation
       - Events
       - Notifications
-      - Automation
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - Webhooks
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.brevo.com/v3
     humanURL: https://developers.brevo.com/docs/transactional-webhooks
     properties:

@@ -21,16 +21,16 @@ servers:
   - url: https://api.brevo.com/v3
     description: Brevo Production API Server
 tags:
+  - name: Agent Status
+    description: >-
+      Manage agent online status for conversation availability.
+  - name: Automated Messages
+    description: >-
+      Create, manage, and retrieve automated messages pushed to visitors.
   - name: Messages
     description: >-
       Send and manage chat messages as an agent or automated bot within
       conversations.
-  - name: Automated Messages
-    description: >-
-      Create, manage, and retrieve automated messages pushed to visitors.
-  - name: Agent Status
-    description: >-
-      Manage agent online status for conversation availability.
 security:
   - apiKeyAuth: []
 paths:

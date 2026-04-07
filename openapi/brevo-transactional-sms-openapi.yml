@@ -21,14 +21,14 @@ servers:
   - url: https://api.brevo.com/v3
     description: Brevo Production API Server
 tags:
-  - name: Transactional SMS
-    description: >-
-      Send transactional SMS messages for notifications, verifications,
-      and alerts.
   - name: SMS Statistics
     description: >-
       Retrieve delivery reports and activity statistics for transactional
       SMS messages.
+  - name: Transactional SMS
+    description: >-
+      Send transactional SMS messages for notifications, verifications,
+      and alerts.
 security:
   - apiKeyAuth: []
 paths:

@@ -20,15 +20,15 @@ servers:
   - url: https://api.brevo.com/v3
     description: Brevo Production API Server
 tags:
-  - name: Contacts
-    description: >-
-      Create, retrieve, update, and delete individual contacts.
-  - name: Contact Lists
-    description: >-
-      Manage contact lists for organizing and segmenting audiences.
   - name: Contact Attributes
     description: >-
       Define and manage custom attributes for contact profiles.
+  - name: Contact Lists
+    description: >-
+      Manage contact lists for organizing and segmenting audiences.
+  - name: Contacts
+    description: >-
+      Create, retrieve, update, and delete individual contacts.
   - name: Folders
     description: >-
       Organize contact lists into folders for better management.
