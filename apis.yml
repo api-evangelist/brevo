@@ -1,5 +1,6 @@
 aid: brevo
-url: https://raw.githubusercontent.com/api-evangelist/brevo/refs/heads/main/apis.yml
+url: 
+  https://raw.githubusercontent.com/api-evangelist/brevo/refs/heads/main/apis.yml
 apis:
   - aid: brevo:transactional-email-api
     name: Brevo Transactional Email API
@@ -8,7 +9,8 @@ apis:
       - Transactional
       - SMTP
       - Messaging
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.brevo.com/v3
     humanURL: https://developers.brevo.com/docs/send-a-transactional-email
     properties:
@@ -31,7 +33,8 @@ apis:
       - Marketing
       - Campaigns
       - Automation
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.brevo.com/v3
     humanURL: https://developers.brevo.com/docs/getting-started
     properties:
@@ -53,7 +56,8 @@ apis:
       - CRM
       - Lists
       - Segmentation
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.brevo.com/v3
     humanURL: https://developers.brevo.com/docs/how-it-works
     properties:
@@ -75,7 +79,8 @@ apis:
       - Transactional
       - Messaging
       - Mobile
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.brevo.com/v3
     humanURL: https://developers.brevo.com/docs/transactional-sms-endpoints
     properties:
@@ -98,7 +103,8 @@ apis:
       - Messaging
       - Transactional
       - Mobile
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.brevo.com/v3
     humanURL: https://developers.brevo.com/docs/whatsapp-messages
     properties:
@@ -121,7 +127,8 @@ apis:
       - Products
       - Orders
       - Categories
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.brevo.com/v3
     humanURL: https://developers.brevo.com/docs/import-your-products
     properties:
@@ -144,7 +151,8 @@ apis:
       - Conversations
       - Live Chat
       - Support
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.brevo.com/v3
     humanURL: https://developers.brevo.com/docs/getting-started
     properties:
@@ -167,7 +175,8 @@ apis:
       - Events
       - Notifications
       - Automation
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.brevo.com/v3
     humanURL: https://developers.brevo.com/docs/transactional-webhooks
     properties:
@@ -195,3 +204,5 @@ common:
     url: json-schema/brevo-email-event-schema.json
   - type: JSONSchema
     url: json-schema/brevo-order-schema.json
+description: >-
+  Send transactional emails with static or dynamic content using the Messaging API.
