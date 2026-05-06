@@ -1,0 +1,675 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Brevo Contacts API
+  description: The Brevo Contacts API provides programmatic access to contact management features including creating, updating,
+    and deleting contacts. Developers can organize contacts into lists, apply attributes and tags, import contacts in bulk,
+    and build audience segments for targeted campaigns. The API also supports managing folders, contact attributes, and custom
+    fields to structure contact data according to business needs.
+  tags:
+  - Brevo
+  - API
+  created: '2026-05-06'
+  modified: '2026-05-06'
+capability:
+  consumes:
+  - type: http
+    namespace: brevo
+    baseUri: https://api.brevo.com/v3
+    description: Brevo Contacts API HTTP API.
+    authentication:
+      type: apikey
+      in: header
+      name: api-key
+      value: '{{BREVO_TOKEN}}'
+    resources:
+    - name: contacts
+      path: /contacts
+      operations:
+      - name: listcontacts
+        method: GET
+        description: Get all contacts
+        inputParameters:
+        - name: modifiedSince
+          in: query
+          type: string
+          description: Filter contacts modified since this date-time in ISO 8601 format.
+        - name: sort
+          in: query
+          type: string
+          description: Sort direction for the results.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createcontact
+        method: POST
+        description: Create a contact
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: contacts-identifier
+      path: /contacts/{identifier}
+      operations:
+      - name: getcontactinfo
+        method: GET
+        description: Get a contact's details
+        inputParameters:
+        - name: startDate
+          in: query
+          type: string
+          description: Start date for retrieving contact statistics.
+        - name: endDate
+          in: query
+          type: string
+          description: End date for retrieving contact statistics.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatecontact
+        method: PUT
+        description: Update a contact
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deletecontact
+        method: DELETE
+        description: Delete a contact
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: contacts-lists
+      path: /contacts/lists
+      operations:
+      - name: listcontactlists
+        method: GET
+        description: Get all contact lists
+        inputParameters:
+        - name: sort
+          in: query
+          type: string
+          description: Sort direction for the results.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createcontactlist
+        method: POST
+        description: Create a contact list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: contacts-lists-listid
+      path: /contacts/lists/{listId}
+      operations:
+      - name: getcontactlist
+        method: GET
+        description: Get a contact list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatecontactlist
+        method: PUT
+        description: Update a contact list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deletecontactlist
+        method: DELETE
+        description: Delete a contact list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: contacts-lists-listid-contacts-add
+      path: /contacts/lists/{listId}/contacts/add
+      operations:
+      - name: addcontactstolist
+        method: POST
+        description: Add contacts to a list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: contacts-lists-listid-contacts-remove
+      path: /contacts/lists/{listId}/contacts/remove
+      operations:
+      - name: removecontactsfromlist
+        method: POST
+        description: Remove contacts from a list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: contacts-attributes
+      path: /contacts/attributes
+      operations:
+      - name: listcontactattributes
+        method: GET
+        description: List all contact attributes
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: contacts-attributes-attributecategory-attributen
+      path: /contacts/attributes/{attributeCategory}/{attributeName}
+      operations:
+      - name: createcontactattribute
+        method: POST
+        description: Create a contact attribute
+        inputParameters:
+        - name: attributeCategory
+          in: path
+          type: string
+          required: true
+          description: Category of the attribute such as normal, transactional, category, calculated, or global.
+        - name: attributeName
+          in: path
+          type: string
+          required: true
+          description: Name for the new attribute.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deletecontactattribute
+        method: DELETE
+        description: Delete a contact attribute
+        inputParameters:
+        - name: attributeCategory
+          in: path
+          type: string
+          required: true
+          description: Category of the attribute to delete.
+        - name: attributeName
+          in: path
+          type: string
+          required: true
+          description: Name of the attribute to delete.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: contacts-folders
+      path: /contacts/folders
+      operations:
+      - name: listfolders
+        method: GET
+        description: Get all folders
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createfolder
+        method: POST
+        description: Create a folder
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: contacts-import
+      path: /contacts/import
+      operations:
+      - name: importcontacts
+        method: POST
+        description: Import contacts
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    port: 8080
+    namespace: brevo-rest
+    description: REST adapter for Brevo Contacts API.
+    resources:
+    - path: /contacts
+      name: listcontacts
+      operations:
+      - method: GET
+        name: listcontacts
+        description: Get all contacts
+        call: brevo.listcontacts
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /contacts
+      name: createcontact
+      operations:
+      - method: POST
+        name: createcontact
+        description: Create a contact
+        call: brevo.createcontact
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /contacts/{identifier}
+      name: getcontactinfo
+      operations:
+      - method: GET
+        name: getcontactinfo
+        description: Get a contact's details
+        call: brevo.getcontactinfo
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /contacts/{identifier}
+      name: updatecontact
+      operations:
+      - method: PUT
+        name: updatecontact
+        description: Update a contact
+        call: brevo.updatecontact
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /contacts/{identifier}
+      name: deletecontact
+      operations:
+      - method: DELETE
+        name: deletecontact
+        description: Delete a contact
+        call: brevo.deletecontact
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /contacts/lists
+      name: listcontactlists
+      operations:
+      - method: GET
+        name: listcontactlists
+        description: Get all contact lists
+        call: brevo.listcontactlists
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /contacts/lists
+      name: createcontactlist
+      operations:
+      - method: POST
+        name: createcontactlist
+        description: Create a contact list
+        call: brevo.createcontactlist
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /contacts/lists/{listId}
+      name: getcontactlist
+      operations:
+      - method: GET
+        name: getcontactlist
+        description: Get a contact list
+        call: brevo.getcontactlist
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /contacts/lists/{listId}
+      name: updatecontactlist
+      operations:
+      - method: PUT
+        name: updatecontactlist
+        description: Update a contact list
+        call: brevo.updatecontactlist
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /contacts/lists/{listId}
+      name: deletecontactlist
+      operations:
+      - method: DELETE
+        name: deletecontactlist
+        description: Delete a contact list
+        call: brevo.deletecontactlist
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /contacts/lists/{listId}/contacts/add
+      name: addcontactstolist
+      operations:
+      - method: POST
+        name: addcontactstolist
+        description: Add contacts to a list
+        call: brevo.addcontactstolist
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /contacts/lists/{listId}/contacts/remove
+      name: removecontactsfromlist
+      operations:
+      - method: POST
+        name: removecontactsfromlist
+        description: Remove contacts from a list
+        call: brevo.removecontactsfromlist
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /contacts/attributes
+      name: listcontactattributes
+      operations:
+      - method: GET
+        name: listcontactattributes
+        description: List all contact attributes
+        call: brevo.listcontactattributes
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /contacts/attributes/{attributeCategory}/{attributeName}
+      name: createcontactattribute
+      operations:
+      - method: POST
+        name: createcontactattribute
+        description: Create a contact attribute
+        call: brevo.createcontactattribute
+        with:
+          attributeCategory: rest.attributeCategory
+          attributeName: rest.attributeName
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /contacts/attributes/{attributeCategory}/{attributeName}
+      name: deletecontactattribute
+      operations:
+      - method: DELETE
+        name: deletecontactattribute
+        description: Delete a contact attribute
+        call: brevo.deletecontactattribute
+        with:
+          attributeCategory: rest.attributeCategory
+          attributeName: rest.attributeName
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /contacts/folders
+      name: listfolders
+      operations:
+      - method: GET
+        name: listfolders
+        description: Get all folders
+        call: brevo.listfolders
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /contacts/folders
+      name: createfolder
+      operations:
+      - method: POST
+        name: createfolder
+        description: Create a folder
+        call: brevo.createfolder
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /contacts/import
+      name: importcontacts
+      operations:
+      - method: POST
+        name: importcontacts
+        description: Import contacts
+        call: brevo.importcontacts
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: brevo-mcp
+    transport: http
+    description: MCP adapter for Brevo Contacts API for AI agent use.
+    tools:
+    - name: listcontacts
+      description: Get all contacts
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: brevo.listcontacts
+      with:
+        modifiedSince: tools.modifiedSince
+        sort: tools.sort
+      inputParameters:
+      - name: modifiedSince
+        type: string
+        description: Filter contacts modified since this date-time in ISO 8601 format.
+      - name: sort
+        type: string
+        description: Sort direction for the results.
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createcontact
+      description: Create a contact
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: brevo.createcontact
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getcontactinfo
+      description: Get a contact's details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: brevo.getcontactinfo
+      with:
+        startDate: tools.startDate
+        endDate: tools.endDate
+      inputParameters:
+      - name: startDate
+        type: string
+        description: Start date for retrieving contact statistics.
+      - name: endDate
+        type: string
+        description: End date for retrieving contact statistics.
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updatecontact
+      description: Update a contact
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: brevo.updatecontact
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletecontact
+      description: Delete a contact
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: brevo.deletecontact
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listcontactlists
+      description: Get all contact lists
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: brevo.listcontactlists
+      with:
+        sort: tools.sort
+      inputParameters:
+      - name: sort
+        type: string
+        description: Sort direction for the results.
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createcontactlist
+      description: Create a contact list
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: brevo.createcontactlist
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getcontactlist
+      description: Get a contact list
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: brevo.getcontactlist
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updatecontactlist
+      description: Update a contact list
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: brevo.updatecontactlist
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletecontactlist
+      description: Delete a contact list
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: brevo.deletecontactlist
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: addcontactstolist
+      description: Add contacts to a list
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: brevo.addcontactstolist
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: removecontactsfromlist
+      description: Remove contacts from a list
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: brevo.removecontactsfromlist
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listcontactattributes
+      description: List all contact attributes
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: brevo.listcontactattributes
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createcontactattribute
+      description: Create a contact attribute
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: brevo.createcontactattribute
+      with:
+        attributeCategory: tools.attributeCategory
+        attributeName: tools.attributeName
+      inputParameters:
+      - name: attributeCategory
+        type: string
+        description: Category of the attribute such as normal, transactional, category, calculated, or global.
+        required: true
+      - name: attributeName
+        type: string
+        description: Name for the new attribute.
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletecontactattribute
+      description: Delete a contact attribute
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: brevo.deletecontactattribute
+      with:
+        attributeCategory: tools.attributeCategory
+        attributeName: tools.attributeName
+      inputParameters:
+      - name: attributeCategory
+        type: string
+        description: Category of the attribute to delete.
+        required: true
+      - name: attributeName
+        type: string
+        description: Name of the attribute to delete.
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listfolders
+      description: Get all folders
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: brevo.listfolders
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createfolder
+      description: Create a folder
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: brevo.createfolder
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: importcontacts
+      description: Import contacts
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: brevo.importcontacts
+      outputParameters:
+      - type: object
+        mapping: $.
+binds:
+- namespace: env
+  keys:
+    BREVO_TOKEN: BREVO_TOKEN
