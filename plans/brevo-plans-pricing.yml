@@ -1,162 +1,156 @@
 specification: API Commons Plans
 specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
-provider: brevo
+provider: Brevo
 providerId: brevo
 created: '2026-05-04'
-modified: '2026-05-04'
-tags: []
-description: Machine-readable plans and pricing scaffold for this API provider. Conforms to the API Commons
-  Plans schema. Tier limits and prices are scaffold defaults; replace with provider-published values.
+modified: '2026-05-05'
+reconciled: true
+tags:
+  - Email
+  - Transactional
+  - SMS
+  - Marketing
+  - CRM
+  - Automation
+description: Brevo (formerly Sendinblue) bills its marketing platform on email send volume rather than
+  contact count, with up to 100,000 contacts allowed across plans. Tiers ladder from a forever-Free plan
+  (300 emails/day) through Starter ($9/mo at 5K emails) and Business ($18/mo at 5K emails) up to a custom-priced
+  Enterprise (BrevoPlus) tier with dedicated account management. Higher email volumes scale the monthly
+  fee on the same tier (e.g. 100K emails costs ~$69 Starter / ~$129 Business).
+sources:
+  - https://www.brevo.com/pricing/
+  - https://developers.brevo.com/docs/api-limits
 plans:
   - id: brevo-free
     name: Free
     type: freemium
-    description: Free entry tier for the brevo API surface. Intended for evaluation, prototyping, and
-      low-volume integrations. Real limits and pricing must be reconciled with the provider's published
-      plan documentation.
+    description: Forever-free plan with a daily send cap; up to 100,000 contacts and 40+ templates.
     entries:
-      - label: API Requests
-        description: Monthly API request quota across all included endpoints
-        name: api_requests
+      - label: Email send limit
+        name: emails
         type: quota
-        metric: requests
-        limit: 1000
-        timeFrame: month
+        metric: email
+        limit: 300
+        timeFrame: day
         geo: global
-        domains:
-          - https://api.brevo.com/v3
         unit: 1
-        price: '0.00'
+        price: '0'
         userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the free tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 10
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://api.brevo.com/v3
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-    elements:
-      - name: Public Documentation
-      - name: Community Support
-      - name: Sandbox Access
-      - name: Brevo Transactional Email API
-      - name: Brevo Email Campaigns API
-      - name: Brevo Contacts API
-      - name: Brevo Transactional SMS API
-      - name: Brevo WhatsApp API
-      - name: Brevo eCommerce API
-      - name: Brevo Conversations API
-      - name: Brevo Webhooks API
-  - id: brevo-pro
-    name: Professional
-    type: paid
-    description: Production tier for brevo. Provides higher quotas, priority support, and access to the
-      broader API portfolio. Pricing placeholder; align with the provider's pricing page.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota
-        name: api_requests
+      - label: Contacts
+        name: contacts
         type: quota
-        metric: requests
+        metric: contact
         limit: 100000
         timeFrame: month
         geo: global
-        domains:
-          - https://api.brevo.com/v3
         unit: 1
-        price: TBD
+        price: '0'
         userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the professional tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 100
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://api.brevo.com/v3
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Overage
-        description: Per-request price after monthly quota is exceeded
-        name: overage
-        type: metered
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: global
-        domains:
-          - https://api.brevo.com/v3
-        unit: 1000
-        price: TBD
-        userMultiplied: false
-    elements:
-      - name: All Production Endpoints
-      - name: Email Support
-      - name: SLA Targets
-      - name: Webhook Subscriptions
-      - name: Brevo Transactional Email API
-      - name: Brevo Email Campaigns API
-      - name: Brevo Contacts API
-      - name: Brevo Transactional SMS API
-      - name: Brevo WhatsApp API
-      - name: Brevo eCommerce API
-      - name: Brevo Conversations API
-      - name: Brevo Webhooks API
-  - id: brevo-enterprise
-    name: Enterprise
-    type: enterprise
-    description: Custom-negotiated tier for brevo. Includes dedicated capacity, contractual SLAs, security
-      review, data residency options, and named technical account management.
-    entries:
-      - label: API Requests
-        description: Negotiated request volume; -1 indicates uncapped subject to fair use
-        name: api_requests
+      - label: Marketing automation
+        name: automation_contacts
         type: quota
-        metric: requests
+        metric: contact
+        limit: 2000
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0'
+        userMultiplied: false
+    elements:
+      - name: 40+ Email Templates
+      - name: Drag-and-Drop Editor
+      - name: Transactional Email API
+  - id: brevo-starter
+    name: Starter
+    type: subscription
+    description: Entry paid tier; pricing scales with monthly email volume.
+    entries:
+      - label: Subscription (5K emails/month)
+        name: subscription_5k
+        type: subscription
+        metric: month
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: $9/month
+        userMultiplied: false
+      - label: Subscription (100K emails/month)
+        name: subscription_100k
+        type: subscription
+        metric: month
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: $69/month
+        userMultiplied: false
+      - label: Daily send cap
+        name: daily_send
+        type: quota
+        metric: email
         limit: -1
+        timeFrame: day
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: false
+    elements:
+      - name: No Daily Sending Limit
+      - name: Core Marketing Features
+      - name: Email Support
+  - id: brevo-business
+    name: Business
+    type: subscription
+    description: Business / Standard tier adds A/B testing, landing pages, multi-user access, priority
+      support, and unlimited automation workflows. Pricing scales with monthly email volume.
+    entries:
+      - label: Subscription (5K emails/month)
+        name: subscription_5k
+        type: subscription
+        metric: month
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: $18/month
+        userMultiplied: false
+      - label: Subscription (100K emails/month)
+        name: subscription_100k
+        type: subscription
+        metric: month
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: $129/month
+        userMultiplied: false
+    elements:
+      - name: A/B Testing
+      - name: Landing Pages
+      - name: Multi-user Access
+      - name: Priority Email Support
+      - name: Unlimited Automation Workflows
+  - id: brevo-enterprise
+    name: BrevoPlus / Enterprise
+    type: enterprise
+    description: Custom-priced enterprise plan with dedicated account management and advanced security.
+    entries:
+      - label: Custom subscription
+        name: custom_subscription
+        type: subscription
+        metric: month
+        limit: 1
         timeFrame: month
         geo: configurable
-        domains:
-          - https://api.brevo.com/v3
-        unit: 1
-        price: custom
-        userMultiplied: false
-      - label: Rate Limit
-        description: Negotiated burst and steady-state rate
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 1000
-        timeFrame: minute
-        geo: configurable
-        domains:
-          - https://api.brevo.com/v3
         unit: 1
         price: custom
         userMultiplied: false
     elements:
-      - name: Unlimited / Negotiated Volume
-      - name: 24/7 Dedicated Support
-      - name: Contractual SLA
-      - name: Security & Compliance Review
-      - name: Dedicated Account Manager
-      - name: Custom Data Residency
-      - name: Brevo Transactional Email API
-      - name: Brevo Email Campaigns API
-      - name: Brevo Contacts API
-      - name: Brevo Transactional SMS API
-      - name: Brevo WhatsApp API
-      - name: Brevo eCommerce API
-      - name: Brevo Conversations API
-      - name: Brevo Webhooks API
-maintainers: []
+      - name: Dedicated Account Management
+      - name: Advanced Security Features
+      - name: Custom Volume
+maintainers:
+  - FN: Kin Lane
+    email: info@apievangelist.com

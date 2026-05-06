@@ -1,189 +1,101 @@
 specification: FinOps Framework
 specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
 alignedWith:
   framework: FinOps Foundation Framework
   frameworkUrl: https://www.finops.org/framework/
   dataSpec: FOCUS
   dataSpecVersion: '1.3'
   dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
-provider: brevo
+provider: Brevo
 providerId: brevo
-publisherName: brevo
-serviceCategory: API
+publisherName: Sendinblue SAS (Brevo)
+serviceCategory: Email & Marketing Automation
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: true
 tags:
+  - Email
+  - Transactional
+  - SMS
+  - Marketing
+  - CRM
   - FinOps
-  - Cost Management
   - FOCUS
-description: FinOps framework definition for the brevo API surface. Provides a FOCUS-aligned mapping for
-  cost allocation, usage measurement, and unit-economics reporting across the provider's APIs.
-principles:
-  - name: Visibility
-    description: Make API consumption costs visible to engineering, product, and finance teams in near
-      real-time.
-  - name: Allocation
-    description: Tag every chargeable API call with the consuming team, environment, application, and
-      feature so cost can be allocated.
-  - name: Optimization
-    description: Continuously evaluate request patterns, caching, batching, and tier selection to reduce
-      cost per useful unit of work.
-  - name: Accountability
-    description: Establish budget owners and chargeback or showback flows for each consuming team.
-domains:
-  - name: Understand Usage and Cost
-    capabilities:
-      - Data Ingestion
-      - Allocation
-      - Reporting and Analytics
-      - Anomaly Management
-  - name: Quantify Business Value
-    capabilities:
-      - Planning and Estimating
-      - Forecasting
-      - Budgeting
-      - Benchmarking
-      - Unit Economics
-  - name: Optimize Usage and Cost
-    capabilities:
-      - Architecting for Cloud
-      - Rate Optimization
-      - Workload Optimization
-      - Cloud Sustainability
-      - Licensing and SaaS
-  - name: Manage the FinOps Practice
-    capabilities:
-      - FinOps Practice Operations
-      - FinOps Education and Enablement
-      - Invoicing and Chargeback
-      - Onboarding Workloads
-      - Intersecting Disciplines
+description: 'FOCUS-aligned FinOps for Brevo: tiered subscription priced on monthly email send volume,
+  with up to 100K contacts allowed across plans. Free tier caps daily sends at 300; paid tiers (Starter,
+  Business) scale subscription cost with chosen email volume; BrevoPlus / Enterprise is custom-priced.'
+sources:
+  - https://www.brevo.com/pricing/
+  - https://developers.brevo.com/docs/api-limits
 billingModel:
-  pricingCategory: Usage-Based
+  pricingCategory: Tiered Subscription (volume-based)
   billingFrequency: Monthly
   billingCurrency: USD
   chargeCategories:
-    - Usage
     - Purchase
     - Tax
-    - Credit
     - Adjustment
-  chargeFrequency: Recurring
+    - Credit
 focusColumns:
-  ServiceName: brevo
-  ServiceCategory: Developer Tools / API
-  ProviderName: brevo
-  PublisherName: brevo
-  InvoiceIssuerName: brevo
-  PricingCategory: Usage-Based
-  PricingUnit: request
+  ServiceName: Brevo
+  ServiceCategory: Email & Marketing Automation
+  ProviderName: Brevo
+  PublisherName: Sendinblue SAS
+  InvoiceIssuerName: Sendinblue SAS
   BillingCurrency: USD
-  ChargeCategory: Usage
+  PricingCategory: Standard
+  PricingUnit: subscription-month
 meters:
-  - name: api_requests
-    description: Count of billable API requests
-    unit: request
+  - name: subscription_month
+    description: Plan subscription fee billed monthly. Price scales with the chosen email volume tier.
+    unit: month
     aggregation: sum
     dimensions:
-      - api
-      - endpoint
-      - tier
-      - region
-      - consumer
-  - name: data_egress
-    description: Bytes returned over the network in API responses
-    unit: GB
+      - plan
+      - email_volume_tier
+      - billing_cycle
+  - name: emails_sent
+    description: Marketing and transactional emails sent against the plan's monthly volume.
+    unit: email
     aggregation: sum
     dimensions:
-      - api
-      - region
-      - consumer
-  - name: compute_seconds
-    description: Server-side compute consumed by the request, where applicable
-    unit: second
+      - email_type
+      - campaign
+  - name: sms_sent
+    description: Transactional and marketing SMS sent; billed per SMS per destination country.
+    unit: message
     aggregation: sum
     dimensions:
-      - api
-      - endpoint
-      - tier
-apis:
-  - name: Brevo Transactional Email API
-    baseURL: https://api.brevo.com/v3
-    tags:
-      - Email
-      - Messaging
-      - SMTP
-      - Transactional
-    serviceName: Brevo Transactional Email API
-    serviceCategory: API
-  - name: Brevo Email Campaigns API
-    baseURL: https://api.brevo.com/v3
-    tags:
-      - Automation
-      - Campaigns
-      - Email
-      - Marketing
-    serviceName: Brevo Email Campaigns API
-    serviceCategory: API
-  - name: Brevo Contacts API
-    baseURL: https://api.brevo.com/v3
-    tags:
-      - Contacts
-      - CRM
-      - Lists
-      - Segmentation
-    serviceName: Brevo Contacts API
-    serviceCategory: API
-  - name: Brevo Transactional SMS API
-    baseURL: https://api.brevo.com/v3
-    tags:
-      - Messaging
-      - Mobile
-      - SMS
-      - Transactional
-    serviceName: Brevo Transactional SMS API
-    serviceCategory: API
-  - name: Brevo WhatsApp API
-    baseURL: https://api.brevo.com/v3
-    tags:
-      - Messaging
-      - Mobile
-      - Transactional
-      - WhatsApp
-    serviceName: Brevo WhatsApp API
-    serviceCategory: API
-  - name: Brevo eCommerce API
-    baseURL: https://api.brevo.com/v3
-    tags:
-      - Categories
-      - Ecommerce
-      - Orders
-      - Products
-    serviceName: Brevo eCommerce API
-    serviceCategory: API
-  - name: Brevo Conversations API
-    baseURL: https://api.brevo.com/v3
-    tags:
-      - Chat
-      - Conversations
-      - Live Chat
-      - Support
-    serviceName: Brevo Conversations API
-    serviceCategory: API
-  - name: Brevo Webhooks API
-    baseURL: https://api.brevo.com/v3
-    tags:
-      - Automation
-      - Events
-      - Notifications
-      - Webhooks
-    serviceName: Brevo Webhooks API
-    serviceCategory: API
-unitEconomics:
-  - name: Cost per 1K Requests
-    metric: billed_cost / (api_requests / 1000)
-    target: TBD
-  - name: Cost per Active Consumer
-    metric: billed_cost / active_consumers
-    target: TBD
-maintainers: []
+      - country
+      - message_type
+  - name: contacts
+    description: Stored contacts on the account.
+    unit: contact
+    aggregation: max
+    dimensions:
+      - list
+  - name: automation_contacts
+    description: Contacts engaged through marketing automation; capped at 2K on Free.
+    unit: contact
+    aggregation: max
+    dimensions:
+      - workflow
+principles:
+  - name: Visibility
+    description: Pull send-volume, deliverability, and SMS country breakdowns from the Brevo dashboard
+      and the statistics API; reconcile monthly against the chosen email-volume tier.
+  - name: Allocation
+    description: Tag campaigns and transactional templates with the consuming product / brand; use sub-accounts
+      where available so subscription fees can be split.
+  - name: Optimization
+    description: Choose the smallest email-volume tier that fits actual sends, suppress inactive contacts
+      to keep within tier limits, and prefer transactional SMTP for triggered messages over marketing
+      sends. Annual billing pricing is sometimes available; large 100K+ senders should compare Starter
+      vs Business at their volume.
+  - name: Accountability
+    description: Designate a messaging-platform owner; alert when daily / monthly send approaches tier
+      cap, and revisit BrevoPlus negotiation at sustained 1M+ send volumes.
+maintainers:
+  - FN: Kin Lane
+    email: info@apievangelist.com

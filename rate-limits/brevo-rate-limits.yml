@@ -1,117 +1,95 @@
 specification: API Commons Rate Limits
 specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
-provider: brevo
+provider: Brevo
 providerId: brevo
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: true
 tags:
+  - Email
+  - Transactional
+  - SMS
+  - Marketing
+  - CRM
   - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the brevo API surface. Captures per-tier quotas,
-  burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to be replaced
-  with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+description: Brevo enforces API rate limits using two metrics, requests-per-second (RPS) and requests-per-hour
+  (RPH), with limits scaling across three tiers - General (all accounts), Advanced (Professional / Enterprise),
+  and Extended (Enterprise only). Per-endpoint ceilings are highest for transactional email and SMS sends.
+  Overages return HTTP 429 and Brevo includes rate-limit headers on every response.
+sources:
+  - https://developers.brevo.com/docs/api-limits
+  - https://www.brevo.com/pricing/
 responseCodes:
   throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
+  - name: General - POST /v3/smtp/email
+    scope: account
+    metric: requests_per_second
+    limit: 1000
+    timeFrame: second
+    notes: Also 3,600,000 requests/hour. All account types.
+  - name: General - POST /v3/transactionalSMS/send
+    scope: account
+    metric: requests_per_second
+    limit: 150
+    timeFrame: second
+    notes: Also 540,000 requests/hour.
+  - name: General - GET /v3/smtp/emails
+    scope: account
+    metric: requests_per_second
+    limit: 2
+    timeFrame: second
+    notes: Also 7,200 requests/hour.
+  - name: General - /v3/contacts/{...}
+    scope: account
+    metric: requests_per_second
     limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Brevo Transactional Email API
-      - Brevo Email Campaigns API
-      - Brevo Contacts API
-      - Brevo Transactional SMS API
-      - Brevo WhatsApp API
-      - Brevo eCommerce API
-      - Brevo Conversations API
-      - Brevo Webhooks API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Brevo Transactional Email API
-      - Brevo Email Campaigns API
-      - Brevo Contacts API
-      - Brevo Transactional SMS API
-      - Brevo WhatsApp API
-      - Brevo eCommerce API
-      - Brevo Conversations API
-      - Brevo Webhooks API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
+    timeFrame: second
+    notes: Also 36,000 requests/hour.
+  - name: General - all other endpoints
+    scope: account
+    metric: requests_per_hour
     limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Brevo Transactional Email API
-      - Brevo Email Campaigns API
-      - Brevo Contacts API
-      - Brevo Transactional SMS API
-      - Brevo WhatsApp API
-      - Brevo eCommerce API
-      - Brevo Conversations API
-      - Brevo Webhooks API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Brevo Transactional Email API
-      - Brevo Email Campaigns API
-      - Brevo Contacts API
-      - Brevo Transactional SMS API
-      - Brevo WhatsApp API
-      - Brevo eCommerce API
-      - Brevo Conversations API
-      - Brevo Webhooks API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Brevo Transactional Email API
-      - Brevo Email Campaigns API
-      - Brevo Contacts API
-      - Brevo Transactional SMS API
-      - Brevo WhatsApp API
-      - Brevo eCommerce API
-      - Brevo Conversations API
-      - Brevo Webhooks API
+    timeFrame: hour
+  - name: Advanced - email send
+    scope: account
+    metric: requests_per_second
+    limit: 2000
+    timeFrame: second
+    notes: Email and SMS limits double on Professional / Enterprise; contacts reach 20 RPS / 72,000 RPH;
+      other endpoints reach 200 RPH.
+  - name: Advanced - contact endpoints
+    scope: account
+    metric: requests_per_second
+    limit: 20
+    timeFrame: second
+  - name: Extended - email send
+    scope: account
+    metric: requests_per_second
+    limit: 6000
+    timeFrame: second
+    notes: Enterprise-only ceiling.
+  - name: Extended - SMS send
+    scope: account
+    metric: requests_per_second
+    limit: 250
+    timeFrame: second
+  - name: Extended - contact endpoints
+    scope: account
+    metric: requests_per_second
+    limit: 60
+    timeFrame: second
 policies:
   - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
-maintainers: []
+    description: Apply exponential backoff with jitter on 429 responses; rate-limit headers are included
+      on all responses to support proactive throttling.
+  - name: Tiered Capacity
+    description: Capacity is bound to account tier; upgrade from Free / Starter to Professional / Enterprise
+      to lift to Advanced or Extended tiers.
+  - name: Endpoint-Specific Limits
+    description: Bulk send endpoints (email / SMS) have 1-2 orders of magnitude higher RPS than read or
+      contact-management endpoints; design clients to batch and avoid per-record loops on contacts.
+maintainers:
+  - FN: Kin Lane
+    email: info@apievangelist.com
