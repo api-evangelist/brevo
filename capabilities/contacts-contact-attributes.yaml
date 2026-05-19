@@ -1,0 +1,170 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Brevo Contacts API — Contact Attributes
+  description: 'Brevo Contacts API — Contact Attributes. 3 operations. Lead operation: List all contact attributes. Self-contained
+    Naftiko capability covering one Brevo business surface.'
+  tags:
+  - Brevo
+  - Contact Attributes
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BREVO_API_KEY: BREVO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: contacts-contact-attributes
+    baseUri: https://api.brevo.com/v3
+    description: Brevo Contacts API — Contact Attributes business capability. Self-contained, no shared references.
+    resources:
+    - name: contacts-attributes
+      path: /contacts/attributes
+      operations:
+      - name: listcontactattributes
+        method: GET
+        description: List all contact attributes
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: contacts-attributes-attributeCategory-attributeName
+      path: /contacts/attributes/{attributeCategory}/{attributeName}
+      operations:
+      - name: createcontactattribute
+        method: POST
+        description: Create a contact attribute
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: attributeCategory
+          in: path
+          type: string
+          description: Category of the attribute such as normal, transactional, category, calculated, or global.
+          required: true
+        - name: attributeName
+          in: path
+          type: string
+          description: Name for the new attribute.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletecontactattribute
+        method: DELETE
+        description: Delete a contact attribute
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: attributeCategory
+          in: path
+          type: string
+          description: Category of the attribute to delete.
+          required: true
+        - name: attributeName
+          in: path
+          type: string
+          description: Name of the attribute to delete.
+          required: true
+    authentication:
+      type: apikey
+      key: api-key
+      value: '{{env.BREVO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: contacts-contact-attributes-rest
+    port: 8080
+    description: REST adapter for Brevo Contacts API — Contact Attributes. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/contacts/attributes
+      name: contacts-attributes
+      description: REST surface for contacts-attributes.
+      operations:
+      - method: GET
+        name: listcontactattributes
+        description: List all contact attributes
+        call: contacts-contact-attributes.listcontactattributes
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/contacts/attributes/{attributecategory}/{attributename}
+      name: contacts-attributes-attributecategory-attributename
+      description: REST surface for contacts-attributes-attributeCategory-attributeName.
+      operations:
+      - method: POST
+        name: createcontactattribute
+        description: Create a contact attribute
+        call: contacts-contact-attributes.createcontactattribute
+        with:
+          attributeCategory: rest.attributeCategory
+          attributeName: rest.attributeName
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletecontactattribute
+        description: Delete a contact attribute
+        call: contacts-contact-attributes.deletecontactattribute
+        with:
+          attributeCategory: rest.attributeCategory
+          attributeName: rest.attributeName
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: contacts-contact-attributes-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Brevo Contacts API — Contact Attributes. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-all-contact-attributes
+      description: List all contact attributes
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: contacts-contact-attributes.listcontactattributes
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-contact-attribute
+      description: Create a contact attribute
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: contacts-contact-attributes.createcontactattribute
+      with:
+        attributeCategory: tools.attributeCategory
+        attributeName: tools.attributeName
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-contact-attribute
+      description: Delete a contact attribute
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: contacts-contact-attributes.deletecontactattribute
+      with:
+        attributeCategory: tools.attributeCategory
+        attributeName: tools.attributeName
+      outputParameters:
+      - type: object
+        mapping: $.

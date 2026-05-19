@@ -1,0 +1,159 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Brevo Transactional Email API — Email Activity
+  description: 'Brevo Transactional Email API — Email Activity. 2 operations. Lead operation: Get aggregated transactional
+    email statistics. Self-contained Naftiko capability covering one Brevo business surface.'
+  tags:
+  - Brevo
+  - Email Activity
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BREVO_API_KEY: BREVO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: transactional-email-email-activity
+    baseUri: https://api.brevo.com/v3
+    description: Brevo Transactional Email API — Email Activity business capability. Self-contained, no shared references.
+    resources:
+    - name: smtp-statistics-aggregatedReport
+      path: /smtp/statistics/aggregatedReport
+      operations:
+      - name: getaggregatedemailreport
+        method: GET
+        description: Get aggregated transactional email statistics
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: startDate
+          in: query
+          type: string
+          description: Start date for the report in YYYY-MM-DD format.
+        - name: endDate
+          in: query
+          type: string
+          description: End date for the report in YYYY-MM-DD format.
+    - name: smtp-statistics-events
+      path: /smtp/statistics/events
+      operations:
+      - name: gettransactionalemailevents
+        method: GET
+        description: Get transactional email activity events
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: startDate
+          in: query
+          type: string
+          description: Start date for the event query in YYYY-MM-DD format.
+        - name: endDate
+          in: query
+          type: string
+          description: End date for the event query in YYYY-MM-DD format.
+        - name: event
+          in: query
+          type: string
+          description: Filter by event type such as delivered, opened, clicked, hardBounce, softBounce, blocked, spam, or
+            unsubscribed.
+        - name: email
+          in: query
+          type: string
+          description: Filter events by recipient email address.
+        - name: messageId
+          in: query
+          type: string
+          description: Filter events by the unique message identifier.
+        - name: templateId
+          in: query
+          type: integer
+          description: Filter events by the template ID used for sending.
+    authentication:
+      type: apikey
+      key: api-key
+      value: '{{env.BREVO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: transactional-email-email-activity-rest
+    port: 8080
+    description: REST adapter for Brevo Transactional Email API — Email Activity. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/smtp/statistics/aggregatedreport
+      name: smtp-statistics-aggregatedreport
+      description: REST surface for smtp-statistics-aggregatedReport.
+      operations:
+      - method: GET
+        name: getaggregatedemailreport
+        description: Get aggregated transactional email statistics
+        call: transactional-email-email-activity.getaggregatedemailreport
+        with:
+          startDate: rest.startDate
+          endDate: rest.endDate
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/smtp/statistics/events
+      name: smtp-statistics-events
+      description: REST surface for smtp-statistics-events.
+      operations:
+      - method: GET
+        name: gettransactionalemailevents
+        description: Get transactional email activity events
+        call: transactional-email-email-activity.gettransactionalemailevents
+        with:
+          startDate: rest.startDate
+          endDate: rest.endDate
+          event: rest.event
+          email: rest.email
+          messageId: rest.messageId
+          templateId: rest.templateId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: transactional-email-email-activity-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Brevo Transactional Email API — Email Activity. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: get-aggregated-transactional-email-statistics
+      description: Get aggregated transactional email statistics
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: transactional-email-email-activity.getaggregatedemailreport
+      with:
+        startDate: tools.startDate
+        endDate: tools.endDate
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-transactional-email-activity-events
+      description: Get transactional email activity events
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: transactional-email-email-activity.gettransactionalemailevents
+      with:
+        startDate: tools.startDate
+        endDate: tools.endDate
+        event: tools.event
+        email: tools.email
+        messageId: tools.messageId
+        templateId: tools.templateId
+      outputParameters:
+      - type: object
+        mapping: $.

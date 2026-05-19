@@ -1,0 +1,174 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Brevo Conversations API — Messages
+  description: 'Brevo Conversations API — Messages. 4 operations. Lead operation: Send a message as an agent. Self-contained
+    Naftiko capability covering one Brevo business surface.'
+  tags:
+  - Brevo
+  - Messages
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BREVO_API_KEY: BREVO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: conversations-messages
+    baseUri: https://api.brevo.com/v3
+    description: Brevo Conversations API — Messages business capability. Self-contained, no shared references.
+    resources:
+    - name: conversations-messages
+      path: /conversations/messages
+      operations:
+      - name: sendmessageasagent
+        method: POST
+        description: Send a message as an agent
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: conversations-messages-messageId
+      path: /conversations/messages/{messageId}
+      operations:
+      - name: getmessage
+        method: GET
+        description: Get a message
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatemessage
+        method: PUT
+        description: Update a message
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletemessage
+        method: DELETE
+        description: Delete a message
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: apikey
+      key: api-key
+      value: '{{env.BREVO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: conversations-messages-rest
+    port: 8080
+    description: REST adapter for Brevo Conversations API — Messages. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/conversations/messages
+      name: conversations-messages
+      description: REST surface for conversations-messages.
+      operations:
+      - method: POST
+        name: sendmessageasagent
+        description: Send a message as an agent
+        call: conversations-messages.sendmessageasagent
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/conversations/messages/{messageid}
+      name: conversations-messages-messageid
+      description: REST surface for conversations-messages-messageId.
+      operations:
+      - method: GET
+        name: getmessage
+        description: Get a message
+        call: conversations-messages.getmessage
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatemessage
+        description: Update a message
+        call: conversations-messages.updatemessage
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletemessage
+        description: Delete a message
+        call: conversations-messages.deletemessage
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: conversations-messages-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Brevo Conversations API — Messages. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: send-message-agent
+      description: Send a message as an agent
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: conversations-messages.sendmessageasagent
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-message
+      description: Get a message
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: conversations-messages.getmessage
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-message
+      description: Update a message
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: conversations-messages.updatemessage
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-message
+      description: Delete a message
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: conversations-messages.deletemessage
+      outputParameters:
+      - type: object
+        mapping: $.

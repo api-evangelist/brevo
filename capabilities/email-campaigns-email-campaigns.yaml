@@ -1,0 +1,315 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Brevo Email Campaigns API — Email Campaigns
+  description: 'Brevo Email Campaigns API — Email Campaigns. 7 operations. Lead operation: Return all email campaigns. Self-contained
+    Naftiko capability covering one Brevo business surface.'
+  tags:
+  - Brevo
+  - Email Campaigns
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BREVO_API_KEY: BREVO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: email-campaigns-email-campaigns
+    baseUri: https://api.brevo.com/v3
+    description: Brevo Email Campaigns API — Email Campaigns business capability. Self-contained, no shared references.
+    resources:
+    - name: emailCampaigns
+      path: /emailCampaigns
+      operations:
+      - name: listemailcampaigns
+        method: GET
+        description: Return all email campaigns
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: type
+          in: query
+          type: string
+          description: Filter by campaign type such as classic or trigger.
+        - name: status
+          in: query
+          type: string
+          description: Filter by campaign status.
+        - name: startDate
+          in: query
+          type: string
+          description: Filter campaigns created on or after this date in YYYY-MM-DD format.
+        - name: endDate
+          in: query
+          type: string
+          description: Filter campaigns created on or before this date in YYYY-MM-DD format.
+        - name: statistics
+          in: query
+          type: string
+          description: Type of statistics to include in the response, such as globalStats or linksStats.
+      - name: createemailcampaign
+        method: POST
+        description: Create an email campaign
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: emailCampaigns-campaignId
+      path: /emailCampaigns/{campaignId}
+      operations:
+      - name: getemailcampaign
+        method: GET
+        description: Get an email campaign
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: statistics
+          in: query
+          type: string
+          description: Type of statistics to include such as globalStats or linksStats.
+      - name: updateemailcampaign
+        method: PUT
+        description: Update an email campaign
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteemailcampaign
+        method: DELETE
+        description: Delete an email campaign
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: emailCampaigns-campaignId-sendNow
+      path: /emailCampaigns/{campaignId}/sendNow
+      operations:
+      - name: sendemailcampaignnow
+        method: POST
+        description: Send an email campaign immediately
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: emailCampaigns-campaignId-sendTest
+      path: /emailCampaigns/{campaignId}/sendTest
+      operations:
+      - name: sendtestemail
+        method: POST
+        description: Send a test email for a campaign
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: api-key
+      value: '{{env.BREVO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: email-campaigns-email-campaigns-rest
+    port: 8080
+    description: REST adapter for Brevo Email Campaigns API — Email Campaigns. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/emailcampaigns
+      name: emailcampaigns
+      description: REST surface for emailCampaigns.
+      operations:
+      - method: GET
+        name: listemailcampaigns
+        description: Return all email campaigns
+        call: email-campaigns-email-campaigns.listemailcampaigns
+        with:
+          type: rest.type
+          status: rest.status
+          startDate: rest.startDate
+          endDate: rest.endDate
+          statistics: rest.statistics
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createemailcampaign
+        description: Create an email campaign
+        call: email-campaigns-email-campaigns.createemailcampaign
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/emailcampaigns/{campaignid}
+      name: emailcampaigns-campaignid
+      description: REST surface for emailCampaigns-campaignId.
+      operations:
+      - method: GET
+        name: getemailcampaign
+        description: Get an email campaign
+        call: email-campaigns-email-campaigns.getemailcampaign
+        with:
+          statistics: rest.statistics
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateemailcampaign
+        description: Update an email campaign
+        call: email-campaigns-email-campaigns.updateemailcampaign
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteemailcampaign
+        description: Delete an email campaign
+        call: email-campaigns-email-campaigns.deleteemailcampaign
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/emailcampaigns/{campaignid}/sendnow
+      name: emailcampaigns-campaignid-sendnow
+      description: REST surface for emailCampaigns-campaignId-sendNow.
+      operations:
+      - method: POST
+        name: sendemailcampaignnow
+        description: Send an email campaign immediately
+        call: email-campaigns-email-campaigns.sendemailcampaignnow
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/emailcampaigns/{campaignid}/sendtest
+      name: emailcampaigns-campaignid-sendtest
+      description: REST surface for emailCampaigns-campaignId-sendTest.
+      operations:
+      - method: POST
+        name: sendtestemail
+        description: Send a test email for a campaign
+        call: email-campaigns-email-campaigns.sendtestemail
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: email-campaigns-email-campaigns-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Brevo Email Campaigns API — Email Campaigns. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: return-all-email-campaigns
+      description: Return all email campaigns
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: email-campaigns-email-campaigns.listemailcampaigns
+      with:
+        type: tools.type
+        status: tools.status
+        startDate: tools.startDate
+        endDate: tools.endDate
+        statistics: tools.statistics
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-email-campaign
+      description: Create an email campaign
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: email-campaigns-email-campaigns.createemailcampaign
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-email-campaign
+      description: Get an email campaign
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: email-campaigns-email-campaigns.getemailcampaign
+      with:
+        statistics: tools.statistics
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-email-campaign
+      description: Update an email campaign
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: email-campaigns-email-campaigns.updateemailcampaign
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-email-campaign
+      description: Delete an email campaign
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: email-campaigns-email-campaigns.deleteemailcampaign
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: send-email-campaign-immediately
+      description: Send an email campaign immediately
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: email-campaigns-email-campaigns.sendemailcampaignnow
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: send-test-email-campaign
+      description: Send a test email for a campaign
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: email-campaigns-email-campaigns.sendtestemail
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

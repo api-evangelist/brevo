@@ -1,0 +1,171 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Brevo eCommerce API — Orders
+  description: 'Brevo eCommerce API — Orders. 3 operations. Lead operation: Get order details. Self-contained Naftiko capability
+    covering one Brevo business surface.'
+  tags:
+  - Brevo
+  - Orders
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BREVO_API_KEY: BREVO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: ecommerce-orders
+    baseUri: https://api.brevo.com/v3
+    description: Brevo eCommerce API — Orders business capability. Self-contained, no shared references.
+    resources:
+    - name: orders
+      path: /orders
+      operations:
+      - name: listorders
+        method: GET
+        description: Get order details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: startDate
+          in: query
+          type: string
+          description: Start date for filtering orders in YYYY-MM-DD format.
+        - name: endDate
+          in: query
+          type: string
+          description: End date for filtering orders in YYYY-MM-DD format.
+    - name: orders-status
+      path: /orders/status
+      operations:
+      - name: createupdateorder
+        method: POST
+        description: Create or update an order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: orders-status-batch
+      path: /orders/status/batch
+      operations:
+      - name: batchcreateupdateorders
+        method: POST
+        description: Create or update orders in batch
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: api-key
+      value: '{{env.BREVO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: ecommerce-orders-rest
+    port: 8080
+    description: REST adapter for Brevo eCommerce API — Orders. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/orders
+      name: orders
+      description: REST surface for orders.
+      operations:
+      - method: GET
+        name: listorders
+        description: Get order details
+        call: ecommerce-orders.listorders
+        with:
+          startDate: rest.startDate
+          endDate: rest.endDate
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/orders/status
+      name: orders-status
+      description: REST surface for orders-status.
+      operations:
+      - method: POST
+        name: createupdateorder
+        description: Create or update an order
+        call: ecommerce-orders.createupdateorder
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/orders/status/batch
+      name: orders-status-batch
+      description: REST surface for orders-status-batch.
+      operations:
+      - method: POST
+        name: batchcreateupdateorders
+        description: Create or update orders in batch
+        call: ecommerce-orders.batchcreateupdateorders
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: ecommerce-orders-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Brevo eCommerce API — Orders. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: get-order-details
+      description: Get order details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: ecommerce-orders.listorders
+      with:
+        startDate: tools.startDate
+        endDate: tools.endDate
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-update-order
+      description: Create or update an order
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: ecommerce-orders.createupdateorder
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-update-orders-batch
+      description: Create or update orders in batch
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: ecommerce-orders.batchcreateupdateorders
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

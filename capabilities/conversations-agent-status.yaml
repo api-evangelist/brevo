@@ -1,0 +1,82 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Brevo Conversations API — Agent Status
+  description: 'Brevo Conversations API — Agent Status. 1 operations. Lead operation: Set agent status to online. Self-contained
+    Naftiko capability covering one Brevo business surface.'
+  tags:
+  - Brevo
+  - Agent Status
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BREVO_API_KEY: BREVO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: conversations-agent-status
+    baseUri: https://api.brevo.com/v3
+    description: Brevo Conversations API — Agent Status business capability. Self-contained, no shared references.
+    resources:
+    - name: conversations-agentOnlinePing
+      path: /conversations/agentOnlinePing
+      operations:
+      - name: setagentonline
+        method: POST
+        description: Set agent status to online
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: api-key
+      value: '{{env.BREVO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: conversations-agent-status-rest
+    port: 8080
+    description: REST adapter for Brevo Conversations API — Agent Status. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/conversations/agentonlineping
+      name: conversations-agentonlineping
+      description: REST surface for conversations-agentOnlinePing.
+      operations:
+      - method: POST
+        name: setagentonline
+        description: Set agent status to online
+        call: conversations-agent-status.setagentonline
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: conversations-agent-status-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Brevo Conversations API — Agent Status. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: set-agent-status-online
+      description: Set agent status to online
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: conversations-agent-status.setagentonline
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

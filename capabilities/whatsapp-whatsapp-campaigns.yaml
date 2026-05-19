@@ -1,0 +1,220 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Brevo WhatsApp API — WhatsApp Campaigns
+  description: 'Brevo WhatsApp API — WhatsApp Campaigns. 5 operations. Lead operation: Return all WhatsApp campaigns. Self-contained
+    Naftiko capability covering one Brevo business surface.'
+  tags:
+  - Brevo
+  - WhatsApp Campaigns
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BREVO_API_KEY: BREVO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: whatsapp-whatsapp-campaigns
+    baseUri: https://api.brevo.com/v3
+    description: Brevo WhatsApp API — WhatsApp Campaigns business capability. Self-contained, no shared references.
+    resources:
+    - name: whatsappCampaigns
+      path: /whatsappCampaigns
+      operations:
+      - name: listwhatsappcampaigns
+        method: GET
+        description: Return all WhatsApp campaigns
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: startDate
+          in: query
+          type: string
+          description: Filter campaigns created on or after this date.
+        - name: endDate
+          in: query
+          type: string
+          description: Filter campaigns created on or before this date.
+        - name: sort
+          in: query
+          type: string
+          description: Sort direction for the results.
+      - name: createwhatsappcampaign
+        method: POST
+        description: Create and send a WhatsApp campaign
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: whatsappCampaigns-campaignId
+      path: /whatsappCampaigns/{campaignId}
+      operations:
+      - name: getwhatsappcampaign
+        method: GET
+        description: Get a WhatsApp campaign
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatewhatsappcampaign
+        method: PUT
+        description: Update a WhatsApp campaign
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletewhatsappcampaign
+        method: DELETE
+        description: Delete a WhatsApp campaign
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: apikey
+      key: api-key
+      value: '{{env.BREVO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: whatsapp-whatsapp-campaigns-rest
+    port: 8080
+    description: REST adapter for Brevo WhatsApp API — WhatsApp Campaigns. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/whatsappcampaigns
+      name: whatsappcampaigns
+      description: REST surface for whatsappCampaigns.
+      operations:
+      - method: GET
+        name: listwhatsappcampaigns
+        description: Return all WhatsApp campaigns
+        call: whatsapp-whatsapp-campaigns.listwhatsappcampaigns
+        with:
+          startDate: rest.startDate
+          endDate: rest.endDate
+          sort: rest.sort
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createwhatsappcampaign
+        description: Create and send a WhatsApp campaign
+        call: whatsapp-whatsapp-campaigns.createwhatsappcampaign
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/whatsappcampaigns/{campaignid}
+      name: whatsappcampaigns-campaignid
+      description: REST surface for whatsappCampaigns-campaignId.
+      operations:
+      - method: GET
+        name: getwhatsappcampaign
+        description: Get a WhatsApp campaign
+        call: whatsapp-whatsapp-campaigns.getwhatsappcampaign
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatewhatsappcampaign
+        description: Update a WhatsApp campaign
+        call: whatsapp-whatsapp-campaigns.updatewhatsappcampaign
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletewhatsappcampaign
+        description: Delete a WhatsApp campaign
+        call: whatsapp-whatsapp-campaigns.deletewhatsappcampaign
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: whatsapp-whatsapp-campaigns-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Brevo WhatsApp API — WhatsApp Campaigns. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: return-all-whatsapp-campaigns
+      description: Return all WhatsApp campaigns
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: whatsapp-whatsapp-campaigns.listwhatsappcampaigns
+      with:
+        startDate: tools.startDate
+        endDate: tools.endDate
+        sort: tools.sort
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-and-send-whatsapp-campaign
+      description: Create and send a WhatsApp campaign
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: whatsapp-whatsapp-campaigns.createwhatsappcampaign
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-whatsapp-campaign
+      description: Get a WhatsApp campaign
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: whatsapp-whatsapp-campaigns.getwhatsappcampaign
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-whatsapp-campaign
+      description: Update a WhatsApp campaign
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: whatsapp-whatsapp-campaigns.updatewhatsappcampaign
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-whatsapp-campaign
+      description: Delete a WhatsApp campaign
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: whatsapp-whatsapp-campaigns.deletewhatsappcampaign
+      outputParameters:
+      - type: object
+        mapping: $.

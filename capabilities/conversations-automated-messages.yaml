@@ -1,0 +1,201 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Brevo Conversations API — Automated Messages
+  description: 'Brevo Conversations API — Automated Messages. 4 operations. Lead operation: Send an automated message. Self-contained
+    Naftiko capability covering one Brevo business surface.'
+  tags:
+  - Brevo
+  - Automated Messages
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BREVO_API_KEY: BREVO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: conversations-automated-messages
+    baseUri: https://api.brevo.com/v3
+    description: Brevo Conversations API — Automated Messages business capability. Self-contained, no shared references.
+    resources:
+    - name: conversations-pushedMessages
+      path: /conversations/pushedMessages
+      operations:
+      - name: createautomatedmessage
+        method: POST
+        description: Send an automated message
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: conversations-pushedMessages-pushedMessageId
+      path: /conversations/pushedMessages/{pushedMessageId}
+      operations:
+      - name: getautomatedmessage
+        method: GET
+        description: Get an automated message
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: pushedMessageId
+          in: path
+          type: string
+          description: Unique identifier of the automated message.
+          required: true
+      - name: updateautomatedmessage
+        method: PUT
+        description: Update an automated message
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: pushedMessageId
+          in: path
+          type: string
+          description: Unique identifier of the automated message.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteautomatedmessage
+        method: DELETE
+        description: Delete an automated message
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: pushedMessageId
+          in: path
+          type: string
+          description: Unique identifier of the automated message.
+          required: true
+    authentication:
+      type: apikey
+      key: api-key
+      value: '{{env.BREVO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: conversations-automated-messages-rest
+    port: 8080
+    description: REST adapter for Brevo Conversations API — Automated Messages. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/conversations/pushedmessages
+      name: conversations-pushedmessages
+      description: REST surface for conversations-pushedMessages.
+      operations:
+      - method: POST
+        name: createautomatedmessage
+        description: Send an automated message
+        call: conversations-automated-messages.createautomatedmessage
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/conversations/pushedmessages/{pushedmessageid}
+      name: conversations-pushedmessages-pushedmessageid
+      description: REST surface for conversations-pushedMessages-pushedMessageId.
+      operations:
+      - method: GET
+        name: getautomatedmessage
+        description: Get an automated message
+        call: conversations-automated-messages.getautomatedmessage
+        with:
+          pushedMessageId: rest.pushedMessageId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateautomatedmessage
+        description: Update an automated message
+        call: conversations-automated-messages.updateautomatedmessage
+        with:
+          pushedMessageId: rest.pushedMessageId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteautomatedmessage
+        description: Delete an automated message
+        call: conversations-automated-messages.deleteautomatedmessage
+        with:
+          pushedMessageId: rest.pushedMessageId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: conversations-automated-messages-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Brevo Conversations API — Automated Messages. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: send-automated-message
+      description: Send an automated message
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: conversations-automated-messages.createautomatedmessage
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-automated-message
+      description: Get an automated message
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: conversations-automated-messages.getautomatedmessage
+      with:
+        pushedMessageId: tools.pushedMessageId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-automated-message
+      description: Update an automated message
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: conversations-automated-messages.updateautomatedmessage
+      with:
+        pushedMessageId: tools.pushedMessageId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-automated-message
+      description: Delete an automated message
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: conversations-automated-messages.deleteautomatedmessage
+      with:
+        pushedMessageId: tools.pushedMessageId
+      outputParameters:
+      - type: object
+        mapping: $.

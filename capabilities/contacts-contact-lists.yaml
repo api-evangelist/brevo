@@ -1,0 +1,292 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Brevo Contacts API — Contact Lists
+  description: 'Brevo Contacts API — Contact Lists. 7 operations. Lead operation: Get all contact lists. Self-contained Naftiko
+    capability covering one Brevo business surface.'
+  tags:
+  - Brevo
+  - Contact Lists
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BREVO_API_KEY: BREVO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: contacts-contact-lists
+    baseUri: https://api.brevo.com/v3
+    description: Brevo Contacts API — Contact Lists business capability. Self-contained, no shared references.
+    resources:
+    - name: contacts-lists
+      path: /contacts/lists
+      operations:
+      - name: listcontactlists
+        method: GET
+        description: Get all contact lists
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sort
+          in: query
+          type: string
+          description: Sort direction for the results.
+      - name: createcontactlist
+        method: POST
+        description: Create a contact list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: contacts-lists-listId
+      path: /contacts/lists/{listId}
+      operations:
+      - name: getcontactlist
+        method: GET
+        description: Get a contact list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatecontactlist
+        method: PUT
+        description: Update a contact list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletecontactlist
+        method: DELETE
+        description: Delete a contact list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: contacts-lists-listId-contacts-add
+      path: /contacts/lists/{listId}/contacts/add
+      operations:
+      - name: addcontactstolist
+        method: POST
+        description: Add contacts to a list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: contacts-lists-listId-contacts-remove
+      path: /contacts/lists/{listId}/contacts/remove
+      operations:
+      - name: removecontactsfromlist
+        method: POST
+        description: Remove contacts from a list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: api-key
+      value: '{{env.BREVO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: contacts-contact-lists-rest
+    port: 8080
+    description: REST adapter for Brevo Contacts API — Contact Lists. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/contacts/lists
+      name: contacts-lists
+      description: REST surface for contacts-lists.
+      operations:
+      - method: GET
+        name: listcontactlists
+        description: Get all contact lists
+        call: contacts-contact-lists.listcontactlists
+        with:
+          sort: rest.sort
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createcontactlist
+        description: Create a contact list
+        call: contacts-contact-lists.createcontactlist
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/contacts/lists/{listid}
+      name: contacts-lists-listid
+      description: REST surface for contacts-lists-listId.
+      operations:
+      - method: GET
+        name: getcontactlist
+        description: Get a contact list
+        call: contacts-contact-lists.getcontactlist
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatecontactlist
+        description: Update a contact list
+        call: contacts-contact-lists.updatecontactlist
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletecontactlist
+        description: Delete a contact list
+        call: contacts-contact-lists.deletecontactlist
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/contacts/lists/{listid}/contacts/add
+      name: contacts-lists-listid-contacts-add
+      description: REST surface for contacts-lists-listId-contacts-add.
+      operations:
+      - method: POST
+        name: addcontactstolist
+        description: Add contacts to a list
+        call: contacts-contact-lists.addcontactstolist
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/contacts/lists/{listid}/contacts/remove
+      name: contacts-lists-listid-contacts-remove
+      description: REST surface for contacts-lists-listId-contacts-remove.
+      operations:
+      - method: POST
+        name: removecontactsfromlist
+        description: Remove contacts from a list
+        call: contacts-contact-lists.removecontactsfromlist
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: contacts-contact-lists-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Brevo Contacts API — Contact Lists. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-all-contact-lists
+      description: Get all contact lists
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: contacts-contact-lists.listcontactlists
+      with:
+        sort: tools.sort
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-contact-list
+      description: Create a contact list
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: contacts-contact-lists.createcontactlist
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-contact-list
+      description: Get a contact list
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: contacts-contact-lists.getcontactlist
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-contact-list
+      description: Update a contact list
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: contacts-contact-lists.updatecontactlist
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-contact-list
+      description: Delete a contact list
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: contacts-contact-lists.deletecontactlist
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: add-contacts-list
+      description: Add contacts to a list
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: contacts-contact-lists.addcontactstolist
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: remove-contacts-list
+      description: Remove contacts from a list
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: contacts-contact-lists.removecontactsfromlist
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
