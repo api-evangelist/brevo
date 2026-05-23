@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SendWhatsAppResponse",
+  "title": "SendWhatsAppResponse",
+  "type": "object",
+  "properties": {
+    "messageId": {
+      "type": "string",
+      "description": "Unique identifier assigned to the sent WhatsApp message."
+    }
+  }
+}

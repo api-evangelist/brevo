@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CreateContactAttribute",
+  "title": "CreateContactAttribute",
+  "type": "object",
+  "properties": {
+    "value": {
+      "type": "string",
+      "description": "Default or computed value for the attribute."
+    },
+    "enumeration": {
+      "type": "array",
+      "description": "Enum values for category-type attributes.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "integer",
+            "description": "Numeric value."
+          },
+          "label": {
+            "type": "string",
+            "description": "Display label."
+          }
+        }
+      }
+    },
+    "type": {
+      "type": "string",
+      "description": "Data type of the attribute.",
+      "enum": [
+        "text",
+        "date",
+        "float",
+        "boolean",
+        "id"
+      ]
+    }
+  }
+}

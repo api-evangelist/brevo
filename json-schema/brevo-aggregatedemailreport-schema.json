@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AggregatedEmailReport",
+  "title": "AggregatedEmailReport",
+  "type": "object",
+  "properties": {
+    "range": {
+      "type": "string",
+      "description": "Date range for the aggregated statistics."
+    },
+    "requests": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total number of email send requests."
+    },
+    "delivered": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total number of successfully delivered emails."
+    },
+    "hardBounces": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total number of hard bounces."
+    },
+    "softBounces": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total number of soft bounces."
+    },
+    "clicks": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total number of link clicks."
+    },
+    "uniqueClicks": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total number of unique link clicks."
+    },
+    "opens": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total number of email opens."
+    },
+    "uniqueOpens": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total number of unique email opens."
+    },
+    "spamReports": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total number of spam reports."
+    },
+    "blocked": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total number of blocked emails."
+    },
+    "invalid": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total number of invalid email addresses."
+    },
+    "unsubscribed": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total number of unsubscribes."
+    }
+  }
+}

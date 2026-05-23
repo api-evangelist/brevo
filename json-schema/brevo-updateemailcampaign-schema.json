@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/UpdateEmailCampaign",
+  "title": "UpdateEmailCampaign",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Updated name for the campaign."
+    },
+    "subject": {
+      "type": "string",
+      "description": "Updated subject line."
+    },
+    "sender": {
+      "type": "object",
+      "description": "Updated sender identity.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Sender display name."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Sender email address."
+        }
+      }
+    },
+    "htmlContent": {
+      "type": "string",
+      "description": "Updated HTML content for the campaign body."
+    },
+    "scheduledAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Updated scheduled send date-time."
+    },
+    "recipients": {
+      "type": "object",
+      "description": "Updated target audience.",
+      "properties": {
+        "listIds": {
+          "type": "array",
+          "description": "IDs of contact lists to target.",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "exclusionListIds": {
+          "type": "array",
+          "description": "IDs of contact lists to exclude.",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      }
+    }
+  }
+}

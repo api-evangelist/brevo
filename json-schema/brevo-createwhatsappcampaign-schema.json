@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CreateWhatsAppCampaign",
+  "title": "CreateWhatsAppCampaign",
+  "type": "object",
+  "required": [
+    "name",
+    "templateId",
+    "recipients"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name for the campaign."
+    },
+    "templateId": {
+      "type": "integer",
+      "format": "int64",
+      "description": "ID of the approved WhatsApp template to use."
+    },
+    "scheduledAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC date-time to schedule the campaign send."
+    },
+    "recipients": {
+      "type": "object",
+      "description": "Target audience for the campaign.",
+      "required": [
+        "listIds"
+      ],
+      "properties": {
+        "listIds": {
+          "type": "array",
+          "description": "IDs of contact lists to target.",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "segments": {
+          "type": "array",
+          "description": "IDs of segments to target.",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      }
+    }
+  }
+}

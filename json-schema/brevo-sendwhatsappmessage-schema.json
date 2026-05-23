@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SendWhatsAppMessage",
+  "title": "SendWhatsAppMessage",
+  "type": "object",
+  "required": [
+    "contactNumbers",
+    "templateId"
+  ],
+  "properties": {
+    "contactNumbers": {
+      "type": "array",
+      "description": "List of recipient phone numbers in international format.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "templateId": {
+      "type": "integer",
+      "format": "int64",
+      "description": "ID of the approved WhatsApp template to use."
+    },
+    "params": {
+      "type": "array",
+      "description": "Dynamic parameter values to substitute into the template.",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

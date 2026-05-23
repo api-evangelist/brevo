@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/EmailCampaign",
+  "title": "EmailCampaign",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unique identifier of the campaign."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the campaign."
+    },
+    "subject": {
+      "type": "string",
+      "description": "Subject line of the campaign email."
+    },
+    "type": {
+      "type": "string",
+      "description": "Type of the campaign.",
+      "enum": [
+        "classic",
+        "trigger"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "description": "Current status of the campaign.",
+      "enum": [
+        "draft",
+        "sent",
+        "archive",
+        "queued",
+        "suspended",
+        "in_process"
+      ]
+    },
+    "scheduledAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC date-time when the campaign is scheduled to send."
+    },
+    "sender": {
+      "type": "object",
+      "description": "Sender identity used for the campaign.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Sender display name."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Sender email address."
+        }
+      }
+    },
+    "recipients": {
+      "type": "object",
+      "description": "Target audience configuration for the campaign.",
+      "properties": {
+        "lists": {
+          "type": "array",
+          "description": "List IDs to target with the campaign.",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "exclusionLists": {
+          "type": "array",
+          "description": "List IDs to exclude from the campaign.",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "statistics": {
+      "type": "object",
+      "description": "Campaign performance statistics when requested.",
+      "properties": {
+        "globalStats": {
+          "type": "object",
+          "description": "Aggregated performance metrics.",
+          "properties": {
+            "uniqueClicks": {
+              "type": "integer",
+              "format": "int64",
+              "description": "Number of unique link clicks."
+            },
+            "clickers": {
+              "type": "integer",
+              "format": "int64",
+              "description": "Number of unique recipients who clicked."
+            },
+            "complaints": {
+              "type": "integer",
+              "format": "int64",
+              "description": "Number of spam complaints."
+            },
+            "delivered": {
+              "type": "integer",
+              "format": "int64",
+              "description": "Number of successfully delivered emails."
+            },
+            "sent": {
+              "type": "integer",
+              "format": "int64",
+              "description": "Number of emails sent."
+            },
+            "softBounces": {
+              "type": "integer",
+              "format": "int64",
+              "description": "Number of soft bounces."
+            },
+            "hardBounces": {
+              "type": "integer",
+              "format": "int64",
+              "description": "Number of hard bounces."
+            },
+            "uniqueViews": {
+              "type": "integer",
+              "format": "int64",
+              "description": "Number of unique email opens."
+            },
+            "unsubscriptions": {
+              "type": "integer",
+              "format": "int64",
+              "description": "Number of unsubscribes."
+            }
+          }
+        }
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC date-time when the campaign was created."
+    },
+    "modifiedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC date-time when the campaign was last modified."
+    }
+  }
+}

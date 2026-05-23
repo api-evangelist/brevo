@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/WhatsAppTemplateList",
+  "title": "WhatsAppTemplateList",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total number of WhatsApp templates."
+    },
+    "templates": {
+      "type": "array",
+      "description": "List of WhatsApp template summaries.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unique identifier of the template."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the template."
+          },
+          "status": {
+            "type": "string",
+            "description": "Approval status of the template.",
+            "enum": [
+              "approved",
+              "pending",
+              "rejected"
+            ]
+          },
+          "language": {
+            "type": "string",
+            "description": "Language code of the template."
+          },
+          "category": {
+            "type": "string",
+            "description": "Category of the template."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "UTC date-time when the template was created."
+          },
+          "modifiedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "UTC date-time when the template was last modified."
+          }
+        }
+      }
+    }
+  }
+}

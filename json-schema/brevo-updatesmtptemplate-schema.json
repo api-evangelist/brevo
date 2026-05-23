@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/UpdateSmtpTemplate",
+  "title": "UpdateSmtpTemplate",
+  "type": "object",
+  "properties": {
+    "templateName": {
+      "type": "string",
+      "description": "Updated name for the template."
+    },
+    "subject": {
+      "type": "string",
+      "description": "Updated subject line for the template."
+    },
+    "htmlContent": {
+      "type": "string",
+      "description": "Updated HTML content for the template body."
+    },
+    "sender": {
+      "type": "object",
+      "description": "Updated sender identity for the template.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Sender display name."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Sender email address."
+        }
+      }
+    },
+    "replyTo": {
+      "type": "string",
+      "format": "email",
+      "description": "Updated reply-to email address."
+    },
+    "isActive": {
+      "type": "boolean",
+      "description": "Whether the template should be active."
+    }
+  }
+}

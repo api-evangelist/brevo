@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SmsEventReport",
+  "title": "SmsEventReport",
+  "type": "object",
+  "properties": {
+    "events": {
+      "type": "array",
+      "description": "List of transactional SMS activity events.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "phoneNumber": {
+            "type": "string",
+            "description": "Recipient phone number."
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "UTC date-time when the event occurred."
+          },
+          "messageId": {
+            "type": "string",
+            "description": "Unique identifier of the SMS message."
+          },
+          "event": {
+            "type": "string",
+            "description": "Type of SMS event that occurred.",
+            "enum": [
+              "sent",
+              "accepted",
+              "delivered",
+              "replied",
+              "softBounce",
+              "hardBounce",
+              "subscribe",
+              "unsubscribe",
+              "skip",
+              "rejected"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "description": "Reason for the event if applicable."
+          },
+          "tag": {
+            "type": "string",
+            "description": "Tag assigned to the SMS."
+          }
+        }
+      }
+    }
+  }
+}

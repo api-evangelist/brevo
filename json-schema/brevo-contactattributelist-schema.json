@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ContactAttributeList",
+  "title": "ContactAttributeList",
+  "type": "object",
+  "properties": {
+    "attributes": {
+      "type": "array",
+      "description": "List of contact attributes.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the attribute."
+          },
+          "category": {
+            "type": "string",
+            "description": "Category of the attribute.",
+            "enum": [
+              "normal",
+              "transactional",
+              "category",
+              "calculated",
+              "global"
+            ]
+          },
+          "type": {
+            "type": "string",
+            "description": "Data type of the attribute value.",
+            "enum": [
+              "text",
+              "date",
+              "float",
+              "boolean",
+              "id"
+            ]
+          },
+          "enumeration": {
+            "type": "array",
+            "description": "Enumeration values for category attributes.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "integer",
+                  "description": "Numeric value of the enum option."
+                },
+                "label": {
+                  "type": "string",
+                  "description": "Display label for the enum option."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

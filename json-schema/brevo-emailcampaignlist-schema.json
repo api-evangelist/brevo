@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/EmailCampaignList",
+  "title": "EmailCampaignList",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total number of email campaigns matching the filter criteria."
+    },
+    "campaigns": {
+      "type": "array",
+      "description": "List of email campaign summaries.",
+      "items": {
+        "$ref": "#/components/schemas/EmailCampaign"
+      }
+    }
+  }
+}

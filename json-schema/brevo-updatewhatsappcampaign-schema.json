@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/UpdateWhatsAppCampaign",
+  "title": "UpdateWhatsAppCampaign",
+  "type": "object",
+  "properties": {
+    "campaignName": {
+      "type": "string",
+      "description": "Updated name for the campaign."
+    },
+    "templateId": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Updated template ID for the campaign."
+    },
+    "scheduledAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Updated scheduled send date-time."
+    },
+    "recipients": {
+      "type": "object",
+      "description": "Updated target audience.",
+      "properties": {
+        "listIds": {
+          "type": "array",
+          "description": "IDs of contact lists to target.",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "segments": {
+          "type": "array",
+          "description": "IDs of segments to target.",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      }
+    }
+  }
+}

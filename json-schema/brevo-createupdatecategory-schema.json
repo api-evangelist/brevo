@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CreateUpdateCategory",
+  "title": "CreateUpdateCategory",
+  "type": "object",
+  "required": [
+    "id",
+    "name"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the category."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the category."
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL of the category page."
+    }
+  }
+}

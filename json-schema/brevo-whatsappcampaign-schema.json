@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/WhatsAppCampaign",
+  "title": "WhatsAppCampaign",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unique identifier of the campaign."
+    },
+    "campaignName": {
+      "type": "string",
+      "description": "Name of the campaign."
+    },
+    "campaignStatus": {
+      "type": "string",
+      "description": "Current status of the campaign.",
+      "enum": [
+        "draft",
+        "scheduled",
+        "sent",
+        "archive"
+      ]
+    },
+    "templateId": {
+      "type": "integer",
+      "format": "int64",
+      "description": "ID of the WhatsApp template used for the campaign."
+    },
+    "scheduledAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC date-time when the campaign is scheduled to send."
+    },
+    "recipients": {
+      "type": "object",
+      "description": "Target audience for the campaign.",
+      "properties": {
+        "lists": {
+          "type": "array",
+          "description": "IDs of contact lists to target.",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "segments": {
+          "type": "array",
+          "description": "IDs of segments to target.",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "statistics": {
+      "type": "object",
+      "description": "Campaign delivery statistics.",
+      "properties": {
+        "sent": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of messages sent."
+        },
+        "delivered": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of messages delivered."
+        },
+        "read": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of messages read."
+        }
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC date-time when the campaign was created."
+    },
+    "modifiedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC date-time when the campaign was last modified."
+    }
+  }
+}

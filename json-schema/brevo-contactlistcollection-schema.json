@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ContactListCollection",
+  "title": "ContactListCollection",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total number of contact lists."
+    },
+    "lists": {
+      "type": "array",
+      "description": "List of contact list summaries.",
+      "items": {
+        "$ref": "#/components/schemas/ContactListDetail"
+      }
+    }
+  }
+}

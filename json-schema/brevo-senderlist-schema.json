@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SenderList",
+  "title": "SenderList",
+  "type": "object",
+  "properties": {
+    "senders": {
+      "type": "array",
+      "description": "List of configured sender identities.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unique identifier of the sender."
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name of the sender."
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email address of the sender."
+          },
+          "active": {
+            "type": "boolean",
+            "description": "Whether the sender is verified and active."
+          }
+        }
+      }
+    }
+  }
+}

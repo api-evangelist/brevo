@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TemplateList",
+  "title": "TemplateList",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total number of templates available."
+    },
+    "templates": {
+      "type": "array",
+      "description": "List of email template summaries.",
+      "items": {
+        "$ref": "#/components/schemas/SmtpTemplate"
+      }
+    }
+  }
+}

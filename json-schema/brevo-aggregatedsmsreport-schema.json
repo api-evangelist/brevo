@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AggregatedSmsReport",
+  "title": "AggregatedSmsReport",
+  "type": "object",
+  "properties": {
+    "range": {
+      "type": "string",
+      "description": "Date range for the aggregated statistics."
+    },
+    "requests": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total SMS send requests."
+    },
+    "delivered": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total successfully delivered SMS."
+    },
+    "hardBounces": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total hard bounces."
+    },
+    "softBounces": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total soft bounces."
+    },
+    "blocked": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total blocked SMS."
+    },
+    "unsubscribed": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total unsubscribes."
+    }
+  }
+}

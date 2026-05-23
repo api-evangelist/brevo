@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/EmailEventReport",
+  "title": "EmailEventReport",
+  "type": "object",
+  "properties": {
+    "events": {
+      "type": "array",
+      "description": "List of transactional email activity events.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Recipient email address associated with the event."
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "UTC date-time when the event occurred."
+          },
+          "messageId": {
+            "type": "string",
+            "description": "Unique identifier of the email message."
+          },
+          "event": {
+            "type": "string",
+            "description": "Type of email event that occurred.",
+            "enum": [
+              "sent",
+              "delivered",
+              "opened",
+              "clicked",
+              "hardBounce",
+              "softBounce",
+              "blocked",
+              "spam",
+              "invalid",
+              "deferred",
+              "unsubscribed"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "description": "Reason for the event if applicable, such as bounce details."
+          },
+          "tag": {
+            "type": "string",
+            "description": "Tag assigned to the email for categorization."
+          },
+          "subject": {
+            "type": "string",
+            "description": "Subject line of the email message."
+          },
+          "templateId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Template ID used for the email if applicable."
+          }
+        }
+      }
+    }
+  }
+}

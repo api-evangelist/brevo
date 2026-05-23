@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SendTransactionalSms",
+  "title": "SendTransactionalSms",
+  "type": "object",
+  "required": [
+    "sender",
+    "recipient",
+    "content"
+  ],
+  "properties": {
+    "sender": {
+      "type": "string",
+      "description": "Name or number displayed as the SMS sender. Must be between 3 and 11 characters for alphanumeric senders.",
+      "minLength": 3,
+      "maxLength": 11
+    },
+    "recipient": {
+      "type": "string",
+      "description": "Recipient phone number in international format with country code prefix."
+    },
+    "content": {
+      "type": "string",
+      "description": "Text content of the SMS message.",
+      "maxLength": 160
+    },
+    "type": {
+      "type": "string",
+      "description": "Type of SMS message to send.",
+      "enum": [
+        "transactional",
+        "marketing"
+      ],
+      "default": "transactional"
+    },
+    "tag": {
+      "type": "string",
+      "description": "Tag for categorizing the SMS for reporting purposes."
+    },
+    "webUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "Webhook URL to receive delivery status notifications."
+    }
+  }
+}

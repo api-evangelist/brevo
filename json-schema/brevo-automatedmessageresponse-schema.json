@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AutomatedMessageResponse",
+  "title": "AutomatedMessageResponse",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier of the automated message."
+    },
+    "visitorId": {
+      "type": "string",
+      "description": "Unique identifier of the visitor."
+    },
+    "text": {
+      "type": "string",
+      "description": "Text content of the automated message."
+    },
+    "agentId": {
+      "type": "string",
+      "description": "Agent attributed to the message."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC date-time when the message was created."
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/FolderList",
+  "title": "FolderList",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total number of folders."
+    },
+    "folders": {
+      "type": "array",
+      "description": "List of folder records.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unique identifier of the folder."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the folder."
+          },
+          "totalSubscribers": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Total subscribers across all lists in the folder."
+          },
+          "totalBlacklisted": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Total blacklisted contacts across all lists."
+          },
+          "uniqueSubscribers": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unique subscribers across all lists in the folder."
+          }
+        }
+      }
+    }
+  }
+}

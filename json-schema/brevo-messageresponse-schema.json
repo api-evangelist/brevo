@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/MessageResponse",
+  "title": "MessageResponse",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier of the message."
+    },
+    "type": {
+      "type": "string",
+      "description": "Type of the message sender.",
+      "enum": [
+        "agent",
+        "visitor",
+        "bot"
+      ]
+    },
+    "text": {
+      "type": "string",
+      "description": "Text content of the message."
+    },
+    "visitorId": {
+      "type": "string",
+      "description": "Unique identifier of the visitor."
+    },
+    "agentId": {
+      "type": "string",
+      "description": "Unique identifier of the agent if applicable."
+    },
+    "agentName": {
+      "type": "string",
+      "description": "Display name of the agent if applicable."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC date-time when the message was created."
+    }
+  }
+}

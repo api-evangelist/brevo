@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Webhook",
+  "title": "Webhook",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unique identifier of the webhook."
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL where event notifications are delivered."
+    },
+    "description": {
+      "type": "string",
+      "description": "Human-readable description of the webhook purpose."
+    },
+    "type": {
+      "type": "string",
+      "description": "Type of webhook determining which event categories apply.",
+      "enum": [
+        "transactional",
+        "marketing",
+        "inbound"
+      ]
+    },
+    "events": {
+      "type": "array",
+      "description": "List of event types the webhook is subscribed to.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "isActive": {
+      "type": "boolean",
+      "description": "Whether the webhook is currently active and receiving events."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC date-time when the webhook was created."
+    },
+    "modifiedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC date-time when the webhook was last modified."
+    }
+  }
+}

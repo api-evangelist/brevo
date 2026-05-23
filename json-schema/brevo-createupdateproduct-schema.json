@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CreateUpdateProduct",
+  "title": "CreateUpdateProduct",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "url"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the product."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the product."
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL of the product page."
+    },
+    "imageUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL of the product image."
+    },
+    "sku": {
+      "type": "string",
+      "description": "Stock keeping unit identifier."
+    },
+    "price": {
+      "type": "number",
+      "format": "float",
+      "description": "Price of the product."
+    },
+    "categories": {
+      "type": "array",
+      "description": "IDs of categories to assign the product to.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "metaInfo": {
+      "type": "object",
+      "description": "Additional metadata as key-value pairs.",
+      "additionalProperties": true
+    }
+  }
+}

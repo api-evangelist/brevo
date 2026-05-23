@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/OrderProduct",
+  "title": "OrderProduct",
+  "type": "object",
+  "required": [
+    "productId",
+    "quantity",
+    "price"
+  ],
+  "properties": {
+    "productId": {
+      "type": "string",
+      "description": "Unique identifier of the product."
+    },
+    "quantity": {
+      "type": "integer",
+      "description": "Quantity of the product ordered.",
+      "minimum": 1
+    },
+    "price": {
+      "type": "number",
+      "format": "float",
+      "description": "Price of the product at the time of order."
+    },
+    "variantId": {
+      "type": "string",
+      "description": "Variant identifier if the product has variants."
+    }
+  }
+}

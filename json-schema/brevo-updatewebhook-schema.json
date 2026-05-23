@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/UpdateWebhook",
+  "title": "UpdateWebhook",
+  "type": "object",
+  "properties": {
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Updated URL to receive webhook notifications."
+    },
+    "description": {
+      "type": "string",
+      "description": "Updated description."
+    },
+    "events": {
+      "type": "array",
+      "description": "Updated list of event types to subscribe to.",
+      "items": {
+        "type": "string",
+        "enum": [
+          "sent",
+          "request",
+          "delivered",
+          "hardBounce",
+          "softBounce",
+          "blocked",
+          "spam",
+          "invalid",
+          "deferred",
+          "click",
+          "opened",
+          "uniqueOpened",
+          "unsubscribed",
+          "listAddition",
+          "inboundEmailProcessed"
+        ]
+      }
+    },
+    "domain": {
+      "type": "string",
+      "description": "Updated domain filter."
+    }
+  }
+}

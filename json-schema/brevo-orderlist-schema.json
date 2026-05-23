@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/OrderList",
+  "title": "OrderList",
+  "type": "object",
+  "properties": {
+    "orders": {
+      "type": "array",
+      "description": "List of order records.",
+      "items": {
+        "$ref": "#/components/schemas/Order"
+      }
+    }
+  }
+}

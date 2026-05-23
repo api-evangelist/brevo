@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SendMessage",
+  "title": "SendMessage",
+  "type": "object",
+  "required": [
+    "visitorId",
+    "text"
+  ],
+  "properties": {
+    "visitorId": {
+      "type": "string",
+      "description": "Unique identifier of the visitor to send the message to."
+    },
+    "text": {
+      "type": "string",
+      "description": "Text content of the message."
+    },
+    "agentId": {
+      "type": "string",
+      "description": "Unique identifier of the agent sending the message."
+    },
+    "agentName": {
+      "type": "string",
+      "description": "Display name of the agent."
+    }
+  }
+}

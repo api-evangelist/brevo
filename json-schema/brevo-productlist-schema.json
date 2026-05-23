@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ProductList",
+  "title": "ProductList",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total number of products."
+    },
+    "products": {
+      "type": "array",
+      "description": "List of product records.",
+      "items": {
+        "$ref": "#/components/schemas/Product"
+      }
+    }
+  }
+}

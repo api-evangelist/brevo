@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SmtpTemplate",
+  "title": "SmtpTemplate",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unique identifier of the template."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the template."
+    },
+    "subject": {
+      "type": "string",
+      "description": "Subject line of the template."
+    },
+    "isActive": {
+      "type": "boolean",
+      "description": "Whether the template is currently active."
+    },
+    "htmlContent": {
+      "type": "string",
+      "description": "HTML content of the template body."
+    },
+    "sender": {
+      "type": "object",
+      "description": "Default sender identity for the template.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Sender display name."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Sender email address."
+        }
+      }
+    },
+    "replyTo": {
+      "type": "string",
+      "format": "email",
+      "description": "Default reply-to email address for the template."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC date-time when the template was created."
+    },
+    "modifiedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC date-time when the template was last modified."
+    }
+  }
+}

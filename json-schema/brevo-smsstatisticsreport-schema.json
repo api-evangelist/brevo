@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SmsStatisticsReport",
+  "title": "SmsStatisticsReport",
+  "type": "object",
+  "properties": {
+    "reports": {
+      "type": "array",
+      "description": "Daily SMS statistics reports.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "Date for the statistics."
+          },
+          "requests": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Number of SMS send requests."
+          },
+          "delivered": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Number of successfully delivered SMS."
+          },
+          "hardBounces": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Number of hard bounces."
+          },
+          "softBounces": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Number of soft bounces."
+          },
+          "blocked": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Number of blocked SMS."
+          },
+          "unsubscribed": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Number of unsubscribes."
+          }
+        }
+      }
+    }
+  }
+}

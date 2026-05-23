@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CreateAutomatedMessage",
+  "title": "CreateAutomatedMessage",
+  "type": "object",
+  "required": [
+    "visitorId",
+    "text"
+  ],
+  "properties": {
+    "visitorId": {
+      "type": "string",
+      "description": "Unique identifier of the visitor to send the automated message to."
+    },
+    "text": {
+      "type": "string",
+      "description": "Text content of the automated message."
+    },
+    "agentId": {
+      "type": "string",
+      "description": "Unique identifier of the agent to attribute the message to."
+    },
+    "groupId": {
+      "type": "string",
+      "description": "Group identifier for routing the conversation."
+    }
+  }
+}

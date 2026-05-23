@@ -1,0 +1,255 @@
+{
+  "provider": "Brevo",
+  "providerId": "brevo",
+  "kind": "json-structure",
+  "description": "Structural overview of the Brevo API surface; extracted from openapi/.",
+  "schemaCount": 13,
+  "operationCount": 18,
+  "schemas": [
+    {
+      "name": "ContactList",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "Contact",
+      "type": "object",
+      "propertyCount": 8,
+      "required": []
+    },
+    {
+      "name": "CreateContact",
+      "type": "object",
+      "propertyCount": 5,
+      "required": []
+    },
+    {
+      "name": "UpdateContact",
+      "type": "object",
+      "propertyCount": 5,
+      "required": []
+    },
+    {
+      "name": "ContactListCollection",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "ContactListDetail",
+      "type": "object",
+      "propertyCount": 6,
+      "required": []
+    },
+    {
+      "name": "CreateContactList",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "name",
+        "folderId"
+      ]
+    },
+    {
+      "name": "UpdateContactList",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "ContactAttributeList",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "CreateContactAttribute",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "FolderList",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "ImportContacts",
+      "type": "object",
+      "propertyCount": 9,
+      "required": []
+    },
+    {
+      "name": "ErrorResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    }
+  ],
+  "operations": [
+    {
+      "method": "GET",
+      "path": "/contacts",
+      "operationId": "listContacts",
+      "summary": "Get all contacts",
+      "tags": [
+        "Contacts"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/contacts",
+      "operationId": "createContact",
+      "summary": "Create a contact",
+      "tags": [
+        "Contacts"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/contacts/{identifier}",
+      "operationId": "getContactInfo",
+      "summary": "Get a contact's details",
+      "tags": [
+        "Contacts"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/contacts/{identifier}",
+      "operationId": "updateContact",
+      "summary": "Update a contact",
+      "tags": [
+        "Contacts"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/contacts/{identifier}",
+      "operationId": "deleteContact",
+      "summary": "Delete a contact",
+      "tags": [
+        "Contacts"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/contacts/lists",
+      "operationId": "listContactLists",
+      "summary": "Get all contact lists",
+      "tags": [
+        "Contact Lists"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/contacts/lists",
+      "operationId": "createContactList",
+      "summary": "Create a contact list",
+      "tags": [
+        "Contact Lists"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/contacts/lists/{listId}",
+      "operationId": "getContactList",
+      "summary": "Get a contact list",
+      "tags": [
+        "Contact Lists"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/contacts/lists/{listId}",
+      "operationId": "updateContactList",
+      "summary": "Update a contact list",
+      "tags": [
+        "Contact Lists"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/contacts/lists/{listId}",
+      "operationId": "deleteContactList",
+      "summary": "Delete a contact list",
+      "tags": [
+        "Contact Lists"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/contacts/lists/{listId}/contacts/add",
+      "operationId": "addContactsToList",
+      "summary": "Add contacts to a list",
+      "tags": [
+        "Contact Lists"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/contacts/lists/{listId}/contacts/remove",
+      "operationId": "removeContactsFromList",
+      "summary": "Remove contacts from a list",
+      "tags": [
+        "Contact Lists"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/contacts/attributes",
+      "operationId": "listContactAttributes",
+      "summary": "List all contact attributes",
+      "tags": [
+        "Contact Attributes"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/contacts/attributes/{attributeCategory}/{attributeName}",
+      "operationId": "createContactAttribute",
+      "summary": "Create a contact attribute",
+      "tags": [
+        "Contact Attributes"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/contacts/attributes/{attributeCategory}/{attributeName}",
+      "operationId": "deleteContactAttribute",
+      "summary": "Delete a contact attribute",
+      "tags": [
+        "Contact Attributes"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/contacts/folders",
+      "operationId": "listFolders",
+      "summary": "Get all folders",
+      "tags": [
+        "Folders"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/contacts/folders",
+      "operationId": "createFolder",
+      "summary": "Create a folder",
+      "tags": [
+        "Folders"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/contacts/import",
+      "operationId": "importContacts",
+      "summary": "Import contacts",
+      "tags": [
+        "Import"
+      ]
+    }
+  ]
+}

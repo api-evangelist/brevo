@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CreateContactList",
+  "title": "CreateContactList",
+  "type": "object",
+  "required": [
+    "name",
+    "folderId"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name for the new contact list."
+    },
+    "folderId": {
+      "type": "integer",
+      "format": "int64",
+      "description": "ID of the folder to place the list in."
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CreateUpdateOrder",
+  "title": "CreateUpdateOrder",
+  "type": "object",
+  "required": [
+    "id",
+    "email",
+    "status",
+    "amount",
+    "products",
+    "createdAt"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the order."
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address of the customer who placed the order."
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the order such as completed, pending, or cancelled."
+    },
+    "amount": {
+      "type": "number",
+      "format": "float",
+      "description": "Total order amount including shipping, tax, and item prices."
+    },
+    "products": {
+      "type": "array",
+      "description": "Products included in the order.",
+      "items": {
+        "$ref": "#/components/schemas/OrderProduct"
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC date-time when the order was created."
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC date-time when the order was last updated."
+    },
+    "coupons": {
+      "type": "array",
+      "description": "Coupon codes applied to the order.",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

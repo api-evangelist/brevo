@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CreateEmailCampaign",
+  "title": "CreateEmailCampaign",
+  "type": "object",
+  "required": [
+    "name",
+    "sender"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name for the campaign used for internal identification."
+    },
+    "subject": {
+      "type": "string",
+      "description": "Subject line for the campaign email."
+    },
+    "sender": {
+      "type": "object",
+      "description": "Sender identity for the campaign.",
+      "required": [
+        "email"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Sender display name."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Sender email address."
+        }
+      }
+    },
+    "htmlContent": {
+      "type": "string",
+      "description": "HTML content for the campaign body."
+    },
+    "templateId": {
+      "type": "integer",
+      "format": "int64",
+      "description": "ID of a template to use for the campaign content."
+    },
+    "scheduledAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC date-time to schedule the campaign send."
+    },
+    "recipients": {
+      "type": "object",
+      "description": "Target audience for the campaign.",
+      "properties": {
+        "listIds": {
+          "type": "array",
+          "description": "IDs of contact lists to target.",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "exclusionListIds": {
+          "type": "array",
+          "description": "IDs of contact lists to exclude.",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "replyTo": {
+      "type": "string",
+      "format": "email",
+      "description": "Reply-to email address for the campaign."
+    },
+    "tag": {
+      "type": "string",
+      "description": "Tag for categorizing the campaign."
+    }
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SendTransactionalEmail",
+  "title": "SendTransactionalEmail",
+  "type": "object",
+  "required": [
+    "sender",
+    "to"
+  ],
+  "properties": {
+    "sender": {
+      "type": "object",
+      "description": "The sender identity for the email.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Display name of the sender."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Email address of the sender."
+        }
+      }
+    },
+    "to": {
+      "type": "array",
+      "description": "List of recipient email addresses and optional names.",
+      "items": {
+        "type": "object",
+        "required": [
+          "email"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Recipient email address."
+          },
+          "name": {
+            "type": "string",
+            "description": "Recipient display name."
+          }
+        }
+      }
+    },
+    "cc": {
+      "type": "array",
+      "description": "List of CC recipient email addresses.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "CC recipient email address."
+          },
+          "name": {
+            "type": "string",
+            "description": "CC recipient display name."
+          }
+        }
+      }
+    },
+    "bcc": {
+      "type": "array",
+      "description": "List of BCC recipient email addresses.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "BCC recipient email address."
+          },
+          "name": {
+            "type": "string",
+            "description": "BCC recipient display name."
+          }
+        }
+      }
+    },
+    "subject": {
+      "type": "string",
+      "description": "Subject line of the email. Required if not using a template."
+    },
+    "htmlContent": {
+      "type": "string",
+      "description": "HTML body content of the email. Required if not using a template."
+    },
+    "textContent": {
+      "type": "string",
+      "description": "Plain text body content of the email as a fallback."
+    },
+    "templateId": {
+      "type": "integer",
+      "format": "int64",
+      "description": "ID of the template to use for the email content."
+    },
+    "params": {
+      "type": "object",
+      "description": "Dynamic parameters for template personalization as key-value pairs.",
+      "additionalProperties": true
+    },
+    "replyTo": {
+      "type": "object",
+      "description": "Reply-to address for the email.",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Reply-to email address."
+        },
+        "name": {
+          "type": "string",
+          "description": "Reply-to display name."
+        }
+      }
+    },
+    "attachment": {
+      "type": "array",
+      "description": "List of file attachments to include with the email.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL of the attachment file to download and include."
+          },
+          "content": {
+            "type": "string",
+            "description": "Base64 encoded content of the attachment."
+          },
+          "name": {
+            "type": "string",
+            "description": "Filename of the attachment."
+          }
+        }
+      }
+    },
+    "headers": {
+      "type": "object",
+      "description": "Custom email headers as key-value pairs.",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "tags": {
+      "type": "array",
+      "description": "Tags to categorize the email for tracking purposes.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "scheduledAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC date-time to schedule the email for future delivery."
+    }
+  }
+}

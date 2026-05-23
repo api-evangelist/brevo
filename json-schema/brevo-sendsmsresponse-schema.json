@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SendSmsResponse",
+  "title": "SendSmsResponse",
+  "type": "object",
+  "properties": {
+    "reference": {
+      "type": "string",
+      "description": "Unique reference identifier for the sent SMS message."
+    },
+    "messageId": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unique message ID assigned to the SMS."
+    },
+    "smsCount": {
+      "type": "integer",
+      "description": "Number of SMS segments used to send the message."
+    },
+    "usedCredits": {
+      "type": "number",
+      "format": "float",
+      "description": "Number of SMS credits consumed."
+    },
+    "remainingCredits": {
+      "type": "number",
+      "format": "float",
+      "description": "Remaining SMS credits in the account."
+    }
+  }
+}

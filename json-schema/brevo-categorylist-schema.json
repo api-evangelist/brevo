@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CategoryList",
+  "title": "CategoryList",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total number of categories."
+    },
+    "categories": {
+      "type": "array",
+      "description": "List of category records.",
+      "items": {
+        "$ref": "#/components/schemas/Category"
+      }
+    }
+  }
+}

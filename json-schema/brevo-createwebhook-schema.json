@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CreateWebhook",
+  "title": "CreateWebhook",
+  "type": "object",
+  "required": [
+    "url",
+    "events",
+    "type"
+  ],
+  "properties": {
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to receive webhook event notifications. Must be a valid HTTPS endpoint."
+    },
+    "description": {
+      "type": "string",
+      "description": "Human-readable description of the webhook purpose."
+    },
+    "type": {
+      "type": "string",
+      "description": "Type of webhook. Determines available event types.",
+      "enum": [
+        "transactional",
+        "marketing",
+        "inbound"
+      ]
+    },
+    "events": {
+      "type": "array",
+      "description": "Event types to subscribe to. For transactional type, possible values include sent, delivered, hardBounce, softBounce, blocked, spam, invalid, deferred, click, opened, uniqueOpened, and unsubscribed. For marketing type, possible values include unsubscribed, listAddition, and delivered. For inbound type, the value is inboundEmailProcessed.",
+      "items": {
+        "type": "string",
+        "enum": [
+          "sent",
+          "request",
+          "delivered",
+          "hardBounce",
+          "softBounce",
+          "blocked",
+          "spam",
+          "invalid",
+          "deferred",
+          "click",
+          "opened",
+          "uniqueOpened",
+          "unsubscribed",
+          "listAddition",
+          "inboundEmailProcessed"
+        ]
+      }
+    },
+    "domain": {
+      "type": "string",
+      "description": "Optional domain filter to receive events only for emails sent from this domain."
+    }
+  }
+}

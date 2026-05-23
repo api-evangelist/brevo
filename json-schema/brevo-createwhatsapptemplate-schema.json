@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CreateWhatsAppTemplate",
+  "title": "CreateWhatsAppTemplate",
+  "type": "object",
+  "required": [
+    "name",
+    "language",
+    "category",
+    "bodyText"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name for the template."
+    },
+    "language": {
+      "type": "string",
+      "description": "Language code for the template such as en for English."
+    },
+    "category": {
+      "type": "string",
+      "description": "Template category required by Meta for approval.",
+      "enum": [
+        "MARKETING",
+        "UTILITY"
+      ]
+    },
+    "headerText": {
+      "type": "string",
+      "description": "Header text content for the template."
+    },
+    "bodyText": {
+      "type": "string",
+      "description": "Body text content for the template with parameter placeholders."
+    },
+    "footerText": {
+      "type": "string",
+      "description": "Footer text content for the template."
+    }
+  }
+}
