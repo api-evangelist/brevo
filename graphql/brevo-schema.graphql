@@ -1,0 +1,1212 @@
+"""
+Brevo (Sendinblue) GraphQL Schema
+Conceptual schema derived from the Brevo REST API v3
+https://developers.brevo.com/reference
+"""
+
+# ─── Scalars ───────────────────────────────────────────────────────────────────
+
+scalar DateTime
+scalar JSON
+scalar Upload
+
+# ─── Enums ─────────────────────────────────────────────────────────────────────
+
+enum CampaignStatus {
+  DRAFT
+  QUEUED
+  SENT
+  SUSPENDED
+  ARCHIVE
+  IN_PROCESS
+}
+
+enum CampaignType {
+  CLASSIC
+  TRIGGER
+}
+
+enum WebhookEvent {
+  DELIVERED
+  HARD_BOUNCE
+  SOFT_BOUNCE
+  BLOCKED
+  SPAM
+  INVALID
+  DEFERRED
+  SENT
+  OPENED
+  CLICK
+  UNSUBSCRIBE
+  LIST_ADDITION
+  CONTACT_UPDATED
+  CONTACT_DELETED
+  INBOUND_EMAIL
+}
+
+enum SmsCampaignStatus {
+  DRAFT
+  QUEUED
+  SENT
+  SUSPENDED
+  ARCHIVE
+  IN_PROCESS
+}
+
+enum SenderValidationStatus {
+  PENDING
+  VALIDATED
+  ERROR
+}
+
+enum ConversationStatus {
+  OPEN
+  PENDING
+  RESOLVED
+  SNOOZED
+}
+
+enum MessageType {
+  TEXT
+  IMAGE
+  FILE
+  TEMPLATE
+}
+
+# ─── Contact Types ─────────────────────────────────────────────────────────────
+
+"""A contact in the Brevo platform."""
+type Contact {
+  id: ID!
+  email: String
+  phone: String
+  firstName: String
+  lastName: String
+  smsBlacklisted: Boolean
+  emailBlacklisted: Boolean
+  attributes: ContactAttributes
+  listIds: [Int]
+  statistics: ContactStatistics
+  createdAt: DateTime
+  modifiedAt: DateTime
+}
+
+"""Expanded contact record with engagement and opt-in history."""
+type ContactDetails {
+  id: ID!
+  email: String
+  phone: String
+  firstName: String
+  lastName: String
+  smsBlacklisted: Boolean
+  emailBlacklisted: Boolean
+  attributes: ContactAttributes
+  listIds: [Int]
+  statistics: ContactStatistics
+  createdAt: DateTime
+  modifiedAt: DateTime
+}
+
+"""An email address associated with a contact."""
+type ContactEmail {
+  email: String!
+  blacklisted: Boolean
+  unsubscribed: Boolean
+}
+
+"""A phone number associated with a contact."""
+type ContactPhone {
+  phone: String!
+  blacklisted: Boolean
+}
+
+"""Custom attributes map for a contact."""
+type ContactAttributes {
+  fields: JSON
+}
+
+"""A list entry showing which lists a contact belongs to."""
+type ContactList {
+  listId: Int!
+  name: String
+  unsubscribed: Boolean
+}
+
+"""A bulk import job for contacts."""
+type ContactImport {
+  importId: ID!
+  status: String
+  totalContacts: Int
+  invalidContacts: Int
+  duplicateContacts: Int
+  processedContacts: Int
+  createdAt: DateTime
+}
+
+"""Aggregate statistics for a contact."""
+type ContactStatistics {
+  opened: JSON
+  clicked: JSON
+  unsubscriptions: JSON
+  hardBounces: JSON
+  softBounces: JSON
+  complaints: JSON
+  sent: JSON
+}
+
+# ─── List and Folder Types ──────────────────────────────────────────────────────
+
+"""A contact list used for segmentation and campaign targeting."""
+type List {
+  id: ID!
+  name: String!
+  totalBlacklisted: Int
+  totalSubscribers: Int
+  folderId: Int
+  createdAt: DateTime
+  campaignStats: [CampaignStatistics]
+}
+
+"""Extended list information including subscriber counts."""
+type ListDetails {
+  id: ID!
+  name: String!
+  totalBlacklisted: Int
+  totalSubscribers: Int
+  folderId: Int
+  createdAt: DateTime
+  campaignStats: [CampaignStatistics]
+}
+
+"""A contact entry within a list."""
+type ListContact {
+  listId: Int!
+  contactId: ID!
+  email: String
+  unsubscribed: Boolean
+  addedAt: DateTime
+}
+
+"""An organizational folder grouping multiple lists."""
+type Folder {
+  id: ID!
+  name: String!
+  totalLists: Int
+  totalBlacklisted: Int
+  totalSubscribers: Int
+}
+
+"""Extended folder metadata including list count."""
+type FolderDetails {
+  id: ID!
+  name: String!
+  totalLists: Int
+  totalBlacklisted: Int
+  totalSubscribers: Int
+  lists: [List]
+}
+
+# ─── Campaign Types ─────────────────────────────────────────────────────────────
+
+"""An email marketing campaign."""
+type Campaign {
+  id: ID!
+  name: String!
+  subject: String
+  status: CampaignStatus
+  type: CampaignType
+  scheduledAt: DateTime
+  createdAt: DateTime
+  modifiedAt: DateTime
+  sender: Sender
+  statistics: CampaignStatistics
+}
+
+"""Full campaign configuration including content, sender, and recipients."""
+type CampaignDetails {
+  id: ID!
+  name: String!
+  subject: String
+  previewText: String
+  status: CampaignStatus
+  type: CampaignType
+  scheduledAt: DateTime
+  createdAt: DateTime
+  modifiedAt: DateTime
+  sender: Sender
+  recipients: CampaignRecipients
+  content: CampaignContent
+  statistics: CampaignStatistics
+  inlineImageActivation: Boolean
+  mirrorActive: Boolean
+  recurring: Boolean
+}
+
+"""Scheduling configuration for a campaign send."""
+type CampaignSchedule {
+  scheduledAt: DateTime!
+  batchSize: Int
+  batchesInterval: Int
+}
+
+"""HTML and text content for a campaign."""
+type CampaignContent {
+  htmlContent: String
+  htmlUrl: String
+  textContent: String
+}
+
+"""Recipient list configuration for a campaign."""
+type CampaignRecipients {
+  listIds: [Int]
+  exclusionListIds: [Int]
+  segments: [Int]
+}
+
+# ─── Template Types ─────────────────────────────────────────────────────────────
+
+"""A reusable email template."""
+type Template {
+  id: ID!
+  name: String!
+  subject: String
+  isActive: Boolean
+  testSent: Boolean
+  sender: Sender
+  replyTo: String
+  toField: String
+  tag: String
+  createdAt: DateTime
+  modifiedAt: DateTime
+}
+
+"""Full template record including content and parameter definitions."""
+type TemplateDetails {
+  id: ID!
+  name: String!
+  subject: String
+  isActive: Boolean
+  testSent: Boolean
+  sender: Sender
+  replyTo: String
+  toField: String
+  tag: String
+  htmlContent: String
+  createdAt: DateTime
+  modifiedAt: DateTime
+  params: TemplateParams
+}
+
+"""Template parameter definitions for dynamic content substitution."""
+type TemplateParams {
+  params: JSON
+}
+
+# ─── Statistics Types ────────────────────────────────────────────────────────────
+
+"""Aggregate statistics root across all channels."""
+type Statistics {
+  email: EmailStatistics
+  sms: SMSStatistics
+  whatsapp: WhatsAppStatistics
+  globalStats: GlobalStatistics
+}
+
+"""Per-campaign engagement metrics."""
+type CampaignStatistics {
+  campaignId: ID!
+  globalStats: GlobalStatistics
+  linksStats: JSON
+  statsByDomain: JSON
+  statsByDevice: JSON
+  statsByBrowser: JSON
+}
+
+"""Email delivery and engagement statistics."""
+type EmailStatistics {
+  sent: Int
+  delivered: Int
+  hardBounces: Int
+  softBounces: Int
+  complaints: Int
+  unsubscriptions: Int
+  opens: Int
+  clicks: Int
+  transactional: TransactionalEmailStatistics
+}
+
+"""SMS delivery statistics."""
+type SMSStatistics {
+  sent: Int
+  delivered: Int
+  failed: Int
+  blacklisted: Int
+}
+
+"""WhatsApp message delivery and read statistics."""
+type WhatsAppStatistics {
+  sent: Int
+  delivered: Int
+  read: Int
+  failed: Int
+  rejected: Int
+}
+
+"""Global aggregate statistics across all emails."""
+type GlobalStatistics {
+  sent: Int
+  delivered: Int
+  hardBounces: Int
+  softBounces: Int
+  complaints: Int
+  unsubscriptions: Int
+  opens: Int
+  clicks: Int
+  uniqueViews: Int
+  uniqueClicks: Int
+  clickers: Int
+}
+
+"""Statistics for transactional email activity."""
+type TransactionalEmailStatistics {
+  sent: Int
+  delivered: Int
+  hardBounces: Int
+  softBounces: Int
+  opens: Int
+  clicks: Int
+  blocked: Int
+  invalid: Int
+  queued: Int
+}
+
+# ─── Transactional Email Types ───────────────────────────────────────────────────
+
+"""Root type for transactional messaging resources."""
+type Transactional {
+  emails: [TransactionalEmail]
+  sms: [SMSMessage]
+  whatsapp: [WhatsAppMessage]
+}
+
+"""A single transactional email send record."""
+type TransactionalEmail {
+  uuid: ID!
+  messageId: String
+  email: String
+  subject: String
+  templateId: Int
+  date: DateTime
+  event: String
+  tags: [String]
+  ip: String
+}
+
+"""Full details of an outbound transactional email."""
+type EmailDetails {
+  uuid: ID!
+  messageId: String
+  email: String
+  subject: String
+  from: String
+  to: [String]
+  cc: [String]
+  bcc: [String]
+  replyTo: String
+  templateId: Int
+  date: DateTime
+  event: String
+  tags: [String]
+  events: [EmailEvent]
+}
+
+"""An event in the lifecycle of a transactional email."""
+type EmailEvent {
+  name: String
+  time: DateTime
+  messageId: String
+  reason: String
+  ip: String
+  link: String
+  from: String
+  to: String
+}
+
+# ─── SMS Types ───────────────────────────────────────────────────────────────────
+
+"""A transactional SMS message record."""
+type SMSMessage {
+  reference: ID
+  phoneNumber: String
+  date: DateTime
+  event: String
+  tags: [String]
+}
+
+"""Delivery and content details for an SMS."""
+type SMSDetails {
+  reference: ID
+  phoneNumber: String
+  senderSMS: String
+  content: String
+  date: DateTime
+  event: String
+  tags: [String]
+  events: [SMSEvent]
+}
+
+"""A lifecycle event for an SMS message."""
+type SMSEvent {
+  name: String
+  time: DateTime
+  reason: String
+}
+
+# ─── WhatsApp Types ──────────────────────────────────────────────────────────────
+
+"""A transactional WhatsApp message record."""
+type WhatsAppMessage {
+  messageId: ID
+  phoneNumber: String
+  date: DateTime
+  event: String
+  templateId: Int
+}
+
+"""Template and delivery details for a WhatsApp message."""
+type WhatsAppDetails {
+  messageId: ID
+  phoneNumber: String
+  date: DateTime
+  event: String
+  templateId: Int
+  templateName: String
+  content: String
+  events: [WhatsAppEvent]
+}
+
+"""A lifecycle event for a WhatsApp message."""
+type WhatsAppEvent {
+  name: String
+  time: DateTime
+  reason: String
+}
+
+# ─── SMS Campaign Types ──────────────────────────────────────────────────────────
+
+"""An SMS marketing campaign."""
+type SmsCampaign {
+  id: ID!
+  name: String!
+  status: SmsCampaignStatus
+  content: String
+  scheduledAt: DateTime
+  sender: String
+  createdAt: DateTime
+  modifiedAt: DateTime
+}
+
+"""Full SMS campaign record including content and recipient list."""
+type SmsCampaignDetails {
+  id: ID!
+  name: String!
+  status: SmsCampaignStatus
+  content: String
+  scheduledAt: DateTime
+  sender: String
+  recipients: CampaignRecipients
+  statistics: SMSStatistics
+  createdAt: DateTime
+  modifiedAt: DateTime
+}
+
+# ─── WhatsApp Campaign Types ─────────────────────────────────────────────────────
+
+"""Root type for WhatsApp campaign resources."""
+type WhatsApp {
+  campaigns: [WhatsAppCampaign]
+  templates: [WhatsAppTemplate]
+}
+
+"""A WhatsApp campaign record."""
+type WhatsAppCampaign {
+  id: ID!
+  campaignName: String!
+  campaignStatus: String
+  scheduledAt: DateTime
+  createdAt: DateTime
+  modifiedAt: DateTime
+}
+
+"""Full WhatsApp campaign with template and audience details."""
+type WhatsAppCampaignDetails {
+  id: ID!
+  campaignName: String!
+  campaignStatus: String
+  templateId: Int
+  scheduledAt: DateTime
+  createdAt: DateTime
+  modifiedAt: DateTime
+  recipients: CampaignRecipients
+  statistics: WhatsAppStatistics
+}
+
+"""A WhatsApp message template."""
+type WhatsAppTemplate {
+  id: ID!
+  name: String!
+  status: String
+  language: String
+  category: String
+  components: JSON
+}
+
+# ─── Conversation Types ──────────────────────────────────────────────────────────
+
+"""A live chat or support conversation thread."""
+type Conversation {
+  id: ID!
+  status: ConversationStatus
+  visitorId: String
+  agentId: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+"""Full conversation record including agent assignment and status."""
+type ConversationDetails {
+  id: ID!
+  status: ConversationStatus
+  visitorId: String
+  agentId: String
+  agentName: String
+  messages: [ConversationMessage]
+  createdAt: DateTime
+  updatedAt: DateTime
+  closedAt: DateTime
+}
+
+"""An individual message within a conversation."""
+type ConversationMessage {
+  id: ID!
+  conversationId: ID!
+  type: MessageType
+  text: String
+  senderId: String
+  senderName: String
+  receiverId: String
+  file: File
+  createdAt: DateTime
+  read: Boolean
+}
+
+# ─── Sender Types ────────────────────────────────────────────────────────────────
+
+"""An email sender identity."""
+type Sender {
+  id: ID!
+  name: String!
+  email: String!
+  active: Boolean
+}
+
+"""Full sender record including validation status and associated IPs."""
+type SenderDetails {
+  id: ID!
+  name: String!
+  email: String!
+  active: Boolean
+  ips: [SenderIP]
+}
+
+"""An IP address associated with a sender identity."""
+type SenderIP {
+  ip: String!
+  domain: String
+  weight: Int
+}
+
+# ─── Account Types ───────────────────────────────────────────────────────────────
+
+"""The authenticated Brevo account."""
+type Account {
+  email: String!
+  firstName: String
+  lastName: String
+  companyName: String
+  plan: [AccountPlan]
+}
+
+"""Account metadata including company info, timezone, and limits."""
+type AccountDetails {
+  email: String!
+  firstName: String
+  lastName: String
+  companyName: String
+  address: AccountAddress
+  plan: [AccountPlan]
+  relay: AccountRelay
+}
+
+"""Subscription plan details including email and SMS quotas."""
+type AccountPlan {
+  type: String
+  creditsType: String
+  credits: Float
+  startDate: DateTime
+  endDate: DateTime
+  userLimit: Int
+}
+
+"""Address information for the account."""
+type AccountAddress {
+  street: String
+  city: String
+  zip: String
+  country: String
+}
+
+"""Relay/SMTP configuration for the account."""
+type AccountRelay {
+  enabled: Boolean
+  data: AccountRelayData
+}
+
+"""SMTP relay server details."""
+type AccountRelayData {
+  email: String
+  url: String
+  port: Int
+}
+
+# ─── Webhook Types ────────────────────────────────────────────────────────────────
+
+"""A webhook subscription for event notifications."""
+type Webhook {
+  id: ID!
+  url: String!
+  description: String
+  events: [WebhookEvent]
+  type: String
+  createdAt: DateTime
+  modifiedAt: DateTime
+}
+
+"""Full webhook record including URL and subscribed events."""
+type WebhookDetails {
+  id: ID!
+  url: String!
+  description: String
+  events: [WebhookEvent]
+  type: String
+  auth: WebhookAuth
+  headers: JSON
+  createdAt: DateTime
+  modifiedAt: DateTime
+}
+
+"""Authentication configuration for a webhook."""
+type WebhookAuth {
+  type: String
+  username: String
+  password: String
+  token: String
+}
+
+# ─── File and Upload Types ────────────────────────────────────────────────────────
+
+"""A file stored in the Brevo platform."""
+type File {
+  id: ID!
+  name: String!
+  size: Int
+  mimeType: String
+  url: String
+  createdAt: DateTime
+}
+
+"""File metadata including size, MIME type, and upload timestamp."""
+type FileDetails {
+  id: ID!
+  name: String!
+  size: Int
+  mimeType: String
+  url: String
+  authorId: ID
+  contactId: ID
+  conversationId: ID
+  createdAt: DateTime
+}
+
+"""An in-progress or completed file upload record."""
+type UploadRecord {
+  id: ID!
+  status: String
+  fileId: ID
+  fileName: String
+  uploadedAt: DateTime
+}
+
+# ─── Tracking and Event Types ──────────────────────────────────────────────────────
+
+"""Event tracking configuration for behavioral analytics."""
+type Track {
+  id: ID!
+  name: String!
+  properties: JSON
+  enabled: Boolean
+  createdAt: DateTime
+}
+
+"""A tracked behavioral event associated with a contact."""
+type TrackEvent {
+  id: ID!
+  eventName: String!
+  eventData: JSON
+  contactId: ID
+  email: String
+  date: DateTime
+}
+
+# ─── Authentication Types ──────────────────────────────────────────────────────────
+
+"""An API key for programmatic access to the Brevo API."""
+type APIKey {
+  id: ID!
+  name: String!
+  key: String
+  createdAt: DateTime
+  expiresAt: DateTime
+  active: Boolean
+}
+
+"""An authentication token with expiry."""
+type Token {
+  token: String!
+  expiresAt: DateTime
+  type: String
+}
+
+# ─── Error Type ───────────────────────────────────────────────────────────────────
+
+"""Standard error response."""
+type Error {
+  code: String!
+  message: String!
+  statusCode: Int
+}
+
+# ─── Input Types ──────────────────────────────────────────────────────────────────
+
+input CreateContactInput {
+  email: String
+  attributes: JSON
+  emailBlacklisted: Boolean
+  smsBlacklisted: Boolean
+  listIds: [Int]
+  updateEnabled: Boolean
+  smtpBlacklistSender: [String]
+}
+
+input UpdateContactInput {
+  attributes: JSON
+  emailBlacklisted: Boolean
+  smsBlacklisted: Boolean
+  listIds: [Int]
+  unlinkListIds: [Int]
+  smtpBlacklistSender: [String]
+}
+
+input ImportContactsInput {
+  fileUrl: String
+  jsonBody: JSON
+  listIds: [Int]
+  notifyUrl: String
+  newList: NewListInput
+  emailBlacklist: Boolean
+  smsBlacklist: Boolean
+  updateExistingContacts: Boolean
+  emptyContactsAttributes: Boolean
+}
+
+input NewListInput {
+  listName: String!
+  folderId: Int!
+}
+
+input CreateListInput {
+  name: String!
+  folderId: Int!
+}
+
+input UpdateListInput {
+  name: String
+  folderId: Int
+}
+
+input CreateCampaignInput {
+  name: String!
+  subject: String!
+  sender: SenderInput!
+  type: CampaignType
+  htmlContent: String
+  htmlUrl: String
+  templateId: Int
+  scheduledAt: DateTime
+  header: String
+  footer: String
+  inlineImageActivation: Boolean
+  mirrorActive: Boolean
+  recipients: RecipientsInput
+  tag: String
+  toField: String
+  replyTo: String
+  titleImageSrc: String
+}
+
+input UpdateCampaignInput {
+  name: String
+  subject: String
+  sender: SenderInput
+  htmlContent: String
+  htmlUrl: String
+  templateId: Int
+  scheduledAt: DateTime
+  header: String
+  footer: String
+  recipients: RecipientsInput
+  tag: String
+  toField: String
+  replyTo: String
+}
+
+input SenderInput {
+  name: String!
+  email: String!
+}
+
+input RecipientsInput {
+  listIds: [Int]
+  exclusionListIds: [Int]
+}
+
+input CreateTemplateInput {
+  name: String!
+  subject: String!
+  htmlContent: String
+  htmlUrl: String
+  sender: SenderInput!
+  toField: String
+  replyTo: String
+  tag: String
+  isActive: Boolean
+}
+
+input UpdateTemplateInput {
+  name: String
+  subject: String
+  htmlContent: String
+  htmlUrl: String
+  sender: SenderInput
+  toField: String
+  replyTo: String
+  tag: String
+  isActive: Boolean
+}
+
+input SendTransactionalEmailInput {
+  to: [EmailRecipientInput]!
+  sender: SenderInput
+  subject: String
+  htmlContent: String
+  textContent: String
+  templateId: Int
+  params: JSON
+  cc: [EmailRecipientInput]
+  bcc: [EmailRecipientInput]
+  replyTo: EmailRecipientInput
+  attachment: [AttachmentInput]
+  headers: JSON
+  tags: [String]
+  scheduledAt: DateTime
+  batchId: String
+}
+
+input EmailRecipientInput {
+  email: String!
+  name: String
+}
+
+input AttachmentInput {
+  url: String
+  content: String
+  name: String!
+}
+
+input SendSMSInput {
+  sender: String!
+  recipient: String!
+  content: String!
+  type: String
+  tag: String
+  webUrl: String
+}
+
+input SendWhatsAppMessageInput {
+  senderNumber: String!
+  contactNumbers: [String]!
+  templateId: Int!
+}
+
+input CreateSmsCampaignInput {
+  name: String!
+  sender: String!
+  content: String!
+  recipients: RecipientsInput
+  scheduledAt: DateTime
+}
+
+input CreateWebhookInput {
+  url: String!
+  description: String
+  events: [WebhookEvent]!
+  type: String
+  domain: String
+}
+
+input UpdateWebhookInput {
+  url: String
+  description: String
+  events: [WebhookEvent]
+}
+
+input CreateSenderInput {
+  name: String!
+  email: String!
+  ips: [SenderIPInput]
+}
+
+input SenderIPInput {
+  ip: String!
+  domain: String
+  weight: Int
+}
+
+input CreateFolderInput {
+  name: String!
+}
+
+input CreateAPIKeyInput {
+  name: String!
+}
+
+input ContactFilterInput {
+  modifiedSince: DateTime
+  createdSince: DateTime
+  limit: Int
+  offset: Int
+  sort: SortOrder
+}
+
+input CampaignFilterInput {
+  type: CampaignType
+  status: CampaignStatus
+  startDate: DateTime
+  endDate: DateTime
+  limit: Int
+  offset: Int
+}
+
+enum SortOrder {
+  ASC
+  DESC
+}
+
+# ─── Query and Mutation Root Types ────────────────────────────────────────────────
+
+type Query {
+  """Get a single contact by ID."""
+  contact(id: ID!): ContactDetails
+
+  """List contacts with optional filtering and pagination."""
+  contacts(filter: ContactFilterInput): [Contact]
+
+  """Get a single contact list by ID."""
+  list(id: ID!): ListDetails
+
+  """List all contact lists."""
+  lists(folderId: Int, limit: Int, offset: Int): [List]
+
+  """Get a single folder by ID."""
+  folder(id: ID!): FolderDetails
+
+  """List all folders."""
+  folders(limit: Int, offset: Int): [Folder]
+
+  """Get a single email campaign by ID."""
+  campaign(id: ID!): CampaignDetails
+
+  """List email campaigns with optional filtering."""
+  campaigns(filter: CampaignFilterInput): [Campaign]
+
+  """Get a single email template by ID."""
+  template(id: ID!): TemplateDetails
+
+  """List all email templates."""
+  templates(templateStatus: Boolean, limit: Int, offset: Int): [Template]
+
+  """List all sender identities."""
+  senders(ip: String): [SenderDetails]
+
+  """List transactional email activity."""
+  transactionalEmails(
+    email: String
+    templateId: Int
+    messageId: String
+    startDate: DateTime
+    endDate: DateTime
+    sort: SortOrder
+    limit: Int
+    offset: Int
+  ): [TransactionalEmail]
+
+  """Get full details of a transactional email by UUID."""
+  transactionalEmail(uuid: ID!): EmailDetails
+
+  """List SMS campaigns."""
+  smsCampaigns(status: SmsCampaignStatus, limit: Int, offset: Int): [SmsCampaign]
+
+  """Get a single SMS campaign by ID."""
+  smsCampaign(id: ID!): SmsCampaignDetails
+
+  """List webhook subscriptions."""
+  webhooks(type: String): [WebhookDetails]
+
+  """Get a single webhook by ID."""
+  webhook(id: ID!): WebhookDetails
+
+  """Get account details."""
+  account: AccountDetails
+
+  """Get aggregate statistics."""
+  statistics(startDate: DateTime, endDate: DateTime): Statistics
+
+  """Get campaign statistics by ID."""
+  campaignStatistics(id: ID!): CampaignStatistics
+
+  """List conversations."""
+  conversations(status: ConversationStatus, limit: Int, offset: Int): [ConversationDetails]
+
+  """Get a single conversation by ID."""
+  conversation(id: ID!): ConversationDetails
+
+  """List files."""
+  files(contactId: ID, limit: Int, offset: Int): [File]
+
+  """Get SMS transactional activity."""
+  smsActivity(phone: String, startDate: DateTime, endDate: DateTime, limit: Int, offset: Int): [SMSMessage]
+
+  """List API keys."""
+  apiKeys: [APIKey]
+}
+
+type Mutation {
+  """Create a new contact."""
+  createContact(input: CreateContactInput!): Contact
+
+  """Update an existing contact."""
+  updateContact(id: ID!, input: UpdateContactInput!): Contact
+
+  """Delete a contact."""
+  deleteContact(id: ID!): Boolean
+
+  """Bulk import contacts."""
+  importContacts(input: ImportContactsInput!): ContactImport
+
+  """Add contacts to a list."""
+  addContactToList(listId: ID!, emails: [String], ids: [ID]): Boolean
+
+  """Remove contacts from a list."""
+  removeContactFromList(listId: ID!, emails: [String], ids: [ID]): Boolean
+
+  """Create a new contact list."""
+  createList(input: CreateListInput!): List
+
+  """Update a contact list."""
+  updateList(id: ID!, input: UpdateListInput!): List
+
+  """Delete a contact list."""
+  deleteList(id: ID!): Boolean
+
+  """Create a new folder."""
+  createFolder(input: CreateFolderInput!): Folder
+
+  """Delete a folder."""
+  deleteFolder(id: ID!): Boolean
+
+  """Create a new email campaign."""
+  createCampaign(input: CreateCampaignInput!): Campaign
+
+  """Update an existing campaign."""
+  updateCampaign(id: ID!, input: UpdateCampaignInput!): Campaign
+
+  """Delete a campaign."""
+  deleteCampaign(id: ID!): Boolean
+
+  """Schedule a campaign for future delivery."""
+  scheduleCampaign(id: ID!, scheduledAt: DateTime!): Campaign
+
+  """Send a campaign immediately."""
+  sendCampaignNow(id: ID!): Boolean
+
+  """Create a new email template."""
+  createTemplate(input: CreateTemplateInput!): Template
+
+  """Update an existing template."""
+  updateTemplate(id: ID!, input: UpdateTemplateInput!): Template
+
+  """Delete a template."""
+  deleteTemplate(id: ID!): Boolean
+
+  """Send a transactional email."""
+  sendTransactionalEmail(input: SendTransactionalEmailInput!): TransactionalEmail
+
+  """Send a transactional SMS."""
+  sendSMS(input: SendSMSInput!): SMSMessage
+
+  """Send a transactional WhatsApp message."""
+  sendWhatsAppMessage(input: SendWhatsAppMessageInput!): WhatsAppMessage
+
+  """Create an SMS campaign."""
+  createSmsCampaign(input: CreateSmsCampaignInput!): SmsCampaign
+
+  """Send an SMS campaign now."""
+  sendSmsCampaignNow(id: ID!): Boolean
+
+  """Create a webhook subscription."""
+  createWebhook(input: CreateWebhookInput!): Webhook
+
+  """Update a webhook subscription."""
+  updateWebhook(id: ID!, input: UpdateWebhookInput!): Webhook
+
+  """Delete a webhook subscription."""
+  deleteWebhook(id: ID!): Boolean
+
+  """Create a new sender identity."""
+  createSender(input: CreateSenderInput!): SenderDetails
+
+  """Delete a sender identity."""
+  deleteSender(id: ID!): Boolean
+
+  """Send a test campaign to a list of emails."""
+  sendTestCampaign(id: ID!, emailTo: [String]!): Boolean
+
+  """Create a new API key."""
+  createAPIKey(input: CreateAPIKeyInput!): APIKey
+
+  """Delete an API key."""
+  deleteAPIKey(id: ID!): Boolean
+
+  """Track a behavioral event for a contact."""
+  trackEvent(email: String!, event: String!, properties: JSON): TrackEvent
+}
