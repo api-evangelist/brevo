@@ -1,0 +1,209 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Brevo Conversations API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api-key",
+      "value": "{{api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Messages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send a message as an agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/conversations/messages",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a chat message within a conversation as an agent. The message is delivered to the visitor in real time through the Brevo chat widget."
+        },
+        {
+          "info": {
+            "name": "Get a message",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/conversations/messages/:messageId",
+            "params": [
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the chat message."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific chat message by its unique identifier including the message text, sender, and timestamp."
+        },
+        {
+          "info": {
+            "name": "Update a message",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.brevo.com/v3/conversations/messages/:messageId",
+            "params": [
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the chat message."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the text content of an existing chat message. Only agent messages can be updated."
+        },
+        {
+          "info": {
+            "name": "Delete a message",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/conversations/messages/:messageId",
+            "params": [
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the chat message."
+              }
+            ]
+          },
+          "docs": "Permanently deletes a chat message from a conversation."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Automated Messages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send an automated message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/conversations/pushedMessages",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates and sends an automated message to a visitor. Automated messages can be used for proactive engagement, welcome messages, or scripted bot responses."
+        },
+        {
+          "info": {
+            "name": "Get an automated message",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/conversations/pushedMessages/:pushedMessageId",
+            "params": [
+              {
+                "name": "pushedMessageId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the automated message."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific automated message by its unique identifier."
+        },
+        {
+          "info": {
+            "name": "Update an automated message",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.brevo.com/v3/conversations/pushedMessages/:pushedMessageId",
+            "params": [
+              {
+                "name": "pushedMessageId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the automated message."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the content of an existing automated message."
+        },
+        {
+          "info": {
+            "name": "Delete an automated message",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/conversations/pushedMessages/:pushedMessageId",
+            "params": [
+              {
+                "name": "pushedMessageId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the automated message."
+              }
+            ]
+          },
+          "docs": "Permanently deletes an automated message."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Agent Status",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Set agent status to online",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/conversations/agentOnlinePing",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets an agent's status to online for approximately 2-3 minutes. This endpoint should be pinged every minute for as long as the agent needs to be considered available for conversations."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

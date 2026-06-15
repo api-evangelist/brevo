@@ -1,0 +1,2157 @@
+{
+  "item": [
+    {
+      "id": "1b178bc5-b84d-482d-959b-498fb7f134f8",
+      "name": "Categories",
+      "description": {
+        "content": "Manage product categories for organizing the catalog.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5aa3761a-185b-43e0-8b9a-a3050c2af691",
+          "name": "Return all categories",
+          "request": {
+            "name": "Return all categories",
+            "description": {
+              "content": "Retrieves all product categories in the eCommerce catalog.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "categories"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "Maximum number of results to return per request."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Number of results to skip for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<string>",
+                  "description": "Comma-separated list of category IDs to filter by."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bde60ab7-c67c-40c5-8bdd-f2aa44f92688",
+              "name": "Categories retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 3878,\n  \"categories\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"url\": \"https://E.eqsQqCibS+DhCyBlQM4-yFbAoXgSckvrr-mDeU3ZUpuW5ZfSv,+WulGb3Wc31t\",\n      \"createdAt\": \"2006-03-02T11:16:42.076Z\",\n      \"modifiedAt\": \"2016-12-20T17:24:23.508Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"url\": \"http://WbFPIZZdMgWNzHwtogLr.fpqnf1k69XVm-SoDadlDp6YfDuoLSqrWlmE8zMmCru\",\n      \"createdAt\": \"1979-09-19T20:13:28.720Z\",\n      \"modifiedAt\": \"1987-08-18T07:49:23.225Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1dc499a3-8a0a-420a-a135-e742151abcf4",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9deb32bd-1caa-4ce2-a3da-c8906ae896f1",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ade05cdc-a39f-4d25-bdf7-3268706b96ab",
+          "name": "Create or update a category",
+          "request": {
+            "name": "Create or update a category",
+            "description": {
+              "content": "Creates a new product category or updates an existing one. If a category with the same ID exists, it will be updated.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "categories"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"url\": \"<uri>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f74f81de-4486-40e3-a09d-33f422acdb0b",
+              "name": "Category created or updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"url\": \"<uri>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "123add24-90ba-42ab-b4c8-c4f0e1f553b9",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"url\": \"<uri>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9015fde4-f7fc-4171-b762-e92742cdd11f",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"url\": \"<uri>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a630bb03-5b38-488e-a9e6-446a5dd297e9",
+          "name": "Create or update categories in batch",
+          "request": {
+            "name": "Create or update categories in batch",
+            "description": {
+              "content": "Creates or updates multiple product categories in a single API call.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "categories",
+                "batch"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"categories\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"url\": \"<uri>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"url\": \"<uri>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "11bf152e-5221-4aaa-95e2-e38e852b7f38",
+              "name": "Categories batch processed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "categories",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"categories\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"url\": \"https://rMIVKsgPrB.evdriKFwaHZy4R,Rdi8M3CSu,6n7bgZBjeYgDuZScIM0a+hgctv\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"url\": \"https://vlKCWAzIepIlvcPlq.mbQom.-e2yXoOCyCNHgVg+nFDGDyINQYZEP,fPSti,d+DBxkr0ND+G4nu2rjlLut6-m1d\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "591fc09a-b893-4b47-b597-cf6b7b5bd92c",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "categories",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"categories\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"url\": \"https://rMIVKsgPrB.evdriKFwaHZy4R,Rdi8M3CSu,6n7bgZBjeYgDuZScIM0a+hgctv\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"url\": \"https://vlKCWAzIepIlvcPlq.mbQom.-e2yXoOCyCNHgVg+nFDGDyINQYZEP,fPSti,d+DBxkr0ND+G4nu2rjlLut6-m1d\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e6840a24-dd8e-454d-809b-ce30f7c66162",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "categories",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"categories\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"url\": \"https://rMIVKsgPrB.evdriKFwaHZy4R,Rdi8M3CSu,6n7bgZBjeYgDuZScIM0a+hgctv\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"url\": \"https://vlKCWAzIepIlvcPlq.mbQom.-e2yXoOCyCNHgVg+nFDGDyINQYZEP,fPSti,d+DBxkr0ND+G4nu2rjlLut6-m1d\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "4ecf22b3-68a9-4ae2-ae65-60d3891518b9",
+      "name": "Orders",
+      "description": {
+        "content": "Create and manage eCommerce order data for revenue attribution and purchase tracking.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f7c1bdff-016a-476e-aaeb-c2ae08f9e141",
+          "name": "Create or update an order",
+          "request": {
+            "name": "Create or update an order",
+            "description": {
+              "content": "Creates a new order or updates the status of an existing order in the Brevo eCommerce system. Orders are used for revenue attribution and purchase behavior tracking.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orders",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"email\": \"<email>\",\n  \"status\": \"<string>\",\n  \"amount\": \"<float>\",\n  \"products\": [\n    {\n      \"productId\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"price\": \"<float>\",\n      \"variantId\": \"<string>\"\n    },\n    {\n      \"productId\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"price\": \"<float>\",\n      \"variantId\": \"<string>\"\n    }\n  ],\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"coupons\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c4bfdddb-c518-4f8e-919f-2a027656a70b",
+              "name": "Order created or updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"email\": \"<email>\",\n  \"status\": \"<string>\",\n  \"amount\": \"<float>\",\n  \"products\": [\n    {\n      \"productId\": \"string\",\n      \"quantity\": 2686,\n      \"price\": 9549.554912354028,\n      \"variantId\": \"string\"\n    },\n    {\n      \"productId\": \"string\",\n      \"quantity\": 8850,\n      \"price\": 2142.9738683665855,\n      \"variantId\": \"string\"\n    }\n  ],\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"coupons\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8fbe6163-5bab-47e3-a09e-2c75707abff9",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"email\": \"<email>\",\n  \"status\": \"<string>\",\n  \"amount\": \"<float>\",\n  \"products\": [\n    {\n      \"productId\": \"string\",\n      \"quantity\": 2686,\n      \"price\": 9549.554912354028,\n      \"variantId\": \"string\"\n    },\n    {\n      \"productId\": \"string\",\n      \"quantity\": 8850,\n      \"price\": 2142.9738683665855,\n      \"variantId\": \"string\"\n    }\n  ],\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"coupons\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "292a0951-e102-49e3-b798-167fcb5f2590",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"email\": \"<email>\",\n  \"status\": \"<string>\",\n  \"amount\": \"<float>\",\n  \"products\": [\n    {\n      \"productId\": \"string\",\n      \"quantity\": 2686,\n      \"price\": 9549.554912354028,\n      \"variantId\": \"string\"\n    },\n    {\n      \"productId\": \"string\",\n      \"quantity\": 8850,\n      \"price\": 2142.9738683665855,\n      \"variantId\": \"string\"\n    }\n  ],\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"coupons\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "225825a2-ba73-4e0f-b212-9bbc7f6da4b9",
+          "name": "Create or update orders in batch",
+          "request": {
+            "name": "Create or update orders in batch",
+            "description": {
+              "content": "Creates or updates multiple orders in a single API call for efficient bulk processing of order data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orders",
+                "status",
+                "batch"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orders\": [\n    {\n      \"id\": \"<string>\",\n      \"email\": \"<email>\",\n      \"status\": \"<string>\",\n      \"amount\": \"<float>\",\n      \"products\": [\n        {\n          \"productId\": \"<string>\",\n          \"quantity\": \"<integer>\",\n          \"price\": \"<float>\",\n          \"variantId\": \"<string>\"\n        },\n        {\n          \"productId\": \"<string>\",\n          \"quantity\": \"<integer>\",\n          \"price\": \"<float>\",\n          \"variantId\": \"<string>\"\n        }\n      ],\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\",\n      \"coupons\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"id\": \"<string>\",\n      \"email\": \"<email>\",\n      \"status\": \"<string>\",\n      \"amount\": \"<float>\",\n      \"products\": [\n        {\n          \"productId\": \"<string>\",\n          \"quantity\": \"<integer>\",\n          \"price\": \"<float>\",\n          \"variantId\": \"<string>\"\n        },\n        {\n          \"productId\": \"<string>\",\n          \"quantity\": \"<integer>\",\n          \"price\": \"<float>\",\n          \"variantId\": \"<string>\"\n        }\n      ],\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\",\n      \"coupons\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fae0297a-34e0-42c8-9146-df8604c7563f",
+              "name": "Orders batch processed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    "status",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orders\": [\n    {\n      \"id\": \"string\",\n      \"email\": \"d-lqy6gL@ebSS.qa\",\n      \"status\": \"string\",\n      \"amount\": 225.04494830521193,\n      \"products\": [\n        {\n          \"productId\": \"string\",\n          \"quantity\": 7557,\n          \"price\": 1270.2989641800998,\n          \"variantId\": \"string\"\n        },\n        {\n          \"productId\": \"string\",\n          \"quantity\": 9610,\n          \"price\": 9193.185206002545,\n          \"variantId\": \"string\"\n        }\n      ],\n      \"createdAt\": \"1989-08-18T16:07:55.710Z\",\n      \"updatedAt\": \"2014-08-29T21:16:54.444Z\",\n      \"coupons\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"email\": \"fsvOEHAAFUlG@kspfpLRlteF.yfv\",\n      \"status\": \"string\",\n      \"amount\": 932.1119646425747,\n      \"products\": [\n        {\n          \"productId\": \"string\",\n          \"quantity\": 5435,\n          \"price\": 5780.940514405054,\n          \"variantId\": \"string\"\n        },\n        {\n          \"productId\": \"string\",\n          \"quantity\": 1804,\n          \"price\": 514.5837944736309,\n          \"variantId\": \"string\"\n        }\n      ],\n      \"createdAt\": \"2006-07-04T20:57:25.642Z\",\n      \"updatedAt\": \"1947-03-19T13:21:19.777Z\",\n      \"coupons\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "65e10e47-9330-4dac-9e6f-c0bf7e9220bc",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    "status",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orders\": [\n    {\n      \"id\": \"string\",\n      \"email\": \"d-lqy6gL@ebSS.qa\",\n      \"status\": \"string\",\n      \"amount\": 225.04494830521193,\n      \"products\": [\n        {\n          \"productId\": \"string\",\n          \"quantity\": 7557,\n          \"price\": 1270.2989641800998,\n          \"variantId\": \"string\"\n        },\n        {\n          \"productId\": \"string\",\n          \"quantity\": 9610,\n          \"price\": 9193.185206002545,\n          \"variantId\": \"string\"\n        }\n      ],\n      \"createdAt\": \"1989-08-18T16:07:55.710Z\",\n      \"updatedAt\": \"2014-08-29T21:16:54.444Z\",\n      \"coupons\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"email\": \"fsvOEHAAFUlG@kspfpLRlteF.yfv\",\n      \"status\": \"string\",\n      \"amount\": 932.1119646425747,\n      \"products\": [\n        {\n          \"productId\": \"string\",\n          \"quantity\": 5435,\n          \"price\": 5780.940514405054,\n          \"variantId\": \"string\"\n        },\n        {\n          \"productId\": \"string\",\n          \"quantity\": 1804,\n          \"price\": 514.5837944736309,\n          \"variantId\": \"string\"\n        }\n      ],\n      \"createdAt\": \"2006-07-04T20:57:25.642Z\",\n      \"updatedAt\": \"1947-03-19T13:21:19.777Z\",\n      \"coupons\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "96b584a9-87e8-4ff2-ab74-90a69c29b9e2",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    "status",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orders\": [\n    {\n      \"id\": \"string\",\n      \"email\": \"d-lqy6gL@ebSS.qa\",\n      \"status\": \"string\",\n      \"amount\": 225.04494830521193,\n      \"products\": [\n        {\n          \"productId\": \"string\",\n          \"quantity\": 7557,\n          \"price\": 1270.2989641800998,\n          \"variantId\": \"string\"\n        },\n        {\n          \"productId\": \"string\",\n          \"quantity\": 9610,\n          \"price\": 9193.185206002545,\n          \"variantId\": \"string\"\n        }\n      ],\n      \"createdAt\": \"1989-08-18T16:07:55.710Z\",\n      \"updatedAt\": \"2014-08-29T21:16:54.444Z\",\n      \"coupons\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"email\": \"fsvOEHAAFUlG@kspfpLRlteF.yfv\",\n      \"status\": \"string\",\n      \"amount\": 932.1119646425747,\n      \"products\": [\n        {\n          \"productId\": \"string\",\n          \"quantity\": 5435,\n          \"price\": 5780.940514405054,\n          \"variantId\": \"string\"\n        },\n        {\n          \"productId\": \"string\",\n          \"quantity\": 1804,\n          \"price\": 514.5837944736309,\n          \"variantId\": \"string\"\n        }\n      ],\n      \"createdAt\": \"2006-07-04T20:57:25.642Z\",\n      \"updatedAt\": \"1947-03-19T13:21:19.777Z\",\n      \"coupons\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6a5a5db7-0633-43e5-8790-e40aad7672c0",
+          "name": "Get order details",
+          "request": {
+            "name": "Get order details",
+            "description": {
+              "content": "Retrieves order details from the Brevo eCommerce system. Supports filtering by date range and pagination.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "Maximum number of results to return per request."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Number of results to skip for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>",
+                  "description": "Start date for filtering orders in YYYY-MM-DD format."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>",
+                  "description": "End date for filtering orders in YYYY-MM-DD format."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "50c241d0-4ca6-4cbc-8a86-b8e059f2f304",
+              "name": "Orders retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"orders\": [\n    {\n      \"id\": \"string\",\n      \"email\": \"2CIa4@aUqHF.ahwd\",\n      \"amount\": 7204.91049064639,\n      \"status\": \"string\",\n      \"products\": [\n        {\n          \"productId\": \"string\",\n          \"quantity\": 7474,\n          \"price\": 5412.133144543118,\n          \"variantId\": \"string\"\n        },\n        {\n          \"productId\": \"string\",\n          \"quantity\": 9968,\n          \"price\": 3388.1997313558254,\n          \"variantId\": \"string\"\n        }\n      ],\n      \"createdAt\": \"1949-10-02T00:08:48.277Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"email\": \"Kxsvr9o@KuyZWPzxJZQFpNJkXNK.immu\",\n      \"amount\": 8194.767547689087,\n      \"status\": \"string\",\n      \"products\": [\n        {\n          \"productId\": \"string\",\n          \"quantity\": 3257,\n          \"price\": 8039.191551016876,\n          \"variantId\": \"string\"\n        },\n        {\n          \"productId\": \"string\",\n          \"quantity\": 1016,\n          \"price\": 4706.912159464038,\n          \"variantId\": \"string\"\n        }\n      ],\n      \"createdAt\": \"1984-09-02T07:22:53.857Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0de97a8-3d4a-40d8-b7b1-841227b22cef",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c409e26-245d-41d7-98db-be9b6c3b663d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "8e764a5e-a94c-4599-a372-cb89b1d5396e",
+      "name": "Products",
+      "description": {
+        "content": "Import, manage, and retrieve eCommerce product data.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "704c845b-edc6-4011-868b-1c5ee0b81293",
+          "name": "Return all products",
+          "request": {
+            "name": "Return all products",
+            "description": {
+              "content": "Retrieves a paginated list of all products synced to the Brevo platform. Returns product details including name, price, URL, and category assignments.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "products"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "Maximum number of results to return per request."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Number of results to skip for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<string>",
+                  "description": "Comma-separated list of product IDs to filter by."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "12598bdd-266f-4ee1-8265-586e9736d585",
+              "name": "Products retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 7368,\n  \"products\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"url\": \"http://haoBjxNErj.sxskH9A54t7vyBvW1yItUEcG0s3TrDGkWq5+s5AAnC14n2B6c12AkPA,3hKLvtILl\",\n      \"imageUrl\": \"http://kBZYzgBNOaAGGyJMx.fjdafzmQO2vh\",\n      \"sku\": \"string\",\n      \"price\": 3658.7057154931335,\n      \"categories\": [\n        \"string\",\n        \"string\"\n      ],\n      \"metaInfo\": {\n        \"key_0\": true,\n        \"key_1\": true\n      },\n      \"createdAt\": \"1993-08-02T17:44:05.672Z\",\n      \"modifiedAt\": \"1981-09-07T16:09:07.914Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"url\": \"https://zHgq.dniOrXp6w8yfCqBGOMwegF.+jQUWqvfJF2,zO2\",\n      \"imageUrl\": \"https://dbytZiLfxFzilvEUWcEzNZJNbD.qhovrYqfpg,RouiyOEEm4HoI-PqgPax8Q-VyHqTILsChjYz\",\n      \"sku\": \"string\",\n      \"price\": 6919.995005019663,\n      \"categories\": [\n        \"string\",\n        \"string\"\n      ],\n      \"metaInfo\": {\n        \"key_0\": 8781.419546062512,\n        \"key_1\": 5731,\n        \"key_2\": 8109.123692304494\n      },\n      \"createdAt\": \"1954-01-11T05:41:25.001Z\",\n      \"modifiedAt\": \"1980-08-04T22:27:59.755Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4219d897-6c8d-4cdc-a4c2-f2fd34270d02",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "60362db8-a41b-40da-806f-7ac43b5cc4d3",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8d6b2a0f-b5ba-4aa8-bbc1-3a96f48b5584",
+          "name": "Create or update a product",
+          "request": {
+            "name": "Create or update a product",
+            "description": {
+              "content": "Creates a new product or updates an existing product in the Brevo eCommerce catalog. If a product with the same ID already exists, it will be updated with the provided data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "products"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"imageUrl\": \"<uri>\",\n  \"sku\": \"<string>\",\n  \"price\": \"<float>\",\n  \"categories\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"metaInfo\": {\n    \"key_0\": 1768,\n    \"key_1\": false,\n    \"key_2\": 1840\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fea33813-f46a-4520-940e-9c2d8521d9c8",
+              "name": "Product created or updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"imageUrl\": \"<uri>\",\n  \"sku\": \"<string>\",\n  \"price\": \"<float>\",\n  \"categories\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"metaInfo\": {\n    \"key_0\": 7272.49105064826,\n    \"key_1\": 2161.0825375341724,\n    \"key_2\": \"string\",\n    \"key_3\": 5141.046673109752\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "34954606-4673-4239-9706-78b2eb6c5b13",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"imageUrl\": \"<uri>\",\n  \"sku\": \"<string>\",\n  \"price\": \"<float>\",\n  \"categories\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"metaInfo\": {\n    \"key_0\": 7272.49105064826,\n    \"key_1\": 2161.0825375341724,\n    \"key_2\": \"string\",\n    \"key_3\": 5141.046673109752\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "76aebb10-25cc-4522-9f81-4c4f8f4a4a42",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"imageUrl\": \"<uri>\",\n  \"sku\": \"<string>\",\n  \"price\": \"<float>\",\n  \"categories\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"metaInfo\": {\n    \"key_0\": 7272.49105064826,\n    \"key_1\": 2161.0825375341724,\n    \"key_2\": \"string\",\n    \"key_3\": 5141.046673109752\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e1b39b56-49b3-467f-a9a7-0f3a054d7e50",
+          "name": "Create or update products in batch",
+          "request": {
+            "name": "Create or update products in batch",
+            "description": {
+              "content": "Creates or updates up to 100 products in a single API call. Products with existing IDs will be updated, and new products will be created.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "products",
+                "batch"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"products\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"url\": \"<uri>\",\n      \"imageUrl\": \"<uri>\",\n      \"sku\": \"<string>\",\n      \"price\": \"<float>\",\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"metaInfo\": {\n        \"key_0\": 7118\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"url\": \"<uri>\",\n      \"imageUrl\": \"<uri>\",\n      \"sku\": \"<string>\",\n      \"price\": \"<float>\",\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"metaInfo\": {\n        \"key_0\": 1623.6044833192375\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7861018e-8f07-439b-82c6-3fa3d7126234",
+              "name": "Products batch processed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"products\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"url\": \"https://M.ytAiS9nkBkDSk,m8wFTMdcEFs0sLtNIH32MT6euWHnesrc2-ZWWd\",\n      \"imageUrl\": \"http://OAzBXTQbVWyPNN.rdE5SzTsHQuaroP7A3TfsQ,glFrFPkzNdv1GVmF1oV\",\n      \"sku\": \"string\",\n      \"price\": 4501.202066644666,\n      \"categories\": [\n        \"string\",\n        \"string\"\n      ],\n      \"metaInfo\": {\n        \"key_0\": 786.6331183623132,\n        \"key_1\": true\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"url\": \"http://QrujLDXCZymjas.bwfaVzrFJDbX9PyhhEsIxf0a3Pi3KdO,qUeIs-Xogpzm93nwL,BADFkSxLd\",\n      \"imageUrl\": \"http://KgK.fcgV6eA6yQsEiLLtMUEEU79t\",\n      \"sku\": \"string\",\n      \"price\": 5675.890062574325,\n      \"categories\": [\n        \"string\",\n        \"string\"\n      ],\n      \"metaInfo\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f9fa06da-10a8-43bb-a40d-eabe899f3dd5",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"products\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"url\": \"https://M.ytAiS9nkBkDSk,m8wFTMdcEFs0sLtNIH32MT6euWHnesrc2-ZWWd\",\n      \"imageUrl\": \"http://OAzBXTQbVWyPNN.rdE5SzTsHQuaroP7A3TfsQ,glFrFPkzNdv1GVmF1oV\",\n      \"sku\": \"string\",\n      \"price\": 4501.202066644666,\n      \"categories\": [\n        \"string\",\n        \"string\"\n      ],\n      \"metaInfo\": {\n        \"key_0\": 786.6331183623132,\n        \"key_1\": true\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"url\": \"http://QrujLDXCZymjas.bwfaVzrFJDbX9PyhhEsIxf0a3Pi3KdO,qUeIs-Xogpzm93nwL,BADFkSxLd\",\n      \"imageUrl\": \"http://KgK.fcgV6eA6yQsEiLLtMUEEU79t\",\n      \"sku\": \"string\",\n      \"price\": 5675.890062574325,\n      \"categories\": [\n        \"string\",\n        \"string\"\n      ],\n      \"metaInfo\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6cfdbaa-5277-404e-a29f-e6506ded5fd3",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"products\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"url\": \"https://M.ytAiS9nkBkDSk,m8wFTMdcEFs0sLtNIH32MT6euWHnesrc2-ZWWd\",\n      \"imageUrl\": \"http://OAzBXTQbVWyPNN.rdE5SzTsHQuaroP7A3TfsQ,glFrFPkzNdv1GVmF1oV\",\n      \"sku\": \"string\",\n      \"price\": 4501.202066644666,\n      \"categories\": [\n        \"string\",\n        \"string\"\n      ],\n      \"metaInfo\": {\n        \"key_0\": 786.6331183623132,\n        \"key_1\": true\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"url\": \"http://QrujLDXCZymjas.bwfaVzrFJDbX9PyhhEsIxf0a3Pi3KdO,qUeIs-Xogpzm93nwL,BADFkSxLd\",\n      \"imageUrl\": \"http://KgK.fcgV6eA6yQsEiLLtMUEEU79t\",\n      \"sku\": \"string\",\n      \"price\": 5675.890062574325,\n      \"categories\": [\n        \"string\",\n        \"string\"\n      ],\n      \"metaInfo\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2ad86ace-9741-4e96-83b7-75f96e1f3458",
+          "name": "Get a product",
+          "request": {
+            "name": "Get a product",
+            "description": {
+              "content": "Retrieves the details of a specific product by its unique identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "products",
+                ":productId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "productId",
+                  "description": "(Required) Unique identifier of the product."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "92a3e406-3720-45fe-87a4-ab0571916a57",
+              "name": "Product retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    ":productId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productId",
+                      "description": "(Required) Unique identifier of the product."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"url\": \"https://PMqvxQezTcKeaAJmIR.gjchvYgv-kfg+wZBL9a1gYeN\",\n  \"imageUrl\": \"http://CdWDVKm.vumhXT3TbNQBQuFortFEUPO0l4\",\n  \"sku\": \"string\",\n  \"price\": 615.0568112329469,\n  \"categories\": [\n    \"string\",\n    \"string\"\n  ],\n  \"metaInfo\": {\n    \"key_0\": 6350.002585111927,\n    \"key_1\": \"string\",\n    \"key_2\": \"string\"\n  },\n  \"createdAt\": \"2013-12-30T15:13:38.617Z\",\n  \"modifiedAt\": \"2025-08-23T11:54:47.481Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4e40ff5c-9f02-4276-a037-a6afa2712ab1",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    ":productId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productId",
+                      "description": "(Required) Unique identifier of the product."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "baaaa3c7-20c3-49d4-b7e9-8e2ca767b7f0",
+              "name": "Product not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    ":productId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productId",
+                      "description": "(Required) Unique identifier of the product."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.brevo.com/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8342b540-e8f0-448b-b2fa-84139b8b41ab",
+    "name": "Brevo eCommerce API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Brevo eCommerce API allows developers to sync product catalogs, categories, and order data with the Brevo platform. It provides endpoints for importing and managing products, organizing them into categories, and tracking customer purchase history. This data integration enables merchants to attribute revenue to marketing campaigns, trigger automated workflows based on purchase behavior, and build product recommendation segments for targeted messaging.\n\nContact Support:\n Name: Brevo Support",
+      "type": "text/plain"
+    }
+  }
+}

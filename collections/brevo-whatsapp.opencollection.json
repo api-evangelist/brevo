@@ -1,0 +1,235 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Brevo WhatsApp API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api-key",
+      "value": "{{api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "WhatsApp Messages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send a WhatsApp message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/whatsapp/sendMessage",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a transactional WhatsApp message to a recipient using an approved template or plain text content. Messages are delivered through the WhatsApp Business platform and support dynamic parameter substitution in templates."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "WhatsApp Campaigns",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Return all WhatsApp campaigns",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/whatsappCampaigns",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return per request."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to skip for pagination."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Filter campaigns created on or after this date."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "Filter campaigns created on or before this date."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction for the results."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all WhatsApp campaigns created in the account. Supports filtering by status and date range."
+        },
+        {
+          "info": {
+            "name": "Create and send a WhatsApp campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/whatsappCampaigns",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new WhatsApp marketing campaign with the specified template, recipients, and scheduling options."
+        },
+        {
+          "info": {
+            "name": "Get a WhatsApp campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/whatsappCampaigns/:campaignId",
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the WhatsApp campaign."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific WhatsApp campaign including template, recipients, and delivery statistics."
+        },
+        {
+          "info": {
+            "name": "Update a WhatsApp campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.brevo.com/v3/whatsappCampaigns/:campaignId",
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the WhatsApp campaign."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing WhatsApp campaign with new template, recipients, or scheduling options. Only draft campaigns can be updated."
+        },
+        {
+          "info": {
+            "name": "Delete a WhatsApp campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/whatsappCampaigns/:campaignId",
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the WhatsApp campaign."
+              }
+            ]
+          },
+          "docs": "Permanently deletes a WhatsApp campaign by its unique identifier."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "WhatsApp Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a WhatsApp template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/whatsappCampaigns/template",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new WhatsApp message template. Templates must be approved by Meta before they can be used for sending messages."
+        },
+        {
+          "info": {
+            "name": "Return all WhatsApp templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/whatsappCampaigns/template-list",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return per request."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to skip for pagination."
+              }
+            ]
+          },
+          "docs": "Retrieves all WhatsApp message templates created in the account including their approval status and content."
+        },
+        {
+          "info": {
+            "name": "Send a WhatsApp template for approval",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/whatsappCampaigns/template/approval/:templateId",
+            "params": [
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the template to submit for approval."
+              }
+            ]
+          },
+          "docs": "Submits a WhatsApp message template to Meta for review and approval. Templates must be approved before they can be used for sending messages to recipients."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,332 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Brevo Transactional Email API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api-key",
+      "value": "{{api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transactional Emails",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send a transactional email",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/smtp/email",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a transactional email to one or more recipients. Supports personalization with dynamic parameters, template-based content, attachments, and scheduled delivery. Can also send to multiple recipients in a single call."
+        },
+        {
+          "info": {
+            "name": "Batch send transactional emails",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/smtp/email/batch",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends multiple transactional emails in a single API call. Each email in the batch can have different recipients, content, and parameters. Template placeholders can fetch values from the contact database."
+        },
+        {
+          "info": {
+            "name": "Get the content of a sent transactional email",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/smtp/email/:messageId",
+            "params": [
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "The unique message identifier of the sent transactional email."
+              }
+            ]
+          },
+          "docs": "Retrieves the personalized content of a previously sent transactional email including the rendered HTML body, subject line, and recipient information."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Email Activity",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get transactional email activity events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/smtp/statistics/events",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return per request."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to skip for pagination."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date for the event query in YYYY-MM-DD format."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End date for the event query in YYYY-MM-DD format."
+              },
+              {
+                "name": "event",
+                "value": "",
+                "type": "query",
+                "description": "Filter by event type such as delivered, opened, clicked, hardBounce, softBounce, blocked, spam, or unsubscribed."
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by recipient email address."
+              },
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by the unique message identifier."
+              },
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by the template ID used for sending."
+              }
+            ]
+          },
+          "docs": "Retrieves all transactional email activity as unaggregated events. Returns individual event records for deliveries, opens, clicks, bounces, spam reports, and other email activity."
+        },
+        {
+          "info": {
+            "name": "Get aggregated transactional email statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/smtp/statistics/aggregatedReport",
+            "params": [
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date for the report in YYYY-MM-DD format."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End date for the report in YYYY-MM-DD format."
+              }
+            ]
+          },
+          "docs": "Retrieves aggregated statistics for transactional email activity over a specified period. Returns totals for requests, delivered, opens, clicks, bounces, and other metrics."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Email Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List email templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/smtp/templates",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return per request."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to skip for pagination."
+              },
+              {
+                "name": "templateStatus",
+                "value": "",
+                "type": "query",
+                "description": "Filter templates by their active status."
+              }
+            ]
+          },
+          "docs": "Retrieves all transactional email templates created in the account. Templates can be used to send personalized transactional emails with consistent formatting."
+        },
+        {
+          "info": {
+            "name": "Create an email template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/smtp/templates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new transactional email template with HTML content, subject line, and sender information. Templates support dynamic parameters for personalization."
+        },
+        {
+          "info": {
+            "name": "Get an email template",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/smtp/templates/:templateId",
+            "params": [
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the email template."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific transactional email template by its unique identifier."
+        },
+        {
+          "info": {
+            "name": "Update an email template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.brevo.com/v3/smtp/templates/:templateId",
+            "params": [
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the email template."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing transactional email template with new content, subject line, or sender information."
+        },
+        {
+          "info": {
+            "name": "Delete an email template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/smtp/templates/:templateId",
+            "params": [
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the email template."
+              }
+            ]
+          },
+          "docs": "Permanently deletes a transactional email template by its unique identifier."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Senders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get email senders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/senders",
+            "params": [
+              {
+                "name": "ip",
+                "value": "",
+                "type": "query",
+                "description": "Filter senders by dedicated IP address."
+              },
+              {
+                "name": "domain",
+                "value": "",
+                "type": "query",
+                "description": "Filter senders by domain name."
+              }
+            ]
+          },
+          "docs": "Retrieves the list of all sender identities configured in the account for use with transactional and marketing emails."
+        },
+        {
+          "info": {
+            "name": "Create a new sender",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/senders",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new sender identity that can be used for sending transactional and marketing emails. The sender must be verified before use."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

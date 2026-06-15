@@ -1,0 +1,178 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Brevo Transactional SMS API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api-key",
+      "value": "{{api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transactional SMS",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send a transactional SMS",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/transactionalSMS/sms",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a transactional SMS message to a recipient phone number. Supports customizable sender names and message content. The message is delivered immediately for time-sensitive notifications."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "SMS Statistics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get transactional SMS activity events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/transactionalSMS/statistics/events",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return per request."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to skip for pagination."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date for the event query in YYYY-MM-DD format."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End date for the event query in YYYY-MM-DD format."
+              },
+              {
+                "name": "phoneNumber",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by recipient phone number."
+              },
+              {
+                "name": "event",
+                "value": "",
+                "type": "query",
+                "description": "Filter by event type such as delivered, sent, softBounce, hardBounce, or unsubscribed."
+              },
+              {
+                "name": "tags",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by tag assigned to the SMS."
+              }
+            ]
+          },
+          "docs": "Retrieves detailed event-level data for transactional SMS messages including delivery status, bounces, and recipient interactions."
+        },
+        {
+          "info": {
+            "name": "Get transactional SMS statistics reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/transactionalSMS/statistics/reports",
+            "params": [
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date for the report in YYYY-MM-DD format."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End date for the report in YYYY-MM-DD format."
+              },
+              {
+                "name": "days",
+                "value": "",
+                "type": "query",
+                "description": "Number of days for the report, starting from today."
+              },
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query",
+                "description": "Filter reports by tag."
+              }
+            ]
+          },
+          "docs": "Retrieves detailed delivery reports for transactional SMS messages over a specified date range. Returns per-day statistics for sent, delivered, and bounced messages."
+        },
+        {
+          "info": {
+            "name": "Get aggregated transactional SMS statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/transactionalSMS/statistics/aggregatedReport",
+            "params": [
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date for the report in YYYY-MM-DD format."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End date for the report in YYYY-MM-DD format."
+              },
+              {
+                "name": "days",
+                "value": "",
+                "type": "query",
+                "description": "Number of days for the report, starting from today."
+              },
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query",
+                "description": "Filter by tag."
+              }
+            ]
+          },
+          "docs": "Retrieves aggregated statistics for transactional SMS activity over a specified period. Returns totals for sent, delivered, and bounced messages."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

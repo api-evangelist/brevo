@@ -1,0 +1,456 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Brevo Contacts API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api-key",
+      "value": "{{api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Contacts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/contacts",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return per request."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to skip for pagination."
+              },
+              {
+                "name": "modifiedSince",
+                "value": "",
+                "type": "query",
+                "description": "Filter contacts modified since this date-time in ISO 8601 format."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction for the results."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of contacts from the account. Supports filtering by modification date and sorting. The response includes contact attributes and list memberships."
+        },
+        {
+          "info": {
+            "name": "Create a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/contacts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new contact with the specified email address and optional attributes. The contact can be immediately added to one or more lists. Duplicate email addresses will result in an update of the existing contact if updateEnabled is set."
+        },
+        {
+          "info": {
+            "name": "Get a contact's details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/contacts/:identifier",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Contact identifier which can be an email address, phone number, or internal contact ID."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date for retrieving contact statistics."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End date for retrieving contact statistics."
+              }
+            ]
+          },
+          "docs": "Retrieves detailed information about a specific contact including all attributes, list memberships, and email campaign statistics. The contact can be identified by email address, phone number, or internal ID."
+        },
+        {
+          "info": {
+            "name": "Update a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.brevo.com/v3/contacts/:identifier",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Contact identifier which can be an email address, phone number, or internal contact ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing contact's attributes and list memberships. The contact is identified by email address, phone number, or internal ID."
+        },
+        {
+          "info": {
+            "name": "Delete a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/contacts/:identifier",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Contact identifier which can be an email address, phone number, or internal contact ID."
+              }
+            ]
+          },
+          "docs": "Permanently deletes a contact from the account. The contact is identified by email address, phone number, or internal ID."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Contact Lists",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all contact lists",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/contacts/lists",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return per request."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to skip for pagination."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction for the results."
+              }
+            ]
+          },
+          "docs": "Retrieves all contact lists in the account with their subscriber counts and folder assignments."
+        },
+        {
+          "info": {
+            "name": "Create a contact list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/contacts/lists",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new contact list within a specified folder. Lists are used to organize contacts for targeted campaign sending."
+        },
+        {
+          "info": {
+            "name": "Get a contact list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/contacts/lists/:listId",
+            "params": [
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the contact list."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific contact list including subscriber count and configuration."
+        },
+        {
+          "info": {
+            "name": "Update a contact list",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.brevo.com/v3/contacts/lists/:listId",
+            "params": [
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the contact list."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the name or folder assignment of an existing contact list."
+        },
+        {
+          "info": {
+            "name": "Delete a contact list",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/contacts/lists/:listId",
+            "params": [
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the contact list."
+              }
+            ]
+          },
+          "docs": "Permanently deletes a contact list. Contacts in the list are not deleted but are removed from the list membership."
+        },
+        {
+          "info": {
+            "name": "Add contacts to a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/contacts/lists/:listId/contacts/add",
+            "params": [
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the contact list."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds one or more existing contacts to a contact list using their email addresses or internal IDs."
+        },
+        {
+          "info": {
+            "name": "Remove contacts from a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/contacts/lists/:listId/contacts/remove",
+            "params": [
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the contact list."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Removes one or more contacts from a contact list. The contacts themselves are not deleted from the account."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Contact Attributes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all contact attributes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/contacts/attributes"
+          },
+          "docs": "Retrieves all custom contact attributes defined in the account including their types and enumeration values."
+        },
+        {
+          "info": {
+            "name": "Create a contact attribute",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/contacts/attributes/:attributeCategory/:attributeName",
+            "params": [
+              {
+                "name": "attributeCategory",
+                "value": "",
+                "type": "path",
+                "description": "Category of the attribute such as normal, transactional, category, calculated, or global."
+              },
+              {
+                "name": "attributeName",
+                "value": "",
+                "type": "path",
+                "description": "Name for the new attribute."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new custom contact attribute in the specified category. Attributes extend the contact profile with additional data fields."
+        },
+        {
+          "info": {
+            "name": "Delete a contact attribute",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/contacts/attributes/:attributeCategory/:attributeName",
+            "params": [
+              {
+                "name": "attributeCategory",
+                "value": "",
+                "type": "path",
+                "description": "Category of the attribute to delete."
+              },
+              {
+                "name": "attributeName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the attribute to delete."
+              }
+            ]
+          },
+          "docs": "Permanently deletes a custom contact attribute from the account."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Folders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all folders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/contacts/folders",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return per request."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to skip for pagination."
+              }
+            ]
+          },
+          "docs": "Retrieves all folders used to organize contact lists."
+        },
+        {
+          "info": {
+            "name": "Create a folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/contacts/folders",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new folder for organizing contact lists."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Import",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Import contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/contacts/import",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Imports contacts in bulk from a file URL or inline data. Supports CSV and other structured formats. Contacts can be assigned to lists and have attributes mapped during import."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
