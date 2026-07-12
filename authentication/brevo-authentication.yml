@@ -1,0 +1,25 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/brevo-contacts-openapi.yml, openapi/brevo-conversations-openapi.yml, openapi/brevo-ecommerce-openapi.yml,
+  openapi/brevo-email-campaigns-openapi.yml, openapi/brevo-transactional-email-openapi.yml,
+  openapi/brevo-transactional-sms-openapi.yml, openapi/brevo-webhooks-openapi.yml, openapi/brevo-whatsapp-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: apiKeyAuth
+  type: apiKey
+  in: header
+  parameter: api-key
+  description: Brevo API key passed in the api-key request header for authentication.
+  sources:
+  - openapi/brevo-contacts-openapi.yml
+  - openapi/brevo-conversations-openapi.yml
+  - openapi/brevo-ecommerce-openapi.yml
+  - openapi/brevo-email-campaigns-openapi.yml
+  - openapi/brevo-transactional-email-openapi.yml
+  - openapi/brevo-transactional-sms-openapi.yml
+  - openapi/brevo-webhooks-openapi.yml
+  - openapi/brevo-whatsapp-openapi.yml
