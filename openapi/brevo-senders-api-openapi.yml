@@ -1,0 +1,143 @@
+openapi: 3.1.0
+info:
+  title: Brevo Contacts Agent Status Senders API
+  description: The Brevo Contacts API provides programmatic access to contact management features including creating, updating, and deleting contacts. Developers can organize contacts into lists, apply attributes and tags, import contacts in bulk, and build audience segments for targeted campaigns. The API also supports managing folders, contact attributes, and custom fields to structure contact data according to business needs.
+  version: '3.0'
+  contact:
+    name: Brevo Support
+    url: https://help.brevo.com
+  termsOfService: https://www.brevo.com/legal/termsofuse/
+servers:
+- url: https://api.brevo.com/v3
+  description: Brevo Production API Server
+security:
+- apiKeyAuth: []
+tags:
+- name: Senders
+  description: Manage sender identities used for transactional email sending.
+paths:
+  /senders:
+    get:
+      operationId: getSenders
+      summary: Get email senders
+      description: Retrieves the list of all sender identities configured in the account for use with transactional and marketing emails.
+      tags:
+      - Senders
+      parameters:
+      - name: ip
+        in: query
+        description: Filter senders by dedicated IP address.
+        schema:
+          type: string
+      - name: domain
+        in: query
+        description: Filter senders by domain name.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Senders retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SenderList'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      operationId: createSender
+      summary: Create a new sender
+      description: Creates a new sender identity that can be used for sending transactional and marketing emails. The sender must be verified before use.
+      tags:
+      - Senders
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSender'
+      responses:
+        '201':
+          description: Sender created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateSenderResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    SenderList:
+      type: object
+      properties:
+        senders:
+          type: array
+          description: List of configured sender identities.
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int64
+                description: Unique identifier of the sender.
+              name:
+                type: string
+                description: Display name of the sender.
+              email:
+                type: string
+                format: email
+                description: Email address of the sender.
+              active:
+                type: boolean
+                description: Whether the sender is verified and active.
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code identifying the type of error.
+        message:
+          type: string
+          description: Human-readable description of the error.
+    CreateSenderResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the newly created sender.
+    CreateSender:
+      type: object
+      required:
+      - name
+      - email
+      properties:
+        name:
+          type: string
+          description: Display name for the new sender.
+        email:
+          type: string
+          format: email
+          description: Email address for the new sender.
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: api-key
+      description: Brevo API key passed in the api-key request header for authentication.
+externalDocs:
+  description: Brevo Contacts Documentation
+  url: https://developers.brevo.com/docs/how-it-works

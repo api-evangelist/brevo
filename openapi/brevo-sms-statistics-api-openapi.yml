@@ -1,0 +1,326 @@
+openapi: 3.1.0
+info:
+  title: Brevo Contacts Agent Status SMS Statistics API
+  description: The Brevo Contacts API provides programmatic access to contact management features including creating, updating, and deleting contacts. Developers can organize contacts into lists, apply attributes and tags, import contacts in bulk, and build audience segments for targeted campaigns. The API also supports managing folders, contact attributes, and custom fields to structure contact data according to business needs.
+  version: '3.0'
+  contact:
+    name: Brevo Support
+    url: https://help.brevo.com
+  termsOfService: https://www.brevo.com/legal/termsofuse/
+servers:
+- url: https://api.brevo.com/v3
+  description: Brevo Production API Server
+security:
+- apiKeyAuth: []
+tags:
+- name: SMS Statistics
+  description: Retrieve delivery reports and activity statistics for transactional SMS messages.
+paths:
+  /transactionalSMS/statistics/events:
+    get:
+      operationId: getSmsEvents
+      summary: Get transactional SMS activity events
+      description: Retrieves detailed event-level data for transactional SMS messages including delivery status, bounces, and recipient interactions.
+      tags:
+      - SMS Statistics
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/offsetParam'
+      - name: startDate
+        in: query
+        description: Start date for the event query in YYYY-MM-DD format.
+        schema:
+          type: string
+          format: date
+      - name: endDate
+        in: query
+        description: End date for the event query in YYYY-MM-DD format.
+        schema:
+          type: string
+          format: date
+      - name: phoneNumber
+        in: query
+        description: Filter events by recipient phone number.
+        schema:
+          type: string
+      - name: event
+        in: query
+        description: Filter by event type such as delivered, sent, softBounce, hardBounce, or unsubscribed.
+        schema:
+          type: string
+          enum:
+          - sent
+          - accepted
+          - delivered
+          - replied
+          - softBounce
+          - hardBounce
+          - subscribe
+          - unsubscribe
+          - skip
+          - rejected
+      - name: tags
+        in: query
+        description: Filter events by tag assigned to the SMS.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: SMS events retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmsEventReport'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /transactionalSMS/statistics/reports:
+    get:
+      operationId: getSmsReports
+      summary: Get transactional SMS statistics reports
+      description: Retrieves detailed delivery reports for transactional SMS messages over a specified date range. Returns per-day statistics for sent, delivered, and bounced messages.
+      tags:
+      - SMS Statistics
+      parameters:
+      - name: startDate
+        in: query
+        description: Start date for the report in YYYY-MM-DD format.
+        schema:
+          type: string
+          format: date
+      - name: endDate
+        in: query
+        description: End date for the report in YYYY-MM-DD format.
+        schema:
+          type: string
+          format: date
+      - name: days
+        in: query
+        description: Number of days for the report, starting from today.
+        schema:
+          type: integer
+      - name: tag
+        in: query
+        description: Filter reports by tag.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: SMS reports retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmsStatisticsReport'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /transactionalSMS/statistics/aggregatedReport:
+    get:
+      operationId: getAggregatedSmsReport
+      summary: Get aggregated transactional SMS statistics
+      description: Retrieves aggregated statistics for transactional SMS activity over a specified period. Returns totals for sent, delivered, and bounced messages.
+      tags:
+      - SMS Statistics
+      parameters:
+      - name: startDate
+        in: query
+        description: Start date for the report in YYYY-MM-DD format.
+        schema:
+          type: string
+          format: date
+      - name: endDate
+        in: query
+        description: End date for the report in YYYY-MM-DD format.
+        schema:
+          type: string
+          format: date
+      - name: days
+        in: query
+        description: Number of days for the report, starting from today.
+        schema:
+          type: integer
+      - name: tag
+        in: query
+        description: Filter by tag.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Aggregated SMS statistics retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AggregatedSmsReport'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  parameters:
+    offsetParam:
+      name: offset
+      in: query
+      description: Number of results to skip for pagination.
+      schema:
+        type: integer
+        format: int64
+        default: 0
+    limitParam:
+      name: limit
+      in: query
+      description: Maximum number of results to return per request.
+      schema:
+        type: integer
+        format: int64
+        default: 50
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code identifying the type of error.
+        message:
+          type: string
+          description: Human-readable description of the error.
+    SmsStatisticsReport:
+      type: object
+      properties:
+        reports:
+          type: array
+          description: Daily SMS statistics reports.
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date
+                description: Date for the statistics.
+              requests:
+                type: integer
+                format: int64
+                description: Number of SMS send requests.
+              delivered:
+                type: integer
+                format: int64
+                description: Number of successfully delivered SMS.
+              hardBounces:
+                type: integer
+                format: int64
+                description: Number of hard bounces.
+              softBounces:
+                type: integer
+                format: int64
+                description: Number of soft bounces.
+              blocked:
+                type: integer
+                format: int64
+                description: Number of blocked SMS.
+              unsubscribed:
+                type: integer
+                format: int64
+                description: Number of unsubscribes.
+    SmsEventReport:
+      type: object
+      properties:
+        events:
+          type: array
+          description: List of transactional SMS activity events.
+          items:
+            type: object
+            properties:
+              phoneNumber:
+                type: string
+                description: Recipient phone number.
+              date:
+                type: string
+                format: date-time
+                description: UTC date-time when the event occurred.
+              messageId:
+                type: string
+                description: Unique identifier of the SMS message.
+              event:
+                type: string
+                description: Type of SMS event that occurred.
+                enum:
+                - sent
+                - accepted
+                - delivered
+                - replied
+                - softBounce
+                - hardBounce
+                - subscribe
+                - unsubscribe
+                - skip
+                - rejected
+              reason:
+                type: string
+                description: Reason for the event if applicable.
+              tag:
+                type: string
+                description: Tag assigned to the SMS.
+    AggregatedSmsReport:
+      type: object
+      properties:
+        range:
+          type: string
+          description: Date range for the aggregated statistics.
+        requests:
+          type: integer
+          format: int64
+          description: Total SMS send requests.
+        delivered:
+          type: integer
+          format: int64
+          description: Total successfully delivered SMS.
+        hardBounces:
+          type: integer
+          format: int64
+          description: Total hard bounces.
+        softBounces:
+          type: integer
+          format: int64
+          description: Total soft bounces.
+        blocked:
+          type: integer
+          format: int64
+          description: Total blocked SMS.
+        unsubscribed:
+          type: integer
+          format: int64
+          description: Total unsubscribes.
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: api-key
+      description: Brevo API key passed in the api-key request header for authentication.
+externalDocs:
+  description: Brevo Contacts Documentation
+  url: https://developers.brevo.com/docs/how-it-works

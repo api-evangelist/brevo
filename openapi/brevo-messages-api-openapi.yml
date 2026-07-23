@@ -1,0 +1,221 @@
+openapi: 3.1.0
+info:
+  title: Brevo Contacts Agent Status Messages API
+  description: The Brevo Contacts API provides programmatic access to contact management features including creating, updating, and deleting contacts. Developers can organize contacts into lists, apply attributes and tags, import contacts in bulk, and build audience segments for targeted campaigns. The API also supports managing folders, contact attributes, and custom fields to structure contact data according to business needs.
+  version: '3.0'
+  contact:
+    name: Brevo Support
+    url: https://help.brevo.com
+  termsOfService: https://www.brevo.com/legal/termsofuse/
+servers:
+- url: https://api.brevo.com/v3
+  description: Brevo Production API Server
+security:
+- apiKeyAuth: []
+tags:
+- name: Messages
+  description: Send and manage chat messages as an agent or automated bot within conversations.
+paths:
+  /conversations/messages:
+    post:
+      operationId: sendMessageAsAgent
+      summary: Send a message as an agent
+      description: Sends a chat message within a conversation as an agent. The message is delivered to the visitor in real time through the Brevo chat widget.
+      tags:
+      - Messages
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendMessage'
+      responses:
+        '200':
+          description: Message sent successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /conversations/messages/{messageId}:
+    get:
+      operationId: getMessage
+      summary: Get a message
+      description: Retrieves the details of a specific chat message by its unique identifier including the message text, sender, and timestamp.
+      tags:
+      - Messages
+      parameters:
+      - $ref: '#/components/parameters/messageIdParam'
+      responses:
+        '200':
+          description: Message retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Message not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      operationId: updateMessage
+      summary: Update a message
+      description: Updates the text content of an existing chat message. Only agent messages can be updated.
+      tags:
+      - Messages
+      parameters:
+      - $ref: '#/components/parameters/messageIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - text
+              properties:
+                text:
+                  type: string
+                  description: Updated message text content.
+      responses:
+        '200':
+          description: Message updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Message not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      operationId: deleteMessage
+      summary: Delete a message
+      description: Permanently deletes a chat message from a conversation.
+      tags:
+      - Messages
+      parameters:
+      - $ref: '#/components/parameters/messageIdParam'
+      responses:
+        '204':
+          description: Message deleted successfully
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Message not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  parameters:
+    messageIdParam:
+      name: messageId
+      in: path
+      required: true
+      description: Unique identifier of the chat message.
+      schema:
+        type: string
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code identifying the type of error.
+        message:
+          type: string
+          description: Human-readable description of the error.
+    SendMessage:
+      type: object
+      required:
+      - visitorId
+      - text
+      properties:
+        visitorId:
+          type: string
+          description: Unique identifier of the visitor to send the message to.
+        text:
+          type: string
+          description: Text content of the message.
+        agentId:
+          type: string
+          description: Unique identifier of the agent sending the message.
+        agentName:
+          type: string
+          description: Display name of the agent.
+    MessageResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the message.
+        type:
+          type: string
+          description: Type of the message sender.
+          enum:
+          - agent
+          - visitor
+          - bot
+        text:
+          type: string
+          description: Text content of the message.
+        visitorId:
+          type: string
+          description: Unique identifier of the visitor.
+        agentId:
+          type: string
+          description: Unique identifier of the agent if applicable.
+        agentName:
+          type: string
+          description: Display name of the agent if applicable.
+        createdAt:
+          type: string
+          format: date-time
+          description: UTC date-time when the message was created.
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: api-key
+      description: Brevo API key passed in the api-key request header for authentication.
+externalDocs:
+  description: Brevo Contacts Documentation
+  url: https://developers.brevo.com/docs/how-it-works

@@ -1,0 +1,257 @@
+openapi: 3.1.0
+info:
+  title: Brevo Contacts Agent Status Orders API
+  description: The Brevo Contacts API provides programmatic access to contact management features including creating, updating, and deleting contacts. Developers can organize contacts into lists, apply attributes and tags, import contacts in bulk, and build audience segments for targeted campaigns. The API also supports managing folders, contact attributes, and custom fields to structure contact data according to business needs.
+  version: '3.0'
+  contact:
+    name: Brevo Support
+    url: https://help.brevo.com
+  termsOfService: https://www.brevo.com/legal/termsofuse/
+servers:
+- url: https://api.brevo.com/v3
+  description: Brevo Production API Server
+security:
+- apiKeyAuth: []
+tags:
+- name: Orders
+  description: Create and manage eCommerce order data for revenue attribution and purchase tracking.
+paths:
+  /orders/status:
+    post:
+      operationId: createUpdateOrder
+      summary: Create or update an order
+      description: Creates a new order or updates the status of an existing order in the Brevo eCommerce system. Orders are used for revenue attribution and purchase behavior tracking.
+      tags:
+      - Orders
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdateOrder'
+      responses:
+        '201':
+          description: Order created or updated successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /orders/status/batch:
+    post:
+      operationId: batchCreateUpdateOrders
+      summary: Create or update orders in batch
+      description: Creates or updates multiple orders in a single API call for efficient bulk processing of order data.
+      tags:
+      - Orders
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - orders
+              properties:
+                orders:
+                  type: array
+                  description: List of orders to create or update.
+                  items:
+                    $ref: '#/components/schemas/CreateUpdateOrder'
+      responses:
+        '201':
+          description: Orders batch processed successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /orders:
+    get:
+      operationId: listOrders
+      summary: Get order details
+      description: Retrieves order details from the Brevo eCommerce system. Supports filtering by date range and pagination.
+      tags:
+      - Orders
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/offsetParam'
+      - name: startDate
+        in: query
+        description: Start date for filtering orders in YYYY-MM-DD format.
+        schema:
+          type: string
+          format: date
+      - name: endDate
+        in: query
+        description: End date for filtering orders in YYYY-MM-DD format.
+        schema:
+          type: string
+          format: date
+      responses:
+        '200':
+          description: Orders retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderList'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    CreateUpdateOrder:
+      type: object
+      required:
+      - id
+      - email
+      - status
+      - amount
+      - products
+      - createdAt
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the order.
+        email:
+          type: string
+          format: email
+          description: Email address of the customer who placed the order.
+        status:
+          type: string
+          description: Status of the order such as completed, pending, or cancelled.
+        amount:
+          type: number
+          format: float
+          description: Total order amount including shipping, tax, and item prices.
+        products:
+          type: array
+          description: Products included in the order.
+          items:
+            $ref: '#/components/schemas/OrderProduct'
+        createdAt:
+          type: string
+          format: date-time
+          description: UTC date-time when the order was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: UTC date-time when the order was last updated.
+        coupons:
+          type: array
+          description: Coupon codes applied to the order.
+          items:
+            type: string
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the order.
+        email:
+          type: string
+          format: email
+          description: Email address of the customer.
+        amount:
+          type: number
+          format: float
+          description: Total order amount.
+        status:
+          type: string
+          description: Current status of the order.
+        products:
+          type: array
+          description: Products included in the order.
+          items:
+            $ref: '#/components/schemas/OrderProduct'
+        createdAt:
+          type: string
+          format: date-time
+          description: UTC date-time when the order was created.
+    OrderProduct:
+      type: object
+      required:
+      - productId
+      - quantity
+      - price
+      properties:
+        productId:
+          type: string
+          description: Unique identifier of the product.
+        quantity:
+          type: integer
+          description: Quantity of the product ordered.
+          minimum: 1
+        price:
+          type: number
+          format: float
+          description: Price of the product at the time of order.
+        variantId:
+          type: string
+          description: Variant identifier if the product has variants.
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code identifying the type of error.
+        message:
+          type: string
+          description: Human-readable description of the error.
+    OrderList:
+      type: object
+      properties:
+        orders:
+          type: array
+          description: List of order records.
+          items:
+            $ref: '#/components/schemas/Order'
+  parameters:
+    offsetParam:
+      name: offset
+      in: query
+      description: Number of results to skip for pagination.
+      schema:
+        type: integer
+        format: int64
+        default: 0
+    limitParam:
+      name: limit
+      in: query
+      description: Maximum number of results to return per request.
+      schema:
+        type: integer
+        format: int64
+        default: 50
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: api-key
+      description: Brevo API key passed in the api-key request header for authentication.
+externalDocs:
+  description: Brevo Contacts Documentation
+  url: https://developers.brevo.com/docs/how-it-works

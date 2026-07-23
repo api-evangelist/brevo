@@ -1,0 +1,202 @@
+openapi: 3.1.0
+info:
+  title: Brevo Contacts Agent Status Categories API
+  description: The Brevo Contacts API provides programmatic access to contact management features including creating, updating, and deleting contacts. Developers can organize contacts into lists, apply attributes and tags, import contacts in bulk, and build audience segments for targeted campaigns. The API also supports managing folders, contact attributes, and custom fields to structure contact data according to business needs.
+  version: '3.0'
+  contact:
+    name: Brevo Support
+    url: https://help.brevo.com
+  termsOfService: https://www.brevo.com/legal/termsofuse/
+servers:
+- url: https://api.brevo.com/v3
+  description: Brevo Production API Server
+security:
+- apiKeyAuth: []
+tags:
+- name: Categories
+  description: Manage product categories for organizing the catalog.
+paths:
+  /categories:
+    get:
+      operationId: listCategories
+      summary: Return all categories
+      description: Retrieves all product categories in the eCommerce catalog.
+      tags:
+      - Categories
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/offsetParam'
+      - name: ids
+        in: query
+        description: Comma-separated list of category IDs to filter by.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Categories retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryList'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      operationId: createUpdateCategory
+      summary: Create or update a category
+      description: Creates a new product category or updates an existing one. If a category with the same ID exists, it will be updated.
+      tags:
+      - Categories
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdateCategory'
+      responses:
+        '201':
+          description: Category created or updated successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /categories/batch:
+    post:
+      operationId: batchCreateUpdateCategories
+      summary: Create or update categories in batch
+      description: Creates or updates multiple product categories in a single API call.
+      tags:
+      - Categories
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - categories
+              properties:
+                categories:
+                  type: array
+                  description: List of categories to create or update.
+                  items:
+                    $ref: '#/components/schemas/CreateUpdateCategory'
+                  maxItems: 100
+      responses:
+        '201':
+          description: Categories batch processed successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  parameters:
+    offsetParam:
+      name: offset
+      in: query
+      description: Number of results to skip for pagination.
+      schema:
+        type: integer
+        format: int64
+        default: 0
+    limitParam:
+      name: limit
+      in: query
+      description: Maximum number of results to return per request.
+      schema:
+        type: integer
+        format: int64
+        default: 50
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code identifying the type of error.
+        message:
+          type: string
+          description: Human-readable description of the error.
+    CategoryList:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: Total number of categories.
+        categories:
+          type: array
+          description: List of category records.
+          items:
+            $ref: '#/components/schemas/Category'
+    Category:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the category.
+        name:
+          type: string
+          description: Name of the category.
+        url:
+          type: string
+          format: uri
+          description: URL of the category page.
+        createdAt:
+          type: string
+          format: date-time
+          description: UTC date-time when the category was created.
+        modifiedAt:
+          type: string
+          format: date-time
+          description: UTC date-time when the category was last modified.
+    CreateUpdateCategory:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the category.
+        name:
+          type: string
+          description: Name of the category.
+        url:
+          type: string
+          format: uri
+          description: URL of the category page.
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: api-key
+      description: Brevo API key passed in the api-key request header for authentication.
+externalDocs:
+  description: Brevo Contacts Documentation
+  url: https://developers.brevo.com/docs/how-it-works

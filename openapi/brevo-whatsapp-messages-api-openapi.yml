@@ -1,0 +1,96 @@
+openapi: 3.1.0
+info:
+  title: Brevo Contacts Agent Status WhatsApp Messages API
+  description: The Brevo Contacts API provides programmatic access to contact management features including creating, updating, and deleting contacts. Developers can organize contacts into lists, apply attributes and tags, import contacts in bulk, and build audience segments for targeted campaigns. The API also supports managing folders, contact attributes, and custom fields to structure contact data according to business needs.
+  version: '3.0'
+  contact:
+    name: Brevo Support
+    url: https://help.brevo.com
+  termsOfService: https://www.brevo.com/legal/termsofuse/
+servers:
+- url: https://api.brevo.com/v3
+  description: Brevo Production API Server
+security:
+- apiKeyAuth: []
+tags:
+- name: WhatsApp Messages
+  description: Send transactional WhatsApp messages to recipients using approved templates or plain text.
+paths:
+  /whatsapp/sendMessage:
+    post:
+      operationId: sendWhatsAppMessage
+      summary: Send a WhatsApp message
+      description: Sends a transactional WhatsApp message to a recipient using an approved template or plain text content. Messages are delivered through the WhatsApp Business platform and support dynamic parameter substitution in templates.
+      tags:
+      - WhatsApp Messages
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendWhatsAppMessage'
+      responses:
+        '201':
+          description: WhatsApp message sent successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendWhatsAppResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    SendWhatsAppResponse:
+      type: object
+      properties:
+        messageId:
+          type: string
+          description: Unique identifier assigned to the sent WhatsApp message.
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code identifying the type of error.
+        message:
+          type: string
+          description: Human-readable description of the error.
+    SendWhatsAppMessage:
+      type: object
+      required:
+      - contactNumbers
+      - templateId
+      properties:
+        contactNumbers:
+          type: array
+          description: List of recipient phone numbers in international format.
+          items:
+            type: string
+        templateId:
+          type: integer
+          format: int64
+          description: ID of the approved WhatsApp template to use.
+        params:
+          type: array
+          description: Dynamic parameter values to substitute into the template.
+          items:
+            type: string
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: api-key
+      description: Brevo API key passed in the api-key request header for authentication.
+externalDocs:
+  description: Brevo Contacts Documentation
+  url: https://developers.brevo.com/docs/how-it-works

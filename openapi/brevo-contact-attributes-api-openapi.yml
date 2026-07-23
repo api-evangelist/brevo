@@ -1,0 +1,214 @@
+openapi: 3.1.0
+info:
+  title: Brevo Contacts Agent Status Contact Attributes API
+  description: The Brevo Contacts API provides programmatic access to contact management features including creating, updating, and deleting contacts. Developers can organize contacts into lists, apply attributes and tags, import contacts in bulk, and build audience segments for targeted campaigns. The API also supports managing folders, contact attributes, and custom fields to structure contact data according to business needs.
+  version: '3.0'
+  contact:
+    name: Brevo Support
+    url: https://help.brevo.com
+  termsOfService: https://www.brevo.com/legal/termsofuse/
+servers:
+- url: https://api.brevo.com/v3
+  description: Brevo Production API Server
+security:
+- apiKeyAuth: []
+tags:
+- name: Contact Attributes
+  description: Define and manage custom attributes for contact profiles.
+paths:
+  /contacts/attributes:
+    get:
+      operationId: listContactAttributes
+      summary: List all contact attributes
+      description: Retrieves all custom contact attributes defined in the account including their types and enumeration values.
+      tags:
+      - Contact Attributes
+      responses:
+        '200':
+          description: Contact attributes retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactAttributeList'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /contacts/attributes/{attributeCategory}/{attributeName}:
+    post:
+      operationId: createContactAttribute
+      summary: Create a contact attribute
+      description: Creates a new custom contact attribute in the specified category. Attributes extend the contact profile with additional data fields.
+      tags:
+      - Contact Attributes
+      parameters:
+      - name: attributeCategory
+        in: path
+        required: true
+        description: Category of the attribute such as normal, transactional, category, calculated, or global.
+        schema:
+          type: string
+          enum:
+          - normal
+          - transactional
+          - category
+          - calculated
+          - global
+      - name: attributeName
+        in: path
+        required: true
+        description: Name for the new attribute.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateContactAttribute'
+      responses:
+        '201':
+          description: Attribute created successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      operationId: deleteContactAttribute
+      summary: Delete a contact attribute
+      description: Permanently deletes a custom contact attribute from the account.
+      tags:
+      - Contact Attributes
+      parameters:
+      - name: attributeCategory
+        in: path
+        required: true
+        description: Category of the attribute to delete.
+        schema:
+          type: string
+          enum:
+          - normal
+          - transactional
+          - category
+          - calculated
+          - global
+      - name: attributeName
+        in: path
+        required: true
+        description: Name of the attribute to delete.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Attribute deleted successfully
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Attribute not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ContactAttributeList:
+      type: object
+      properties:
+        attributes:
+          type: array
+          description: List of contact attributes.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Name of the attribute.
+              category:
+                type: string
+                description: Category of the attribute.
+                enum:
+                - normal
+                - transactional
+                - category
+                - calculated
+                - global
+              type:
+                type: string
+                description: Data type of the attribute value.
+                enum:
+                - text
+                - date
+                - float
+                - boolean
+                - id
+              enumeration:
+                type: array
+                description: Enumeration values for category attributes.
+                items:
+                  type: object
+                  properties:
+                    value:
+                      type: integer
+                      description: Numeric value of the enum option.
+                    label:
+                      type: string
+                      description: Display label for the enum option.
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code identifying the type of error.
+        message:
+          type: string
+          description: Human-readable description of the error.
+    CreateContactAttribute:
+      type: object
+      properties:
+        value:
+          type: string
+          description: Default or computed value for the attribute.
+        enumeration:
+          type: array
+          description: Enum values for category-type attributes.
+          items:
+            type: object
+            properties:
+              value:
+                type: integer
+                description: Numeric value.
+              label:
+                type: string
+                description: Display label.
+        type:
+          type: string
+          description: Data type of the attribute.
+          enum:
+          - text
+          - date
+          - float
+          - boolean
+          - id
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: api-key
+      description: Brevo API key passed in the api-key request header for authentication.
+externalDocs:
+  description: Brevo Contacts Documentation
+  url: https://developers.brevo.com/docs/how-it-works

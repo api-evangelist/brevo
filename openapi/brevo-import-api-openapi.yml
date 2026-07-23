@@ -1,0 +1,118 @@
+openapi: 3.1.0
+info:
+  title: Brevo Contacts Agent Status Import API
+  description: The Brevo Contacts API provides programmatic access to contact management features including creating, updating, and deleting contacts. Developers can organize contacts into lists, apply attributes and tags, import contacts in bulk, and build audience segments for targeted campaigns. The API also supports managing folders, contact attributes, and custom fields to structure contact data according to business needs.
+  version: '3.0'
+  contact:
+    name: Brevo Support
+    url: https://help.brevo.com
+  termsOfService: https://www.brevo.com/legal/termsofuse/
+servers:
+- url: https://api.brevo.com/v3
+  description: Brevo Production API Server
+security:
+- apiKeyAuth: []
+tags:
+- name: Import
+  description: Bulk import contacts from files or data payloads.
+paths:
+  /contacts/import:
+    post:
+      operationId: importContacts
+      summary: Import contacts
+      description: Imports contacts in bulk from a file URL or inline data. Supports CSV and other structured formats. Contacts can be assigned to lists and have attributes mapped during import.
+      tags:
+      - Import
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImportContacts'
+      responses:
+        '202':
+          description: Import process started
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  processId:
+                    type: integer
+                    format: int64
+                    description: Identifier for the import process.
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code identifying the type of error.
+        message:
+          type: string
+          description: Human-readable description of the error.
+    ImportContacts:
+      type: object
+      properties:
+        fileUrl:
+          type: string
+          format: uri
+          description: URL of the file to import contacts from.
+        fileBody:
+          type: string
+          description: Inline CSV data for contact import.
+        listIds:
+          type: array
+          description: IDs of lists to add imported contacts to.
+          items:
+            type: integer
+            format: int64
+        notifyUrl:
+          type: string
+          format: uri
+          description: URL to receive notification when the import completes.
+        newList:
+          type: object
+          description: Create a new list and add imported contacts to it.
+          properties:
+            listName:
+              type: string
+              description: Name of the new list.
+            folderId:
+              type: integer
+              format: int64
+              description: Folder ID for the new list.
+        emailBlacklist:
+          type: boolean
+          description: Whether to blacklist imported contacts' email addresses.
+        smsBlacklist:
+          type: boolean
+          description: Whether to blacklist imported contacts' phone numbers.
+        updateExistingContacts:
+          type: boolean
+          description: Whether to update existing contacts during import.
+        emptyContactsAttributes:
+          type: boolean
+          description: Whether to empty existing attributes not in the import file.
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: api-key
+      description: Brevo API key passed in the api-key request header for authentication.
+externalDocs:
+  description: Brevo Contacts Documentation
+  url: https://developers.brevo.com/docs/how-it-works

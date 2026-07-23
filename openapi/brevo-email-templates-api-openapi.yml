@@ -1,0 +1,334 @@
+openapi: 3.1.0
+info:
+  title: Brevo Contacts Agent Status Email Templates API
+  description: The Brevo Contacts API provides programmatic access to contact management features including creating, updating, and deleting contacts. Developers can organize contacts into lists, apply attributes and tags, import contacts in bulk, and build audience segments for targeted campaigns. The API also supports managing folders, contact attributes, and custom fields to structure contact data according to business needs.
+  version: '3.0'
+  contact:
+    name: Brevo Support
+    url: https://help.brevo.com
+  termsOfService: https://www.brevo.com/legal/termsofuse/
+servers:
+- url: https://api.brevo.com/v3
+  description: Brevo Production API Server
+security:
+- apiKeyAuth: []
+tags:
+- name: Email Templates
+  description: Create and manage reusable email templates for transactional messaging.
+paths:
+  /smtp/templates:
+    get:
+      operationId: listSmtpTemplates
+      summary: List email templates
+      description: Retrieves all transactional email templates created in the account. Templates can be used to send personalized transactional emails with consistent formatting.
+      tags:
+      - Email Templates
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/offsetParam'
+      - name: templateStatus
+        in: query
+        description: Filter templates by their active status.
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Templates retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateList'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      operationId: createSmtpTemplate
+      summary: Create an email template
+      description: Creates a new transactional email template with HTML content, subject line, and sender information. Templates support dynamic parameters for personalization.
+      tags:
+      - Email Templates
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSmtpTemplate'
+      responses:
+        '201':
+          description: Template created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTemplateResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /smtp/templates/{templateId}:
+    get:
+      operationId: getSmtpTemplate
+      summary: Get an email template
+      description: Retrieves the details of a specific transactional email template by its unique identifier.
+      tags:
+      - Email Templates
+      parameters:
+      - $ref: '#/components/parameters/templateIdParam'
+      responses:
+        '200':
+          description: Template retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmtpTemplate'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Template not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      operationId: updateSmtpTemplate
+      summary: Update an email template
+      description: Updates an existing transactional email template with new content, subject line, or sender information.
+      tags:
+      - Email Templates
+      parameters:
+      - $ref: '#/components/parameters/templateIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSmtpTemplate'
+      responses:
+        '204':
+          description: Template updated successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Template not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      operationId: deleteSmtpTemplate
+      summary: Delete an email template
+      description: Permanently deletes a transactional email template by its unique identifier.
+      tags:
+      - Email Templates
+      parameters:
+      - $ref: '#/components/parameters/templateIdParam'
+      responses:
+        '204':
+          description: Template deleted successfully
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Template not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    SmtpTemplate:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the template.
+        name:
+          type: string
+          description: Name of the template.
+        subject:
+          type: string
+          description: Subject line of the template.
+        isActive:
+          type: boolean
+          description: Whether the template is currently active.
+        htmlContent:
+          type: string
+          description: HTML content of the template body.
+        sender:
+          type: object
+          description: Default sender identity for the template.
+          properties:
+            name:
+              type: string
+              description: Sender display name.
+            email:
+              type: string
+              format: email
+              description: Sender email address.
+        replyTo:
+          type: string
+          format: email
+          description: Default reply-to email address for the template.
+        createdAt:
+          type: string
+          format: date-time
+          description: UTC date-time when the template was created.
+        modifiedAt:
+          type: string
+          format: date-time
+          description: UTC date-time when the template was last modified.
+    CreateSmtpTemplate:
+      type: object
+      required:
+      - templateName
+      - sender
+      properties:
+        templateName:
+          type: string
+          description: Name for the new template.
+        subject:
+          type: string
+          description: Default subject line for the template.
+        htmlContent:
+          type: string
+          description: HTML content for the template body.
+        sender:
+          type: object
+          description: Default sender identity for the template.
+          required:
+          - email
+          properties:
+            name:
+              type: string
+              description: Sender display name.
+            email:
+              type: string
+              format: email
+              description: Sender email address.
+        replyTo:
+          type: string
+          format: email
+          description: Default reply-to email address.
+        isActive:
+          type: boolean
+          description: Whether to activate the template immediately.
+    CreateTemplateResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the newly created template.
+    TemplateList:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: Total number of templates available.
+        templates:
+          type: array
+          description: List of email template summaries.
+          items:
+            $ref: '#/components/schemas/SmtpTemplate'
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code identifying the type of error.
+        message:
+          type: string
+          description: Human-readable description of the error.
+    UpdateSmtpTemplate:
+      type: object
+      properties:
+        templateName:
+          type: string
+          description: Updated name for the template.
+        subject:
+          type: string
+          description: Updated subject line for the template.
+        htmlContent:
+          type: string
+          description: Updated HTML content for the template body.
+        sender:
+          type: object
+          description: Updated sender identity for the template.
+          properties:
+            name:
+              type: string
+              description: Sender display name.
+            email:
+              type: string
+              format: email
+              description: Sender email address.
+        replyTo:
+          type: string
+          format: email
+          description: Updated reply-to email address.
+        isActive:
+          type: boolean
+          description: Whether the template should be active.
+  parameters:
+    offsetParam:
+      name: offset
+      in: query
+      description: Number of results to skip for pagination.
+      schema:
+        type: integer
+        format: int64
+        default: 0
+    templateIdParam:
+      name: templateId
+      in: path
+      required: true
+      description: The unique identifier of the email template.
+      schema:
+        type: integer
+        format: int64
+    limitParam:
+      name: limit
+      in: query
+      description: Maximum number of results to return per request.
+      schema:
+        type: integer
+        format: int64
+        default: 50
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: api-key
+      description: Brevo API key passed in the api-key request header for authentication.
+externalDocs:
+  description: Brevo Contacts Documentation
+  url: https://developers.brevo.com/docs/how-it-works

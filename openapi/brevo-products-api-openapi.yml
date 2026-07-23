@@ -1,0 +1,278 @@
+openapi: 3.1.0
+info:
+  title: Brevo Contacts Agent Status Products API
+  description: The Brevo Contacts API provides programmatic access to contact management features including creating, updating, and deleting contacts. Developers can organize contacts into lists, apply attributes and tags, import contacts in bulk, and build audience segments for targeted campaigns. The API also supports managing folders, contact attributes, and custom fields to structure contact data according to business needs.
+  version: '3.0'
+  contact:
+    name: Brevo Support
+    url: https://help.brevo.com
+  termsOfService: https://www.brevo.com/legal/termsofuse/
+servers:
+- url: https://api.brevo.com/v3
+  description: Brevo Production API Server
+security:
+- apiKeyAuth: []
+tags:
+- name: Products
+  description: Import, manage, and retrieve eCommerce product data.
+paths:
+  /products:
+    get:
+      operationId: listProducts
+      summary: Return all products
+      description: Retrieves a paginated list of all products synced to the Brevo platform. Returns product details including name, price, URL, and category assignments.
+      tags:
+      - Products
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/offsetParam'
+      - name: ids
+        in: query
+        description: Comma-separated list of product IDs to filter by.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Products retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductList'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      operationId: createUpdateProduct
+      summary: Create or update a product
+      description: Creates a new product or updates an existing product in the Brevo eCommerce catalog. If a product with the same ID already exists, it will be updated with the provided data.
+      tags:
+      - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdateProduct'
+      responses:
+        '201':
+          description: Product created or updated successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /products/batch:
+    post:
+      operationId: batchCreateUpdateProducts
+      summary: Create or update products in batch
+      description: Creates or updates up to 100 products in a single API call. Products with existing IDs will be updated, and new products will be created.
+      tags:
+      - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - products
+              properties:
+                products:
+                  type: array
+                  description: List of products to create or update.
+                  items:
+                    $ref: '#/components/schemas/CreateUpdateProduct'
+                  maxItems: 100
+      responses:
+        '201':
+          description: Products batch processed successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /products/{productId}:
+    get:
+      operationId: getProduct
+      summary: Get a product
+      description: Retrieves the details of a specific product by its unique identifier.
+      tags:
+      - Products
+      parameters:
+      - $ref: '#/components/parameters/productIdParam'
+      responses:
+        '200':
+          description: Product retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  parameters:
+    offsetParam:
+      name: offset
+      in: query
+      description: Number of results to skip for pagination.
+      schema:
+        type: integer
+        format: int64
+        default: 0
+    productIdParam:
+      name: productId
+      in: path
+      required: true
+      description: Unique identifier of the product.
+      schema:
+        type: string
+    limitParam:
+      name: limit
+      in: query
+      description: Maximum number of results to return per request.
+      schema:
+        type: integer
+        format: int64
+        default: 50
+  schemas:
+    ProductList:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: Total number of products.
+        products:
+          type: array
+          description: List of product records.
+          items:
+            $ref: '#/components/schemas/Product'
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code identifying the type of error.
+        message:
+          type: string
+          description: Human-readable description of the error.
+    CreateUpdateProduct:
+      type: object
+      required:
+      - id
+      - name
+      - url
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the product.
+        name:
+          type: string
+          description: Name of the product.
+        url:
+          type: string
+          format: uri
+          description: URL of the product page.
+        imageUrl:
+          type: string
+          format: uri
+          description: URL of the product image.
+        sku:
+          type: string
+          description: Stock keeping unit identifier.
+        price:
+          type: number
+          format: float
+          description: Price of the product.
+        categories:
+          type: array
+          description: IDs of categories to assign the product to.
+          items:
+            type: string
+        metaInfo:
+          type: object
+          description: Additional metadata as key-value pairs.
+          additionalProperties: true
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the product.
+        name:
+          type: string
+          description: Name of the product.
+        url:
+          type: string
+          format: uri
+          description: URL of the product page.
+        imageUrl:
+          type: string
+          format: uri
+          description: URL of the product image.
+        sku:
+          type: string
+          description: Stock keeping unit identifier.
+        price:
+          type: number
+          format: float
+          description: Price of the product.
+        categories:
+          type: array
+          description: IDs of categories the product belongs to.
+          items:
+            type: string
+        metaInfo:
+          type: object
+          description: Additional metadata for the product as key-value pairs.
+          additionalProperties: true
+        createdAt:
+          type: string
+          format: date-time
+          description: UTC date-time when the product was created.
+        modifiedAt:
+          type: string
+          format: date-time
+          description: UTC date-time when the product was last modified.
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: api-key
+      description: Brevo API key passed in the api-key request header for authentication.
+externalDocs:
+  description: Brevo Contacts Documentation
+  url: https://developers.brevo.com/docs/how-it-works

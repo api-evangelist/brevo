@@ -1,0 +1,337 @@
+openapi: 3.1.0
+info:
+  title: Brevo Contacts Agent Status Webhooks API
+  description: The Brevo Contacts API provides programmatic access to contact management features including creating, updating, and deleting contacts. Developers can organize contacts into lists, apply attributes and tags, import contacts in bulk, and build audience segments for targeted campaigns. The API also supports managing folders, contact attributes, and custom fields to structure contact data according to business needs.
+  version: '3.0'
+  contact:
+    name: Brevo Support
+    url: https://help.brevo.com
+  termsOfService: https://www.brevo.com/legal/termsofuse/
+servers:
+- url: https://api.brevo.com/v3
+  description: Brevo Production API Server
+security:
+- apiKeyAuth: []
+tags:
+- name: Webhooks
+  description: Create, manage, and configure webhook subscriptions for receiving real-time event notifications.
+paths:
+  /webhooks:
+    get:
+      operationId: listWebhooks
+      summary: Get all webhooks
+      description: Retrieves all webhook subscriptions configured in the account. Supports filtering by webhook type to view transactional, marketing, or inbound webhook configurations.
+      tags:
+      - Webhooks
+      parameters:
+      - name: type
+        in: query
+        description: Filter webhooks by type. Returns all types if not specified.
+        schema:
+          type: string
+          enum:
+          - transactional
+          - marketing
+          - inbound
+      - name: sort
+        in: query
+        description: Sort direction for the results.
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+      responses:
+        '200':
+          description: Webhooks retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookList'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      operationId: createWebhook
+      summary: Create a webhook
+      description: Creates a new webhook subscription to receive real-time event notifications at the specified URL. The webhook can be configured for transactional, marketing, or inbound event types.
+      tags:
+      - Webhooks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWebhook'
+      responses:
+        '201':
+          description: Webhook created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    description: Unique identifier of the newly created webhook.
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /webhooks/{webhookId}:
+    get:
+      operationId: getWebhook
+      summary: Get a webhook
+      description: Retrieves the details of a specific webhook subscription including its URL, event types, and configuration.
+      tags:
+      - Webhooks
+      parameters:
+      - $ref: '#/components/parameters/webhookIdParam'
+      responses:
+        '200':
+          description: Webhook retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Webhook not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      operationId: updateWebhook
+      summary: Update a webhook
+      description: Updates an existing webhook subscription with new URL, event types, or configuration options.
+      tags:
+      - Webhooks
+      parameters:
+      - $ref: '#/components/parameters/webhookIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateWebhook'
+      responses:
+        '204':
+          description: Webhook updated successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Webhook not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      operationId: deleteWebhook
+      summary: Delete a webhook
+      description: Permanently deletes a webhook subscription. Events will no longer be sent to the configured URL.
+      tags:
+      - Webhooks
+      parameters:
+      - $ref: '#/components/parameters/webhookIdParam'
+      responses:
+        '204':
+          description: Webhook deleted successfully
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Webhook not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  parameters:
+    webhookIdParam:
+      name: webhookId
+      in: path
+      required: true
+      description: Unique identifier of the webhook subscription.
+      schema:
+        type: integer
+        format: int64
+  schemas:
+    Webhook:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the webhook.
+        url:
+          type: string
+          format: uri
+          description: URL where event notifications are delivered.
+        description:
+          type: string
+          description: Human-readable description of the webhook purpose.
+        type:
+          type: string
+          description: Type of webhook determining which event categories apply.
+          enum:
+          - transactional
+          - marketing
+          - inbound
+        events:
+          type: array
+          description: List of event types the webhook is subscribed to.
+          items:
+            type: string
+        isActive:
+          type: boolean
+          description: Whether the webhook is currently active and receiving events.
+        createdAt:
+          type: string
+          format: date-time
+          description: UTC date-time when the webhook was created.
+        modifiedAt:
+          type: string
+          format: date-time
+          description: UTC date-time when the webhook was last modified.
+    WebhookList:
+      type: object
+      properties:
+        webhooks:
+          type: array
+          description: List of webhook subscriptions.
+          items:
+            $ref: '#/components/schemas/Webhook'
+    UpdateWebhook:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          description: Updated URL to receive webhook notifications.
+        description:
+          type: string
+          description: Updated description.
+        events:
+          type: array
+          description: Updated list of event types to subscribe to.
+          items:
+            type: string
+            enum:
+            - sent
+            - request
+            - delivered
+            - hardBounce
+            - softBounce
+            - blocked
+            - spam
+            - invalid
+            - deferred
+            - click
+            - opened
+            - uniqueOpened
+            - unsubscribed
+            - listAddition
+            - inboundEmailProcessed
+        domain:
+          type: string
+          description: Updated domain filter.
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code identifying the type of error.
+        message:
+          type: string
+          description: Human-readable description of the error.
+    CreateWebhook:
+      type: object
+      required:
+      - url
+      - events
+      - type
+      properties:
+        url:
+          type: string
+          format: uri
+          description: URL to receive webhook event notifications. Must be a valid HTTPS endpoint.
+        description:
+          type: string
+          description: Human-readable description of the webhook purpose.
+        type:
+          type: string
+          description: Type of webhook. Determines available event types.
+          enum:
+          - transactional
+          - marketing
+          - inbound
+        events:
+          type: array
+          description: Event types to subscribe to. For transactional type, possible values include sent, delivered, hardBounce, softBounce, blocked, spam, invalid, deferred, click, opened, uniqueOpened, and unsubscribed. For marketing type, possible values include unsubscribed, listAddition, and delivered. For inbound type, the value is inboundEmailProcessed.
+          items:
+            type: string
+            enum:
+            - sent
+            - request
+            - delivered
+            - hardBounce
+            - softBounce
+            - blocked
+            - spam
+            - invalid
+            - deferred
+            - click
+            - opened
+            - uniqueOpened
+            - unsubscribed
+            - listAddition
+            - inboundEmailProcessed
+        domain:
+          type: string
+          description: Optional domain filter to receive events only for emails sent from this domain.
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: api-key
+      description: Brevo API key passed in the api-key request header for authentication.
+externalDocs:
+  description: Brevo Contacts Documentation
+  url: https://developers.brevo.com/docs/how-it-works

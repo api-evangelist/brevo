@@ -1,0 +1,102 @@
+openapi: 3.1.0
+info:
+  title: Brevo Contacts Agent Status Campaign Statistics API
+  description: The Brevo Contacts API provides programmatic access to contact management features including creating, updating, and deleting contacts. Developers can organize contacts into lists, apply attributes and tags, import contacts in bulk, and build audience segments for targeted campaigns. The API also supports managing folders, contact attributes, and custom fields to structure contact data according to business needs.
+  version: '3.0'
+  contact:
+    name: Brevo Support
+    url: https://help.brevo.com
+  termsOfService: https://www.brevo.com/legal/termsofuse/
+servers:
+- url: https://api.brevo.com/v3
+  description: Brevo Production API Server
+security:
+- apiKeyAuth: []
+tags:
+- name: Campaign Statistics
+  description: Retrieve performance metrics and statistics for email campaigns.
+paths:
+  /emailCampaigns/{campaignId}/exportRecipients:
+    post:
+      operationId: exportCampaignRecipients
+      summary: Export recipients of an email campaign
+      description: Exports the recipients of a specific email campaign for analysis or processing. The exported data includes recipient details and their interaction status.
+      tags:
+      - Campaign Statistics
+      parameters:
+      - $ref: '#/components/parameters/campaignIdParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                notifyURL:
+                  type: string
+                  format: uri
+                  description: URL to receive a notification when the export is ready.
+                recipientsType:
+                  type: string
+                  description: Type of recipients to export.
+                  enum:
+                  - all
+                  - nonClickers
+                  - nonOpeners
+                  - clickers
+                  - openers
+                  - softBounces
+                  - hardBounces
+                  - unsubscribed
+      responses:
+        '202':
+          description: Export request accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  processId:
+                    type: integer
+                    format: int64
+                    description: Identifier for the export process.
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Campaign not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code identifying the type of error.
+        message:
+          type: string
+          description: Human-readable description of the error.
+  parameters:
+    campaignIdParam:
+      name: campaignId
+      in: path
+      required: true
+      description: Unique identifier of the email campaign.
+      schema:
+        type: integer
+        format: int64
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: api-key
+      description: Brevo API key passed in the api-key request header for authentication.
+externalDocs:
+  description: Brevo Contacts Documentation
+  url: https://developers.brevo.com/docs/how-it-works
