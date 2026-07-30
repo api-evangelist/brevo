@@ -1,178 +1,668 @@
 aid: brevo
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/brevo.png
 url: https://raw.githubusercontent.com/api-evangelist/brevo/refs/heads/main/apis.yml
 apis:
-- aid: brevo:transactional-email-api
-  name: Brevo Transactional Email API
-  tags:
-  - Email
-  - Messaging
-  - SMTP
-  - Transactional
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  baseURL: https://api.brevo.com/v3
+- aid: brevo:brevo-agent-status-api
+  name: brevo Agent Status API
+  description: Manage agent online status for conversation availability.
   humanURL: https://developers.brevo.com/docs/send-a-transactional-email
-  properties:
-  - url: https://developers.brevo.com/docs/send-a-transactional-email
-    type: Documentation
-  - url: openapi/brevo-transactional-email-openapi.yml
-    type: OpenAPI
-  - url: graphql/brevo-graphql.md
-    type: GraphQL
-  description: The Brevo Transactional Email API allows developers to send transactional
-    emails such as order confirmations, password resets, and account notifications
-    programmatically. It supports single and batch sending, scheduled deliveries,
-    template-based emails, and attachment handling. The API also provides endpoints
-    for tracking email activity including opens, clicks, bounces, and delivery status
-    through detailed event logs and real-time webhooks.
-- aid: brevo:email-campaigns-api
-  name: Brevo Email Campaigns API
-  tags:
-  - Automation
-  - Campaigns
-  - Email
-  - Marketing
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   baseURL: https://api.brevo.com/v3
-  humanURL: https://developers.brevo.com/docs/getting-started
-  properties:
-  - url: https://developers.brevo.com/docs/getting-started
-    type: Documentation
-  - url: openapi/brevo-email-campaigns-openapi.yml
-    type: OpenAPI
-  description: The Brevo Email Campaigns API enables developers to create, manage,
-    and send marketing email campaigns programmatically. It provides endpoints for
-    building campaigns with HTML content or templates, scheduling sends, segmenting
-    audiences, and managing sender identities. Developers can retrieve campaign statistics
-    including open rates, click rates, and unsubscribes to measure performance and
-    optimize future campaigns.
-- aid: brevo:contacts-api
-  name: Brevo Contacts API
   tags:
-  - Contacts
-  - CRM
-  - Lists
-  - Segmentation
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  baseURL: https://api.brevo.com/v3
-  humanURL: https://developers.brevo.com/docs/how-it-works
+  - Agent Status
   properties:
-  - url: https://developers.brevo.com/docs/how-it-works
-    type: Documentation
-  - url: openapi/brevo-contacts-openapi.yml
-    type: OpenAPI
-  description: The Brevo Contacts API provides programmatic access to contact management
-    features including creating, updating, and deleting contacts. Developers can organize
-    contacts into lists, apply attributes and tags, import contacts in bulk, and build
-    audience segments for targeted campaigns. The API also supports managing folders,
-    contact attributes, and custom fields to structure contact data according to business
-    needs.
-- aid: brevo:transactional-sms-api
-  name: Brevo Transactional SMS API
+  - type: OpenAPI
+    url: openapi/brevo-agent-status-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/send-a-transactional-email
+  - type: GraphQL
+    url: graphql/brevo-graphql.md
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started
+  - type: Documentation
+    url: https://developers.brevo.com/docs/how-it-works
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-sms-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/whatsapp-messages
+  - type: Documentation
+    url: https://developers.brevo.com/docs/import-your-products
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-webhooks
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+- aid: brevo:brevo-automated-messages-api
+  name: brevo Automated Messages API
+  description: Create, manage, and retrieve automated messages pushed to visitors.
+  humanURL: https://developers.brevo.com/docs/send-a-transactional-email
+  baseURL: https://api.brevo.com/v3
   tags:
-  - Messaging
-  - Mobile
-  - SMS
-  - Transactional
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  baseURL: https://api.brevo.com/v3
-  humanURL: https://developers.brevo.com/docs/transactional-sms-endpoints
+  - Automated Messages
   properties:
-  - url: https://developers.brevo.com/docs/transactional-sms-endpoints
-    type: Documentation
-  - url: openapi/brevo-transactional-sms-openapi.yml
-    type: OpenAPI
-  description: The Brevo Transactional SMS API allows developers to send non-promotional
-    SMS messages such as order confirmations, delivery notifications, and verification
-    codes using recipients' phone numbers. It supports sending individual messages
-    with customizable sender names and provides endpoints for tracking SMS delivery
-    status and activity. The API is designed for time-sensitive notifications that
-    require immediate delivery to mobile devices.
-- aid: brevo:whatsapp-api
-  name: Brevo WhatsApp API
+  - type: OpenAPI
+    url: openapi/brevo-automated-messages-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/send-a-transactional-email
+  - type: GraphQL
+    url: graphql/brevo-graphql.md
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started
+  - type: Documentation
+    url: https://developers.brevo.com/docs/how-it-works
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-sms-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/whatsapp-messages
+  - type: Documentation
+    url: https://developers.brevo.com/docs/import-your-products
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-webhooks
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+- aid: brevo:brevo-campaign-statistics-api
+  name: brevo Campaign Statistics API
+  description: Retrieve performance metrics and statistics for email campaigns.
+  humanURL: https://developers.brevo.com/docs/send-a-transactional-email
+  baseURL: https://api.brevo.com/v3
   tags:
-  - Messaging
-  - Mobile
-  - Transactional
-  - WhatsApp
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  baseURL: https://api.brevo.com/v3
-  humanURL: https://developers.brevo.com/docs/whatsapp-messages
+  - Campaign Statistics
   properties:
-  - url: https://developers.brevo.com/docs/whatsapp-messages
-    type: Documentation
-  - url: openapi/brevo-whatsapp-openapi.yml
-    type: OpenAPI
-  description: The Brevo WhatsApp API enables developers to send transactional WhatsApp
-    messages such as order confirmations, status updates, and password reset links
-    through the WhatsApp Business platform. It provides endpoints for sending template-based
-    messages, managing WhatsApp campaigns, and tracking message delivery and read
-    status. The API leverages WhatsApp's high engagement rates to deliver important
-    notifications directly to users on their preferred messaging platform.
-- aid: brevo:ecommerce-api
-  name: Brevo eCommerce API
+  - type: OpenAPI
+    url: openapi/brevo-campaign-statistics-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/send-a-transactional-email
+  - type: GraphQL
+    url: graphql/brevo-graphql.md
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started
+  - type: Documentation
+    url: https://developers.brevo.com/docs/how-it-works
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-sms-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/whatsapp-messages
+  - type: Documentation
+    url: https://developers.brevo.com/docs/import-your-products
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-webhooks
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+- aid: brevo:brevo-categories-api
+  name: brevo Categories API
+  description: Manage product categories for organizing the catalog.
+  humanURL: https://developers.brevo.com/docs/send-a-transactional-email
+  baseURL: https://api.brevo.com/v3
   tags:
   - Categories
-  - Ecommerce
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-categories-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/send-a-transactional-email
+  - type: GraphQL
+    url: graphql/brevo-graphql.md
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started
+  - type: Documentation
+    url: https://developers.brevo.com/docs/how-it-works
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-sms-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/whatsapp-messages
+  - type: Documentation
+    url: https://developers.brevo.com/docs/import-your-products
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-webhooks
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+- aid: brevo:brevo-contact-attributes-api
+  name: brevo Contact Attributes API
+  description: Define and manage custom attributes for contact profiles.
+  humanURL: https://developers.brevo.com/docs/send-a-transactional-email
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - Contact Attributes
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-contact-attributes-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/send-a-transactional-email
+  - type: GraphQL
+    url: graphql/brevo-graphql.md
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started
+  - type: Documentation
+    url: https://developers.brevo.com/docs/how-it-works
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-sms-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/whatsapp-messages
+  - type: Documentation
+    url: https://developers.brevo.com/docs/import-your-products
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-webhooks
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+- aid: brevo:brevo-contact-lists-api
+  name: brevo Contact Lists API
+  description: Manage contact lists for organizing and segmenting audiences.
+  humanURL: https://developers.brevo.com/docs/send-a-transactional-email
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - Contact Lists
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-contact-lists-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/send-a-transactional-email
+  - type: GraphQL
+    url: graphql/brevo-graphql.md
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started
+  - type: Documentation
+    url: https://developers.brevo.com/docs/how-it-works
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-sms-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/whatsapp-messages
+  - type: Documentation
+    url: https://developers.brevo.com/docs/import-your-products
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-webhooks
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+- aid: brevo:brevo-contacts-api
+  name: brevo Contacts API
+  description: Create, retrieve, update, and delete individual contacts.
+  humanURL: https://developers.brevo.com/docs/send-a-transactional-email
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - Contacts
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-contacts-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/send-a-transactional-email
+  - type: GraphQL
+    url: graphql/brevo-graphql.md
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started
+  - type: Documentation
+    url: https://developers.brevo.com/docs/how-it-works
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-sms-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/whatsapp-messages
+  - type: Documentation
+    url: https://developers.brevo.com/docs/import-your-products
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-webhooks
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+- aid: brevo:brevo-email-activity-api
+  name: brevo Email Activity API
+  description: >-
+    Track and retrieve transactional email activity including delivery status, opens, clicks, and bounces.
+  humanURL: https://developers.brevo.com/docs/send-a-transactional-email
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - Email Activity
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-email-activity-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/send-a-transactional-email
+  - type: GraphQL
+    url: graphql/brevo-graphql.md
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started
+  - type: Documentation
+    url: https://developers.brevo.com/docs/how-it-works
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-sms-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/whatsapp-messages
+  - type: Documentation
+    url: https://developers.brevo.com/docs/import-your-products
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-webhooks
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+- aid: brevo:brevo-email-campaigns-api
+  name: brevo Email Campaigns API
+  description: Create, update, send, and manage marketing email campaigns.
+  humanURL: https://developers.brevo.com/docs/send-a-transactional-email
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - Email Campaigns
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-email-campaigns-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/send-a-transactional-email
+  - type: GraphQL
+    url: graphql/brevo-graphql.md
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started
+  - type: Documentation
+    url: https://developers.brevo.com/docs/how-it-works
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-sms-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/whatsapp-messages
+  - type: Documentation
+    url: https://developers.brevo.com/docs/import-your-products
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-webhooks
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+- aid: brevo:brevo-email-templates-api
+  name: brevo Email Templates API
+  description: Create and manage reusable email templates for transactional messaging.
+  humanURL: https://developers.brevo.com/docs/send-a-transactional-email
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - Email Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-email-templates-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/send-a-transactional-email
+  - type: GraphQL
+    url: graphql/brevo-graphql.md
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started
+  - type: Documentation
+    url: https://developers.brevo.com/docs/how-it-works
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-sms-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/whatsapp-messages
+  - type: Documentation
+    url: https://developers.brevo.com/docs/import-your-products
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-webhooks
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+- aid: brevo:brevo-folders-api
+  name: brevo Folders API
+  description: Organize contact lists into folders for better management.
+  humanURL: https://developers.brevo.com/docs/send-a-transactional-email
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - Folders
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-folders-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/send-a-transactional-email
+  - type: GraphQL
+    url: graphql/brevo-graphql.md
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started
+  - type: Documentation
+    url: https://developers.brevo.com/docs/how-it-works
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-sms-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/whatsapp-messages
+  - type: Documentation
+    url: https://developers.brevo.com/docs/import-your-products
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-webhooks
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+- aid: brevo:brevo-import-api
+  name: brevo Import API
+  description: Bulk import contacts from files or data payloads.
+  humanURL: https://developers.brevo.com/docs/send-a-transactional-email
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - Import
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-import-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/send-a-transactional-email
+  - type: GraphQL
+    url: graphql/brevo-graphql.md
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started
+  - type: Documentation
+    url: https://developers.brevo.com/docs/how-it-works
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-sms-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/whatsapp-messages
+  - type: Documentation
+    url: https://developers.brevo.com/docs/import-your-products
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-webhooks
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+- aid: brevo:brevo-messages-api
+  name: brevo Messages API
+  description: Send and manage chat messages as an agent or automated bot within conversations.
+  humanURL: https://developers.brevo.com/docs/send-a-transactional-email
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - Messages
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-messages-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/send-a-transactional-email
+  - type: GraphQL
+    url: graphql/brevo-graphql.md
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started
+  - type: Documentation
+    url: https://developers.brevo.com/docs/how-it-works
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-sms-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/whatsapp-messages
+  - type: Documentation
+    url: https://developers.brevo.com/docs/import-your-products
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-webhooks
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+- aid: brevo:brevo-orders-api
+  name: brevo Orders API
+  description: Create and manage eCommerce order data for revenue attribution and purchase tracking.
+  humanURL: https://developers.brevo.com/docs/send-a-transactional-email
+  baseURL: https://api.brevo.com/v3
+  tags:
   - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-orders-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/send-a-transactional-email
+  - type: GraphQL
+    url: graphql/brevo-graphql.md
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started
+  - type: Documentation
+    url: https://developers.brevo.com/docs/how-it-works
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-sms-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/whatsapp-messages
+  - type: Documentation
+    url: https://developers.brevo.com/docs/import-your-products
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-webhooks
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+- aid: brevo:brevo-products-api
+  name: brevo Products API
+  description: Import, manage, and retrieve eCommerce product data.
+  humanURL: https://developers.brevo.com/docs/send-a-transactional-email
+  baseURL: https://api.brevo.com/v3
+  tags:
   - Products
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  baseURL: https://api.brevo.com/v3
-  humanURL: https://developers.brevo.com/docs/import-your-products
   properties:
-  - url: https://developers.brevo.com/docs/import-your-products
-    type: Documentation
-  - url: openapi/brevo-ecommerce-openapi.yml
-    type: OpenAPI
-  description: The Brevo eCommerce API allows developers to sync product catalogs,
-    categories, and order data with the Brevo platform. It provides endpoints for
-    importing and managing products, organizing them into categories, and tracking
-    customer purchase history. This data integration enables merchants to attribute
-    revenue to marketing campaigns, trigger automated workflows based on purchase
-    behavior, and build product recommendation segments for targeted messaging.
-- aid: brevo:conversations-api
-  name: Brevo Conversations API
-  tags:
-  - Chat
-  - Conversations
-  - Live Chat
-  - Support
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  - type: OpenAPI
+    url: openapi/brevo-products-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/send-a-transactional-email
+  - type: GraphQL
+    url: graphql/brevo-graphql.md
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started
+  - type: Documentation
+    url: https://developers.brevo.com/docs/how-it-works
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-sms-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/whatsapp-messages
+  - type: Documentation
+    url: https://developers.brevo.com/docs/import-your-products
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-webhooks
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+- aid: brevo:brevo-senders-api
+  name: brevo Senders API
+  description: Manage sender identities used for transactional email sending.
+  humanURL: https://developers.brevo.com/docs/send-a-transactional-email
   baseURL: https://api.brevo.com/v3
-  humanURL: https://developers.brevo.com/docs/getting-started
-  properties:
-  - url: https://developers.brevo.com/docs/getting-started
-    type: Documentation
-  - url: openapi/brevo-conversations-openapi.yml
-    type: OpenAPI
-  description: The Brevo Conversations API provides programmatic access to live chat
-    and messaging features for customer support and engagement. It enables developers
-    to manage chat conversations, send and receive messages, and integrate Brevo's
-    chat widget into websites and applications. The API supports real-time communication
-    with site visitors and can be used to build custom chat interfaces, automate responses,
-    and route conversations to appropriate team members.
-- aid: brevo:webhooks-api
-  name: Brevo Webhooks API
   tags:
-  - Automation
-  - Events
-  - Notifications
+  - Senders
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-senders-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/send-a-transactional-email
+  - type: GraphQL
+    url: graphql/brevo-graphql.md
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started
+  - type: Documentation
+    url: https://developers.brevo.com/docs/how-it-works
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-sms-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/whatsapp-messages
+  - type: Documentation
+    url: https://developers.brevo.com/docs/import-your-products
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-webhooks
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+- aid: brevo:brevo-sms-statistics-api
+  name: brevo SMS Statistics API
+  description: Retrieve delivery reports and activity statistics for transactional SMS messages.
+  humanURL: https://developers.brevo.com/docs/send-a-transactional-email
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - SMS Statistics
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-sms-statistics-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/send-a-transactional-email
+  - type: GraphQL
+    url: graphql/brevo-graphql.md
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started
+  - type: Documentation
+    url: https://developers.brevo.com/docs/how-it-works
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-sms-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/whatsapp-messages
+  - type: Documentation
+    url: https://developers.brevo.com/docs/import-your-products
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-webhooks
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+- aid: brevo:brevo-transactional-emails-api
+  name: brevo Transactional Emails API
+  description: >-
+    Send and manage transactional emails including order confirmations, password resets, and account notifications.
+  humanURL: https://developers.brevo.com/docs/send-a-transactional-email
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - Transactional Emails
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-transactional-emails-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/send-a-transactional-email
+  - type: GraphQL
+    url: graphql/brevo-graphql.md
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started
+  - type: Documentation
+    url: https://developers.brevo.com/docs/how-it-works
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-sms-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/whatsapp-messages
+  - type: Documentation
+    url: https://developers.brevo.com/docs/import-your-products
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-webhooks
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+- aid: brevo:brevo-transactional-sms-api
+  name: brevo Transactional SMS API
+  description: Send transactional SMS messages for notifications, verifications, and alerts.
+  humanURL: https://developers.brevo.com/docs/send-a-transactional-email
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - Transactional SMS
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-transactional-sms-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/send-a-transactional-email
+  - type: GraphQL
+    url: graphql/brevo-graphql.md
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started
+  - type: Documentation
+    url: https://developers.brevo.com/docs/how-it-works
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-sms-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/whatsapp-messages
+  - type: Documentation
+    url: https://developers.brevo.com/docs/import-your-products
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-webhooks
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+- aid: brevo:brevo-webhooks-api
+  name: brevo Webhooks API
+  description: >-
+    Create, manage, and configure webhook subscriptions for receiving real-time event notifications.
+  humanURL: https://developers.brevo.com/docs/send-a-transactional-email
+  baseURL: https://api.brevo.com/v3
+  tags:
   - Webhooks
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  baseURL: https://api.brevo.com/v3
-  humanURL: https://developers.brevo.com/docs/transactional-webhooks
   properties:
-  - url: https://developers.brevo.com/docs/transactional-webhooks
-    type: Documentation
-  - url: openapi/brevo-webhooks-openapi.yml
-    type: OpenAPI
-  - url: asyncapi/brevo-webhooks-asyncapi.yml
-    type: AsyncAPI
-  description: The Brevo Webhooks API allows developers to receive real-time notifications
-    when events occur across transactional emails, marketing campaigns, and conversations.
-    By configuring webhook subscriptions, applications can automatically receive data
-    for events such as email deliveries, opens, clicks, bounces, spam reports, and
-    unsubscribes. This eliminates the need for polling and enables event-driven integrations
-    that respond immediately to changes in messaging activity.
+  - type: OpenAPI
+    url: openapi/brevo-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/send-a-transactional-email
+  - type: GraphQL
+    url: graphql/brevo-graphql.md
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started
+  - type: Documentation
+    url: https://developers.brevo.com/docs/how-it-works
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-sms-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/whatsapp-messages
+  - type: Documentation
+    url: https://developers.brevo.com/docs/import-your-products
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-webhooks
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+- aid: brevo:brevo-whatsapp-campaigns-api
+  name: brevo WhatsApp Campaigns API
+  description: Create, manage, and send WhatsApp marketing campaigns.
+  humanURL: https://developers.brevo.com/docs/send-a-transactional-email
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - WhatsApp Campaigns
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-whatsapp-campaigns-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/send-a-transactional-email
+  - type: GraphQL
+    url: graphql/brevo-graphql.md
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started
+  - type: Documentation
+    url: https://developers.brevo.com/docs/how-it-works
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-sms-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/whatsapp-messages
+  - type: Documentation
+    url: https://developers.brevo.com/docs/import-your-products
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-webhooks
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+- aid: brevo:brevo-whatsapp-messages-api
+  name: brevo WhatsApp Messages API
+  description: >-
+    Send transactional WhatsApp messages to recipients using approved templates or plain text.
+  humanURL: https://developers.brevo.com/docs/send-a-transactional-email
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - WhatsApp Messages
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-whatsapp-messages-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/send-a-transactional-email
+  - type: GraphQL
+    url: graphql/brevo-graphql.md
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started
+  - type: Documentation
+    url: https://developers.brevo.com/docs/how-it-works
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-sms-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/whatsapp-messages
+  - type: Documentation
+    url: https://developers.brevo.com/docs/import-your-products
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-webhooks
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+- aid: brevo:brevo-whatsapp-templates-api
+  name: brevo WhatsApp Templates API
+  description: Create and manage WhatsApp message templates that require Meta approval before use.
+  humanURL: https://developers.brevo.com/docs/send-a-transactional-email
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - WhatsApp Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-whatsapp-templates-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/send-a-transactional-email
+  - type: GraphQL
+    url: graphql/brevo-graphql.md
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started
+  - type: Documentation
+    url: https://developers.brevo.com/docs/how-it-works
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-sms-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/whatsapp-messages
+  - type: Documentation
+    url: https://developers.brevo.com/docs/import-your-products
+  - type: Documentation
+    url: https://developers.brevo.com/docs/transactional-webhooks
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
 modified: '2026-05-19'
 common:
 - type: AgenticAccess
