@@ -1,0 +1,108 @@
+generated: '2026-08-13'
+method: searched
+status: published
+source: https://developers.brevo.com/docs/mcp-protocol
+docs:
+- https://developers.brevo.com/docs/mcp-protocol
+- https://developers.brevo.com/docs/integration-guide
+description: >-
+  Brevo ships a hosted, remote MCP server at https://mcp.brevo.com. An agent POSTs directly
+  to the endpoint with a Bearer MCP token minted in the Brevo dashboard (Account > SMTP & API
+  > API Keys, with the "Create MCP server API key" toggle on) — no local install required.
+  Brevo splits the surface into one combined server covering 27 modules and 27 per-module
+  servers, so a client can load a narrower tool set. The endpoint also advertises RFC 8414
+  authorization-server metadata with dynamic client registration and PKCE, so an OAuth
+  client can register itself rather than pasting a static token.
+deployment:
+  mode: remote
+  endpoint: https://mcp.brevo.com/v1/brevo/mcp
+  auth: api-key
+  verified: probed
+  note: >-
+    Probed 2026-08-13 — an anonymous tools/list POST to the endpoint returns HTTP 401
+    {"error":"invalid_token","error_description":"Authentication required"}, confirming a
+    live, auth-gated MCP surface rather than a 404. Authentication is a Bearer MCP token
+    (`Authorization: Bearer <BREVO_MCP_TOKEN>`); the same endpoint additionally publishes
+    OAuth metadata at https://mcp.brevo.com/.well-known/oauth-authorization-server
+    (authorization_code + refresh_token, PKCE S256, dynamic client registration,
+    scopes_supported ["all"]). Brevo's own configuration examples for Claude Desktop and
+    Claude Code wrap the remote endpoint in `npx mcp-remote` as a bridge — that is a
+    client-side shim over the hosted URL, not a stdio server Brevo distributes, so the
+    mode here is remote, not both.
+server:
+  name: brevo
+  transport: http
+  url: https://mcp.brevo.com/v1/brevo/mcp
+  base_url: https://mcp.brevo.com
+  module_count: 27
+  token_scope: full read/write on the account (per Brevo's own warning in the tool
+    configuration guide)
+oauth:
+  issuer: https://mcp.brevo.com
+  authorization_endpoint: https://mcp.brevo.com/oauth/authorize
+  token_endpoint: https://mcp.brevo.com/oauth/token
+  registration_endpoint: https://mcp.brevo.com/oauth/register
+  grant_types: [authorization_code, refresh_token]
+  code_challenge_methods: [S256]
+  scopes_supported: [all]
+  source: well-known/brevo-mcp-oauth-authorization-server.json
+servers:
+- name: brevo
+  endpoint: https://mcp.brevo.com/v1/brevo/mcp
+  description: All features combined (27 modules)
+  kind: main
+- {name: contacts, endpoint: https://mcp.brevo.com/v1/brevo_contacts/mcp, description: Manage contacts and lists}
+- {name: email_campaign_management, endpoint: https://mcp.brevo.com/v1/brevo_email_campaign_management/mcp, description: Create and manage email campaigns}
+- {name: campaign_analytics, endpoint: https://mcp.brevo.com/v1/brevo_campaign_analytics/mcp, description: View campaign performance}
+- {name: templates, endpoint: https://mcp.brevo.com/v1/brevo_templates/mcp, description: Manage email templates}
+- {name: transac_templates, endpoint: https://mcp.brevo.com/v1/brevo_transac_templates/mcp, description: Manage transactional email templates}
+- {name: deals, endpoint: https://mcp.brevo.com/v1/brevo_deals/mcp, description: Manage CRM deals}
+- {name: companies, endpoint: https://mcp.brevo.com/v1/brevo_companies/mcp, description: Manage CRM companies}
+- {name: tasks, endpoint: https://mcp.brevo.com/v1/brevo_tasks/mcp, description: Manage CRM tasks}
+- {name: pipelines, endpoint: https://mcp.brevo.com/v1/brevo_pipelines/mcp, description: Configure CRM pipelines}
+- {name: notes, endpoint: https://mcp.brevo.com/v1/brevo_notes/mcp, description: Add notes to contacts and deals}
+- {name: sms_campaigns, endpoint: https://mcp.brevo.com/v1/brevo_sms_campaigns/mcp, description: Create and send SMS campaigns}
+- {name: whatsapp_campaigns, endpoint: https://mcp.brevo.com/v1/brevo_whatsapp_campaigns/mcp, description: Create and send WhatsApp campaigns}
+- {name: whatsapp_management, endpoint: https://mcp.brevo.com/v1/brevo_whatsapp_management/mcp, description: Configure WhatsApp settings}
+- {name: lists, endpoint: https://mcp.brevo.com/v1/brevo_lists/mcp, description: Manage contact lists}
+- {name: segments, endpoint: https://mcp.brevo.com/v1/brevo_segments/mcp, description: Manage contact segments}
+- {name: attributes, endpoint: https://mcp.brevo.com/v1/brevo_attributes/mcp, description: Manage contact attributes}
+- {name: contact_import_export, endpoint: https://mcp.brevo.com/v1/brevo_contact_import_export/mcp, description: Import and export contacts in bulk}
+- {name: folders, endpoint: https://mcp.brevo.com/v1/brevo_folders/mcp, description: Organise campaigns into folders}
+- {name: groups, endpoint: https://mcp.brevo.com/v1/brevo_groups/mcp, description: Manage contact groups}
+- {name: senders, endpoint: https://mcp.brevo.com/v1/brevo_senders/mcp, description: Manage sender identities}
+- {name: domains, endpoint: https://mcp.brevo.com/v1/brevo_domains/mcp, description: Manage sender domains}
+- {name: ips, endpoint: https://mcp.brevo.com/v1/brevo_ips/mcp, description: Manage dedicated IPs}
+- {name: accounts, endpoint: https://mcp.brevo.com/v1/brevo_accounts/mcp, description: Manage account and sub-accounts}
+- {name: users, endpoint: https://mcp.brevo.com/v1/brevo_users/mcp, description: Manage users and permissions}
+- {name: webhooks_management, endpoint: https://mcp.brevo.com/v1/brevo_webhooks_management/mcp, description: Configure webhooks}
+- {name: external_feeds, endpoint: https://mcp.brevo.com/v1/brevo_external_feeds/mcp, description: Manage RSS feeds}
+- {name: processes, endpoint: https://mcp.brevo.com/v1/brevo_processes/mcp, description: Monitor background processes}
+tools:
+  status: gated
+  note: >-
+    The live tool list is auth-gated — tools/list returns 401 without a Bearer MCP token,
+    so per-tool inputSchema could not be introspected anonymously and NO tool list is
+    asserted here. Brevo publishes module names and descriptions but not a tool-level
+    manifest. mcp/brevo-tool-crosswalk.yml maps each published module to the backing
+    OpenAPI operations by name and path semantics, with confidence recorded honestly.
+docs_mcp:
+  endpoint: https://developers.brevo.com/_mcp/server
+  auth: none
+  verified: probed
+  server_info:
+    name: fern-docs-mcp-server
+    version: 1.0.0
+    protocolVersion: '2025-11-25'
+  note: >-
+    A SECOND, separate MCP server — the documentation search server Brevo's Fern-hosted
+    developer portal exposes, advertised in llms.txt. It answers an anonymous initialize
+    handshake over text/event-stream (probed 2026-08-13). It serves docs retrieval, not
+    account operations; the account surface is mcp.brevo.com above. Recorded separately so
+    the two are never conflated.
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+  - {url: 'https://mcp.brevo.com/v1/brevo/mcp', method: POST, http_status: 401, body: '{"error":"invalid_token","error_description":"Authentication required"}'}
+  - {url: 'https://mcp.brevo.com/.well-known/oauth-authorization-server', http_status: 200}
+  - {url: 'https://developers.brevo.com/_mcp/server', method: POST, http_status: 200, note: initialize handshake succeeded anonymously}

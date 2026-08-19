@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Brevo Contacts Agent Status API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api-key",
+      "value": "{{api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Agent Status",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Set agent status to online",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/conversations/agentOnlinePing",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets an agent's status to online for approximately 2-3 minutes. This endpoint should be pinged every minute for as long as the agent needs to be considered available for conversations."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

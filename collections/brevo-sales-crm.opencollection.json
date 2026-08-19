@@ -1,0 +1,1193 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sales CRM",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "companies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all Companies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/companies",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "filters[attributes.name]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by attributes. If you have a filter for the owner on your side please send it as filters[attributes.owner] and utilize the account email for the filtering."
+              },
+              {
+                "name": "linkedContactsIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by linked contacts ids"
+              },
+              {
+                "name": "linkedDealsIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by linked Deals ids"
+              },
+              {
+                "name": "modifiedSince",
+                "value": "",
+                "type": "query",
+                "description": "Filter (urlencoded) the companies modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result."
+              },
+              {
+                "name": "createdSince",
+                "value": "",
+                "type": "query",
+                "description": "Filter (urlencoded) the companies created after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first document of the page"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of documents per page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in the ascending/descending order. Default order is **descending** by creation if `sort` is not passed"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "The field used to sort field names."
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of companies with optional filtering, sorting, and search capabilities. Results are sorted by creation date in descending order by default, and can be filtered by attributes, linked contacts, linked deals, or modification/creation timestamps."
+        },
+        {
+          "info": {
+            "name": "Create a company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/companies",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new CRM company with the specified name, attributes, and optional associations to contacts and deals. The company name is required, and you can optionally provide a country code when a phone number attribute is included."
+        },
+        {
+          "info": {
+            "name": "Get a company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/companies/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Get Company Details"
+              }
+            ]
+          },
+          "docs": "Retrieve the full details of a single company by its identifier, including its attributes, linked contacts, and linked deals. Returns a 404 error if the company does not exist, or a 403 error if the user lacks permission to view the company."
+        },
+        {
+          "info": {
+            "name": "Update a company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.brevo.com/v3/companies/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing company''s attributes, name, linked contacts, or linked deals. Note that passing `linkedContactsIds` or `linkedDealsIds` replaces the entire list of associations, so omitted IDs will be removed. The company name cannot be set to an empty string."
+        },
+        {
+          "info": {
+            "name": "Delete a company",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/companies/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID to delete"
+              }
+            ]
+          },
+          "docs": "Permanently delete a company by its identifier. The requesting user must be the company owner or have manage permission on companies; otherwise, a 403 Forbidden error is returned."
+        },
+        {
+          "info": {
+            "name": "Create a company/deal attribute",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/crm/attributes",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new custom attribute for companies or deals. The attribute label must be unique within the object type, cannot exceed 50 characters, and cannot use reserved names. For `single-select` or `multi-choice` attribute types, you must also provide the `optionsLabels` array."
+        },
+        {
+          "info": {
+            "name": "Get company attributes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/crm/attributes/companies",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieve the list of all attributes defined for companies, including both system-default and custom attributes. Each attribute includes its label, internal name, type, required status, and available options for select-type attributes."
+        },
+        {
+          "info": {
+            "name": "Link and Unlink company with contact and deal",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.brevo.com/v3/companies/link-unlink/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Link or unlink contacts and deals with a specific company in a single request. You can simultaneously link new contacts/deals and unlink existing ones by providing the respective ID arrays in the request body."
+        },
+        {
+          "info": {
+            "name": "Import companies(creation and updation)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/companies/import",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "mapping",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Import companies from a CSV file with mapping options."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "deals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get pipeline stages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/crm/pipeline/details",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "This endpoint is deprecated. Prefer /crm/pipeline/details/{pipelineID} instead."
+        },
+        {
+          "info": {
+            "name": "Get a pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/crm/pipeline/details/:pipelineID",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pipelineID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve the details of a specific deal pipeline by its identifier, including its stages, stage ordering, and configuration. Use this endpoint to obtain the pipeline and stage IDs needed when creating or updating deals."
+        },
+        {
+          "info": {
+            "name": "Get all pipelines",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/crm/pipeline/details/all",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieve the list of all deal pipelines configured for your account, including each pipeline''s stages and settings. If no pipelines have been configured yet, a default pipeline is automatically created and returned."
+        },
+        {
+          "info": {
+            "name": "Get deal attributes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/crm/attributes/deals",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieve the list of all attributes defined for deals, including both system-default and custom attributes. Each attribute includes its label, internal name, type, required status, and available options for select-type attributes."
+        },
+        {
+          "info": {
+            "name": "Get all deals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/crm/deals",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "filters[attributes.deal_name]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by attributes. If you have a filter for the owner on your end, please send it as filters[attributes.deal_owner] and utilize the account email for the filtering."
+              },
+              {
+                "name": "filters[attributes.deal_owner]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the deal owner. Pass the account email address of the deal owner."
+              },
+              {
+                "name": "filters[attributes.deal_stage]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the deal stage. Pass the stage id, retrievable from GET /crm/pipeline/details/{pipelineID}."
+              },
+              {
+                "name": "filters[attributes.pipeline]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the pipeline. Pass the pipeline id, retrievable from GET /crm/pipeline/details/{pipelineID}."
+              },
+              {
+                "name": "filters[linkedCompaniesIds]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by linked companies ids"
+              },
+              {
+                "name": "filters[linkedContactsIds]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by linked contacts ids"
+              },
+              {
+                "name": "modifiedSince",
+                "value": "",
+                "type": "query",
+                "description": "Filter (urlencoded) the deals modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result."
+              },
+              {
+                "name": "createdSince",
+                "value": "",
+                "type": "query",
+                "description": "Filter (urlencoded) the deals created after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first document of the page"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of documents per page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in the ascending/descending order. Default order is **descending** by creation if `sort` is not passed"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "The field used to sort field names."
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of deals with optional filtering, sorting, and search capabilities. Results can be filtered by attributes such as deal name or owner, linked companies, linked contacts, or modification/creation timestamps. Default sort order is descending by creation date."
+        },
+        {
+          "info": {
+            "name": "Create a deal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/crm/deals",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new deal in the CRM with the specified name, attributes, and optional associations to contacts and companies. You can assign the deal to a specific pipeline and stage by providing `pipeline` and `deal_stage` attribute IDs, which can be retrieved from the pipeline details endpoint."
+        },
+        {
+          "info": {
+            "name": "Get a deal",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/crm/deals/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve the full details of a single deal by its identifier, including its attributes, pipeline stage, linked contacts, and linked companies. Returns a 404 error if the deal does not exist."
+        },
+        {
+          "info": {
+            "name": "Update a deal",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.brevo.com/v3/crm/deals/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing deal''s attributes, name, linked contacts, or linked companies. Note that passing `linkedContactsIds` or `linkedCompaniesIds` replaces the entire list of associations, so omitted IDs will be removed. To move a deal to a different pipeline or stage, provide both the `pipeline` and `deal_stage` attribute IDs."
+        },
+        {
+          "info": {
+            "name": "Delete a deal",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/crm/deals/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Permanently delete a deal by its identifier. The requesting user must be the deal owner or have manage permission on deals; otherwise, a 403 Forbidden error is returned."
+        },
+        {
+          "info": {
+            "name": "Link and Unlink a deal with contacts and companies",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.brevo.com/v3/crm/deals/link-unlink/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Link or unlink contacts and companies with a specific deal in a single request. You can simultaneously link new contacts/companies and unlink existing ones by providing the respective ID arrays in the request body."
+        },
+        {
+          "info": {
+            "name": "Import deals(creation and updation)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/crm/deals/import",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "mapping",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Import deals from a CSV file with mapping options."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "tasks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all task types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/crm/tasktypes",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieve the list of all available task types, such as Email, Call, Meeting, Todo, Lunch, Deadline, and LinkedIn. If no task types exist yet, the default set is automatically created and returned. Use the task type ID when creating or updating tasks."
+        },
+        {
+          "info": {
+            "name": "Get all tasks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/crm/tasks",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "filter[type]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by task type (ID)"
+              },
+              {
+                "name": "filter[status]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by task status"
+              },
+              {
+                "name": "filter[date]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by date"
+              },
+              {
+                "name": "filter[assignTo]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the \"assignTo\" ID. You can utilize account emails for the \"assignTo\" attribute."
+              },
+              {
+                "name": "filter[contacts]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by contact ids"
+              },
+              {
+                "name": "filter[deals]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by deals ids"
+              },
+              {
+                "name": "filter[companies]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by companies ids"
+              },
+              {
+                "name": "dateFrom",
+                "value": "",
+                "type": "query",
+                "description": "dateFrom to date range filter type (timestamp in milliseconds)"
+              },
+              {
+                "name": "dateTo",
+                "value": "",
+                "type": "query",
+                "description": "dateTo to date range filter type (timestamp in milliseconds)"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first document of the page"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of documents per page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in the ascending/descending order. Default order is **descending** by creation if `sort` is not passed"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "The field used to sort field names."
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of CRM tasks with optional filtering by task type, status, date range, assignee, and linked entities (contacts, deals, companies). Results are sorted by creation date in descending order by default, with a default limit of 50 tasks per page."
+        },
+        {
+          "info": {
+            "name": "Create a task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/crm/tasks",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new CRM task with the specified name, type, due date, and optional associations to contacts, companies, or deals. A task requires a name, task type ID, and due date at minimum. You can also set a duration, notes, a reminder, and assign the task to a specific user."
+        },
+        {
+          "info": {
+            "name": "Get a task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/crm/tasks/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve the full details of a single CRM task by its identifier. The response includes the task''s name, type, status, due date, duration, notes, assignee, reminder settings, and linked contacts, companies, or deals."
+        },
+        {
+          "info": {
+            "name": "Update a task",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.brevo.com/v3/crm/tasks/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing CRM task''s properties such as name, type, due date, status, duration, notes, assignee, reminder, or linked entities. Only the fields provided in the request body will be updated; omitted fields remain unchanged."
+        },
+        {
+          "info": {
+            "name": "Delete a task",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/crm/tasks/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Permanently delete a CRM task by its identifier. This removes the task and cancels any associated reminders. The requesting user must be the task assignee or have manage permission on tasks."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "notes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all notes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/crm/notes",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "entity",
+                "value": "",
+                "type": "query",
+                "description": "Filter by note entity type"
+              },
+              {
+                "name": "entityIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by note entity IDs"
+              },
+              {
+                "name": "dateFrom",
+                "value": "",
+                "type": "query",
+                "description": "dateFrom to date range filter type (timestamp in milliseconds)"
+              },
+              {
+                "name": "dateTo",
+                "value": "",
+                "type": "query",
+                "description": "dateTo to date range filter type (timestamp in milliseconds)"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first document of the page"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of documents per page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in the ascending/descending order. Default order is **descending** by creation if `sort` is not passed"
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of CRM notes with optional filtering by entity type, entity IDs, and date range. Results are sorted by creation date in descending order by default, with a default limit of 50 notes per page."
+        },
+        {
+          "info": {
+            "name": "Create a note",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/crm/notes",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new CRM note and optionally associate it with contacts, companies, or deals. The note text content is required, and you can link the note to multiple entities simultaneously during creation."
+        },
+        {
+          "info": {
+            "name": "Get a note",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/crm/notes/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Note ID to get"
+              }
+            ]
+          },
+          "docs": "Retrieve the full details of a single CRM note by its identifier. The response includes the note''s text content, creation date, author, and any associated contacts, companies, or deals."
+        },
+        {
+          "info": {
+            "name": "Update a note",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.brevo.com/v3/crm/notes/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Note ID to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing CRM note''s text content and its associations with contacts, companies, or deals. You can modify the note text, change the pinned status, or update the linked entities."
+        },
+        {
+          "info": {
+            "name": "Delete a note",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/crm/notes/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Note ID to delete"
+              }
+            ]
+          },
+          "docs": "Permanently delete a CRM note by its identifier. This removes the note and unlinks it from any associated contacts, companies, or deals."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/crm/files",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "entity",
+                "value": "",
+                "type": "query",
+                "description": "Filter by file entity type"
+              },
+              {
+                "name": "entityIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by file entity IDs"
+              },
+              {
+                "name": "dateFrom",
+                "value": "",
+                "type": "query",
+                "description": "dateFrom to date range filter type (timestamp in milliseconds)"
+              },
+              {
+                "name": "dateTo",
+                "value": "",
+                "type": "query",
+                "description": "dateTo to date range filter type (timestamp in milliseconds)"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first document of the page"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of documents per page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in the ascending/descending order. Default order is **descending** by creation if `sort` is not passed"
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of CRM files with optional filtering by entity type, entity IDs, and date range. Results are sorted by creation date in descending order by default, with a default limit of 50 files per page."
+        },
+        {
+          "info": {
+            "name": "Upload a file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/crm/files",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "companyId",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "contactId",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "dealId",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Upload a file and associate it with a contact, company, or deal. The file must be sent as multipart form data with a maximum size of 10 MB. You can optionally link the file to a specific entity by providing the corresponding entity ID."
+        },
+        {
+          "info": {
+            "name": "Download a file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/crm/files/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "File id to download."
+              }
+            ]
+          },
+          "docs": "Get a temporary download URL for a CRM file by its identifier. The returned URL is valid for 5 minutes only and provides direct access to the file content."
+        },
+        {
+          "info": {
+            "name": "Delete a file",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/crm/files/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "File id to delete."
+              }
+            ]
+          },
+          "docs": "Permanently delete a CRM file by its identifier. This removes the file from storage and unlinks it from any associated contacts, companies, or deals."
+        },
+        {
+          "info": {
+            "name": "Get file details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/crm/files/:id/data",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "File id to get file data."
+              }
+            ]
+          },
+          "docs": "Retrieve the metadata and details of a specific CRM file by its identifier. This returns information such as the file name, size, type, creation date, and associated entities, but does not include the file content itself."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

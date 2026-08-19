@@ -1,0 +1,1844 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Loyalty",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "program",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get loyalty program list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/loyalty/config/programs",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of documents per page"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first document in the page"
+              },
+              {
+                "name": "sort_field",
+                "value": "",
+                "type": "query",
+                "description": "Sort documents by field"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order"
+              }
+            ]
+          },
+          "docs": "Returns list of loyalty programs"
+        },
+        {
+          "info": {
+            "name": "Create loyalty program",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/loyalty/config/programs",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates loyalty program"
+        },
+        {
+          "info": {
+            "name": "Get loyalty program Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/loyalty/config/programs/:pid",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID. A unique identifier for the loyalty program."
+              }
+            ]
+          },
+          "docs": "Returns loyalty program"
+        },
+        {
+          "info": {
+            "name": "Update loyalty program",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.brevo.com/v3/loyalty/config/programs/:pid",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID. A unique identifier for the loyalty program."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates loyalty program"
+        },
+        {
+          "info": {
+            "name": "Partially update loyalty program",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.brevo.com/v3/loyalty/config/programs/:pid",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID. A unique identifier for the loyalty program."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Partially updates loyalty program"
+        },
+        {
+          "info": {
+            "name": "Delete Loyalty Program",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/loyalty/config/programs/:pid",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID. A unique identifier for the loyalty program."
+              }
+            ]
+          },
+          "docs": "Deletes Loyalty Program"
+        },
+        {
+          "info": {
+            "name": "Publish loyalty program",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/loyalty/config/programs/:pid/publish",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID. A unique identifier for the loyalty program."
+              }
+            ]
+          },
+          "docs": "Publishes loyalty program"
+        },
+        {
+          "info": {
+            "name": "Create subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/loyalty/config/programs/:pid/subscriptions",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID. A unique identifier for the loyalty program."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Subscribes to a loyalty program"
+        },
+        {
+          "info": {
+            "name": "Create subscription member",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/loyalty/config/programs/:pid/subscription-members",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID. A unique identifier for the loyalty program."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add member to a subscription"
+        },
+        {
+          "info": {
+            "name": "Delete subscription member",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/loyalty/config/programs/:pid/subscription-members",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID. A unique identifier for the loyalty program."
+              },
+              {
+                "name": "memberContactIds",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of member contact IDs to delete from the subscription."
+              }
+            ]
+          },
+          "docs": "Deletes member from a subscription"
+        },
+        {
+          "info": {
+            "name": "Delete subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/loyalty/config/programs/:pid/contact/:cid",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID. A unique identifier for the loyalty program."
+              },
+              {
+                "name": "cid",
+                "value": "",
+                "type": "path",
+                "description": "Contact ID."
+              }
+            ]
+          },
+          "docs": "Delete subscription for a contact"
+        },
+        {
+          "info": {
+            "name": "Get Subscription Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/loyalty/config/programs/:pid/account-info",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID. A unique identifier for the loyalty program."
+              },
+              {
+                "name": "contactId",
+                "value": "",
+                "type": "query",
+                "description": "The contact ID to filter by."
+              },
+              {
+                "name": "params",
+                "value": "",
+                "type": "query",
+                "description": "A list of filter parameters for querying the subscription info."
+              },
+              {
+                "name": "loyaltySubscriptionId",
+                "value": "",
+                "type": "query",
+                "description": "The loyalty subscription ID to filter by."
+              },
+              {
+                "name": "includeInternal",
+                "value": "",
+                "type": "query",
+                "description": "Include balances tied to internal definitions."
+              }
+            ]
+          },
+          "docs": "Get Information of balances, tiers, rewards and subscription members for a subscription"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "reward",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get code count",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/loyalty/offer/programs/:pid/code-pools/:cpid/codes-count",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID"
+              },
+              {
+                "name": "cpid",
+                "value": "",
+                "type": "path",
+                "description": "Code Pool ID"
+              }
+            ]
+          },
+          "docs": "Get code count"
+        },
+        {
+          "info": {
+            "name": "Get voucher for a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/loyalty/offer/programs/:pid/vouchers",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Page size"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order"
+              },
+              {
+                "name": "sortField",
+                "value": "",
+                "type": "query",
+                "description": "Sort field"
+              },
+              {
+                "name": "contactId",
+                "value": "",
+                "type": "query",
+                "description": "Contact ID"
+              },
+              {
+                "name": "metadata_key_value",
+                "value": "",
+                "type": "query",
+                "description": "Metadata value for a Key filter"
+              },
+              {
+                "name": "rewardId",
+                "value": "",
+                "type": "query",
+                "description": "Reward ID"
+              }
+            ]
+          },
+          "docs": "Get voucher for a contact"
+        },
+        {
+          "info": {
+            "name": "Get Reward Page API",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/loyalty/offer/programs/:pid/offers",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Page size"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "State of the reward"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Version"
+              }
+            ]
+          },
+          "docs": "Returns a reward page"
+        },
+        {
+          "info": {
+            "name": "Create a reward",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/loyalty/offer/programs/:pid/offers",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new reward in the loyalty program."
+        },
+        {
+          "info": {
+            "name": "Get reward information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/loyalty/offer/programs/:pid/rewards/:rid",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID"
+              },
+              {
+                "name": "rid",
+                "value": "",
+                "type": "path",
+                "description": "Reward ID"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Version"
+              }
+            ]
+          },
+          "docs": "Returns reward information."
+        },
+        {
+          "info": {
+            "name": "Create a voucher",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/loyalty/offer/programs/:pid/rewards/attribute",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a voucher and attribute it to a specific membership."
+        },
+        {
+          "info": {
+            "name": "Create redeem voucher request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/loyalty/offer/programs/:pid/rewards/redeem",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a request to redeem a voucher."
+        },
+        {
+          "info": {
+            "name": "Complete redeem voucher request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/loyalty/offer/programs/:pid/rewards/redeem/:tid/complete",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID"
+              },
+              {
+                "name": "tid",
+                "value": "",
+                "type": "path",
+                "description": "Redeem transaction ID"
+              }
+            ]
+          },
+          "docs": "Completes voucher redeem request."
+        },
+        {
+          "info": {
+            "name": "Revoke vouchers",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/loyalty/offer/programs/:pid/rewards/revoke",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID"
+              },
+              {
+                "name": "attributedRewardIds",
+                "value": "",
+                "type": "query",
+                "description": "Reward Attribution IDs (comma seperated)"
+              }
+            ]
+          },
+          "docs": "Revoke attributed vouchers."
+        },
+        {
+          "info": {
+            "name": "Validate a reward",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/loyalty/offer/programs/:pid/rewards/validate",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validates a reward."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "balance",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get balance definition list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/loyalty/balance/programs/:pid/balance-definitions",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program Id"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of records returned"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset to paginate records"
+              },
+              {
+                "name": "sortField",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort by"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Version"
+              }
+            ]
+          },
+          "docs": "Returns balance definition page"
+        },
+        {
+          "info": {
+            "name": "Create balance definition",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/loyalty/balance/programs/:pid/balance-definitions",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates balance definition and returns information"
+        },
+        {
+          "info": {
+            "name": "Get balance definition",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/loyalty/balance/programs/:pid/balance-definitions/:bdid",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program Id"
+              },
+              {
+                "name": "bdid",
+                "value": "",
+                "type": "path",
+                "description": "Balance Definition Id"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Version"
+              }
+            ]
+          },
+          "docs": "Returns balance definition"
+        },
+        {
+          "info": {
+            "name": "Update balance definition",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.brevo.com/v3/loyalty/balance/programs/:pid/balance-definitions/:bdid",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program Id"
+              },
+              {
+                "name": "bdid",
+                "value": "",
+                "type": "path",
+                "description": "Balance Definition Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates Balance definition"
+        },
+        {
+          "info": {
+            "name": "Delete balance definition",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/loyalty/balance/programs/:pid/balance-definitions/:bdid",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program Id"
+              },
+              {
+                "name": "bdid",
+                "value": "",
+                "type": "path",
+                "description": "Balance Definition Id"
+              }
+            ]
+          },
+          "docs": "Delete Balance definition"
+        },
+        {
+          "info": {
+            "name": "Create balance limits",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/loyalty/balance/programs/:pid/balance-definitions/:bdid/limits",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program Id"
+              },
+              {
+                "name": "bdid",
+                "value": "",
+                "type": "path",
+                "description": "Balance Definition Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates balance limit and sends the created UUID along with the data"
+        },
+        {
+          "info": {
+            "name": "Get balance limits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/loyalty/balance/programs/:pid/balance-definitions/:bdid/limits/:blid",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program Id"
+              },
+              {
+                "name": "bdid",
+                "value": "",
+                "type": "path",
+                "description": "Balance Definition Id"
+              },
+              {
+                "name": "blid",
+                "value": "",
+                "type": "path",
+                "description": "Balance Limit Id"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Version"
+              }
+            ]
+          },
+          "docs": "Fetches balance limits and send the created UUID along with the data"
+        },
+        {
+          "info": {
+            "name": "Updates balance limit",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.brevo.com/v3/loyalty/balance/programs/:pid/balance-definitions/:bdid/limits/:blid",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program Id"
+              },
+              {
+                "name": "bdid",
+                "value": "",
+                "type": "path",
+                "description": "Balance Definition Id"
+              },
+              {
+                "name": "blid",
+                "value": "",
+                "type": "path",
+                "description": "Balance Limit Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates balance limit"
+        },
+        {
+          "info": {
+            "name": "Delete balance limit",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/loyalty/balance/programs/:pid/balance-definitions/:bdid/limits/:blid",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program Id"
+              },
+              {
+                "name": "bdid",
+                "value": "",
+                "type": "path",
+                "description": "Balance Definition Id"
+              },
+              {
+                "name": "blid",
+                "value": "",
+                "type": "path",
+                "description": "Balance Limit Id"
+              }
+            ]
+          },
+          "docs": "Delete balance limit"
+        },
+        {
+          "info": {
+            "name": "Get subscription balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/loyalty/balance/programs/:pid/subscriptions/:cid/balances",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cid",
+                "value": "",
+                "type": "path",
+                "description": "Contact Id"
+              },
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program Id"
+              },
+              {
+                "name": "includeInternal",
+                "value": "",
+                "type": "query",
+                "description": "Include balances tied to internal definitions."
+              }
+            ]
+          },
+          "docs": "Returns subscription balances"
+        },
+        {
+          "info": {
+            "name": "Create subscription balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/loyalty/balance/programs/:pid/subscriptions/:cid/balances",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program Id"
+              },
+              {
+                "name": "cid",
+                "value": "",
+                "type": "path",
+                "description": "Contact Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a balance for a contact"
+        },
+        {
+          "info": {
+            "name": "Get balance list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/loyalty/balance/programs/:pid/contact-balances",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program Id"
+              },
+              {
+                "name": "includeInternal",
+                "value": "",
+                "type": "query",
+                "description": "Include balances tied to internal definitions."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of records returned"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip a number of records"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order"
+              },
+              {
+                "name": "sortField",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort by"
+              },
+              {
+                "name": "balanceDefinitionId",
+                "value": "",
+                "type": "query",
+                "description": "Balance Definition ID (required)"
+              }
+            ]
+          },
+          "docs": "Returns contact balances for a given balance definition across all subscriptions."
+        },
+        {
+          "info": {
+            "name": "Create new transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/loyalty/balance/programs/:pid/transactions",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates new transaction and returns information"
+        },
+        {
+          "info": {
+            "name": "Complete transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/loyalty/balance/programs/:pid/transactions/:tid/complete",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program Id"
+              },
+              {
+                "name": "tid",
+                "value": "",
+                "type": "path",
+                "description": "Transaction Id"
+              }
+            ]
+          },
+          "docs": "Completes transaction"
+        },
+        {
+          "info": {
+            "name": "Cancel transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/loyalty/balance/programs/:pid/transactions/:tid/cancel",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program Id"
+              },
+              {
+                "name": "tid",
+                "value": "",
+                "type": "path",
+                "description": "Transaction Id"
+              }
+            ]
+          },
+          "docs": "Cancels transaction"
+        },
+        {
+          "info": {
+            "name": "Create balance order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/loyalty/balance/programs/:pid/create-order",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns created order"
+        },
+        {
+          "info": {
+            "name": "Get Active Balances API",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/loyalty/balance/programs/:pid/active-balance",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program Id"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset"
+              },
+              {
+                "name": "sortField",
+                "value": "",
+                "type": "query",
+                "description": "Sort Field"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort Order"
+              },
+              {
+                "name": "contactId",
+                "value": "",
+                "type": "query",
+                "description": "Contact ID"
+              },
+              {
+                "name": "balanceDefinitionId",
+                "value": "",
+                "type": "query",
+                "description": "Balance Definition ID"
+              },
+              {
+                "name": "includeInternal",
+                "value": "",
+                "type": "query",
+                "description": "Include balances tied to internal definitions."
+              }
+            ]
+          },
+          "docs": "Returns Active Balances"
+        },
+        {
+          "info": {
+            "name": "Get Transaction History API",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/loyalty/balance/programs/:pid/transaction-history",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program Id"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of records returned"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Page number to retrieve"
+              },
+              {
+                "name": "sortField",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort by"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order"
+              },
+              {
+                "name": "contactId",
+                "value": "",
+                "type": "query",
+                "description": "Contact ID"
+              },
+              {
+                "name": "balanceDefinitionId",
+                "value": "",
+                "type": "query",
+                "description": "Balance Definition ID"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Transaction status filter"
+              },
+              {
+                "name": "transactionType",
+                "value": "",
+                "type": "query",
+                "description": "Transaction type filter"
+              },
+              {
+                "name": "loyaltySubscriptionId",
+                "value": "",
+                "type": "query",
+                "description": "Loyalty Subscription ID filter"
+              }
+            ]
+          },
+          "docs": "Returns transaction history"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "tier",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List tier groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/loyalty/tier/programs/:pid/tier-groups",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Select 'active' to retrieve list of all tier groups which are live for clients. Select draft to retrieve list of all non deleted tier groups."
+              }
+            ]
+          },
+          "docs": "Returns the list of tier groups defined within the loyalty program."
+        },
+        {
+          "info": {
+            "name": "Create a tier group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/loyalty/tier/programs/:pid/tier-groups",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new tier group in a loyalty program. *(The changes will take effect with the next publication of the loyalty program)*"
+        },
+        {
+          "info": {
+            "name": "Get tier group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/loyalty/tier/programs/:pid/tier-groups/:gid",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID"
+              },
+              {
+                "name": "gid",
+                "value": "",
+                "type": "path",
+                "description": "Tier group ID"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Select active to retrieve active version of tier group. Select draft to retrieve latest changes in tier group."
+              }
+            ]
+          },
+          "docs": "Returns tier group information."
+        },
+        {
+          "info": {
+            "name": "Update tier group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.brevo.com/v3/loyalty/tier/programs/:pid/tier-groups/:gid",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID"
+              },
+              {
+                "name": "gid",
+                "value": "",
+                "type": "path",
+                "description": "Tier group ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a tier group from a loyalty program. *(The changes will take effect with the next publication of the loyalty program)*"
+        },
+        {
+          "info": {
+            "name": "Delete tier group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/loyalty/tier/programs/:pid/tier-groups/:gid",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID"
+              },
+              {
+                "name": "gid",
+                "value": "",
+                "type": "path",
+                "description": "Tier group ID"
+              }
+            ]
+          },
+          "docs": "Deletes a tier group from a loyalty program. *(The changes will take effect with the next publication of the loyalty program)*"
+        },
+        {
+          "info": {
+            "name": "List tiers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/loyalty/tier/programs/:pid/tiers",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Select 'active' to retrieve list of all tiers which are live for clients. Select draft to retrieve list of all non deleted tiers."
+              }
+            ]
+          },
+          "docs": "Returns the list of tiers defined within the loyalty program."
+        },
+        {
+          "info": {
+            "name": "Create a tier",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/loyalty/tier/programs/:pid/tier-groups/:gid/tiers",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID"
+              },
+              {
+                "name": "gid",
+                "value": "",
+                "type": "path",
+                "description": "Tier group ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new tier in a loyalty program tier group. *(The changes will take effect with the next publication of the loyalty program)*"
+        },
+        {
+          "info": {
+            "name": "Update tier",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.brevo.com/v3/loyalty/tier/programs/:pid/tiers/:tid",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID"
+              },
+              {
+                "name": "tid",
+                "value": "",
+                "type": "path",
+                "description": "Tier ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Modifies an existing tier for the specified tier group *(The changes will take effect with the next publication of the loyalty program)*"
+        },
+        {
+          "info": {
+            "name": "Delete tier",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/loyalty/tier/programs/:pid/tiers/:tid",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID"
+              },
+              {
+                "name": "tid",
+                "value": "",
+                "type": "path",
+                "description": "Tier ID"
+              }
+            ]
+          },
+          "docs": "Deletes a tier from a loyalty program tier group. *(The changes will take effect with the next publication of the loyalty program)*"
+        },
+        {
+          "info": {
+            "name": "Assign a tier",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/loyalty/tier/programs/:pid/contacts/:cid/tiers/:tid",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pid",
+                "value": "",
+                "type": "path",
+                "description": "Loyalty Program ID"
+              },
+              {
+                "name": "cid",
+                "value": "",
+                "type": "path",
+                "description": "Contact ID"
+              },
+              {
+                "name": "tid",
+                "value": "",
+                "type": "path",
+                "description": "Tier ID"
+              }
+            ]
+          },
+          "docs": "Manually assigns a tier to a specific membership."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

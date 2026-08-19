@@ -1,0 +1,99 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/brevo-*-openapi.yml, well-known/, scopes/, conventions/, security/
+docs: https://developers.brevo.com/docs/how-it-works
+description: >-
+  Which cross-cutting standards the Brevo surface genuinely conforms to, judged against the
+  13 provider-published OpenAPI 3.1 specs and the live discovery documents probed on
+  2026-08-13. Brevo's strongest conformance is on the discovery and OAuth axis — it is one
+  of a small minority of providers serving a real RFC 9727 API catalog, and its partner
+  realm publishes complete RFC 8414 metadata with RFC 7662 introspection and RFC 7009
+  revocation. Its weakest is on error and rate-limit semantics, where it uses proprietary
+  shapes and vendor-prefixed headers instead of the registered ones.
+standards:
+- id: openapi-3.1
+  conforms: true
+  evidence: All 13 published specs declare openapi 3.1.0; 285 operations with operationIds, tags, and 4xx/5xx responses.
+- id: rfc9727-api-catalog
+  conforms: true
+  evidence: https://developers.brevo.com/.well-known/api-catalog returns 200 with a linkset of 13 service-desc entries. Raw at well-known/brevo-api-catalog.json.
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: true
+  evidence: https://oauth.brevo.com/realms/partner/.well-known/oauth-authorization-server returns 200 with issuer, endpoints, grant_types, code_challenge_methods and 37 scopes_supported.
+- id: oauth2
+  conforms: true
+  evidence: authorization_code and client_credentials grants, refresh tokens, PKCE (plain and S256), on the partner realm.
+- id: rfc7636-pkce
+  conforms: true
+  evidence: code_challenge_methods_supported [plain, S256] on the partner realm; S256-only on the MCP authorization server.
+- id: rfc7662-token-introspection
+  conforms: true
+  evidence: introspection_endpoint published; docs show the RFC 7662 response shape with active/scope/client_id/exp/iat/sub/token_type.
+- id: rfc7009-token-revocation
+  conforms: true
+  evidence: revocation_endpoint https://oauth.brevo.com/realms/partner/oauth/revoke
+- id: rfc7591-dynamic-client-registration
+  conforms: true
+  evidence: registration_endpoint https://mcp.brevo.com/oauth/register on the MCP authorization server (not on the partner realm).
+  scope: mcp-only
+- id: oidc
+  conforms: partial
+  evidence: >-
+    An /.well-known/openid-configuration is served on the partner realm and openid/profile/
+    email/offline_access scopes are supported, but the document is the OAuth metadata — it
+    omits id_token_signing_alg_values_supported and subject_types_supported, so it is not a
+    complete OIDC discovery document.
+- id: mcp
+  conforms: true
+  evidence: Hosted server at https://mcp.brevo.com/v1/brevo/mcp (401 without a Bearer token), plus a Fern docs MCP server at https://developers.brevo.com/_mcp/server answering an anonymous initialize with protocolVersion 2025-11-25.
+- id: llmstxt
+  conforms: true
+  evidence: https://developers.brevo.com/llms.txt returns 200, ~47KB, with per-section /llms.txt indexes and .md twins of every page.
+- id: asyncapi
+  conforms: false
+  evidence: Brevo documents a rich webhook catalog across 9 event families but publishes no AsyncAPI document. asyncapi/brevo-webhooks-asyncapi.yml in this repo is an API Evangelist derivation, not a Brevo artifact.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Errors are a flat {code, message} object with content-type application/json; no application/problem+json anywhere in the 13 specs.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 500 on www.brevo.com and 404 on api.brevo.com and developers.brevo.com. A responsible-disclosure policy exists as an HTML page instead.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation header support documented; no operation carries deprecated:true. Retirements are announced in the changelog only.
+- id: ratelimit-headers
+  conforms: partial
+  evidence: >-
+    Rate-limit signalling exists on every response but uses the vendor-prefixed
+    x-sib-ratelimit-limit / -remaining / -reset rather than the IETF draft RateLimit-*
+    fields, and no Retry-After is sent on 429.
+- id: idempotency
+  conforms: partial
+  evidence: >-
+    An idempotencyKey (UUID, 30-minute TTL) is supported on batch transactional email only,
+    and is carried in the JSON body's headers object rather than as an HTTP header. Replay
+    returns duplicate_parameter rather than the original response.
+- id: pagination
+  conforms: true
+  evidence: Consistent limit/offset/sort query parameters with a `count` total across contact, campaign, CRM and loyalty list operations.
+- id: a2a
+  conforms: false
+  evidence: No agent card at /.well-known/agent-card.json or /.well-known/agent.json on any of the four probed hosts.
+- id: fhir-r4
+  conforms: false
+- id: scim2
+  conforms: false
+- id: odata
+  conforms: false
+- id: json-api
+  conforms: false
+- id: fapi
+  conforms: false
+- id: psd2
+  conforms: false
+compliance:
+  published: true
+  certifications: ['ISO/IEC 27001:2022']
+  programs: [GDPR, CASL, CCPA]
+  source: https://www.brevo.com/features/data-security/
+  artifact: security/brevo-trust-center.yml

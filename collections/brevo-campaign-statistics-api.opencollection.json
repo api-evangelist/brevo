@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Brevo Contacts Agent Status Campaign Statistics API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api-key",
+      "value": "{{api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Campaign Statistics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Export recipients of an email campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/emailCampaigns/:campaignId/exportRecipients",
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the email campaign."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Exports the recipients of a specific email campaign for analysis or processing. The exported data includes recipient details and their interaction status."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,24 +1,95 @@
 {
   "opencollection": "1.0.0",
   "info": {
-    "name": "Brevo Conversations API",
-    "version": "3.0"
-  },
-  "request": {
-    "auth": {
-      "type": "apikey",
-      "key": "api-key",
-      "value": "{{api-key}}",
-      "placement": "header"
-    }
+    "name": "Conversations",
+    "version": "1.0.0"
   },
   "items": [
     {
       "info": {
-        "name": "Messages",
+        "name": "conversations",
         "type": "folder"
       },
       "items": [
+        {
+          "info": {
+            "name": "Get a message",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/conversations/messages/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the message"
+              }
+            ]
+          },
+          "docs": "Retrieve a single message by its ID."
+        },
+        {
+          "info": {
+            "name": "Update a message sent by an agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.brevo.com/v3/conversations/messages/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the message"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the text of a message sent by an agent. Only messages of type `agent` can be edited. The `text` and `html` fields of the message will be updated."
+        },
+        {
+          "info": {
+            "name": "Delete a message sent by an agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/conversations/messages/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the message"
+              }
+            ]
+          },
+          "docs": "Delete a message sent by an agent. Only messages of type `agent` can be deleted."
+        },
         {
           "info": {
             "name": "Send a message as an agent",
@@ -27,46 +98,10 @@
           "http": {
             "method": "POST",
             "url": "https://api.brevo.com/v3/conversations/messages",
-            "body": {
-              "type": "json",
-              "data": "{}"
-            }
-          },
-          "docs": "Sends a chat message within a conversation as an agent. The message is delivered to the visitor in real time through the Brevo chat widget."
-        },
-        {
-          "info": {
-            "name": "Get a message",
-            "type": "http"
-          },
-          "http": {
-            "method": "GET",
-            "url": "https://api.brevo.com/v3/conversations/messages/:messageId",
-            "params": [
+            "headers": [
               {
-                "name": "messageId",
-                "value": "",
-                "type": "path",
-                "description": "Unique identifier of the chat message."
-              }
-            ]
-          },
-          "docs": "Retrieves the details of a specific chat message by its unique identifier including the message text, sender, and timestamp."
-        },
-        {
-          "info": {
-            "name": "Update a message",
-            "type": "http"
-          },
-          "http": {
-            "method": "PUT",
-            "url": "https://api.brevo.com/v3/conversations/messages/:messageId",
-            "params": [
-              {
-                "name": "messageId",
-                "value": "",
-                "type": "path",
-                "description": "Unique identifier of the chat message."
+                "name": "api-key",
+                "value": ""
               }
             ],
             "body": {
@@ -74,49 +109,7 @@
               "data": "{}"
             }
           },
-          "docs": "Updates the text content of an existing chat message. Only agent messages can be updated."
-        },
-        {
-          "info": {
-            "name": "Delete a message",
-            "type": "http"
-          },
-          "http": {
-            "method": "DELETE",
-            "url": "https://api.brevo.com/v3/conversations/messages/:messageId",
-            "params": [
-              {
-                "name": "messageId",
-                "value": "",
-                "type": "path",
-                "description": "Unique identifier of the chat message."
-              }
-            ]
-          },
-          "docs": "Permanently deletes a chat message from a conversation."
-        }
-      ]
-    },
-    {
-      "info": {
-        "name": "Automated Messages",
-        "type": "folder"
-      },
-      "items": [
-        {
-          "info": {
-            "name": "Send an automated message",
-            "type": "http"
-          },
-          "http": {
-            "method": "POST",
-            "url": "https://api.brevo.com/v3/conversations/pushedMessages",
-            "body": {
-              "type": "json",
-              "data": "{}"
-            }
-          },
-          "docs": "Creates and sends an automated message to a visitor. Automated messages can be used for proactive engagement, welcome messages, or scripted bot responses."
+          "docs": "Send a message as an agent to an existing visitor's conversation. You must provide either `agentId` alone, or all three of `agentEmail` + `agentName` + `receivedFrom` to identify the agent."
         },
         {
           "info": {
@@ -125,17 +118,23 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://api.brevo.com/v3/conversations/pushedMessages/:pushedMessageId",
+            "url": "https://api.brevo.com/v3/conversations/pushedMessages/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
             "params": [
               {
-                "name": "pushedMessageId",
+                "name": "id",
                 "value": "",
                 "type": "path",
-                "description": "Unique identifier of the automated message."
+                "description": "ID of the message sent previously"
               }
             ]
           },
-          "docs": "Retrieves the details of a specific automated message by its unique identifier."
+          "docs": "Retrieve a single automated (pushed) message by its ID."
         },
         {
           "info": {
@@ -144,13 +143,19 @@
           },
           "http": {
             "method": "PUT",
-            "url": "https://api.brevo.com/v3/conversations/pushedMessages/:pushedMessageId",
+            "url": "https://api.brevo.com/v3/conversations/pushedMessages/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
             "params": [
               {
-                "name": "pushedMessageId",
+                "name": "id",
                 "value": "",
                 "type": "path",
-                "description": "Unique identifier of the automated message."
+                "description": "ID of the message"
               }
             ],
             "body": {
@@ -158,7 +163,7 @@
               "data": "{}"
             }
           },
-          "docs": "Updates the content of an existing automated message."
+          "docs": "Update the text of an automated (pushed) message. The `text` and `html` fields of the message will be updated."
         },
         {
           "info": {
@@ -167,40 +172,86 @@
           },
           "http": {
             "method": "DELETE",
-            "url": "https://api.brevo.com/v3/conversations/pushedMessages/:pushedMessageId",
+            "url": "https://api.brevo.com/v3/conversations/pushedMessages/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
             "params": [
               {
-                "name": "pushedMessageId",
+                "name": "id",
                 "value": "",
                 "type": "path",
-                "description": "Unique identifier of the automated message."
+                "description": "ID of the message"
               }
             ]
           },
-          "docs": "Permanently deletes an automated message."
-        }
-      ]
-    },
-    {
-      "info": {
-        "name": "Agent Status",
-        "type": "folder"
-      },
-      "items": [
+          "docs": "Delete an automated (pushed) message by its ID."
+        },
         {
           "info": {
-            "name": "Set agent status to online",
+            "name": "Send an automated message to a visitor",
             "type": "http"
           },
           "http": {
             "method": "POST",
-            "url": "https://api.brevo.com/v3/conversations/agentOnlinePing",
+            "url": "https://api.brevo.com/v3/conversations/pushedMessages",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
             "body": {
               "type": "json",
               "data": "{}"
             }
           },
-          "docs": "Sets an agent's status to online for approximately 2-3 minutes. This endpoint should be pinged every minute for as long as the agent needs to be considered available for conversations."
+          "docs": "Send an automated (pushed) message to a visitor on behalf of an agent. Example use cases: order status updates, announcing new features in your web app, etc."
+        },
+        {
+          "info": {
+            "name": "Sets agent's status to online for 2-3 minutes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/conversations/agentOnlinePing",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets the agent's status to online for 2-3 minutes. We recommend pinging this endpoint every minute for as long as the agent has to be considered online. You must provide either `agentId` alone, or all three of `agentEmail` + `agentName` + `receivedFrom`."
+        },
+        {
+          "info": {
+            "name": "Set visitor group assignment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.brevo.com/v3/conversations/visitorGroup",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Assigns a visitor to a specific agent group or removes them from their current group."
         }
       ]
     }

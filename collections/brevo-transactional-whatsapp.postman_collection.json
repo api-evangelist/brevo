@@ -1,0 +1,431 @@
+{
+  "item": [
+    {
+      "id": "50448853-68c9-41da-8178-73d5f7fce8eb",
+      "name": "transactionalWhatsApp",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "59e023c8-1953-4384-b173-a21589c4d2f9",
+          "name": "Send a WhatsApp message",
+          "request": {
+            "name": "Send a WhatsApp message",
+            "description": {
+              "content": "<Note>You can use this API for WhatsApp only if you have setup your WhatsApp account on Brevo platform. To setup your WhatsApp account, follow the steps in the guide below.\n[Activating Whatsapp](https://developers.brevo.com/docs/whatsapp-campaigns-1) in your account</Note>\nThis endpoint is used to send a WhatsApp message. <br/>(**The first message you send using the API must contain a Template ID. You must create a template on WhatsApp on the Brevo platform to fetch the Template ID.**)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "whatsapp",
+                "sendMessage"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                "key": "api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "24076cc4-ce8c-408b-a567-c0ee5b598d6e",
+              "name": "successfully created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "whatsapp",
+                    "sendMessage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"messageId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "74c53671-34e5-4b61-bb60-753222a3607a",
+              "name": "bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "whatsapp",
+                    "sendMessage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"DMARC policy requires domain authentication\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ca5e5a06-3118-4be2-b67f-ac029003bf86",
+          "name": "Get all your WhatsApp activity (unaggregated events)",
+          "request": {
+            "name": "Get all your WhatsApp activity (unaggregated events)",
+            "description": {
+              "content": "This endpoint will show the unaggregated statistics for WhatsApp activity (30 days by default if `startDate` and `endDate` or `days` is not passed. The date range can not exceed 90 days)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "whatsapp",
+                "statistics",
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "2500",
+                  "description": "Number limitation for the result returned"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Beginning point in the list to retrieve from"
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<string>",
+                  "description": "**Mandatory if endDate is used.** Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<string>",
+                  "description": "**Mandatory if startDate is used.** Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "days",
+                  "value": "<long>",
+                  "description": "Number of days in the past including today (positive integer). _Not compatible with 'startDate' and 'endDate'_\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "contactNumber",
+                  "value": "<mobile>",
+                  "description": "Filter results for specific contact (WhatsApp Number with country code. Example, 85264318721)"
+                },
+                {
+                  "disabled": false,
+                  "key": "event",
+                  "value": "<string>",
+                  "description": "Filter the report for a specific event type"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "desc",
+                  "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                "key": "api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fbb9f828-5c77-4fad-8824-1dc872b4e9ce",
+              "name": "WhatsApp events report",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "whatsapp",
+                    "statistics",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "2500"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "days",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "contactNumber",
+                      "value": "<mobile>"
+                    },
+                    {
+                      "key": "event",
+                      "value": "soft-bounce"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "desc"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"events\": [\n    {\n      \"contactNumber\": \"string\",\n      \"date\": \"string\",\n      \"event\": \"sent\",\n      \"messageId\": \"string\",\n      \"senderNumber\": \"string\",\n      \"body\": \"string\",\n      \"mediaUrl\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"contactNumber\": \"string\",\n      \"date\": \"string\",\n      \"event\": \"sent\",\n      \"messageId\": \"string\",\n      \"senderNumber\": \"string\",\n      \"body\": \"string\",\n      \"mediaUrl\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "225ddd4c-235d-4f73-8ab2-a6819c04e154",
+              "name": "bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "whatsapp",
+                    "statistics",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "2500"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "days",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "contactNumber",
+                      "value": "<mobile>"
+                    },
+                    {
+                      "key": "event",
+                      "value": "soft-bounce"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "desc"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"Request already processed\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.brevo.com/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "8d86abac-0c03-482d-a60b-ee8aa9a84e6e",
+    "name": "Transactional WhatsApp",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,179 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Brevo Contacts Agent Status Contact Lists API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api-key",
+      "value": "{{api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Contact Lists",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all contact lists",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/contacts/lists",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return per request."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to skip for pagination."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction for the results."
+              }
+            ]
+          },
+          "docs": "Retrieves all contact lists in the account with their subscriber counts and folder assignments."
+        },
+        {
+          "info": {
+            "name": "Create a contact list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/contacts/lists",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new contact list within a specified folder. Lists are used to organize contacts for targeted campaign sending."
+        },
+        {
+          "info": {
+            "name": "Get a contact list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/contacts/lists/:listId",
+            "params": [
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the contact list."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific contact list including subscriber count and configuration."
+        },
+        {
+          "info": {
+            "name": "Update a contact list",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.brevo.com/v3/contacts/lists/:listId",
+            "params": [
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the contact list."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the name or folder assignment of an existing contact list."
+        },
+        {
+          "info": {
+            "name": "Delete a contact list",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/contacts/lists/:listId",
+            "params": [
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the contact list."
+              }
+            ]
+          },
+          "docs": "Permanently deletes a contact list. Contacts in the list are not deleted but are removed from the list membership."
+        },
+        {
+          "info": {
+            "name": "Add contacts to a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/contacts/lists/:listId/contacts/add",
+            "params": [
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the contact list."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds one or more existing contacts to a contact list using their email addresses or internal IDs."
+        },
+        {
+          "info": {
+            "name": "Remove contacts from a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/contacts/lists/:listId/contacts/remove",
+            "params": [
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the contact list."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Removes one or more contacts from a contact list. The contacts themselves are not deleted from the account."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

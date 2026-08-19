@@ -4,8 +4,15 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Brevo
 providerId: brevo
 created: '2026-05-04'
-modified: '2026-05-05'
+generated: '2026-08-13'
+method: searched
+source: https://developers.brevo.com/docs/api-limits
+modified: '2026-08-13'
 reconciled: true
+docs:
+  - https://developers.brevo.com/docs/api-limits
+  - https://developers.brevo.com/docs/limit-headers
+  - https://developers.brevo.com/docs/platform-quotas
 tags:
   - Email
   - Transactional
@@ -13,83 +20,256 @@ tags:
   - Marketing
   - CRM
   - Rate Limiting
-description: Brevo enforces API rate limits using two metrics, requests-per-second (RPS) and requests-per-hour
-  (RPH), with limits scaling across three tiers - General (all accounts), Advanced (Professional / Enterprise),
-  and Extended (Enterprise only). Per-endpoint ceilings are highest for transactional email and SMS sends.
-  Overages return HTTP 429 and Brevo includes rate-limit headers on every response.
+description: >-
+  Brevo publishes a complete per-endpoint rate-limit table across three account tiers —
+  General (all accounts), Advanced (Professional and Enterprise) and Extended (Enterprise
+  only) — expressed in both requests per second (RPS) and requests per hour (RPH). Where an
+  endpoint carries both, both must be respected simultaneously. The spread is extreme: the
+  transactional send endpoint allows 1,000 RPS on the free tier while every unlisted
+  endpoint is capped at 100 requests per HOUR, which is the number that actually constrains
+  most integrations. Exhaustion returns 429 and every response carries vendor-prefixed
+  x-sib-ratelimit-* headers; there is no Retry-After.
 sources:
   - https://developers.brevo.com/docs/api-limits
-  - https://www.brevo.com/pricing/
+  - https://developers.brevo.com/docs/limit-headers
 responseCodes:
   throttled: 429
+headers:
+  fields:
+    - name: x-sib-ratelimit-limit
+      description: Maximum number of requests allowed in the current time window before a 429
+    - name: x-sib-ratelimit-remaining
+      description: Number of requests remaining in the current time window
+    - name: x-sib-ratelimit-reset
+      description: Time until the rate limit resets, in the granularity unit (typically seconds)
+  retry_after: false
+  standard: vendor-prefixed
+  note: >-
+    Brevo uses the legacy Sendinblue x-sib-* prefix rather than the IETF RateLimit-* draft
+    fields, and sends no Retry-After on 429 — an agent must read x-sib-ratelimit-reset.
+  applies_to: all rate-limited endpoints
+tiers:
+  - {name: General, availability: 'All account types (Free, Starter, Standard, Professional, Enterprise)'}
+  - {name: Advanced, availability: Professional and Enterprise accounts}
+  - {name: Extended, availability: Enterprise accounts}
 limits:
-  - name: General - POST /v3/smtp/email
+  - name: General - POST /v3/smtp/email, GET /v3/smtp/blockedContacts
+    tier: General
     scope: account
     metric: requests_per_second
     limit: 1000
     timeFrame: second
-    notes: Also 3,600,000 requests/hour. All account types.
-  - name: General - POST /v3/transactionalSMS/send
-    scope: account
-    metric: requests_per_second
-    limit: 150
-    timeFrame: second
-    notes: Also 540,000 requests/hour.
+    notes: Also 3,600,000 requests/hour.
   - name: General - GET /v3/smtp/emails
+    tier: General
     scope: account
     metric: requests_per_second
     limit: 2
     timeFrame: second
     notes: Also 7,200 requests/hour.
-  - name: General - /v3/contacts/{...}
+  - name: General - POST /v3/transactionalSMS/send
+    tier: General
+    scope: account
+    metric: requests_per_second
+    limit: 150
+    timeFrame: second
+    notes: Also 540,000 requests/hour.
+  - name: General - POST /v3/events
+    tier: General
     scope: account
     metric: requests_per_second
     limit: 10
     timeFrame: second
     notes: Also 36,000 requests/hour.
+  - name: General - POST /v3/orders/status
+    tier: General
+    scope: account
+    metric: requests_per_second
+    limit: 5
+    timeFrame: second
+    notes: Also 18,000 requests/hour.
+  - name: General - POST /v3/products
+    tier: General
+    scope: account
+    metric: requests_per_second
+    limit: 2
+    timeFrame: second
+    notes: Also 7,200 requests/hour.
+  - name: General - all other /v3/smtp/{...} endpoints
+    tier: General
+    scope: account
+    metric: requests_per_hour
+    limit: 300
+    timeFrame: hour
+    notes: Excludes POST /v3/smtp/email and GET /v3/smtp/blockedContacts, which have dedicated limits.
+  - name: General - all /v3/contacts/{...} endpoints
+    tier: General
+    scope: account
+    metric: requests_per_second
+    limit: 10
+    timeFrame: second
+    notes: Also 36,000 requests/hour.
+  - name: General - all /v3/loyalty/{...} endpoints
+    tier: General
+    scope: account
+    metric: requests_per_hour
+    limit: 600
+    timeFrame: hour
   - name: General - all other endpoints
+    tier: General
     scope: account
     metric: requests_per_hour
     limit: 100
     timeFrame: hour
-  - name: Advanced - email send
+    notes: The default ceiling for the majority of the 285 published operations.
+  - name: Advanced - POST /v3/smtp/email, GET /v3/smtp/blockedContacts
+    tier: Advanced
     scope: account
     metric: requests_per_second
     limit: 2000
     timeFrame: second
-    notes: Email and SMS limits double on Professional / Enterprise; contacts reach 20 RPS / 72,000 RPH;
-      other endpoints reach 200 RPH.
-  - name: Advanced - contact endpoints
+    notes: Also 7,200,000 requests/hour.
+  - name: Advanced - GET /v3/smtp/emails
+    tier: Advanced
+    scope: account
+    metric: requests_per_second
+    limit: 3
+    timeFrame: second
+    notes: Also 10,800 requests/hour.
+  - name: Advanced - POST /v3/transactionalSMS/send
+    tier: Advanced
+    scope: account
+    metric: requests_per_second
+    limit: 200
+    timeFrame: second
+    notes: Also 720,000 requests/hour.
+  - name: Advanced - POST /v3/events
+    tier: Advanced
     scope: account
     metric: requests_per_second
     limit: 20
     timeFrame: second
-  - name: Extended - email send
+    notes: Also 72,000 requests/hour.
+  - name: Advanced - POST /v3/orders/status
+    tier: Advanced
+    scope: account
+    metric: requests_per_second
+    limit: 10
+    timeFrame: second
+    notes: Also 36,000 requests/hour.
+  - name: Advanced - POST /v3/products
+    tier: Advanced
+    scope: account
+    metric: requests_per_second
+    limit: 4
+    timeFrame: second
+    notes: Also 14,400 requests/hour.
+  - name: Advanced - all other /v3/smtp/{...} endpoints
+    tier: Advanced
+    scope: account
+    metric: requests_per_hour
+    limit: 600
+    timeFrame: hour
+  - name: Advanced - all /v3/contacts/{...} endpoints
+    tier: Advanced
+    scope: account
+    metric: requests_per_second
+    limit: 20
+    timeFrame: second
+    notes: Also 72,000 requests/hour.
+  - name: Advanced - all /v3/loyalty/{...} endpoints
+    tier: Advanced
+    scope: account
+    metric: requests_per_hour
+    limit: 1200
+    timeFrame: hour
+  - name: Advanced - all other endpoints
+    tier: Advanced
+    scope: account
+    metric: requests_per_hour
+    limit: 200
+    timeFrame: hour
+  - name: Extended - POST /v3/smtp/email, GET /v3/smtp/blockedContacts
+    tier: Extended
     scope: account
     metric: requests_per_second
     limit: 6000
     timeFrame: second
-    notes: Enterprise-only ceiling.
-  - name: Extended - SMS send
+  - name: Extended - GET /v3/smtp/emails
+    tier: Extended
+    scope: account
+    metric: requests_per_hour
+    limit: 18000
+    timeFrame: hour
+  - name: Extended - POST /v3/transactionalSMS/send
+    tier: Extended
     scope: account
     metric: requests_per_second
     limit: 250
     timeFrame: second
-  - name: Extended - contact endpoints
+  - name: Extended - POST /v3/events
+    tier: Extended
     scope: account
     metric: requests_per_second
     limit: 60
     timeFrame: second
+  - name: Extended - POST /v3/orders/status
+    tier: Extended
+    scope: account
+    metric: requests_per_second
+    limit: 15
+    timeFrame: second
+  - name: Extended - POST /v3/products
+    tier: Extended
+    scope: account
+    metric: requests_per_hour
+    limit: 21600
+    timeFrame: hour
+  - name: Extended - all other /v3/smtp/{...} endpoints
+    tier: Extended
+    scope: account
+    metric: requests_per_hour
+    limit: 1800
+    timeFrame: hour
+  - name: Extended - all /v3/contacts/{...} endpoints
+    tier: Extended
+    scope: account
+    metric: requests_per_second
+    limit: 60
+    timeFrame: second
+  - name: Extended - all /v3/loyalty/{...} endpoints
+    tier: Extended
+    scope: account
+    metric: requests_per_hour
+    limit: 100000
+    timeFrame: hour
+  - name: Extended - all other endpoints
+    tier: Extended
+    scope: account
+    metric: requests_per_hour
+    limit: 600
+    timeFrame: hour
+limit_count: 30
 policies:
-  - name: Backoff Strategy
-    description: Apply exponential backoff with jitter on 429 responses; rate-limit headers are included
-      on all responses to support proactive throttling.
-  - name: Tiered Capacity
-    description: Capacity is bound to account tier; upgrade from Free / Starter to Professional / Enterprise
-      to lift to Advanced or Extended tiers.
-  - name: Endpoint-Specific Limits
-    description: Bulk send endpoints (email / SMS) have 1-2 orders of magnitude higher RPS than read or
-      contact-management endpoints; design clients to batch and avoid per-record loops on contacts.
+  - name: Distribute requests evenly
+    description: >-
+      Brevo's own guidance — calculate the allowance and spread requests evenly across the
+      window rather than bursting (1,000 RPS supports 60,000 requests/minute when even).
+  - name: Read the headers, do not poll
+    description: >-
+      Check x-sib-ratelimit-remaining before issuing a request; back off for
+      x-sib-ratelimit-reset seconds. No Retry-After is sent.
+  - name: Use webhooks instead of statistics polling
+    description: >-
+      Brevo explicitly recommends webhooks over polling the statistics endpoints, which sit
+      under the 300 RPH /v3/smtp/{...} bucket.
+  - name: Tiered capacity
+    description: Capacity is bound to account tier; Advanced requires Professional or Enterprise, Extended requires Enterprise.
+platform_quotas:
+  docs: https://developers.brevo.com/docs/platform-quotas
+  note: >-
+    Separate from rate limits — object-creation ceilings (campaigns, contacts, lists,
+    templates) per plan. Rate limits cap request frequency; quotas cap object counts.
 maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com

@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Brevo Contacts Agent Status Transactional SMS API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api-key",
+      "value": "{{api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transactional SMS",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send a transactional SMS",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/transactionalSMS/sms",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a transactional SMS message to a recipient phone number. Supports customizable sender names and message content. The message is delivered immediately for time-sensitive notifications."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

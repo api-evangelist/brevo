@@ -1,0 +1,1106 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Contact Management",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "contacts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create contact attribute",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/contacts/attributes/:attributeCategory/:attributeName",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "attributeCategory",
+                "value": "",
+                "type": "path",
+                "description": "Category of the attribute"
+              },
+              {
+                "name": "attributeName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the attribute"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new contact attribute under the specified category and name. The required body properties depend on the category: use \"type\" for normal, transactional, or category attributes; use \"value\" for calculated or global attributes; use \"enumeration\" for category attributes; and use \"multiCategoryOptions\" for normal multiple-choice attributes. None of the category or multicategory option values can exceed 200 characters."
+        },
+        {
+          "info": {
+            "name": "Update contact attribute",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.brevo.com/v3/contacts/attributes/:attributeCategory/:attributeName",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "attributeCategory",
+                "value": "",
+                "type": "path",
+                "description": "Category of the attribute"
+              },
+              {
+                "name": "attributeName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the existing attribute"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing contact attribute identified by its category and name. For category-type attributes, you can update the enumeration values; for calculated or global attributes, update the computed value formula; and for normal multiple-choice attributes, update the multicategory options. None of the category or multicategory option values can exceed 200 characters."
+        },
+        {
+          "info": {
+            "name": "Delete an attribute",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/contacts/attributes/:attributeCategory/:attributeName",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "attributeCategory",
+                "value": "",
+                "type": "path",
+                "description": "Category of the attribute"
+              },
+              {
+                "name": "attributeName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the existing attribute"
+              }
+            ]
+          },
+          "docs": "Permanently delete an existing contact attribute by its category and name. The attribute must exist in the specified category (normal, transactional, category, calculated, or global), otherwise a 404 error is returned."
+        },
+        {
+          "info": {
+            "name": "List all attributes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/contacts/attributes",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieve all contact attributes defined in your Brevo account, grouped by category (normal, transactional, category, calculated, global). Each attribute includes its name, type, and category, along with enumeration values for category-type attributes and options for multiple-choice-type attributes."
+        },
+        {
+          "info": {
+            "name": "Delete a multiple-choice attribute option",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/contacts/attributes/:attributeType/:multipleChoiceAttribute/:multipleChoiceAttributeOption",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "attributeType",
+                "value": "",
+                "type": "path",
+                "description": "Type of the attribute"
+              },
+              {
+                "name": "multipleChoiceAttribute",
+                "value": "",
+                "type": "path",
+                "description": "Name of the existing multiple-choice attribute"
+              },
+              {
+                "name": "multipleChoiceAttributeOption",
+                "value": "",
+                "type": "path",
+                "description": "Name of the existing multiple-choice attribute option that you want to delete"
+              }
+            ]
+          },
+          "docs": "Delete a specific option from an existing multiple-choice contact attribute. The attribute type must be \"multiple-choice\", and both the attribute name and the option to delete must already exist in your account."
+        },
+        {
+          "info": {
+            "name": "Get all the lists",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/contacts/lists",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of documents per page"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first document of the page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+              }
+            ]
+          },
+          "docs": "<Note>Ongoing changes for this endpoint.\nWe're dropping support for the response attributes totalSubscribers and totalBlacklisted.\nThese are non breaking changes. The default value for the attributes will be 0.</Note>"
+        },
+        {
+          "info": {
+            "name": "Create a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/contacts/lists",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new contact list inside a specified folder. Both the list name and the parent folder ID are required. The newly created list will be empty and ready to receive contacts via the add contacts endpoint."
+        },
+        {
+          "info": {
+            "name": "Get a list's details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/contacts/lists/:listId",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "Id of the list"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if endDate is used**. Starting (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to aggregate the sent email campaigns for a specific list id. **Prefer to pass your timezone in date-time format for accurate result**\n"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if startDate is used**. Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to aggregate the sent email campaigns for a specific list id. **Prefer to pass your timezone in date-time format for accurate result**\n"
+              }
+            ]
+          },
+          "docs": "Retrieve the details of a specific contact list by its ID, including its name, folder ID, creation date, subscriber counts, and campaign statistics. You can optionally filter campaign statistics by providing startDate and endDate parameters (both must be used together in YYYY-MM-DD format)."
+        },
+        {
+          "info": {
+            "name": "Update a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.brevo.com/v3/contacts/lists/:listId",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "Id of the list"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing contact list identified by its ID. You can update the list name, move it to a different folder by providing a new folderId, or both. Only one of the two parameters (name, folderId) needs to be provided per request."
+        },
+        {
+          "info": {
+            "name": "Delete a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/contacts/lists/:listId",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "Id of the list"
+              }
+            ]
+          },
+          "docs": "Permanently delete a contact list identified by its ID. The contacts in the list are not deleted; they are only removed from this list. Returns a 404 error if the list ID does not exist."
+        },
+        {
+          "info": {
+            "name": "Get contacts in a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/contacts/lists/:listId/contacts",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "Id of the list"
+              },
+              {
+                "name": "modifiedSince",
+                "value": "",
+                "type": "query",
+                "description": "Filter (urlencoded) the contacts modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). **Prefer to pass your timezone in date-time format for accurate result.**\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of documents per page"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first document of the page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+              }
+            ]
+          },
+          "docs": "Retrieve all contacts belonging to a specific list, identified by its list ID. Results are paginated with a default of 50 contacts per page (maximum 500) and sorted in descending order of creation. You can optionally filter contacts by their modification date using the modifiedSince parameter."
+        },
+        {
+          "info": {
+            "name": "Delete a contact from a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/contacts/lists/:listId/contacts/remove",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "Id of the list"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete a contact from a list"
+        },
+        {
+          "info": {
+            "name": "Add existing contacts to a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/contacts/lists/:listId/contacts/add",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "Id of the list"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add existing contacts to a list"
+        },
+        {
+          "info": {
+            "name": "Get all folders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/contacts/folders",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of documents per page"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first document of the page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+              }
+            ]
+          },
+          "docs": "<Note>Ongoing changes for this endpoint\nWe're dropping support for the response attributes totalSubscribers and totalBlacklisted.\nThese are non breaking changes.\nThe default value for the attributes will be 0.\nThe uniqueSubscribers field is deprecated</Note>"
+        },
+        {
+          "info": {
+            "name": "Create a folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/contacts/folders",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new folder to organize your contact lists. Folders serve as containers for grouping related lists together. The folder name is required and must be provided in the request body."
+        },
+        {
+          "info": {
+            "name": "Returns a folder's details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/contacts/folders/:folderId",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "folderId",
+                "value": "",
+                "type": "path",
+                "description": "id of the folder"
+              }
+            ]
+          },
+          "docs": "<Note>Ongoing changes for this endpoint.\nWe're dropping support for the response attributes totalSubscribers and totalBlacklisted.\nThese are non breaking changes. The default value for the attributes will be 0.</Note>"
+        },
+        {
+          "info": {
+            "name": "Update a folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.brevo.com/v3/contacts/folders/:folderId",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "folderId",
+                "value": "",
+                "type": "path",
+                "description": "Id of the folder"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the name of an existing folder identified by its ID. The new folder name must be provided in the request body. Returns a 404 error if the folder ID does not exist."
+        },
+        {
+          "info": {
+            "name": "Delete a folder (and all its lists)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/contacts/folders/:folderId",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "folderId",
+                "value": "",
+                "type": "path",
+                "description": "Id of the folder"
+              }
+            ]
+          },
+          "docs": "Permanently delete a folder identified by its ID. Deleting a folder will also delete all the contact lists contained within it. This action cannot be undone."
+        },
+        {
+          "info": {
+            "name": "Get lists in a folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/contacts/folders/:folderId/lists",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "folderId",
+                "value": "",
+                "type": "path",
+                "description": "Id of the folder"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of documents per page"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first document of the page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+              }
+            ]
+          },
+          "docs": "<Note>Ongoing changes for this endpoint.\nWe're dropping support for the response attributes totalSubscribers and totalBlacklisted.\nThese are non breaking changes. The default value for the attributes will be 0.</Note>"
+        },
+        {
+          "info": {
+            "name": "Get all the contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/contacts",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of documents per page"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first document of the page"
+              },
+              {
+                "name": "modifiedSince",
+                "value": "",
+                "type": "query",
+                "description": "Filter (urlencoded) the contacts modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). **Prefer to pass your timezone in date-time format for accurate result.**\n"
+              },
+              {
+                "name": "createdSince",
+                "value": "",
+                "type": "query",
+                "description": "Filter (urlencoded) the contacts created after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). **Prefer to pass your timezone in date-time format for accurate result.**\n"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by a list of contact IDs. You can pass a **maximum of 20 IDs**. All elements must be integers."
+              },
+              {
+                "name": "segmentId",
+                "value": "",
+                "type": "query",
+                "description": "Id of the segment. **Either listIds or segmentId can be passed.** Must be a positive integer (minimum value of 1)."
+              },
+              {
+                "name": "listIds",
+                "value": "",
+                "type": "query",
+                "description": "Ids of the list. **Either listIds or segmentId can be passed.**"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter the contacts on the basis of attributes. **Allowed operator: equals. For multiple-choice options, the filter will apply an AND condition between the options. For category attributes, the filter will work with both id and value. (e.g. filter=equals(FIRSTNAME,\"Antoine\"), filter=equals(B1, true), filter=equals(DOB, \"1989-11-23\"), filter=equals(GENDER, \"1\"), filter=equals(GENDER, \"MALE\"), filter=equals(COUNTRY,\"USA, INDIA\")**\n"
+              }
+            ]
+          },
+          "docs": "Retrieve all contacts from your Brevo account with support for pagination, filtering, and sorting. Results default to 50 contacts per page (maximum 1000) sorted in descending order of creation, and can be filtered by modification date, creation date, contact IDs (up to 20), list IDs, segment ID, or contact attributes using the equals operator. Note that either listIds or segmentId can be passed but not both simultaneously."
+        },
+        {
+          "info": {
+            "name": "Create a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/contacts",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<Note>Follow this format when passing a \"SMS\" phone number as an attribute.\nAccepted Number Formats 91xxxxxxxxxx +91xxxxxxxxxx 0091xxxxxxxxxx</Note>\nCreates new contacts on Brevo. Contacts can be created by passing either - <br><br> 1. email address of the contact (email_id),  <br> 2. phone number of the contact (to be passed as \"SMS\" field in \"attributes\" along with proper country code), For example- {\"SMS\":\"+91xxxxxxxxxx\"} or {\"SMS\":\"0091xxxxxxxxxx\"} <br> 3. ext_id <br>"
+        },
+        {
+          "info": {
+            "name": "Create Contact via DOI (Double-Opt-In) Flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/contacts/doubleOptinConfirmation",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<Note title=\"How to use attributes param?\">attributes param in this endpoint is an object containing key-value pairs where values can be either a string, integer, array, or boolean. You can create key-value pairs with these four datatypes. When a value is an array, it should be an array of strings.</Note>"
+        },
+        {
+          "info": {
+            "name": "Get a contact's details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/contacts/:identifier",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Email (urlencoded) OR ID of the contact OR its SMS attribute value OR EXT_ID attribute (urlencoded)"
+              },
+              {
+                "name": "identifierType",
+                "value": "",
+                "type": "query",
+                "description": "email_id for Email, phone_id for SMS attribute, contact_id for ID of the contact, ext_id for EXT_ID attribute, whatsapp_id for WHATSAPP attribute, landline_number_id for LANDLINE_NUMBER attribute"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if endDate is used.** Starting date (YYYY-MM-DD) of the statistic events specific to campaigns. Must be lower than equal to endDate. Must not be greater than the current date.\n"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if startDate is used.** Ending date (YYYY-MM-DD) of the statistic events specific to campaigns. Must be greater than equal to startDate. Must not be greater than the current date.\n"
+              }
+            ]
+          },
+          "docs": "<Note>Follow this format when passing a \"SMS\" phone number as an attribute.\nAccepted Number Formats 91xxxxxxxxxx +91xxxxxxxxxx 0091xxxxxxxxxx</Note>\nThere are 2 ways to get a contact <br><br> Option 1- https://api.brevo.com/v3/contacts/{identifier} <br><br> Option 2- https://api.brevo.com/v3/contacts/{identifier}?identifierType={} <br> <br> Option 1 only works if identifierType is email_id (for EMAIL), phone_id (for SMS) or contact_id (for ID of the contact),where you can directly pass the value"
+        },
+        {
+          "info": {
+            "name": "Update a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.brevo.com/v3/contacts/:identifier",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Email (urlencoded) OR ID of the contact OR EXT_ID attribute (urlencoded) OR its SMS attribute value OR its WHATSAPP attribute value OR its LANDLINE_NUMBER attribute value"
+              },
+              {
+                "name": "identifierType",
+                "value": "",
+                "type": "query",
+                "description": "email_id for Email, contact_id for ID of the contact, ext_id for EXT_ID attribute, phone_id for SMS attribute, whatsapp_id for WHATSAPP attribute, landline_number_id for LANDLINE_NUMBER attribute"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<Note>Follow this format when passing a \"SMS\" phone number as an attribute.\nAccepted Number Formats 91xxxxxxxxxx +91xxxxxxxxxx 0091xxxxxxxxxx <br><br> If a blocklisted contact's email address is updated, it is going to remove that blocklisting from the contact and they will be resubscribed.</Note>\nThere are 2 ways to update a contact <br><br> Option 1- https://api.brevo.com/v3/contacts/{identifier} <br><br> Option 2- https://api.brevo.com/v3/contacts/{identifier}?identifierType={} <br> <br> Opti"
+        },
+        {
+          "info": {
+            "name": "Delete a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/contacts/:identifier",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Email (urlencoded) OR ID of the contact OR EXT_ID attribute (urlencoded)"
+              },
+              {
+                "name": "identifierType",
+                "value": "",
+                "type": "query",
+                "description": "email_id for Email, contact_id for ID of the contact, ext_id for EXT_ID attribute, phone_id for SMS attribute, whatsapp_id for WHATSAPP attribute, landline_number_id for LANDLINE_NUMBER attribute"
+              }
+            ]
+          },
+          "docs": "There are 2 ways to delete a contact <br><br> Option 1- https://api.brevo.com/v3/contacts/{identifier} <br><br> Option 2- https://api.brevo.com/v3/contacts/{identifier}?identifierType={} <br> <br> Option 1 only works if identifierType is email_id (for EMAIL) or contact_id (for ID of the contact),where you can directly pass the value of EMAIL and ID of the contact.   <br><br> Option 2 works for all identifierType, use email_id for EMAIL attribute, contact_id for ID of the contact, ext_id for EXT_"
+        },
+        {
+          "info": {
+            "name": "Get email campaigns' statistics for a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/contacts/:identifier/campaignStats",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Email (urlencoded) OR ID of the contact"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if endDate is used.** Starting date (YYYY-MM-DD) of the statistic events specific to campaigns. Must be lower than equal to endDate. Must not be greater than the current date.\n"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if startDate is used.** Ending date (YYYY-MM-DD) of the statistic events specific to campaigns. Must be greater than equal to startDate. Must not be greater than the current date. Maximum difference between startDate and endDate should not be greater than 90 days.\n"
+              }
+            ]
+          },
+          "docs": "Retrieve email campaign statistics for a specific contact identified by email address or numeric ID. Statistics include messages sent, opens, clicks, hard/soft bounces, deliveries, unsubscriptions, complaints, and transactional attributes. By default, data covers the last 90 days; use startDate and endDate parameters (YYYY-MM-DD) to specify a custom range with a maximum span of 90 days."
+        },
+        {
+          "info": {
+            "name": "Get all the segments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/contacts/segments",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of documents per page"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first document of the page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+              }
+            ]
+          },
+          "docs": "Retrieve all contact segments defined in your Brevo account with support for pagination and sorting. Results default to 10 segments per page (maximum 50) sorted in descending order of creation. Each segment includes its ID, name, category name, and last update timestamp."
+        },
+        {
+          "info": {
+            "name": "Export contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/contacts/export",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "It returns the background process ID which on completion calls the notify URL that you have set in the input. File will be available in csv."
+        },
+        {
+          "info": {
+            "name": "Import contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/contacts/import",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "It returns the background process ID which on completion calls the notify URL that you have set in the input. **Note**: - Any contact attribute that doesn't exist in your account will be ignored at import end.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "consentGroups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all consent groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/contacts/consent-groups",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return (default 10, max 50)"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to skip (default 0)"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by consent group ID"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter by name (case-insensitive partial match)"
+              },
+              {
+                "name": "signupMode",
+                "value": "",
+                "type": "query",
+                "description": "Filter by signup mode"
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of consent groups for the account.\n\n<Note>This endpoint is only available when the Consent Groups feature is enabled for your account. Returns `403` if the feature is not activated.</Note>"
+        },
+        {
+          "info": {
+            "name": "Create a consent group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/contacts/consent-groups",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new consent group for the account.\n\n<Note>This endpoint is only available when the Consent Groups feature is enabled for your account.</Note>"
+        },
+        {
+          "info": {
+            "name": "Get a consent group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/contacts/consent-groups/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the consent group"
+              }
+            ]
+          },
+          "docs": "Returns a single consent group by ID for the account.\n\n<Note>This endpoint is only available when the Consent Groups feature is enabled for your account.</Note>"
+        },
+        {
+          "info": {
+            "name": "Update a consent group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.brevo.com/v3/contacts/consent-groups/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the consent group to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates name, description, or signupMode of a consent group. At least one field must be provided.\n\n<Note>This endpoint is only available when the Consent Groups feature is enabled for your account.</Note>"
+        },
+        {
+          "info": {
+            "name": "Delete a consent group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/contacts/consent-groups/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the consent group to delete"
+              }
+            ]
+          },
+          "docs": "Deletes a consent group by ID and removes it from all associated contacts.\n\n<Note>This endpoint is only available when the Consent Groups feature is enabled for your account.</Note>"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

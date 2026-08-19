@@ -1,0 +1,234 @@
+generated: '2026-08-13'
+method: derived
+source: mcp/brevo-mcp.yml + openapi/brevo-*-openapi.yml (13 provider-published specs)
+description: >-
+  Binds Brevo's published MCP surface to the machine-readable REST core. Brevo's hosted MCP
+  server is auth-gated — an anonymous tools/list returns 401 — so per-tool names and
+  inputSchemas could NOT be introspected. What Brevo does publish is a module manifest: one
+  combined server plus 27 named per-module servers, each with a one-line description. This
+  crosswalk therefore maps at MODULE granularity, not tool granularity, binding each
+  published module to the OpenAPI operationIds that cover the same resource. Every
+  operationId below was read out of the harvested specs; none is invented. Confidence is
+  `high` where the module name matches an OpenAPI tag or path prefix one-to-one, `medium`
+  where the module spans or splits a tag.
+surfaces:
+  openapi:
+    files: openapi/brevo-*-openapi.yml
+    count: 13
+    operations: 285
+    source: https://developers.brevo.com/.well-known/api-catalog
+    gated: false
+  mcp:
+    url: https://mcp.brevo.com/v1/brevo/mcp
+    modules: 27
+    gated: true
+    note: tools/list returns 401 invalid_token without a Bearer MCP token
+  graphql:
+    endpoint: null
+    note: >-
+      Brevo publishes no GraphQL endpoint. The graphql/ directory in this repo holds a
+      conceptual REST-to-GraphQL translation authored by API Evangelist, clearly labelled
+      as such in graphql/brevo-graphql.md — it is NOT a Brevo surface and is excluded here.
+crosswalk:
+- tool: contacts
+  category: contacts
+  binding: rest
+  confidence: high
+  rest: [getContacts, createContact, getContactInfo, updateContact, deleteContact, getContactStats, createDoiContact, getSegments]
+  note: Backed by openapi/brevo-contact-management-openapi.yml, tag `contacts`.
+- tool: lists
+  category: contacts
+  binding: rest
+  confidence: high
+  rest: [getLists, createList, getList, updateList, deleteList, getContactsFromList, addContactToList, removeContactFromList]
+- tool: segments
+  category: contacts
+  binding: rest
+  confidence: medium
+  rest: [getSegments]
+  note: Only a read operation exists in the public spec; segment creation is UI-only.
+- tool: attributes
+  category: contacts
+  binding: rest
+  confidence: high
+  rest: [getAttributes, createAttribute, updateAttribute, deleteAttribute, deleteMultiAttributeOptions]
+- tool: contact_import_export
+  category: contacts
+  binding: rest
+  confidence: high
+  rest: [importContacts, requestContactExport]
+- tool: folders
+  category: contacts
+  binding: rest
+  confidence: medium
+  rest: [getFolders, createFolder, getFolder, updateFolder, deleteFolder, getFolderLists]
+  note: >-
+    Brevo describes this module as "Organise campaigns into folders"; the only folder
+    operations in the published specs are contact-list folders under /contacts/folders.
+- tool: groups
+  category: accounts
+  binding: rest
+  confidence: medium
+  rest: [createANewGroupOfSubAccounts, getAGroupDetails, updateAGroupOfSubAccounts, deleteAGroup, getSubAccountGroups, deleteSubAccountFromGroup]
+  note: Maps to master-account sub-account groups; no contact-group REST surface is published.
+- tool: email_campaign_management
+  category: campaigns
+  binding: rest
+  confidence: high
+  rest: [getEmailCampaigns, createEmailCampaign, getEmailCampaign, updateEmailCampaign, deleteEmailCampaign, sendEmailCampaignNow, sendTestEmail, updateCampaignStatus, getSharedTemplateUrl, emailExportRecipients, sendReport, uploadImageToGallery]
+- tool: campaign_analytics
+  category: campaigns
+  binding: rest
+  confidence: medium
+  rest: [getAbTestCampaignResult, getSmtpReport, getEmailEventReport, getAggregatedSmtpReport, getTransacAggregatedSmsReport, getTransacSmsReport, getContactStats]
+  note: Fans out across marketing-campaigns, email-api and transactional-sms specs.
+- tool: sms_campaigns
+  category: campaigns
+  binding: rest
+  confidence: high
+  rest: [getSmsCampaigns, createSmsCampaign, getSmsCampaign, updateSmsCampaign, deleteSmsCampaign, sendSmsCampaignNow, updateSmsCampaignStatus, sendTestSms, requestSmsRecipientExport, sendSmsReport]
+- tool: whatsapp_campaigns
+  category: campaigns
+  binding: rest
+  confidence: high
+  rest: [getWhatsAppCampaigns, createWhatsAppCampaign, getWhatsAppCampaign, updateWhatsAppCampaign, deleteWhatsAppCampaign]
+- tool: whatsapp_management
+  category: campaigns
+  binding: rest
+  confidence: high
+  rest: [getWhatsAppConfig, getWhatsAppTemplates, createWhatsAppTemplate, sendWhatsAppTemplateApproval]
+- tool: templates
+  category: content
+  binding: rest
+  confidence: medium
+  rest: [getSharedTemplateUrl, getWhatsAppTemplates]
+  note: >-
+    Brevo's "templates" module (marketing email templates) has no dedicated public REST
+    surface distinct from transactional templates; the closest published operations are
+    listed. Low-fidelity mapping — flagged rather than dropped.
+- tool: transac_templates
+  category: content
+  binding: rest
+  confidence: high
+  rest: [getSmtpTemplates, createSmtpTemplate, getSmtpTemplate, updateSmtpTemplate, deleteSmtpTemplate, sendTestTemplate, postPreviewSmtpEmailTemplates]
+- tool: deals
+  category: crm
+  binding: rest
+  confidence: high
+  rest: [getAllDeals, createADeal, getADeal, updateADeal, deleteADeal, linkAndUnlinkADealWithContactsAndCompanies, importDealsCreationAndUpdation, getDealAttributes]
+- tool: companies
+  category: crm
+  binding: rest
+  confidence: high
+  rest: [getAllCompanies, createACompany, getACompany, updateACompany, deleteACompany, linkAndUnlinkCompanyWithContactAndDeal, importCompaniesCreationAndUpdation, getCompanyAttributes, createACompanyDealAttribute]
+- tool: tasks
+  category: crm
+  binding: rest
+  confidence: high
+  rest: [getAllTasks, createATask, getATask, updateATask, deleteATask, getAllTaskTypes]
+- tool: pipelines
+  category: crm
+  binding: rest
+  confidence: high
+  rest: [getAllPipelines, getAPipeline, getPipelineStages]
+- tool: notes
+  category: crm
+  binding: rest
+  confidence: high
+  rest: [getAllNotes, createANote, getANote, updateANote, deleteANote]
+- tool: senders
+  category: deliverability
+  binding: rest
+  confidence: high
+  rest: [getSenders, createSender, updateSender, deleteSender, validateSenderByOTP, getIpsFromSender]
+- tool: domains
+  category: deliverability
+  binding: rest
+  confidence: high
+  rest: [getDomains, createDomain, getDomainConfiguration, authenticateDomain, deleteDomain]
+- tool: ips
+  category: deliverability
+  binding: rest
+  confidence: high
+  rest: [getIps, listOfAllIPs, associateAnIpToSubAccounts, dissociateAnIpToSubAccounts]
+- tool: accounts
+  category: accounts
+  binding: rest
+  confidence: high
+  rest: [getAccount, getAccountActivity, getTheListOfAllTheSubAccountsOfTheMasterAccount, createANewSubAccountUnderAMasterAccount, getSubAccountDetails, deleteASubAccount, updateSubAccountPlan, updateSubAccountsPlan, getTheDetailsOfRequestedMasterAccount, createAnApiKeyForASubAccount, enableDisableSubAccountApplicationS, generateSsoTokenToAccessAdminAccount, generateSsoTokenToAccessSubAccount]
+- tool: users
+  category: accounts
+  binding: rest
+  confidence: high
+  rest: [getInvitedUsersList, inviteuser, getUserPermission, EditUserPermission, putRevokeUserPermission, putresendcancelinvitation, inviteAdminUser, revokeAnAdminUser, getCorporateInvitedUsersList, getCorporateUserPermission, changeAdminUserPermissions, resendCancelAdminUserInvitation]
+- tool: webhooks_management
+  category: events
+  binding: rest
+  confidence: high
+  rest: [getWebhooks, createWebhook, getWebhook, updateWebhook, deleteWebhook, exportWebhooksHistory]
+- tool: external_feeds
+  category: content
+  binding: rest
+  confidence: high
+  rest: [getAllExternalFeeds, createExternalFeed, getExternalFeedByUUID, updateExternalFeed, deleteExternalFeed]
+- tool: processes
+  category: accounts
+  binding: rest
+  confidence: high
+  rest: [getProcesses, getProcess]
+mcp_only: []
+rest_only:
+- capability: Transactional email send + logs
+  reason: >-
+    No MCP module covers transactional sending. The MCP surface is account/marketing
+    management; the send path stays REST-only.
+  rest: [sendTransacEmail, getTransacEmailsList, getTransacEmailContent, getScheduledEmailById, deleteScheduledEmailById, deleteAnSmtpTransactionalLog, deleteHardbounces, getTransacBlockedContacts, unblockOrResubscribeATransactionalContact, blockNewDomain, getBlockedDomains, deleteBlockedDomain]
+- capability: Transactional SMS send
+  reason: No MCP module; send path is REST-only.
+  rest: [sendAsyncTransactionalSms, getSmsEvents]
+- capability: Transactional WhatsApp send
+  reason: No MCP module; send path is REST-only.
+  rest: [sendWhatsappMessage, getWhatsappEventReport]
+- capability: Inbound email parsing
+  reason: No MCP module published for inbound parsing.
+  rest: [getInboundEmailEvents, getInboundEmailEventsByUuid, getInboundEmailAttachment]
+- capability: Loyalty (programs, rewards, balances, tiers)
+  reason: >-
+    The entire Loyalty API — 50 operations, Brevo's newest product line — has no MCP
+    module. The largest single REST-only gap on the surface.
+  rest: [getLPList, createNewLP, getLoyaltyProgramInfo, updateLoyaltyProgram, publishLoyaltyProgram, subscribeToLoyaltyProgram, createReward, createVoucher, redeemVoucher, completeRedeemTransaction, revokeVouchers, validateReward, getBalanceDefinitionList, createBalanceDefinition, beginTransaction, completeTransaction, cancelTransaction, getContactBalances, createTierGroup, getLoyaltyProgramTier, addSubscriptionToTier]
+- capability: Ecommerce (products, categories, orders, attribution, coupons, payments)
+  reason: No MCP module for the ecommerce surface.
+  rest: [createOrder, createBatchOrder, getOrders, createUpdateProduct, getProducts, getProductInfo, createUpdateBatchProducts, createProductAlert, getCategories, createUpdateCategory, getCategoryInfo, createUpdateBatchCategory, getCouponCollections, createCouponCollection, createCoupons, createPaymentRequest, getPaymentRequest, deletePaymentRequest, activateTheECommerceApp, getDetailedAttributionMetricsForASingleBrevoCampaignOrWorkflow, getAttributionMetricsForOneOrMoreBrevoCampaignsOrWorkflows, getAttributedProductSalesForASingleBrevoCampaignOrWorkflow]
+- capability: Events ingestion
+  reason: No MCP module for the Events API.
+  rest: [getEvents, createEvent, createBatchEvents]
+- capability: Custom object records
+  reason: No MCP module for object management.
+  rest: [upsertrecords, getrecords, batchDeleteObjectRecords]
+- capability: Conversations (live chat agent + automated messages)
+  reason: No MCP module for the Conversations API.
+  rest: [sendAMessageAsAnAgent, getAMessage, updateAMessageSentByAnAgent, deleteAMessageSentByAnAgent, sendAnAutomatedMessageToAVisitor, getAnAutomatedMessage, updateAnAutomatedMessage, deleteAnAutomatedMessage, setsAgentsStatusToOnlineFor23Minutes, setVisitorGroupAssignment]
+- capability: CRM files
+  reason: No MCP module for CRM file attachments.
+  rest: [getAllFiles, uploadAFile, downloadAFile, getFileDetails, deleteAFile]
+- capability: Consent groups
+  reason: No MCP module; feature-flagged REST surface.
+  rest: [getConsentGroups, createConsentGroup, getConsentGroup, updateConsentGroup, deleteConsentGroup]
+- capability: Wallet passes
+  reason: No MCP module for wallet pass install URLs.
+  rest: [getWalletPassInstallUrl]
+coverage:
+  mcp_modules_published: 27
+  mcp_modules_bound: 27
+  mcp_tools_named: 0
+  mcp_only: 0
+  rest_operations_total: 285
+  rest_operations_covered_by_a_module: 152
+  rest_operations_only: 133
+  granularity: module
+  note: >-
+    Roughly 47% of the published REST surface has an MCP module behind it. The uncovered
+    half is concentrated in the transactional send paths and the three newest product
+    lines (Loyalty, Ecommerce attribution, Conversations) — an agent driving Brevo through
+    MCP alone can manage the account and the marketing objects but cannot send a message.

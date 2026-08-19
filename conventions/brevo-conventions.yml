@@ -1,0 +1,125 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.brevo.com/docs/how-it-works
+docs:
+- https://developers.brevo.com/docs/how-it-works
+- https://developers.brevo.com/docs/heterogenous-versions-batch-emails
+- https://developers.brevo.com/docs/limit-headers
+- https://developers.brevo.com/docs/api-limits
+- https://developers.brevo.com/docs/authentication-schemes
+description: >-
+  Cross-cutting request/response semantics for the Brevo API v3, read from the docs and
+  cross-checked against the 13 provider-published OpenAPI 3.1 specs.
+base_url: https://api.brevo.com/v3
+media_type: application/json
+authentication:
+  style: api-key header (`api-key`) or OAuth 2.0 Bearer token
+  artifact: authentication/brevo-authentication.yml
+idempotency:
+  supported: true
+  header: idempotencyKey
+  location: >-
+    Sent inside the JSON `headers` object of the request body on POST /smtp/email, not as
+    an HTTP request header — an unusual placement worth noting for any client that assumes
+    the Stripe-style transport header.
+  format: UUID
+  scope: per batch request (one key covers an entire messageVersions batch, however many
+    versions it contains)
+  retention: 30 minutes TTL
+  on_replay: >-
+    A request reusing a key within the TTL is rejected with a `duplicate_parameter` error
+    and is NOT processed — Brevo does not replay the original response, it refuses the
+    call.
+  applies_to: [sendTransacEmail]
+  docs: https://developers.brevo.com/docs/heterogenous-versions-batch-emails
+  note: >-
+    Idempotency is documented only for batch transactional email. The rest of the write
+    surface — campaigns, contacts, CRM, ecommerce, loyalty — has no idempotency contract,
+    so retries there are not safe by construction.
+pagination:
+  style: offset
+  params:
+  - {name: limit, in: query, description: Number of documents per page, typical_default: 50}
+  - {name: offset, in: query, description: Index of the first document in the page, default: 0}
+  response_fields: [count]
+  variants:
+  - {scope: Sales CRM, params: [limit, offset], note: '/crm/deals, /crm/tasks, /companies use the same offset pair'}
+  - {scope: Loyalty, params: [limit, offset], note: loyalty list endpoints follow the same pattern}
+  sorting:
+  - {name: sort, in: query, values: [asc, desc], note: Present on most list endpoints; sorts by creation date}
+  date_filters: [startDate, endDate, modifiedSince, createdSince]
+field_expansion:
+  supported: false
+  note: >-
+    No expand/include parameter. Related objects are fetched with a second call — for
+    example a deal's linked contacts come back as id arrays, not embedded objects.
+sparse_fields:
+  supported: false
+metadata:
+  supported: true
+  mechanism: >-
+    Contacts carry an open `attributes` map (custom attributes defined per account via the
+    contact-attributes endpoints). Transactional email carries `params` for template
+    substitution and `tags` for classification. There is no generic `metadata` object.
+request_tracing:
+  request_id_header: null
+  note: >-
+    Brevo does not document a request-id / correlation header. The transactional send
+    response returns a `messageId` (an RFC 5322 Message-ID, e.g.
+    <2xxxxxxx.xxxxx@smtp-relay.mailin.fr>) which is the practical trace handle for a send,
+    and webhook events echo it back.
+versioning:
+  scheme: uri-path
+  current: v3
+  path_prefix: /v3
+  breaking_change_policy: null
+  artifact: lifecycle/brevo-lifecycle.yml
+error_envelope:
+  format: brevo-custom
+  shape:
+    code: string — machine-readable error code
+    message: string — human-readable description
+  example: '{"code":"invalid_parameter","message":"Invalid email address"}'
+  rfc9457: false
+  note: >-
+    Errors are a flat {code, message} object, not RFC 9457 application/problem+json. The
+    `code` values are a documented enumeration; captured in errors/brevo-problem-types.yml.
+rate_limit_signaling:
+  headers:
+  - {name: x-sib-ratelimit-limit, description: Maximum requests allowed in the current window}
+  - {name: x-sib-ratelimit-remaining, description: Requests remaining in the current window}
+  - {name: x-sib-ratelimit-reset, description: Seconds until the window resets}
+  exhausted_status: 429
+  retry_after: false
+  note: >-
+    Brevo uses vendor-prefixed `x-sib-*` headers (the legacy Sendinblue prefix), not the
+    RFC 9331 `RateLimit-*` draft form, and does not send `Retry-After`. An agent must read
+    the `x-sib-ratelimit-reset` value to back off correctly.
+  artifact: rate-limits/brevo-rate-limits.yml
+sandbox:
+  supported: true
+  mechanism: 'X-Sib-Sandbox: drop header inside the request body headers object'
+  artifact: sandbox/brevo-sandbox.yml
+batch:
+  supported: true
+  patterns:
+  - {operation: sendTransacEmail, mechanism: 'messageVersions[]', max: 1000 personalized versions per request}
+  - {operation: createBatchEvents, path: /events/batch}
+  - {operation: createUpdateBatchProducts, path: /products/batch}
+  - {operation: createUpdateBatchCategory, path: /categories/batch}
+  - {operation: createBatchOrder, path: /orders/status/batch}
+  - {operation: upsertrecords, path: '/objects/{object_type}/batch/upsert'}
+webhooks:
+  supported: true
+  signing: >-
+    Optional. Brevo supports securing webhook calls; see
+    https://developers.brevo.com/docs/secured-webhooks
+  retry: https://developers.brevo.com/docs/retry-mechanism
+  artifact: asyncapi/brevo-webhooks-asyncapi.yml
+cross_links:
+  errors: errors/brevo-problem-types.yml
+  lifecycle: lifecycle/brevo-lifecycle.yml
+  authentication: authentication/brevo-authentication.yml
+  rate_limits: rate-limits/brevo-rate-limits.yml
+  scopes: scopes/brevo-scopes.yml
+  sandbox: sandbox/brevo-sandbox.yml

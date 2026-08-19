@@ -1,0 +1,674 @@
+{
+  "item": [
+    {
+      "id": "222db148-31e2-4a6f-9fa7-9fa1f28b55c8",
+      "name": "Contact Attributes",
+      "description": {
+        "content": "Define and manage custom attributes for contact profiles.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a4083192-4d6c-4fb4-bf1a-8f216a1cf035",
+          "name": "List all contact attributes",
+          "request": {
+            "name": "List all contact attributes",
+            "description": {
+              "content": "Retrieves all custom contact attributes defined in the account including their types and enumeration values.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts",
+                "attributes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5806cb67-7c34-4aae-876d-be2510b2acef",
+              "name": "Contact attributes retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "attributes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"attributes\": [\n    {\n      \"name\": \"string\",\n      \"category\": \"transactional\",\n      \"type\": \"float\",\n      \"enumeration\": [\n        {\n          \"value\": 5442,\n          \"label\": \"string\"\n        },\n        {\n          \"value\": 4685,\n          \"label\": \"string\"\n        }\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"category\": \"global\",\n      \"type\": \"boolean\",\n      \"enumeration\": [\n        {\n          \"value\": 3771,\n          \"label\": \"string\"\n        },\n        {\n          \"value\": 8708,\n          \"label\": \"string\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9aa16d81-db5b-48c3-8a1e-15b6a6c9b801",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "attributes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a7f2f9ef-e1e0-4678-8fa7-9a05a9bde6f2",
+          "name": "Create a contact attribute",
+          "request": {
+            "name": "Create a contact attribute",
+            "description": {
+              "content": "Creates a new custom contact attribute in the specified category. Attributes extend the contact profile with additional data fields.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts",
+                "attributes",
+                ":attributeCategory",
+                ":attributeName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "attributeCategory",
+                  "description": "(Required) Category of the attribute such as normal, transactional, category, calculated, or global."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "attributeName",
+                  "description": "(Required) Name for the new attribute."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"value\": \"<string>\",\n  \"enumeration\": [\n    {\n      \"value\": \"<integer>\",\n      \"label\": \"<string>\"\n    },\n    {\n      \"value\": \"<integer>\",\n      \"label\": \"<string>\"\n    }\n  ],\n  \"type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c43f1a5c-3e34-435b-a784-547a8f971052",
+              "name": "Attribute created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "attributes",
+                    ":attributeCategory",
+                    ":attributeName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "attributeCategory",
+                      "description": "(Required) Category of the attribute such as normal, transactional, category, calculated, or global."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "attributeName",
+                      "description": "(Required) Name for the new attribute."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"value\": \"<string>\",\n  \"enumeration\": [\n    {\n      \"value\": \"<integer>\",\n      \"label\": \"<string>\"\n    },\n    {\n      \"value\": \"<integer>\",\n      \"label\": \"<string>\"\n    }\n  ],\n  \"type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "13ff3987-dd79-42c4-a3e8-7217bb8488d0",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "attributes",
+                    ":attributeCategory",
+                    ":attributeName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "attributeCategory",
+                      "description": "(Required) Category of the attribute such as normal, transactional, category, calculated, or global."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "attributeName",
+                      "description": "(Required) Name for the new attribute."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"value\": \"<string>\",\n  \"enumeration\": [\n    {\n      \"value\": \"<integer>\",\n      \"label\": \"<string>\"\n    },\n    {\n      \"value\": \"<integer>\",\n      \"label\": \"<string>\"\n    }\n  ],\n  \"type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "33a5ccfe-b5a6-47db-85b3-f675d62b9c63",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "attributes",
+                    ":attributeCategory",
+                    ":attributeName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "attributeCategory",
+                      "description": "(Required) Category of the attribute such as normal, transactional, category, calculated, or global."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "attributeName",
+                      "description": "(Required) Name for the new attribute."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"value\": \"<string>\",\n  \"enumeration\": [\n    {\n      \"value\": \"<integer>\",\n      \"label\": \"<string>\"\n    },\n    {\n      \"value\": \"<integer>\",\n      \"label\": \"<string>\"\n    }\n  ],\n  \"type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "11f7782f-3dc9-4f7b-9b64-6aa8f7af37c3",
+          "name": "Delete a contact attribute",
+          "request": {
+            "name": "Delete a contact attribute",
+            "description": {
+              "content": "Permanently deletes a custom contact attribute from the account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts",
+                "attributes",
+                ":attributeCategory",
+                ":attributeName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "attributeCategory",
+                  "description": "(Required) Category of the attribute to delete."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "attributeName",
+                  "description": "(Required) Name of the attribute to delete."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4a11c0a6-c557-41b8-a4df-10d93ce28c7c",
+              "name": "Attribute deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "attributes",
+                    ":attributeCategory",
+                    ":attributeName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "attributeCategory",
+                      "description": "(Required) Category of the attribute to delete."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "attributeName",
+                      "description": "(Required) Name of the attribute to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5927a964-3b32-4315-9163-36894609932e",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "attributes",
+                    ":attributeCategory",
+                    ":attributeName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "attributeCategory",
+                      "description": "(Required) Category of the attribute to delete."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "attributeName",
+                      "description": "(Required) Name of the attribute to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ded77f8-20e5-4651-92f8-8f6faa33bf74",
+              "name": "Attribute not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "attributes",
+                    ":attributeCategory",
+                    ":attributeName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "attributeCategory",
+                      "description": "(Required) Category of the attribute to delete."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "attributeName",
+                      "description": "(Required) Name of the attribute to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.brevo.com/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6d3a6d5f-5d07-4d8b-8c4f-749855fb8587",
+    "name": "Brevo Contacts Agent Status Contact Attributes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Brevo Contacts API provides programmatic access to contact management features including creating, updating, and deleting contacts. Developers can organize contacts into lists, apply attributes and tags, import contacts in bulk, and build audience segments for targeted campaigns. The API also supports managing folders, contact attributes, and custom fields to structure contact data according to business needs.\n\nContact Support:\n Name: Brevo Support",
+      "type": "text/plain"
+    }
+  }
+}

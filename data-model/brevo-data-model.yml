@@ -1,0 +1,250 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/brevo-*-openapi.yml (13 provider-published OpenAPI 3.1 specs)
+docs: https://developers.brevo.com/reference
+description: >-
+  The entity graph behind the Brevo API, derived from schema properties and id-reference
+  fields across the 285 published operations. Contact is the hub: nearly every other domain
+  — campaigns, CRM, ecommerce, loyalty, events, conversations, wallet — hangs off it by a
+  contact identifier. Brevo is unusual in that a Contact has several co-equal identity keys
+  (email_id, phone_id, whatsapp_id, landline_number_id, ext_id) rather than one primary key,
+  and most contact-scoped paths take a generic `{identifier}` segment that accepts any of
+  them. Identifiers are plain integers or UUIDs; Brevo uses no typed id prefixes.
+id_conventions:
+  style: integer or UUID, per resource
+  prefixes: none
+  note: >-
+    Loyalty and Events use UUIDs (programs, subscriptions, transactions); contacts, lists,
+    campaigns, deals and products use integer ids. Custom-object records are addressed by
+    an `object_type` path segment plus a record identifier.
+  contact_identifier: >-
+    Contact-scoped paths take {identifier}, which resolves against any of email_id,
+    phone_id, whatsapp_id, landline_number_id, ext_id or the numeric contact id.
+domains:
+- {name: contacts, spec: openapi/brevo-contact-management-openapi.yml, operations: 34}
+- {name: campaigns, spec: openapi/brevo-marketing-campaigns-openapi.yml, operations: 32}
+- {name: transactional, spec: openapi/brevo-email-api-openapi.yml, operations: 25}
+- {name: crm, spec: openapi/brevo-sales-crm-openapi.yml, operations: 36}
+- {name: ecommerce, spec: openapi/brevo-ecommerce-openapi.yml, operations: 26}
+- {name: loyalty, spec: openapi/brevo-loyalty-openapi.yml, operations: 50}
+- {name: accounts, spec: openapi/brevo-accounts-and-settings-openapi.yml, operations: 59}
+- {name: events, spec: openapi/brevo-events-openapi.yml, operations: 3}
+- {name: objects, spec: openapi/brevo-object-management-openapi.yml, operations: 3}
+- {name: conversations, spec: openapi/brevo-conversations-openapi.yml, operations: 10}
+- {name: wallet, spec: openapi/brevo-wallet-openapi.yml, operations: 1}
+entities:
+- name: Contact
+  domain: contacts
+  key: id (integer)
+  alternate_keys: [email_id, phone_id, whatsapp_id, landline_number_id, ext_id]
+  fields_of_note: [attributes, listIds, emailBlacklisted, smsBlacklisted, consentGroups]
+  relationships:
+  - {type: has_many, target: List, via: listIds}
+  - {type: has_many, target: ConsentGroup, via: consentGroups}
+  - {type: has_many, target: Deal, via: linkedContactsIds}
+  - {type: has_many, target: LoyaltySubscription, via: contactId}
+  - {type: has_many, target: Order, via: email/contact identifier}
+  - {type: has_many, target: Event, via: identifiers}
+- name: List
+  domain: contacts
+  key: id
+  relationships:
+  - {type: belongs_to, target: Folder, via: folderId}
+  - {type: has_many, target: Contact, via: listId}
+- name: Folder
+  domain: contacts
+  key: id
+  relationships:
+  - {type: has_many, target: List, via: folderId}
+- name: ContactAttribute
+  domain: contacts
+  key: 'attributeCategory + attributeName'
+  note: Category attributes carry both a numeric `value` and (since 2026-05-01) a `valueStr`.
+- name: Segment
+  domain: contacts
+  key: id
+  read_only: true
+- name: ConsentGroup
+  domain: contacts
+  key: id
+  feature_gated: true
+  note: Returns 403 CONSENT_GROUP_NOT_ENABLED when the feature is off for the account.
+- name: EmailCampaign
+  domain: campaigns
+  key: campaignId
+  relationships:
+  - {type: has_many, target: List, via: 'recipients.listIds'}
+  - {type: has_many, target: List, via: 'recipients.exclusionListIds'}
+  - {type: has_many, target: Segment, via: 'recipients.segmentIds / exclusionSegmentIds'}
+  - {type: has_one, target: Sender, via: sender}
+- name: SmsCampaign
+  domain: campaigns
+  key: campaignId
+  relationships:
+  - {type: has_many, target: List, via: 'recipients.listIds'}
+- name: WhatsAppCampaign
+  domain: campaigns
+  key: campaignId
+  relationships:
+  - {type: has_one, target: WhatsAppTemplate, via: templateId}
+- name: SmtpTemplate
+  domain: transactional
+  key: templateId
+  relationships:
+  - {type: has_one, target: Sender, via: sender}
+- name: Sender
+  domain: accounts
+  key: senderId
+  relationships:
+  - {type: has_many, target: Ip, via: ips}
+  - {type: belongs_to, target: Domain, via: email domain}
+- name: Domain
+  domain: accounts
+  key: domainName
+  fields_of_note: [dns_records, authenticated]
+- name: Webhook
+  domain: accounts
+  key: webhookId
+  fields_of_note: [url, events, type]
+- name: SubAccount
+  domain: accounts
+  key: id
+  relationships:
+  - {type: belongs_to, target: MasterAccount, via: corporate hierarchy}
+  - {type: belongs_to, target: SubAccountGroup, via: groupId}
+- name: Deal
+  domain: crm
+  key: id
+  relationships:
+  - {type: belongs_to, target: Pipeline, via: pipeline}
+  - {type: belongs_to, target: PipelineStage, via: deal_stage}
+  - {type: has_many, target: Contact, via: linkedContactsIds}
+  - {type: has_many, target: Company, via: linkedCompaniesIds}
+  - {type: has_many, target: Note, via: dealIds}
+  - {type: has_many, target: Task, via: dealIds}
+- name: Company
+  domain: crm
+  key: id
+  relationships:
+  - {type: has_many, target: Contact, via: linkedContactsIds}
+  - {type: has_many, target: Deal, via: linkedDealsIds}
+- name: Task
+  domain: crm
+  key: id
+  relationships:
+  - {type: belongs_to, target: TaskType, via: taskTypeId}
+  - {type: has_many, target: Contact, via: contactsIds}
+  - {type: has_many, target: Deal, via: dealIds}
+  - {type: has_many, target: Company, via: companiesIds}
+- name: Note
+  domain: crm
+  key: id
+  relationships:
+  - {type: has_many, target: Contact, via: contactIds}
+  - {type: has_many, target: Deal, via: dealIds}
+  - {type: has_many, target: Company, via: companyIds}
+- name: Pipeline
+  domain: crm
+  key: pipelineID
+  relationships:
+  - {type: has_many, target: PipelineStage, via: stages}
+- name: CrmFile
+  domain: crm
+  key: id
+  relationships:
+  - {type: belongs_to, target: Deal, via: dealId}
+  - {type: belongs_to, target: Contact, via: contactId}
+- name: Product
+  domain: ecommerce
+  key: id
+  fields_of_note: [sku, price, alternativePrice, categories, parentId, variantId]
+  relationships:
+  - {type: has_many, target: Category, via: categories}
+  - {type: belongs_to, target: Product, via: parentId, note: variant hierarchy}
+- name: Category
+  domain: ecommerce
+  key: id
+- name: Order
+  domain: ecommerce
+  key: id
+  fields_of_note: [status, amount, storeId, products]
+  relationships:
+  - {type: has_many, target: Product, via: 'products[].productId'}
+  - {type: belongs_to, target: Contact, via: email}
+- name: CouponCollection
+  domain: ecommerce
+  key: id
+  relationships:
+  - {type: has_many, target: Coupon, via: collection}
+- name: PaymentRequest
+  domain: ecommerce
+  key: id
+- name: LoyaltyProgram
+  domain: loyalty
+  key: pid (loyaltyProgramId)
+  relationships:
+  - {type: has_many, target: BalanceDefinition, via: loyaltyProgramId}
+  - {type: has_many, target: TierGroup, via: loyaltyProgramId}
+  - {type: has_many, target: Reward, via: loyaltyProgramId}
+  - {type: has_many, target: LoyaltySubscription, via: loyaltyProgramId}
+- name: LoyaltySubscription
+  domain: loyalty
+  key: loyaltySubscriptionId
+  relationships:
+  - {type: belongs_to, target: Contact, via: contactId}
+  - {type: belongs_to, target: LoyaltyProgram, via: loyaltyProgramId}
+  - {type: has_many, target: Balance, via: loyaltySubscriptionId}
+  - {type: has_one, target: Tier, via: tierId}
+- name: BalanceDefinition
+  domain: loyalty
+  key: bdid
+  relationships:
+  - {type: has_many, target: BalanceLimit, via: balanceDefinitionId}
+- name: LoyaltyTransaction
+  domain: loyalty
+  key: tid
+  lifecycle: begin -> complete | cancel
+  relationships:
+  - {type: belongs_to, target: LoyaltySubscription, via: loyaltySubscriptionId}
+- name: TierGroup
+  domain: loyalty
+  key: gid
+  relationships:
+  - {type: has_many, target: Tier, via: groupId}
+- name: Reward
+  domain: loyalty
+  key: rid
+  relationships:
+  - {type: has_many, target: Voucher, via: rewardId}
+- name: Voucher
+  domain: loyalty
+  lifecycle: attribute -> redeem -> complete | revoke
+  relationships:
+  - {type: belongs_to, target: Contact, via: contactId}
+- name: WalletPass
+  domain: wallet
+  key: passId
+  relationships:
+  - {type: belongs_to, target: Contact, via: contactId}
+- name: Event
+  domain: events
+  key: 'event_name + identifiers'
+  note: 'Batch form requires the wrapper {"events":[...]} since 2026-04-21.'
+  relationships:
+  - {type: belongs_to, target: Contact, via: identifiers}
+- name: CustomObjectRecord
+  domain: objects
+  key: 'object_type + record id'
+  note: Schema is account-defined; the API is generic upsert/get/delete over {object_type}.
+- name: ConversationMessage
+  domain: conversations
+  key: id
+  relationships:
+  - {type: belongs_to, target: Visitor, via: visitorId}
+- name: Process
+  domain: accounts
+  key: processId
+  note: Async job handle returned by long-running operations (imports, exports).
+render:
+  subway: null
+  note: No subway/ visual in this repo yet.

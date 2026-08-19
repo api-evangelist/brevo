@@ -1,20 +1,565 @@
 {
   "item": [
     {
-      "id": "db0dace9-12a1-4704-b870-ac15e4a4ea4e",
-      "name": "SMS Statistics",
+      "id": "518112ca-ad72-409b-b7b8-faae87bfc49b",
+      "name": "transactionalSms",
       "description": {
-        "content": "Retrieve delivery reports and activity statistics for transactional SMS messages.",
+        "content": "",
         "type": "text/plain"
       },
       "item": [
         {
-          "id": "18066ae4-f345-42ea-b0a4-ef73168252c3",
-          "name": "Get transactional SMS activity events",
+          "id": "2c5cd768-d837-41d8-8742-814c26d3e246",
+          "name": "Send SMS message asynchronously to a mobile number",
           "request": {
-            "name": "Get transactional SMS activity events",
+            "name": "Send SMS message asynchronously to a mobile number",
             "description": {
-              "content": "Retrieves detailed event-level data for transactional SMS messages including delivery status, bounces, and recipient interactions.",
+              "content": "<Note>If the user includes stop code in the Transactional SMS, then it will be switched to Marketing SMS automatically and it will be interpreted as a Marketing SMS. To send Transactional SMS as Transactional, it is important not to use stop code.\nNote: For adding a stop code, client has to add reply STOP to [STOP_CODE] and the [STOP_CODE] will be replaced with the number.</Note>\n<Note title=\"For end users in France\">Transactional SMS can be sent at any time without time restrictions. However, if a message is categorized as Marketing, it must adhere to specific time restrictions. Messages sent outside of these restricted hours will experience delays and will be processed during allowable times. Specifically, Marketing SMS cannot be processed between 10pm and 8am, on Sundays, and on French public holidays.</Note>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "transactionalSMS",
+                "send"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                "key": "api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"recipient\": \"<string>\",\n  \"sender\": \"<string>\",\n  \"organisationPrefix\": \"<string>\",\n  \"tag\": \"<string>\",\n  \"type\": \"transactional\",\n  \"unicodeEnabled\": false,\n  \"webUrl\": \"<url>\",\n  \"params\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"templateId\": \"<integer>\",\n  \"content\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "342e722d-99b6-4651-b60e-ccfd706746aa",
+              "name": "SMS has been sent successfully to the recipient",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transactionalSMS",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"recipient\": \"<string>\",\n  \"sender\": \"<string>\",\n  \"organisationPrefix\": \"<string>\",\n  \"tag\": \"string\",\n  \"type\": \"transactional\",\n  \"unicodeEnabled\": false,\n  \"webUrl\": \"<url>\",\n  \"params\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"templateId\": \"<integer>\",\n  \"content\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"messageId\": 7434\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c94d1ca-8056-4047-8ef3-2854386dd2f7",
+              "name": "bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transactionalSMS",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"recipient\": \"<string>\",\n  \"sender\": \"<string>\",\n  \"organisationPrefix\": \"<string>\",\n  \"tag\": \"string\",\n  \"type\": \"transactional\",\n  \"unicodeEnabled\": false,\n  \"webUrl\": \"<url>\",\n  \"params\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"templateId\": \"<integer>\",\n  \"content\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"Invalid parameters passed\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "139e1f8f-ac9a-4b2b-9860-0b2172dabe8b",
+          "name": "Get your SMS activity aggregated over a period of time",
+          "request": {
+            "name": "Get your SMS activity aggregated over a period of time",
+            "description": {
+              "content": "Retrieve an aggregated report of your transactional SMS activity over a specified time period, including counts for requests, delivered, hard bounces, soft bounces, blocked, unsubscribed, replied, accepted, rejected, and skipped messages. Filter by date range using `startDate` and `endDate` (both required together, YYYY-MM-DD format) or by a number of past `days` (not compatible with date range). You can further narrow results by `tag`. If no date filter is provided, the report covers all available data and returns the auto-detected date range.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "transactionalSMS",
+                "statistics",
+                "aggregatedReport"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<string>",
+                  "description": "**Mandatory if endDate is used.** Starting date (YYYY-MM-DD) of the report\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<string>",
+                  "description": "**Mandatory if startDate is used.** Ending date (YYYY-MM-DD) of the report\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "days",
+                  "value": "<long>",
+                  "description": "Number of days in the past including today (positive integer). **Not compatible with startDate and endDate**\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "tag",
+                  "value": "<string>",
+                  "description": "Filter on a tag"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                "key": "api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0fd2ec97-5a45-4a69-a82b-8896f0cc3a92",
+              "name": "Aggregated SMS report informations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transactionalSMS",
+                    "statistics",
+                    "aggregatedReport"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "days",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accepted\": 5548,\n  \"blocked\": 5154,\n  \"delivered\": 5426,\n  \"hardBounces\": 1385,\n  \"range\": \"string\",\n  \"rejected\": 2937,\n  \"replied\": 4109,\n  \"requests\": 5147,\n  \"skipped\": 540,\n  \"softBounces\": 2476,\n  \"unsubscribed\": 9083\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "55e26d27-3140-4baa-a0ac-30f1e324181f",
+              "name": "bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transactionalSMS",
+                    "statistics",
+                    "aggregatedReport"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "days",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"account_under_validation\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d7009a63-aa42-44ea-bd87-1b2568db84fa",
+          "name": "Get your SMS activity aggregated per day",
+          "request": {
+            "name": "Get your SMS activity aggregated per day",
+            "description": {
+              "content": "Retrieve a day-by-day breakdown of your transactional SMS activity, with each entry containing the date and counts for requests, delivered, hard bounces, soft bounces, blocked, unsubscribed, replied, accepted, rejected, and skipped messages. Filter by date range using `startDate` and `endDate` (both required together, YYYY-MM-DD format), by a number of past `days` (not compatible with date range), or by `tag`. Results are sorted in descending order by default unless overridden with the `sort` parameter.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "transactionalSMS",
+                "statistics",
+                "reports"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<string>",
+                  "description": "**Mandatory if endDate is used.** Starting date (YYYY-MM-DD) of the report\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<string>",
+                  "description": "**Mandatory if startDate is used.** Ending date (YYYY-MM-DD) of the report\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "days",
+                  "value": "<long>",
+                  "description": "Number of days in the past including today (positive integer). **Not compatible with 'startDate' and 'endDate'**\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "tag",
+                  "value": "<string>",
+                  "description": "Filter on a tag"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "desc",
+                  "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                "key": "api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4eacb9c8-9d82-49e1-8bfd-4f15d58ee9d8",
+              "name": "Aggregated SMS report informations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transactionalSMS",
+                    "statistics",
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "days",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "desc"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"reports\": [\n    {\n      \"accepted\": 2442,\n      \"blocked\": 332,\n      \"date\": \"2013-05-04\",\n      \"delivered\": 5114,\n      \"hardBounces\": 7449,\n      \"rejected\": 4482,\n      \"replied\": 8358,\n      \"requests\": 2449,\n      \"skipped\": 6019,\n      \"softBounces\": 9035,\n      \"unsubscribed\": 7215\n    },\n    {\n      \"accepted\": 3329,\n      \"blocked\": 5207,\n      \"date\": \"1996-10-23\",\n      \"delivered\": 1119,\n      \"hardBounces\": 8149,\n      \"rejected\": 837,\n      \"replied\": 600,\n      \"requests\": 3730,\n      \"skipped\": 6000,\n      \"softBounces\": 6756,\n      \"unsubscribed\": 4028\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91f37235-428c-48a3-9ed9-5923f0780ea7",
+              "name": "bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transactionalSMS",
+                    "statistics",
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "days",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "desc"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"duplicate_parameter\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d944958b-0aec-4ee7-be8e-247accc269ce",
+          "name": "Get all your SMS activity (unaggregated events)",
+          "request": {
+            "name": "Get all your SMS activity (unaggregated events)",
+            "description": {
+              "content": "Retrieve a paginated list of individual SMS event records (unaggregated), including event type, phone number, message ID, timestamp, tag, and reason or reply content where applicable. Results default to 50 per page (max 100) and are sorted in descending order unless overridden. Filter by date range (`startDate`/`endDate`), past `days` (not compatible with date range), specific `event` type (e.g. delivered, bounces, replies), `phoneNumber`, or `tags`. Bounce events include the failure reason, and reply events include the reply content.",
               "type": "text/plain"
             },
             "url": {
@@ -31,48 +576,66 @@
                   "disabled": false,
                   "key": "limit",
                   "value": "50",
-                  "description": "Maximum number of results to return per request."
+                  "description": "Number of documents per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<string>",
+                  "description": "**Mandatory if endDate is used.** Starting date (YYYY-MM-DD) of the report\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<string>",
+                  "description": "**Mandatory if startDate is used.** Ending date (YYYY-MM-DD) of the report\n"
                 },
                 {
                   "disabled": false,
                   "key": "offset",
                   "value": "0",
-                  "description": "Number of results to skip for pagination."
+                  "description": "Index of the first document of the page"
                 },
                 {
                   "disabled": false,
-                  "key": "startDate",
-                  "value": "<date>",
-                  "description": "Start date for the event query in YYYY-MM-DD format."
-                },
-                {
-                  "disabled": false,
-                  "key": "endDate",
-                  "value": "<date>",
-                  "description": "End date for the event query in YYYY-MM-DD format."
+                  "key": "days",
+                  "value": "<long>",
+                  "description": "Number of days in the past including today (positive integer). **Not compatible with 'startDate' and 'endDate'**\n"
                 },
                 {
                   "disabled": false,
                   "key": "phoneNumber",
                   "value": "<string>",
-                  "description": "Filter events by recipient phone number."
+                  "description": "Filter the report for a specific phone number"
                 },
                 {
                   "disabled": false,
                   "key": "event",
                   "value": "<string>",
-                  "description": "Filter by event type such as delivered, sent, softBounce, hardBounce, or unsubscribed."
+                  "description": "Filter the report for specific events"
                 },
                 {
                   "disabled": false,
                   "key": "tags",
                   "value": "<string>",
-                  "description": "Filter events by tag assigned to the SMS."
+                  "description": "Filter the report for specific tags passed as a serialized urlencoded array"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "desc",
+                  "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
                 }
               ],
               "variable": []
             },
             "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                "key": "api-key",
+                "value": "<string>"
+              },
               {
                 "key": "Accept",
                 "value": "application/json"
@@ -83,8 +646,8 @@
           },
           "response": [
             {
-              "id": "e29f7749-50cd-4d8d-abc6-5af62946d41a",
-              "name": "SMS events retrieved successfully",
+              "id": "a27a6ee7-1e47-49f2-9b44-dafa711c03a4",
+              "name": "Sms events report informations",
               "originalRequest": {
                 "url": {
                   "path": [
@@ -101,16 +664,20 @@
                       "value": "50"
                     },
                     {
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
                       "key": "offset",
                       "value": "0"
                     },
                     {
-                      "key": "startDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "endDate",
-                      "value": "<date>"
+                      "key": "days",
+                      "value": "<long>"
                     },
                     {
                       "key": "phoneNumber",
@@ -118,23 +685,25 @@
                     },
                     {
                       "key": "event",
-                      "value": "<string>"
+                      "value": "blocked"
                     },
                     {
                       "key": "tags",
                       "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "desc"
                     }
                   ],
                   "variable": []
                 },
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
                     "key": "api-key",
-                    "value": "<API Key>"
+                    "value": "<string>"
                   },
                   {
                     "key": "Accept",
@@ -152,13 +721,13 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"events\": [\n    {\n      \"phoneNumber\": \"string\",\n      \"date\": \"1962-10-30T09:11:44.974Z\",\n      \"messageId\": \"string\",\n      \"event\": \"accepted\",\n      \"reason\": \"string\",\n      \"tag\": \"string\"\n    },\n    {\n      \"phoneNumber\": \"string\",\n      \"date\": \"1989-11-23T07:31:39.068Z\",\n      \"messageId\": \"string\",\n      \"event\": \"unsubscribe\",\n      \"reason\": \"string\",\n      \"tag\": \"string\"\n    }\n  ]\n}",
+              "body": "{\n  \"events\": [\n    {\n      \"date\": \"string\",\n      \"event\": \"hardBounces\",\n      \"messageId\": \"string\",\n      \"phoneNumber\": \"string\",\n      \"reason\": \"string\",\n      \"reply\": \"string\",\n      \"tag\": \"string\"\n    },\n    {\n      \"date\": \"string\",\n      \"event\": \"rejected\",\n      \"messageId\": \"string\",\n      \"phoneNumber\": \"string\",\n      \"reason\": \"string\",\n      \"reply\": \"string\",\n      \"tag\": \"string\"\n    }\n  ]\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "7d1f4302-636c-44a6-8f68-a063f911fb37",
-              "name": "Bad request",
+              "id": "f28b3544-a7f7-42e1-9714-863b7cde9563",
+              "name": "bad request",
               "originalRequest": {
                 "url": {
                   "path": [
@@ -175,16 +744,20 @@
                       "value": "50"
                     },
                     {
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
                       "key": "offset",
                       "value": "0"
                     },
                     {
-                      "key": "startDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "endDate",
-                      "value": "<date>"
+                      "key": "days",
+                      "value": "<long>"
                     },
                     {
                       "key": "phoneNumber",
@@ -192,23 +765,25 @@
                     },
                     {
                       "key": "event",
-                      "value": "<string>"
+                      "value": "blocked"
                     },
                     {
                       "key": "tags",
                       "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "desc"
                     }
                   ],
                   "variable": []
                 },
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
                     "key": "api-key",
-                    "value": "<API Key>"
+                    "value": "<string>"
                   },
                   {
                     "key": "Accept",
@@ -226,793 +801,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "21e87b55-dfd0-4961-afdc-861bf72029f4",
-              "name": "Unauthorized",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "transactionalSMS",
-                    "statistics",
-                    "events"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "limit",
-                      "value": "50"
-                    },
-                    {
-                      "key": "offset",
-                      "value": "0"
-                    },
-                    {
-                      "key": "startDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "endDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "phoneNumber",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "event",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "tags",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "api-key",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "4a2668fe-e7b4-4595-b249-c7276f9f6867",
-          "name": "Get transactional SMS statistics reports",
-          "request": {
-            "name": "Get transactional SMS statistics reports",
-            "description": {
-              "content": "Retrieves detailed delivery reports for transactional SMS messages over a specified date range. Returns per-day statistics for sent, delivered, and bounced messages.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "transactionalSMS",
-                "statistics",
-                "reports"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "startDate",
-                  "value": "<date>",
-                  "description": "Start date for the report in YYYY-MM-DD format."
-                },
-                {
-                  "disabled": false,
-                  "key": "endDate",
-                  "value": "<date>",
-                  "description": "End date for the report in YYYY-MM-DD format."
-                },
-                {
-                  "disabled": false,
-                  "key": "days",
-                  "value": "<integer>",
-                  "description": "Number of days for the report, starting from today."
-                },
-                {
-                  "disabled": false,
-                  "key": "tag",
-                  "value": "<string>",
-                  "description": "Filter reports by tag."
-                }
-              ],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "d889c679-306e-48a4-a883-27dc6bd6dd4b",
-              "name": "SMS reports retrieved successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "transactionalSMS",
-                    "statistics",
-                    "reports"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "startDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "endDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "days",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "tag",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "api-key",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"reports\": [\n    {\n      \"date\": \"2015-09-16\",\n      \"requests\": 6432,\n      \"delivered\": 6402,\n      \"hardBounces\": 7624,\n      \"softBounces\": 4248,\n      \"blocked\": 1449,\n      \"unsubscribed\": 1500\n    },\n    {\n      \"date\": \"1989-06-17\",\n      \"requests\": 1420,\n      \"delivered\": 9833,\n      \"hardBounces\": 6913,\n      \"softBounces\": 9784,\n      \"blocked\": 1494,\n      \"unsubscribed\": 6469\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "7ddb33d8-bcf1-44a6-84fd-f504f7d7f1dd",
-              "name": "Bad request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "transactionalSMS",
-                    "statistics",
-                    "reports"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "startDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "endDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "days",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "tag",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "api-key",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "508d4f4e-4c12-4fab-8af5-0dbf2b645f69",
-              "name": "Unauthorized",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "transactionalSMS",
-                    "statistics",
-                    "reports"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "startDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "endDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "days",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "tag",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "api-key",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "2a99fb19-c450-41ff-97dd-393d85514960",
-          "name": "Get aggregated transactional SMS statistics",
-          "request": {
-            "name": "Get aggregated transactional SMS statistics",
-            "description": {
-              "content": "Retrieves aggregated statistics for transactional SMS activity over a specified period. Returns totals for sent, delivered, and bounced messages.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "transactionalSMS",
-                "statistics",
-                "aggregatedReport"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "startDate",
-                  "value": "<date>",
-                  "description": "Start date for the report in YYYY-MM-DD format."
-                },
-                {
-                  "disabled": false,
-                  "key": "endDate",
-                  "value": "<date>",
-                  "description": "End date for the report in YYYY-MM-DD format."
-                },
-                {
-                  "disabled": false,
-                  "key": "days",
-                  "value": "<integer>",
-                  "description": "Number of days for the report, starting from today."
-                },
-                {
-                  "disabled": false,
-                  "key": "tag",
-                  "value": "<string>",
-                  "description": "Filter by tag."
-                }
-              ],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "c52a0d8f-ce32-4841-9e4b-c4413baae3a0",
-              "name": "Aggregated SMS statistics retrieved successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "transactionalSMS",
-                    "statistics",
-                    "aggregatedReport"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "startDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "endDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "days",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "tag",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "api-key",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"range\": \"string\",\n  \"requests\": 2503,\n  \"delivered\": 7961,\n  \"hardBounces\": 6116,\n  \"softBounces\": 305,\n  \"blocked\": 2397,\n  \"unsubscribed\": 2801\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "84ce010a-6b4b-458a-ba22-0f20b36f0197",
-              "name": "Bad request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "transactionalSMS",
-                    "statistics",
-                    "aggregatedReport"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "startDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "endDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "days",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "tag",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "api-key",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "16182ecc-77e2-483a-9f2c-f3c6c4fbf9fe",
-              "name": "Unauthorized",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "transactionalSMS",
-                    "statistics",
-                    "aggregatedReport"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "startDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "endDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "days",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "tag",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "api-key",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        }
-      ],
-      "event": []
-    },
-    {
-      "id": "1f16a56b-d9d5-4bca-9379-34cc3e2d191b",
-      "name": "Transactional SMS",
-      "description": {
-        "content": "Send transactional SMS messages for notifications, verifications, and alerts.",
-        "type": "text/plain"
-      },
-      "item": [
-        {
-          "id": "3ecc2836-db07-45b8-935f-582972d6e8dd",
-          "name": "Send a transactional SMS",
-          "request": {
-            "name": "Send a transactional SMS",
-            "description": {
-              "content": "Sends a transactional SMS message to a recipient phone number. Supports customizable sender names and message content. The message is delivered immediately for time-sensitive notifications.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "transactionalSMS",
-                "sms"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"sender\": \"<string>\",\n  \"recipient\": \"<string>\",\n  \"content\": \"<string>\",\n  \"type\": \"transactional\",\n  \"tag\": \"<string>\",\n  \"webUrl\": \"<uri>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "54329ce6-2ba4-4721-8e0c-47fc3c0c94e6",
-              "name": "SMS sent successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "transactionalSMS",
-                    "sms"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "api-key",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"sender\": \"<string>\",\n  \"recipient\": \"<string>\",\n  \"content\": \"<string>\",\n  \"type\": \"transactional\",\n  \"tag\": \"<string>\",\n  \"webUrl\": \"<uri>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Created",
-              "code": 201,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"reference\": \"string\",\n  \"messageId\": 2556,\n  \"smsCount\": 919,\n  \"usedCredits\": 3138.646884273374,\n  \"remainingCredits\": 5476.64182092535\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "071c0763-fd5d-449f-8bbd-bf853865e9c8",
-              "name": "Bad request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "transactionalSMS",
-                    "sms"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "api-key",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"sender\": \"<string>\",\n  \"recipient\": \"<string>\",\n  \"content\": \"<string>\",\n  \"type\": \"transactional\",\n  \"tag\": \"<string>\",\n  \"webUrl\": \"<uri>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "114fe1c7-c98d-46ab-9368-b4fbc31e4af3",
-              "name": "Unauthorized",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "transactionalSMS",
-                    "sms"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "api-key",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"sender\": \"<string>\",\n  \"recipient\": \"<string>\",\n  \"content\": \"<string>\",\n  \"type\": \"transactional\",\n  \"tag\": \"<string>\",\n  \"webUrl\": \"<uri>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "body": "{\n  \"code\": \"Category id not found\",\n  \"message\": \"string\"\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             }
@@ -1034,29 +823,12 @@
       "key": "baseUrl"
     }
   ],
-  "auth": {
-    "type": "apikey",
-    "apikey": [
-      {
-        "key": "key",
-        "value": "api-key"
-      },
-      {
-        "key": "value",
-        "value": "{{apiKey}}"
-      },
-      {
-        "key": "in",
-        "value": "header"
-      }
-    ]
-  },
   "info": {
-    "_postman_id": "38579307-a950-42b4-b733-4a5aa0a3c55c",
-    "name": "Brevo Transactional SMS API",
+    "_postman_id": "01a4128a-ce92-475d-99c1-e924c23a9e5b",
+    "name": "Transactional SMS",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "description": {
-      "content": "The Brevo Transactional SMS API allows developers to send non-promotional SMS messages such as order confirmations, delivery notifications, and verification codes using recipients' phone numbers. It supports sending individual messages with customizable sender names and provides endpoints for tracking SMS delivery status and activity. The API is designed for time-sensitive notifications that require immediate delivery to mobile devices.\n\nContact Support:\n Name: Brevo Support",
+      "content": "",
       "type": "text/plain"
     }
   }

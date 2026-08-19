@@ -4,7 +4,10 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Brevo
 providerId: brevo
 created: '2026-05-04'
-modified: '2026-05-05'
+generated: '2026-08-13'
+method: searched
+source: https://www.brevo.com/pricing/
+modified: '2026-08-13'
 reconciled: true
 tags:
   - Email
@@ -13,19 +16,40 @@ tags:
   - Marketing
   - CRM
   - Automation
-description: Brevo (formerly Sendinblue) bills its marketing platform on email send volume rather than
-  contact count, with up to 100,000 contacts allowed across plans. Tiers ladder from a forever-Free plan
-  (300 emails/day) through Starter ($9/mo at 5K emails) and Business ($18/mo at 5K emails) up to a custom-priced
-  Enterprise (BrevoPlus) tier with dedicated account management. Higher email volumes scale the monthly
-  fee on the same tier (e.g. 100K emails costs ~$69 Starter / ~$129 Business).
+description: >-
+  Brevo bills its marketing platform on email send volume, not contact count — contacts are
+  unlimited on paid tiers and capped generously on Free. The ladder read from the live
+  pricing page on 2026-08-13 is Free, Starter, Standard, Professional and Enterprise; the
+  "Business" tier recorded in earlier sweeps of this file no longer exists, having been
+  split into Standard and Professional. Prices are rendered client-side on
+  https://www.brevo.com/pricing/ and are volume- and currency-dependent, so per-tier price
+  values are recorded as null with the pricing URL rather than hard-coded to a number that
+  would go stale; the feature and quota boundaries between tiers, which are in the served
+  HTML, are captured verbatim. Billing is monthly or yearly (yearly discounted 10%). The
+  API itself is not separately metered — API access is included on every tier, including
+  Free, and what the plan governs is send volume, channels and seats. SMS and WhatsApp
+  credits are sold separately from the subscription on every tier.
 sources:
   - https://www.brevo.com/pricing/
   - https://developers.brevo.com/docs/api-limits
+  - https://developers.brevo.com/docs/platform-quotas
+billing:
+  periods: [monthly, yearly]
+  yearly_discount: '10%'
+  currency: multiple (localized)
+  price_visibility: js-rendered
+  note: >-
+    Tier prices are injected by client-side script and vary by email volume slider and
+    locale; they are not present in the served HTML.
+plan_count: 5
 plans:
   - id: brevo-free
     name: Free
     type: freemium
-    description: Forever-free plan with a daily send cap; up to 100,000 contacts and 40+ templates.
+    price: 0
+    description: >-
+      Free forever, no credit card. Aimed at individuals and solopreneurs. Includes API
+      access and transactional email, under a daily send cap.
     entries:
       - label: Email send limit
         name: emails
@@ -37,105 +61,125 @@ plans:
         unit: 1
         price: '0'
         userMultiplied: false
-      - label: Contacts
-        name: contacts
-        type: quota
-        metric: contact
-        limit: 100000
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '0'
-        userMultiplied: false
-      - label: Marketing automation
-        name: automation_contacts
-        type: quota
-        metric: contact
-        limit: 2000
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '0'
-        userMultiplied: false
     elements:
-      - name: 40+ Email Templates
-      - name: Drag-and-Drop Editor
-      - name: Transactional Email API
+      - name: Email & transactional messages
+      - name: Drag & drop email editor
+      - name: Email templates
+      - name: Full REST API access
+      - name: No credit card required
   - id: brevo-starter
     name: Starter
     type: subscription
-    description: Entry paid tier; pricing scales with monthly email volume.
+    price: null
+    price_note: Volume-scaled; see https://www.brevo.com/pricing/
+    description: >-
+      Entry paid tier for single users starting with email and multi-channel marketing.
+      Removes the daily send cap; monthly send allowance starts at 5,000 emails.
     entries:
-      - label: Subscription (5K emails/month)
-        name: subscription_5k
-        type: subscription
-        metric: month
-        limit: 1
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: $9/month
-        userMultiplied: false
-      - label: Subscription (100K emails/month)
-        name: subscription_100k
-        type: subscription
-        metric: month
-        limit: 1
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: $69/month
-        userMultiplied: false
-      - label: Daily send cap
-        name: daily_send
+      - label: Included email volume (entry)
+        name: emails
         type: quota
         metric: email
-        limit: -1
-        timeFrame: day
+        limit: 5000
+        timeFrame: month
         geo: global
         unit: 1
-        price: included
+        price: null
         userMultiplied: false
     elements:
-      - name: No Daily Sending Limit
-      - name: Core Marketing Features
-      - name: Email Support
-  - id: brevo-business
-    name: Business
+      - name: From 5,000 emails per month
+      - name: Email & SMS (SMS credits sold separately)
+      - name: AI content generator
+      - name: Advanced segmentation (unlimited segments)
+      - name: Forms
+      - name: Basic reporting & analytics
+      - name: Email support in 6 languages
+      - name: 'Optional add-on: remove Brevo logo'
+  - id: brevo-standard
+    name: Standard
     type: subscription
-    description: Business / Standard tier adds A/B testing, landing pages, multi-user access, priority
-      support, and unlimited automation workflows. Pricing scales with monthly email volume.
+    price: null
+    price_note: Volume-scaled; see https://www.brevo.com/pricing/
+    description: >-
+      Marked "Most Popular" on the pricing page. For small businesses ready to automate and
+      test campaigns. Everything in Starter plus automation and testing.
     entries:
-      - label: Subscription (5K emails/month)
-        name: subscription_5k
-        type: subscription
-        metric: month
+      - label: Landing pages included
+        name: landing_pages
+        type: quota
+        metric: page
         limit: 1
         timeFrame: month
         geo: global
         unit: 1
-        price: $18/month
-        userMultiplied: false
-      - label: Subscription (100K emails/month)
-        name: subscription_100k
-        type: subscription
-        metric: month
-        limit: 1
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: $129/month
+        price: null
         userMultiplied: false
     elements:
-      - name: A/B Testing
-      - name: Landing Pages
-      - name: Multi-user Access
-      - name: Priority Email Support
-      - name: Unlimited Automation Workflows
+      - name: Marketing automation (unlimited multi-step workflows)
+      - name: A/B testing
+      - name: Advanced email reporting (click heatmaps, geography, device)
+      - name: AI send time optimization
+      - name: Web & event tracking
+      - name: Landing pages (1 included)
+      - name: No Brevo logo
+  - id: brevo-professional
+    name: Professional
+    type: subscription
+    price: null
+    price_note: Volume-scaled; see https://www.brevo.com/pricing/
+    description: >-
+      For teams using data and AI across channels. This is the tier at which the API's
+      Advanced rate-limit band unlocks (2,000 RPS on transactional send vs 1,000).
+    entries:
+      - label: Included email volume (entry)
+        name: emails
+        type: quota
+        metric: email
+        limit: 150000
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: null
+        userMultiplied: false
+      - label: Included seats
+        name: seats
+        type: quota
+        metric: user
+        limit: 10
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: null
+        userMultiplied: false
+      - label: Deliverability specialist support
+        name: deliverability_support
+        type: quota
+        metric: hour
+        limit: 3
+        timeFrame: year
+        geo: global
+        unit: 1
+        price: null
+        userMultiplied: false
+    elements:
+      - name: From 150,000 emails per month
+      - name: WhatsApp, popups, mobile & web push
+      - name: 10 seats included
+      - name: Contact scoring (RFM, CLV)
+      - name: Advanced ecommerce (AI recommendations, back-in-stock alerts, coupons)
+      - name: AI segmentation (Aura AI)
+      - name: AI Data Analyst
+      - name: Phone support
+      - name: Advanced API rate-limit tier
   - id: brevo-enterprise
-    name: BrevoPlus / Enterprise
+    name: Enterprise
     type: enterprise
-    description: Custom-priced enterprise plan with dedicated account management and advanced security.
+    price: custom
+    description: >-
+      Custom-priced, sales-gated. Aimed at companies with 1M+ contacts needing full data
+      control. Unlocks the Extended API rate-limit band (6,000 RPS transactional send) and
+      the multi-account / custom-object surface exposed by the corporate and object
+      management APIs.
     entries:
       - label: Custom subscription
         name: custom_subscription
@@ -148,9 +192,25 @@ plans:
         price: custom
         userMultiplied: false
     elements:
-      - name: Dedicated Account Management
-      - name: Advanced Security Features
-      - name: Custom Volume
+      - name: Multi-account management (master account + sub-accounts)
+      - name: Custom objects
+      - name: Brevo Mobile Wallet
+      - name: Extended API rate-limit tier
+      - name: Enterprise-grade security and data control
+      - name: Tailored onboarding
+add_ons:
+  - name: SMS credits
+    note: Sold separately from the subscription on all tiers.
+  - name: WhatsApp credits
+    note: Sold separately; channel available from Professional.
+  - name: Sales Essentials / Sales Advanced
+    note: Priced per month (Essentials) or per month per user (Advanced), separate from the marketing tier.
+api_access:
+  metered_separately: false
+  available_on_free: true
+  note: >-
+    API access is included on every tier. What changes with the plan is send volume,
+    available channels, seats and the rate-limit band — see rate-limits/brevo-rate-limits.yml.
 maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com

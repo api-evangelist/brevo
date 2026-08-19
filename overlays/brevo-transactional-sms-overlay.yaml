@@ -1,0 +1,46 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Brevo Transactional SMS
+  version: 1.0.0
+extends: openapi/brevo-transactional-sms-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: apis.yml + repo artifacts; original spec harvested verbatim from https://developers.brevo.com/openapi/transactional-sms.yaml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: brevo
+    x-apievangelist-api-catalog: https://developers.brevo.com/.well-known/api-catalog
+    x-apievangelist-spec-source: https://developers.brevo.com/openapi/transactional-sms.yaml
+    x-apievangelist-operation-count: 4
+    x-apievangelist-artifacts:
+      authentication: authentication/brevo-authentication.yml
+      scopes: scopes/brevo-scopes.yml
+      conventions: conventions/brevo-conventions.yml
+      errors: errors/brevo-problem-types.yml
+      rate_limits: rate-limits/brevo-rate-limits.yml
+      lifecycle: lifecycle/brevo-lifecycle.yml
+      sandbox: sandbox/brevo-sandbox.yml
+      data_model: data-model/brevo-data-model.yml
+      mcp: mcp/brevo-mcp.yml
+      tool_crosswalk: mcp/brevo-tool-crosswalk.yml
+- target: $.info
+  update:
+    x-apievangelist-idempotency:
+      supported: false
+      header: null
+      note: Idempotency is documented for batch transactional email only (POST /smtp/email); other write
+        operations have no idempotency contract.
+- target: $.info
+  update:
+    x-apievangelist-rate-limit-headers:
+    - x-sib-ratelimit-limit
+    - x-sib-ratelimit-remaining
+    - x-sib-ratelimit-reset
+    x-apievangelist-throttled-status: 429
+    x-apievangelist-retry-after: false
+- target: $.components.securitySchemes
+  update:
+    x-apievangelist-oauth2-note: The published spec declares only the api-key scheme. Brevo also supports
+      OAuth 2.0 on https://oauth.brevo.com/realms/partner with 37 scopes; it is documented but not declared
+      in this contract. See scopes/brevo-scopes.yml.

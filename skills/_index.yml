@@ -1,0 +1,42 @@
+generated: '2026-08-13'
+method: generated
+provider: brevo
+description: >-
+  Packaged Agent Skills for the Brevo API. Every step is grounded in an operationId that
+  exists verbatim in one of the 13 provider-published OpenAPI 3.1 specs harvested from
+  Brevo's own RFC 9727 API catalog. The first entry is not ours — it is Brevo's own
+  agent-context file, bundled inside the @getbrevo/cli npm package and saved verbatim.
+skills:
+- file: brevo-cli-AGENTS.md
+  name: Brevo CLI (provider-published agent context)
+  method: searched
+  source: https://unpkg.com/@getbrevo/cli@2.0.2/agent-context/AGENTS.md
+  api: null
+  operations: []
+  note: >-
+    Brevo's own AGENTS.md, shipped in the CLI package at agent-context/AGENTS.md and saved
+    verbatim. Covers OAuth app management through the `brevo` binary. Brevo also ships a
+    Claude Code skill installable with `brevo skill:cli install`, which auto-refreshes to
+    match the installed CLI version. Note Brevo's explicit instruction that non-Claude
+    agents must NOT run the skill installer, and that agents should not fall back to raw
+    HTTP against api.brevo.com for app management.
+- file: brevo-send-transactional-email.md
+  name: Send a transactional email with Brevo
+  method: generated
+  api: openapi/brevo-email-api-openapi.yml
+  operations: [sendTransacEmail, getScheduledEmailById, deleteScheduledEmailById, getTransacEmailsList, getTransacBlockedContacts, unblockOrResubscribeATransactionalContact]
+- file: brevo-sync-contacts-and-lists.md
+  name: Sync contacts and lists into Brevo
+  method: generated
+  api: openapi/brevo-contact-management-openapi.yml
+  operations: [getContacts, createContact, getContactInfo, updateContact, importContacts, requestContactExport, getLists, createList, addContactToList, removeContactFromList, getAttributes, createAttribute]
+- file: brevo-create-and-send-email-campaign.md
+  name: Create and send a Brevo email campaign
+  method: generated
+  api: openapi/brevo-marketing-campaigns-openapi.yml
+  operations: [createEmailCampaign, getEmailCampaign, updateEmailCampaign, sendTestEmail, sendEmailCampaignNow, updateCampaignStatus, getAbTestCampaignResult, emailExportRecipients, deleteEmailCampaign]
+- file: brevo-run-a-loyalty-program.md
+  name: Run a Brevo loyalty program
+  method: generated
+  api: openapi/brevo-loyalty-openapi.yml
+  operations: [createNewLP, publishLoyaltyProgram, createBalanceDefinition, subscribeToLoyaltyProgram, beginTransaction, completeTransaction, cancelTransaction, getContactBalances, createReward, createVoucher, redeemVoucher, completeRedeemTransaction, createTierGroup, addSubscriptionToTier]

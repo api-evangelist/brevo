@@ -1,0 +1,919 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Email API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "transactionalEmails",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send a transactional email",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/smtp/email",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a transactional email to one or more recipients, either using inline HTML content or a pre-built template via `templateId`. You can schedule emails for future delivery using `scheduledAt` (UTC, up to 5-minute delay), send multiple personalized versions with `messageVersions` (max 2000 total recipients, 99 per version), and attach files via URL or base64-encoded content. A `sender` and `subject` are required when no `templateId` is provided; when a `templateId` is used, the template''s sende"
+        },
+        {
+          "info": {
+            "name": "Get the list of transactional emails on the basis of allowed filters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/smtp/emails",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if templateId and messageId are not passed in query filters.** Email address to which transactional email has been sent.\n"
+              },
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if email and messageId are not passed in query filters.** Id of the template that was used to compose transactional email.\n"
+              },
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if templateId and email are not passed in query filters.** Message ID of the transactional email sent.\n"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if endDate is used.** Starting date (YYYY-MM-DD) from which you want to fetch the list. **Maximum time period that can be selected is one month**.\n"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if startDate is used.** Ending date (YYYY-MM-DD) till which you want to fetch the list. **Maximum time period that can be selected is one month.**\n"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of documents returned per page"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first document in the page"
+              }
+            ]
+          },
+          "docs": "This endpoint will show the list of emails for past 30 days by default. To retrieve emails before that time, please pass startDate and endDate in query filters."
+        },
+        {
+          "info": {
+            "name": "Get the personalized content of a sent transactional email",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/smtp/emails/:uuid",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path",
+                "description": "Unique id of the transactional email that has been sent to a particular contact"
+              }
+            ]
+          },
+          "docs": "<Note title=\"How to get uuid\">You can get the uuid using either of the following methods:\nSend a GET request to https://api.brevo.com/v3/smtp/emails and pass the message_id in the url. Use your api-key to authenticate the request and you will get your uuid as a response.\nThe uuid can also be fetched from the transactional logs page in your Brevo account, from the address URL.</Note>"
+        },
+        {
+          "info": {
+            "name": "Delete scheduled emails by batchId or messageId",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/smtp/email/:identifier",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "The `batchId` of scheduled emails batch (must be a valid UUIDv4) or the `messageId` of scheduled email (enclosed in angle brackets with @ sign, e.g. `<...@domain>`)."
+              }
+            ]
+          },
+          "docs": "Delete scheduled batch of emails by batchId or single scheduled email by messageId"
+        },
+        {
+          "info": {
+            "name": "Fetch scheduled emails by batchId or messageId",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/smtp/emailStatus/:identifier",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "The `batchId` of scheduled emails batch (must be a valid UUIDv4) or the `messageId` of scheduled email (enclosed in angle brackets with @ sign, e.g. `<...@domain>`). When using `messageId`, the `limit`, `offset`, `sort`, and `status` query parameters are ignored."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Mandatory if `endDate` is used. Starting date (YYYY-MM-DD) from which you want to fetch the list. Cannot be more than 30 days older than the current date."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "Mandatory if `startDate` is used. Ending date (YYYY-MM-DD) till which you want to fetch the list. Maximum time period that can be selected is one month."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed. Not valid when identifier is `messageId`."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter the records by `status` of the scheduled email batch or message. Not valid when identifier is `messageId`."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of documents returned per page. Not valid when identifier is `messageId`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first document on the page.  Not valid when identifier is `messageId`."
+              }
+            ]
+          },
+          "docs": "Fetch scheduled batch of emails by batchId or single scheduled email by messageId (Can retrieve data upto 30 days old)"
+        },
+        {
+          "info": {
+            "name": "Delete hardbounces",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/smtp/deleteHardbounces",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete hardbounces. To use carefully (e.g. in case of temporary ISP failures)"
+        },
+        {
+          "info": {
+            "name": "Get your transactional email activity aggregated per day",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/smtp/statistics/reports",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of documents returned per page"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first document on the page"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if endDate is used.** Starting date of the report (YYYY-MM-DD)\n"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if startDate is used.** Ending date of the report (YYYY-MM-DD)\n"
+              },
+              {
+                "name": "days",
+                "value": "",
+                "type": "query",
+                "description": "Number of days in the past including today (positive integer, maximum 30). _Not compatible with 'startDate' and 'endDate'_\n"
+              },
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query",
+                "description": "Tag of the emails"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+              }
+            ]
+          },
+          "docs": "This endpoint will show the aggregated stats per day for the past 10 days by default if `startDate` and `endDate` OR `days` is not passed. The date range can not exceed 30 days."
+        },
+        {
+          "info": {
+            "name": "Get all your transactional email activity (unaggregated events)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/smtp/statistics/events",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number limitation for the result returned"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Beginning point in the list to retrieve from."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if endDate is used.** Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate\n"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if startDate is used.** Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate\n"
+              },
+              {
+                "name": "days",
+                "value": "",
+                "type": "query",
+                "description": "Number of days in the past including today (positive integer, maximum 90). _Not compatible with 'startDate' and 'endDate'_. Defaults to 30 if neither dates nor days are provided.\n"
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Filter the report for a specific email addresses"
+              },
+              {
+                "name": "event",
+                "value": "",
+                "type": "query",
+                "description": "Filter the report for a specific event type"
+              },
+              {
+                "name": "tags",
+                "value": "",
+                "type": "query",
+                "description": "Filter the report for tags (serialized and urlencoded array)"
+              },
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "query",
+                "description": "Filter on a specific message id"
+              },
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "query",
+                "description": "Filter on a specific template id"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+              }
+            ]
+          },
+          "docs": "This endpoint will show the aggregated stats for past 30 days by default if `startDate` and `endDate` OR `days` is not passed. The date range can not exceed 90 days"
+        },
+        {
+          "info": {
+            "name": "Get your transactional email activity aggregated over a period of time",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/smtp/statistics/aggregatedReport",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if endDate is used.** Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate\n"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if startDate is used.** Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate\n"
+              },
+              {
+                "name": "days",
+                "value": "",
+                "type": "query",
+                "description": "Number of days in the past including today (positive integer, maximum 90). _Not compatible with 'startDate' and 'endDate'_. Defaults to 90 if neither dates nor days are provided.\n"
+              },
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query",
+                "description": "Tag of the emails"
+              }
+            ]
+          },
+          "docs": "This endpoint will show the aggregated stats for past 90 days by default if `startDate` and `endDate` OR `days` is not passed. The date range can not exceed 90 days"
+        },
+        {
+          "info": {
+            "name": "Delete an SMTP transactional log",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/smtp/log/:identifier",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "MessageId or email address of the transactional log(s) to delete. Must be a valid message ID (enclosed in angle brackets with @ sign) or a valid email address."
+              },
+              {
+                "name": "from_date",
+                "value": "",
+                "type": "query",
+                "description": "Starting date (YYYY-MM-DD) to narrow down logs for deletion"
+              },
+              {
+                "name": "to_date",
+                "value": "",
+                "type": "query",
+                "description": "Ending date (YYYY-MM-DD) to narrow down logs for deletion"
+              }
+            ]
+          },
+          "docs": "Delete SMTP transactional log entries identified by a message ID (enclosed in angle brackets with an @ sign) or a valid email address. Optionally narrow the deletion to a specific date range using `from_date` and `to_date` query parameters (YYYY-MM-DD format). The operation also removes any associated stored email preview content."
+        },
+        {
+          "info": {
+            "name": "Get the list of email templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/smtp/templates",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "templateStatus",
+                "value": "",
+                "type": "query",
+                "description": "Filter on the status of the template. Active = true, inactive = false"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of documents returned per page"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first document in the page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+              },
+              {
+                "name": "editorType",
+                "value": "",
+                "type": "query",
+                "description": "Filter on the editor type used to create the template. Currently only `richTextEditor` is supported as a filter value."
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of all transactional email templates (including automation templates) with their details such as name, subject, sender, status, HTML content, and timestamps. Results default to 50 per page (max 1000) and are sorted in descending creation order unless overridden. You can filter by active/inactive status using `templateStatus` and by editor type using `editorType` (currently only `richTextEditor` is supported)."
+        },
+        {
+          "info": {
+            "name": "Create an email template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/smtp/templates",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new transactional email template with the specified sender, subject, and content. The `sender`, `subject`, and `templateName` fields are required. Template content can be provided via `htmlContent` (minimum 10 characters) or `htmlUrl`; at least one must be supplied. Templates are created as inactive by default unless `isActive` is explicitly set to `true`."
+        },
+        {
+          "info": {
+            "name": "Returns the template information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/smtp/templates/:templateId",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the template. Can be a numeric template ID or a custom template identifier string (alphanumeric, hyphens, and underscores only, max 64 characters, must start with a letter)."
+              }
+            ]
+          },
+          "docs": "Retrieve the full details of a specific transactional email template by its numeric ID or custom template identifier string. The response includes the template name, subject, sender information, HTML content, active status, creation and modification timestamps, reply-to address, tag, and a `doiTemplate` flag indicating whether the template is a double opt-in template (detected by the presence of optin-related tags or variables in the content)."
+        },
+        {
+          "info": {
+            "name": "Update an email template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.brevo.com/v3/smtp/templates/:templateId",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the template. Can be a numeric template ID or a custom template identifier string."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing transactional email template by its numeric ID or custom template identifier string. All fields in the request body are optional; only the provided fields will be updated. You can update the template name, subject, sender, reply-to address, HTML content (via `htmlContent` or `htmlUrl`), active status, tag, attachment URL, and the personalized `toField`. Only one of sender email or sender ID should be provided per request."
+        },
+        {
+          "info": {
+            "name": "Delete an inactive email template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/smtp/templates/:templateId",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "path",
+                "description": "id of the template"
+              }
+            ]
+          },
+          "docs": "Permanently delete a transactional email template by its numeric ID. Only inactive templates can be deleted; attempting to delete an active template returns a 405 error. To deactivate a template before deletion, use `PUT /smtp/templates/{templateId}` with `isActive` set to `false`. Deletion also removes associated newsletter template data and triggers asynchronous cleanup of shared assets."
+        },
+        {
+          "info": {
+            "name": "Send a template to your test list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/smtp/templates/:templateId/sendTest",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "path",
+                "description": "Id of the template"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a test email of the specified transactional template to one or more recipients. Provide an array of email addresses in the `emailTo` field; if left empty, the test mail is sent to your entire test list. You can send a maximum of 50 test emails per day, and all provided email addresses must be valid."
+        },
+        {
+          "info": {
+            "name": "Generate the rendered preview of transactional template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/smtp/template/preview",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate a fully rendered preview of a transactional email template by resolving dynamic variables. Provide either an `email` address (to populate variables from the contact''s attributes) or a `params` object with key-value pairs for manual substitution; at least one of these is required alongside the mandatory `templateId`. The response includes the rendered HTML, subject, sender details, preview text, and any feed names used in the template."
+        },
+        {
+          "info": {
+            "name": "Get the list of blocked or unsubscribed transactional contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/smtp/blockedContacts",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if endDate is used.** Starting date (YYYY-MM-DD) from which you want to fetch the blocked or unsubscribed contacts\n"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if startDate is used.** Ending date (YYYY-MM-DD) till which you want to fetch the blocked or unsubscribed contacts\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of documents returned per page"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first document on the page"
+              },
+              {
+                "name": "senders",
+                "value": "",
+                "type": "query",
+                "description": "Comma separated list of emails of the senders from which contacts are blocked or unsubscribed"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of transactional contacts that have been blocked or unsubscribed, along with the reason for blocking (e.g. hard bounce, admin blocked, spam complaint, or unsubscription via email/API/Marketing Automation). Both `startDate` and `endDate` must be provided together when filtering by date range, and neither date can be in the future. Results default to 50 per page (max 100) and are sorted in descending order of record creation unless overridden with the `sort` parameter."
+        },
+        {
+          "info": {
+            "name": "Unblock or resubscribe a transactional contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/smtp/blockedContacts/:email",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "path",
+                "description": "contact email (urlencoded) to unblock."
+              }
+            ]
+          },
+          "docs": "Unblock or resubscribe a transactional contact by removing their email address from the blacklist. The email address must be URL-encoded in the path parameter and must be a valid email format. If the contact is not found in the blocklist, a 404 error is returned."
+        },
+        {
+          "info": {
+            "name": "Get the list of blocked domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/smtp/blockedDomains",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get the list of blocked domains"
+        },
+        {
+          "info": {
+            "name": "Add a new domain to the list of blocked domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/smtp/blockedDomains",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Blocks a new domain in order to avoid messages being sent to the same"
+        },
+        {
+          "info": {
+            "name": "Unblock an existing domain from the list of blocked domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/smtp/blockedDomains/:domain",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "domain",
+                "value": "",
+                "type": "path",
+                "description": "The name of the domain to be deleted"
+              }
+            ]
+          },
+          "docs": "Unblocks an existing domain from the list of blocked domains"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "inboundParsing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the list of all the events for the received emails.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/inbound/events",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sender",
+                "value": "",
+                "type": "query",
+                "description": "Email address of the sender."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Mandatory if endDate is used. Starting date (YYYY-MM-DD or YYYY-MM-DDTHH:mm:ss.SSSZ) from which you want to fetch the list. Maximum time period that can be selected is 30 days. Must not be in the future."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "Mandatory if startDate is used. Ending date (YYYY-MM-DD or YYYY-MM-DDTHH:mm:ss.SSSZ) till which you want to fetch the list. Maximum time period that can be selected is 30 days. Must not be in the future."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of documents returned per page"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first document on the page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in the ascending/descending order of record creation"
+              }
+            ]
+          },
+          "docs": "This endpoint will show the list of all the events for the received emails. When no date range is provided, the last 30 days of events are returned by default."
+        },
+        {
+          "info": {
+            "name": "Fetch all events history for one particular received email.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/inbound/events/:uuid",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path",
+                "description": "UUID to fetch events specific to received email"
+              }
+            ]
+          },
+          "docs": "This endpoint will show the list of all events history for one particular received email."
+        },
+        {
+          "info": {
+            "name": "Retrieve inbound attachment with download token.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/inbound/attachments/:downloadToken",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "downloadToken",
+                "value": "",
+                "type": "path",
+                "description": "Token to fetch a particular attachment"
+              }
+            ]
+          },
+          "docs": "This endpoint will retrieve inbound attachment with download token."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

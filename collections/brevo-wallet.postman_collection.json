@@ -1,0 +1,512 @@
+{
+  "item": [
+    {
+      "id": "61c8818a-9e1d-4b4d-a4ef-a60a60ed66ae",
+      "name": "wallet",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b9319be6-b410-4e60-a5ec-e3ad0e8be8c7",
+          "name": "Get a pass installation URL for a contact",
+          "request": {
+            "name": "Get a pass installation URL for a contact",
+            "description": {
+              "content": "Generate a wallet installation URL for a specific contact. The returned URL points to the pass installation page and encodes the pass, contact and organization identifiers as an encrypted token, so it can be shared with the contact (email, SMS, QR code, ...) to add the pass to their Apple Wallet or Google Wallet.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wallet",
+                "passes",
+                ":passId",
+                "installUrl",
+                ":contactId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "passId",
+                  "description": "(Required) Pass ID. The unique identifier of the wallet pass for which to generate an installation URL."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "contactId",
+                  "description": "(Required) The Brevo contact ID the installation URL is generated for."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                "key": "api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fbe732a8-5c57-4ace-9d3c-12ebd494d72b",
+              "name": "Installation URL generated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wallet",
+                    "passes",
+                    ":passId",
+                    "installUrl",
+                    ":contactId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "passId",
+                      "description": "(Required) Pass ID. The unique identifier of the wallet pass for which to generate an installation URL."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contactId",
+                      "description": "(Required) The Brevo contact ID the installation URL is generated for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"url\": \"https://QbI.vrbhxfj4KFvjiNYbHd,En4L2yMVLz9PqIDCxhHG9zxwk7tcS8oKPXiyAGpnKOJU,eVAdp8gU\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "24b3e766-26e5-4466-8253-0a9b84e20350",
+              "name": "Invalid `passId` (must be a well-formed UUID) or `contactId` (must be a positive integer).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wallet",
+                    "passes",
+                    ":passId",
+                    "installUrl",
+                    ":contactId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "passId",
+                      "description": "(Required) Pass ID. The unique identifier of the wallet pass for which to generate an installation URL."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contactId",
+                      "description": "(Required) The Brevo contact ID the installation URL is generated for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1001c02-52a2-4fb9-a38b-9b6b8d492e0b",
+              "name": "Request Authentication Failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wallet",
+                    "passes",
+                    ":passId",
+                    "installUrl",
+                    ":contactId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "passId",
+                      "description": "(Required) Pass ID. The unique identifier of the wallet pass for which to generate an installation URL."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contactId",
+                      "description": "(Required) The Brevo contact ID the installation URL is generated for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "18f1d80b-b291-4e8b-8993-16ba824bbf5d",
+              "name": "The pass does not belong to the authenticated account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wallet",
+                    "passes",
+                    ":passId",
+                    "installUrl",
+                    ":contactId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "passId",
+                      "description": "(Required) Pass ID. The unique identifier of the wallet pass for which to generate an installation URL."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contactId",
+                      "description": "(Required) The Brevo contact ID the installation URL is generated for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "957c1ee8-0392-4d8e-ad35-26a0f4180d43",
+              "name": "Pass not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wallet",
+                    "passes",
+                    ":passId",
+                    "installUrl",
+                    ":contactId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "passId",
+                      "description": "(Required) Pass ID. The unique identifier of the wallet pass for which to generate an installation URL."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contactId",
+                      "description": "(Required) The Brevo contact ID the installation URL is generated for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef2d295b-d5da-48c0-997e-2cc102950afe",
+              "name": "Wallet is not enabled for this account. The response `code` is `WALLET_NOT_ENABLED`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wallet",
+                    "passes",
+                    ":passId",
+                    "installUrl",
+                    ":contactId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "passId",
+                      "description": "(Required) Pass ID. The unique identifier of the wallet pass for which to generate an installation URL."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contactId",
+                      "description": "(Required) The Brevo contact ID the installation URL is generated for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb44095f-3cec-4e89-b88e-ed4d623ea417",
+              "name": "Internal error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wallet",
+                    "passes",
+                    ":passId",
+                    "installUrl",
+                    ":contactId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "passId",
+                      "description": "(Required) Pass ID. The unique identifier of the wallet pass for which to generate an installation URL."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contactId",
+                      "description": "(Required) The Brevo contact ID the installation URL is generated for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.brevo.com/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "6aaec00a-950b-4104-a9f9-f1c7192e8676",
+    "name": "Wallet",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

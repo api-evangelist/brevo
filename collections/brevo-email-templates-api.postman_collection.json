@@ -1,0 +1,1125 @@
+{
+  "item": [
+    {
+      "id": "539c0e1d-af77-4d0d-8aa3-ce1616447aa6",
+      "name": "Email Templates",
+      "description": {
+        "content": "Create and manage reusable email templates for transactional messaging.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "86f28c11-8740-4697-855a-27b53653d0a4",
+          "name": "List email templates",
+          "request": {
+            "name": "List email templates",
+            "description": {
+              "content": "Retrieves all transactional email templates created in the account. Templates can be used to send personalized transactional emails with consistent formatting.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "smtp",
+                "templates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "Maximum number of results to return per request."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Number of results to skip for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "templateStatus",
+                  "value": "<boolean>",
+                  "description": "Filter templates by their active status."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d283d7c4-e95e-4327-b02a-f48fe046653b",
+              "name": "Templates retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "smtp",
+                    "templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "templateStatus",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 8588,\n  \"templates\": [\n    {\n      \"id\": 3905,\n      \"name\": \"string\",\n      \"subject\": \"string\",\n      \"isActive\": false,\n      \"htmlContent\": \"string\",\n      \"sender\": {\n        \"name\": \"string\",\n        \"email\": \"BuzEc4GS2MVh@CLtIymvrPASFgKWyQbVYiVfhbetCmmf.fqo\"\n      },\n      \"replyTo\": \"DkPpmCueH@kVcGZAQhgFKJVFZxLLIPTt.htx\",\n      \"createdAt\": \"1953-12-17T17:36:37.058Z\",\n      \"modifiedAt\": \"2011-04-04T21:04:53.879Z\"\n    },\n    {\n      \"id\": 904,\n      \"name\": \"string\",\n      \"subject\": \"string\",\n      \"isActive\": false,\n      \"htmlContent\": \"string\",\n      \"sender\": {\n        \"name\": \"string\",\n        \"email\": \"793@VnutLkxdWwgsBBGbHyjpdTOOxDlmyGBh.ozu\"\n      },\n      \"replyTo\": \"oSC262b0w6kg@xuoXvhGSlcdwmBAqFcpoRFNXyZKZQD.kgr\",\n      \"createdAt\": \"2014-11-15T05:27:11.766Z\",\n      \"modifiedAt\": \"1974-11-17T13:34:33.611Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a3a9e6b-1fe8-4f82-af1e-ad5a90dadcc0",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "smtp",
+                    "templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "templateStatus",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "22590ea7-8cf4-4cff-855e-88314c8c8f0b",
+          "name": "Create an email template",
+          "request": {
+            "name": "Create an email template",
+            "description": {
+              "content": "Creates a new transactional email template with HTML content, subject line, and sender information. Templates support dynamic parameters for personalization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "smtp",
+                "templates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"templateName\": \"<string>\",\n  \"sender\": {\n    \"email\": \"<email>\",\n    \"name\": \"<string>\"\n  },\n  \"subject\": \"<string>\",\n  \"htmlContent\": \"<string>\",\n  \"replyTo\": \"<email>\",\n  \"isActive\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d3fbd753-d908-4a36-9507-62f69811ca9a",
+              "name": "Template created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "smtp",
+                    "templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"templateName\": \"<string>\",\n  \"sender\": {\n    \"email\": \"<email>\",\n    \"name\": \"<string>\"\n  },\n  \"subject\": \"<string>\",\n  \"htmlContent\": \"<string>\",\n  \"replyTo\": \"<email>\",\n  \"isActive\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 9860\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "132c212a-194c-459d-b2af-1bbf24a7b9ba",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "smtp",
+                    "templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"templateName\": \"<string>\",\n  \"sender\": {\n    \"email\": \"<email>\",\n    \"name\": \"<string>\"\n  },\n  \"subject\": \"<string>\",\n  \"htmlContent\": \"<string>\",\n  \"replyTo\": \"<email>\",\n  \"isActive\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c279c222-7193-4769-9dfc-08ed30bd38d4",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "smtp",
+                    "templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"templateName\": \"<string>\",\n  \"sender\": {\n    \"email\": \"<email>\",\n    \"name\": \"<string>\"\n  },\n  \"subject\": \"<string>\",\n  \"htmlContent\": \"<string>\",\n  \"replyTo\": \"<email>\",\n  \"isActive\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9c39d427-42d1-4257-a2dd-e236459f4006",
+          "name": "Get an email template",
+          "request": {
+            "name": "Get an email template",
+            "description": {
+              "content": "Retrieves the details of a specific transactional email template by its unique identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "smtp",
+                "templates",
+                ":templateId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "templateId",
+                  "description": "(Required) The unique identifier of the email template."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "36654857-f738-4d42-ac32-e34a9694a0eb",
+              "name": "Template retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "smtp",
+                    "templates",
+                    ":templateId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "templateId",
+                      "description": "(Required) The unique identifier of the email template."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 7795,\n  \"name\": \"string\",\n  \"subject\": \"string\",\n  \"isActive\": true,\n  \"htmlContent\": \"string\",\n  \"sender\": {\n    \"name\": \"string\",\n    \"email\": \"BKLRFom1FgKFkPP@iMPrtsSPBEwbpgOBMpehug.nn\"\n  },\n  \"replyTo\": \"c9U1rEMnI@xvhacVRYWTCYssUWRyPbmLEkQdTPsD.imj\",\n  \"createdAt\": \"1991-02-27T06:34:23.109Z\",\n  \"modifiedAt\": \"1979-12-06T02:01:23.497Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5bc522d6-3b33-400b-98c9-2996ca6e851a",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "smtp",
+                    "templates",
+                    ":templateId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "templateId",
+                      "description": "(Required) The unique identifier of the email template."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b15b8603-d2b2-431c-b472-4c78cd067e47",
+              "name": "Template not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "smtp",
+                    "templates",
+                    ":templateId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "templateId",
+                      "description": "(Required) The unique identifier of the email template."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2681fccd-c63b-4945-a4c3-2f664a784cdb",
+          "name": "Update an email template",
+          "request": {
+            "name": "Update an email template",
+            "description": {
+              "content": "Updates an existing transactional email template with new content, subject line, or sender information.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "smtp",
+                "templates",
+                ":templateId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "templateId",
+                  "description": "(Required) The unique identifier of the email template."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"templateName\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"htmlContent\": \"<string>\",\n  \"sender\": {\n    \"name\": \"<string>\",\n    \"email\": \"<email>\"\n  },\n  \"replyTo\": \"<email>\",\n  \"isActive\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "236cc94f-9ee3-433f-9036-c04f310a7aac",
+              "name": "Template updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "smtp",
+                    "templates",
+                    ":templateId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "templateId",
+                      "description": "(Required) The unique identifier of the email template."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"templateName\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"htmlContent\": \"<string>\",\n  \"sender\": {\n    \"name\": \"<string>\",\n    \"email\": \"<email>\"\n  },\n  \"replyTo\": \"<email>\",\n  \"isActive\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "045f09d8-3852-42cd-bc13-a10ff295e22a",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "smtp",
+                    "templates",
+                    ":templateId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "templateId",
+                      "description": "(Required) The unique identifier of the email template."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"templateName\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"htmlContent\": \"<string>\",\n  \"sender\": {\n    \"name\": \"<string>\",\n    \"email\": \"<email>\"\n  },\n  \"replyTo\": \"<email>\",\n  \"isActive\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bac450c6-d0c0-4055-950c-09765435cab1",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "smtp",
+                    "templates",
+                    ":templateId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "templateId",
+                      "description": "(Required) The unique identifier of the email template."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"templateName\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"htmlContent\": \"<string>\",\n  \"sender\": {\n    \"name\": \"<string>\",\n    \"email\": \"<email>\"\n  },\n  \"replyTo\": \"<email>\",\n  \"isActive\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35738a7c-5778-499d-9123-9860cba7d7cf",
+              "name": "Template not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "smtp",
+                    "templates",
+                    ":templateId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "templateId",
+                      "description": "(Required) The unique identifier of the email template."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"templateName\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"htmlContent\": \"<string>\",\n  \"sender\": {\n    \"name\": \"<string>\",\n    \"email\": \"<email>\"\n  },\n  \"replyTo\": \"<email>\",\n  \"isActive\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9836a860-fcac-4bca-a114-cc86fd72b8d1",
+          "name": "Delete an email template",
+          "request": {
+            "name": "Delete an email template",
+            "description": {
+              "content": "Permanently deletes a transactional email template by its unique identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "smtp",
+                "templates",
+                ":templateId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "templateId",
+                  "description": "(Required) The unique identifier of the email template."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0ebdfd48-1e8b-41d4-bff1-1f7d78817cbe",
+              "name": "Template deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "smtp",
+                    "templates",
+                    ":templateId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "templateId",
+                      "description": "(Required) The unique identifier of the email template."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dcec828d-e769-4f16-8c37-6c1a74ec6d1f",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "smtp",
+                    "templates",
+                    ":templateId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "templateId",
+                      "description": "(Required) The unique identifier of the email template."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "36b88b60-c16e-4861-bdec-b56e22dd0cf7",
+              "name": "Template not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "smtp",
+                    "templates",
+                    ":templateId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "templateId",
+                      "description": "(Required) The unique identifier of the email template."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.brevo.com/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9fb1064f-5f53-46ff-a73b-8f3b9ea34a38",
+    "name": "Brevo Contacts Agent Status Email Templates API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Brevo Contacts API provides programmatic access to contact management features including creating, updating, and deleting contacts. Developers can organize contacts into lists, apply attributes and tags, import contacts in bulk, and build audience segments for targeted campaigns. The API also supports managing folders, contact attributes, and custom fields to structure contact data according to business needs.\n\nContact Support:\n Name: Brevo Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,78 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.brevo.com/changelog
+docs:
+- https://developers.brevo.com/changelog
+- https://developers.brevo.com/docs/how-it-works
+description: >-
+  Brevo's API has been on v3 in the URI path for its whole public life; there is no version
+  header, no date-pinned train, and no published breaking-change or support-window policy
+  document. What Brevo does have is a disciplined dated changelog that labels breaking
+  changes explicitly and, when it retires an endpoint, publishes a named deprecation notice
+  with an effective date and a replacement — the POST /contacts/batch retirement dated
+  2026-10-30 is the current live example. There is no RFC 8594 Sunset/Deprecation header
+  support and none of the 285 published operations carries `deprecated: true` in the spec,
+  so the retirement is discoverable only from the changelog, not from the contract.
+versioning:
+  scheme: uri-path
+  current: v3
+  base_url: https://api.brevo.com/v3
+  header_versioning: false
+  date_versioning: false
+  policy_url: null
+  note: Version has not incremented since v3; change is communicated through the changelog.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  spec_deprecated_flag: false
+  announced_via: https://developers.brevo.com/changelog
+  notice_period_observed: ~5.5 months (announced 2026-05-12, effective 2026-10-30)
+  deprecations:
+  - operation: POST /contacts/batch
+    name: Update Multiple Contacts
+    announced: '2026-05-12'
+    effective: '2026-10-30'
+    replacement: POST /v3/contacts/import (operationId importContacts)
+    url: https://developers.brevo.com/changelog/2026/5/12
+    note: >-
+      "The deprecated endpoint may stop functioning after the deprecation date." The
+      endpoint is already absent from the published contact-management OpenAPI, so a client
+      generated from the current spec will not have it.
+  sdk_major_versions:
+  - {package: '@getbrevo/brevo', version: 6.0.0, date: '2026-05-14', breaking: true}
+  - {package: getbrevo/brevo-php, version: 5.0.0, date: '2026-05-14', breaking: true}
+  - {package: brevo-python, version: 5.0.0, date: '2026-05-14', breaking: true}
+  - {package: '@getbrevo/cli', version: 2.0.0, date: '2026-07-02', breaking: true}
+breaking_changes_recent:
+- {date: '2026-05-01', change: 'getAttributes `value` returns 0 for non-numeric category values; migrate to `valueStr`'}
+- {date: '2026-04-21', change: 'POST /events/batch request body must now be wrapped as {"events":[...]}'}
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public SLA or uptime target. Brevo publishes a live status page with per-component
+    history but does not commit to a number outside enterprise contracts.
+status_page:
+  url: https://status.brevo.com/
+  status: 200
+  subscribable: true
+  components: 34
+  component_groups:
+  - {name: Marketing, components: 8}
+  - {name: Transactional, components: 5}
+  - {name: Automations, components: 2}
+  - {name: CRM, components: 4}
+  - {name: Account and Settings, components: 2}
+  - {name: Conversations, components: 3}
+  - {name: Commerce, components: 4}
+  - {name: Brevo Data Platform, components: 1}
+  - {name: Integrations, components: 2}
+  - {name: Customer Data Platform (CDP), components: 3}
+changelog: changelog/brevo-changelog.yml
+deprecated_operations: []
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+  - {url: 'https://status.brevo.com/', http_status: 200}
+  - {url: 'https://developers.brevo.com/changelog/2026/5/12.md', http_status: 200}

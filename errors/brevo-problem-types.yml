@@ -1,0 +1,145 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/brevo-*-openapi.yml (13 provider-published OpenAPI 3.1 specs)
+docs: https://developers.brevo.com/docs/how-it-works
+format: brevo-custom
+rfc9457: false
+description: >-
+  Brevo does not use RFC 9457 application/problem+json. Every error response across the 285
+  published operations returns a flat JSON object of {code, message} — `code` a
+  machine-readable slug from a fixed enumeration, `message` a human-readable string. A few
+  contact operations add an optional `metadata` object. This catalog is derived from the
+  error-code enums and the 4xx/5xx response declarations in the published specs; nothing
+  here is invented, and where the specs give no title beyond "bad request" that is recorded
+  rather than embellished.
+envelope:
+  fields:
+    code: string — machine-readable error code from the enum below
+    message: string — readable message associated to the failure
+    metadata: object — optional, additional information (contact endpoints only)
+  required: [message]
+  example: '{"code":"invalid_parameter","message":"Invalid email address"}'
+  schema_names: [errorModel, contactErrorModel]
+error_codes:
+- {code: invalid_parameter, meaning: A supplied parameter value is not valid, typical_status: 400}
+- {code: missing_parameter, meaning: A required parameter was not supplied, typical_status: 400}
+- {code: out_of_range, meaning: A parameter value is outside the accepted range, typical_status: 400}
+- {code: bad_request, meaning: Generic malformed request, typical_status: 400}
+- {code: unauthorized, meaning: API key missing or not recognised, typical_status: 401}
+- {code: permission_denied, meaning: Key is valid but not entitled to this operation or resource, typical_status: 403}
+- {code: document_not_found, meaning: The referenced object does not exist, typical_status: 404}
+- {code: method_not_allowed, meaning: HTTP method not permitted on this resource, typical_status: 405}
+- {code: not_acceptable, meaning: Requested representation is not available, typical_status: 406}
+- {code: duplicate_parameter, meaning: 'A uniqueness constraint was violated — also the code returned when an idempotencyKey is replayed inside its 30-minute TTL', typical_status: 400}
+- {code: duplicate_request, meaning: The same request is already in flight, typical_status: 409}
+- {code: unprocessable_entity, meaning: Syntactically valid but semantically rejected, typical_status: 422}
+- {code: not_enough_credits, meaning: Account has insufficient email/SMS credits to complete the send, typical_status: 402}
+- {code: campaign_processing, meaning: The campaign is currently being processed and cannot be modified, typical_status: 400}
+- {code: campaign_sent, meaning: The campaign has already been sent and cannot be modified, typical_status: 400}
+- {code: account_under_validation, meaning: Account is pending validation; sending is blocked, typical_status: 403}
+- {code: account_in_process, meaning: Account operation still in progress, typical_status: 400}
+problems:
+- status: 400
+  title: Bad request
+  count: 241
+  description: >-
+    The most common failure across the surface. Returned with an errorModel body carrying
+    one of invalid_parameter / missing_parameter / out_of_range / duplicate_parameter.
+  source_operations: openapi/brevo-*-openapi.yml (241 declarations)
+- status: 401
+  title: Request Authentication Failed
+  count: 65
+  description: >-
+    The `api-key` header is absent or unrecognised. Confirmed live — an unauthenticated GET
+    to https://api.brevo.com/v3/openapi.json returns
+    {"message":"authentication not found in headers","code":"unauthorized"}.
+- status: 402
+  title: Not enough credits
+  count: 2
+  description: >-
+    "You don't have enough credit to send your campaign." Distinctive to a credit-metered
+    messaging platform; an agent must treat this as a billing condition, not a retryable
+    error.
+- status: 403
+  title: Cannot Authenticate Request
+  count: 72
+  description: >-
+    Authenticated but not permitted. Also carries feature-gate refusals — e.g. "Consent
+    Groups feature not enabled for this account" (CONSENT_GROUP_NOT_ENABLED) and "Current
+    account is not a master account" on the /corporate endpoints.
+- status: 404
+  title: Not found
+  count: 143
+  description: Object does not exist (document_not_found), e.g. "List ID not found", "Campaign ID not found".
+- status: 405
+  title: Method not allowed
+  count: 4
+  description: Includes semantic refusals such as "Only email campaigns or templates are allowed".
+- status: 409
+  title: Conflict
+  count: 9
+  description: Uniqueness conflicts — "Loyalty program name already exists", "A consent group with this name already exists".
+- status: 412
+  title: Precondition Failed
+  count: 2
+- status: 415
+  title: Format is not supported
+  count: 2
+- status: 417
+  title: Expectation Failed
+  count: 2
+- status: 422
+  title: Validation errors
+  count: 51
+  description: Field-level validation failures, concentrated in the Loyalty and Sales CRM specs.
+- status: 424
+  title: Failed Dependency
+  count: 7
+  description: An upstream dependency (e.g. a primary attribute, a DNS record) is missing.
+- status: 425
+  title: Too Early
+  count: 2
+- status: 429
+  title: Too Many Requests
+  count: 4
+  description: >-
+    Rate limit exhausted. Response carries x-sib-ratelimit-limit / -remaining / -reset.
+    No Retry-After header. See rate-limits/brevo-rate-limits.yml.
+- status: 500
+  title: Internal error occurred
+  count: 54
+domain_errors:
+  description: >-
+    Beyond the generic enum, several specs declare product-specific error strings as
+    enumerated codes. Recorded verbatim from the specs.
+  sender_and_domain:
+  - Domain does not exist
+  - Domain already exists in your account
+  - DNS records not properly configured
+  - DMARC policy requires domain authentication
+  - Invalid OTP code provided
+  - OTP code has expired
+  - The sum of all IP weights must equal 100
+  contacts:
+  - Contact email not found
+  - Attribute not found
+  - Record(s) for identifier not found
+  ecommerce:
+  - Category id not found
+  - Invalid ISO 4217 currency code.
+  campaigns:
+  - Campaign ID not found
+  general:
+  - api-key not found
+  - Authentication failed
+  - Insufficient credits
+  - Request already processed
+blocked_contact_reasons:
+  description: >-
+    Not API errors, but the enumerated reasons a recipient is suppressed. Returned by
+    getTransacBlockedContacts and echoed on send failures.
+  values: [unsubscribedViaMA, unsubscribedViaEmail, unsubscribedViaApi, adminBlocked, hardBounce, contactFlaggedAsSpam]
+coverage:
+  operations_scanned: 285
+  error_responses_declared: 656
+  distinct_statuses: 15

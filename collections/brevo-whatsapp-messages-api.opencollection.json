@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Brevo Contacts Agent Status WhatsApp Messages API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api-key",
+      "value": "{{api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "WhatsApp Messages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send a WhatsApp message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/whatsapp/sendMessage",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a transactional WhatsApp message to a recipient using an approved template or plain text content. Messages are delivered through the WhatsApp Business platform and support dynamic parameter substitution in templates."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

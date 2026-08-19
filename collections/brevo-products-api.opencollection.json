@@ -1,0 +1,106 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Brevo Contacts Agent Status Products API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api-key",
+      "value": "{{api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Products",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Return all products",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/products",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return per request."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to skip for pagination."
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of product IDs to filter by."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all products synced to the Brevo platform. Returns product details including name, price, URL, and category assignments."
+        },
+        {
+          "info": {
+            "name": "Create or update a product",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/products",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new product or updates an existing product in the Brevo eCommerce catalog. If a product with the same ID already exists, it will be updated with the provided data."
+        },
+        {
+          "info": {
+            "name": "Create or update products in batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/products/batch",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or updates up to 100 products in a single API call. Products with existing IDs will be updated, and new products will be created."
+        },
+        {
+          "info": {
+            "name": "Get a product",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/products/:productId",
+            "params": [
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the product."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific product by its unique identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

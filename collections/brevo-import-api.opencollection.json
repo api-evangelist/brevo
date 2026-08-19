@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Brevo Contacts Agent Status Import API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api-key",
+      "value": "{{api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Import",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Import contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/contacts/import",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Imports contacts in bulk from a file URL or inline data. Supports CSV and other structured formats. Contacts can be assigned to lists and have attributes mapped during import."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

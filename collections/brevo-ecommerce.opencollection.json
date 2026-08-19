@@ -1,210 +1,57 @@
 {
   "opencollection": "1.0.0",
   "info": {
-    "name": "Brevo eCommerce API",
-    "version": "3.0"
-  },
-  "request": {
-    "auth": {
-      "type": "apikey",
-      "key": "api-key",
-      "value": "{{api-key}}",
-      "placement": "header"
-    }
+    "name": "Ecommerce",
+    "version": "1.0.0"
   },
   "items": [
     {
       "info": {
-        "name": "Products",
+        "name": "ecommerce",
         "type": "folder"
       },
       "items": [
         {
           "info": {
-            "name": "Return all products",
-            "type": "http"
-          },
-          "http": {
-            "method": "GET",
-            "url": "https://api.brevo.com/v3/products",
-            "params": [
-              {
-                "name": "limit",
-                "value": "",
-                "type": "query",
-                "description": "Maximum number of results to return per request."
-              },
-              {
-                "name": "offset",
-                "value": "",
-                "type": "query",
-                "description": "Number of results to skip for pagination."
-              },
-              {
-                "name": "ids",
-                "value": "",
-                "type": "query",
-                "description": "Comma-separated list of product IDs to filter by."
-              }
-            ]
-          },
-          "docs": "Retrieves a paginated list of all products synced to the Brevo platform. Returns product details including name, price, URL, and category assignments."
-        },
-        {
-          "info": {
-            "name": "Create or update a product",
-            "type": "http"
-          },
-          "http": {
-            "method": "POST",
-            "url": "https://api.brevo.com/v3/products",
-            "body": {
-              "type": "json",
-              "data": "{}"
-            }
-          },
-          "docs": "Creates a new product or updates an existing product in the Brevo eCommerce catalog. If a product with the same ID already exists, it will be updated with the provided data."
-        },
-        {
-          "info": {
-            "name": "Create or update products in batch",
-            "type": "http"
-          },
-          "http": {
-            "method": "POST",
-            "url": "https://api.brevo.com/v3/products/batch",
-            "body": {
-              "type": "json",
-              "data": "{}"
-            }
-          },
-          "docs": "Creates or updates up to 100 products in a single API call. Products with existing IDs will be updated, and new products will be created."
-        },
-        {
-          "info": {
-            "name": "Get a product",
-            "type": "http"
-          },
-          "http": {
-            "method": "GET",
-            "url": "https://api.brevo.com/v3/products/:productId",
-            "params": [
-              {
-                "name": "productId",
-                "value": "",
-                "type": "path",
-                "description": "Unique identifier of the product."
-              }
-            ]
-          },
-          "docs": "Retrieves the details of a specific product by its unique identifier."
-        }
-      ]
-    },
-    {
-      "info": {
-        "name": "Categories",
-        "type": "folder"
-      },
-      "items": [
-        {
-          "info": {
-            "name": "Return all categories",
-            "type": "http"
-          },
-          "http": {
-            "method": "GET",
-            "url": "https://api.brevo.com/v3/categories",
-            "params": [
-              {
-                "name": "limit",
-                "value": "",
-                "type": "query",
-                "description": "Maximum number of results to return per request."
-              },
-              {
-                "name": "offset",
-                "value": "",
-                "type": "query",
-                "description": "Number of results to skip for pagination."
-              },
-              {
-                "name": "ids",
-                "value": "",
-                "type": "query",
-                "description": "Comma-separated list of category IDs to filter by."
-              }
-            ]
-          },
-          "docs": "Retrieves all product categories in the eCommerce catalog."
-        },
-        {
-          "info": {
-            "name": "Create or update a category",
-            "type": "http"
-          },
-          "http": {
-            "method": "POST",
-            "url": "https://api.brevo.com/v3/categories",
-            "body": {
-              "type": "json",
-              "data": "{}"
-            }
-          },
-          "docs": "Creates a new product category or updates an existing one. If a category with the same ID exists, it will be updated."
-        },
-        {
-          "info": {
-            "name": "Create or update categories in batch",
-            "type": "http"
-          },
-          "http": {
-            "method": "POST",
-            "url": "https://api.brevo.com/v3/categories/batch",
-            "body": {
-              "type": "json",
-              "data": "{}"
-            }
-          },
-          "docs": "Creates or updates multiple product categories in a single API call."
-        }
-      ]
-    },
-    {
-      "info": {
-        "name": "Orders",
-        "type": "folder"
-      },
-      "items": [
-        {
-          "info": {
-            "name": "Create or update an order",
+            "name": "Managing the status of the order",
             "type": "http"
           },
           "http": {
             "method": "POST",
             "url": "https://api.brevo.com/v3/orders/status",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
             "body": {
               "type": "json",
               "data": "{}"
             }
           },
-          "docs": "Creates a new order or updates the status of an existing order in the Brevo eCommerce system. Orders are used for revenue attribution and purchase behavior tracking."
+          "docs": "Manages the transactional status of the order"
         },
         {
           "info": {
-            "name": "Create or update orders in batch",
+            "name": "Create orders in batch",
             "type": "http"
           },
           "http": {
             "method": "POST",
             "url": "https://api.brevo.com/v3/orders/status/batch",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
             "body": {
               "type": "json",
               "data": "{}"
             }
           },
-          "docs": "Creates or updates multiple orders in a single API call for efficient bulk processing of order data."
+          "docs": "Create multiple orders at one time instead of one order at a time"
         },
         {
           "info": {
@@ -214,34 +61,837 @@
           "http": {
             "method": "GET",
             "url": "https://api.brevo.com/v3/orders",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
             "params": [
               {
                 "name": "limit",
                 "value": "",
                 "type": "query",
-                "description": "Maximum number of results to return per request."
+                "description": "Number of documents per page"
               },
               {
                 "name": "offset",
                 "value": "",
                 "type": "query",
-                "description": "Number of results to skip for pagination."
+                "description": "Index of the first document in the page"
               },
               {
-                "name": "startDate",
+                "name": "sort",
                 "value": "",
                 "type": "query",
-                "description": "Start date for filtering orders in YYYY-MM-DD format."
+                "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
               },
               {
-                "name": "endDate",
+                "name": "modifiedSince",
                 "value": "",
                 "type": "query",
-                "description": "End date for filtering orders in YYYY-MM-DD format."
+                "description": "Filter (urlencoded) the orders modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). **Prefer to pass your timezone in date-time format for accurate result.**\n"
+              },
+              {
+                "name": "createdSince",
+                "value": "",
+                "type": "query",
+                "description": "Filter (urlencoded) the orders created after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). **Prefer to pass your timezone in date-time format for accurate result.**\n"
               }
             ]
           },
-          "docs": "Retrieves order details from the Brevo eCommerce system. Supports filtering by date range and pagination."
+          "docs": "Get all the orders"
+        },
+        {
+          "info": {
+            "name": "Return all your products",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/products",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of documents per page"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first document in the page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by product ids"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search products simultaneously across SKU, name, and ID fields. Results are returned in the following priority order: **exact SKU match** > **SKU prefix match** > **name match** > **ID match**. For example, `?search=123` on products with `{sku: \"123\"}` and `{sku: \"123456\"}` returns the exact SKU match first."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter by product name, minimum 3 characters should be present for search."
+              },
+              {
+                "name": "price[lte]",
+                "value": "",
+                "type": "query",
+                "description": "Price filter for products less than and equals to particular amount"
+              },
+              {
+                "name": "price[gte]",
+                "value": "",
+                "type": "query",
+                "description": "Price filter for products greater than and equals to particular amount"
+              },
+              {
+                "name": "price[lt]",
+                "value": "",
+                "type": "query",
+                "description": "Price filter for products less than particular amount"
+              },
+              {
+                "name": "price[gt]",
+                "value": "",
+                "type": "query",
+                "description": "Price filter for products greater than particular amount"
+              },
+              {
+                "name": "price[eq]",
+                "value": "",
+                "type": "query",
+                "description": "Price filter for products equals to particular amount"
+              },
+              {
+                "name": "price[ne]",
+                "value": "",
+                "type": "query",
+                "description": "Price filter for products not equals to particular amount"
+              },
+              {
+                "name": "alternativePrice[lte]",
+                "value": "",
+                "type": "query",
+                "description": "Alternative price filter for products less than and equals to particular amount"
+              },
+              {
+                "name": "alternativePrice[gte]",
+                "value": "",
+                "type": "query",
+                "description": "Alternative price filter for products greater than and equals to particular amount"
+              },
+              {
+                "name": "alternativePrice[lt]",
+                "value": "",
+                "type": "query",
+                "description": "Alternative price filter for products less than particular amount"
+              },
+              {
+                "name": "alternativePrice[gt]",
+                "value": "",
+                "type": "query",
+                "description": "Alternative price filter for products greater than particular amount"
+              },
+              {
+                "name": "alternativePrice[eq]",
+                "value": "",
+                "type": "query",
+                "description": "Alternative price filter for products equals to particular amount"
+              },
+              {
+                "name": "alternativePrice[ne]",
+                "value": "",
+                "type": "query",
+                "description": "Alternative price filter for products not equals to particular amount"
+              },
+              {
+                "name": "categories",
+                "value": "",
+                "type": "query",
+                "description": "Filter by categories ids"
+              },
+              {
+                "name": "modifiedSince",
+                "value": "",
+                "type": "query",
+                "description": "Filter (urlencoded) the products modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). **Prefer to pass your timezone in date-time format for accurate result.**\n"
+              },
+              {
+                "name": "createdSince",
+                "value": "",
+                "type": "query",
+                "description": "Filter (urlencoded) the products created after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). **Prefer to pass your timezone in date-time format for accurate result.**\n"
+              },
+              {
+                "name": "sortByField",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results by a specific field. Default sort field is `created_at` when not passed.\n"
+              },
+              {
+                "name": "isDeleted",
+                "value": "",
+                "type": "query",
+                "description": "Filter products by their deletion status. If `false` is passed, only products that are not deleted will be returned.\n"
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of all ecommerce products stored in your Brevo account. Results are sorted by creation date in descending order by default, and can be filtered by product IDs, name (minimum 3 characters), price range, category IDs, modification date, creation date, or deletion status. Use the `search` parameter to query across SKU, name, and ID simultaneously — results are prioritized as exact SKU match > SKU prefix match > name match > ID match. Pagination defaults to 50 products per "
+        },
+        {
+          "info": {
+            "name": "Create/Update a product",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/products",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new ecommerce product or update an existing one, identified by the mandatory `id` field. When `updateEnabled` is `false` (the default), the endpoint inserts a new product and returns `201`; if the product ID already exists, a `400` error is returned. When `updateEnabled` is `true`, the endpoint performs an upsert, returning `201` for a new product or `204` for an update. The `name` field is mandatory for creation but optional for updates. Product images are downloaded, validated (max 5 "
+        },
+        {
+          "info": {
+            "name": "Get a product's details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/products/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Product ID"
+              }
+            ]
+          },
+          "docs": "Retrieve the full details of a single ecommerce product by its unique ID. The response includes the product name, price, SKU, URL, image URLs (original and thumbnails), categories, stock level, meta information, creation and modification timestamps, and deletion status. Returns a `404` error if no product matches the provided ID."
+        },
+        {
+          "info": {
+            "name": "Create products in batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/products/batch",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create or update multiple ecommerce products in a single request. The `products` array accepts up to 100 product objects for creation (or up to 1000 when `updateEnabled` is `true` and the account has an increased limit). Each product requires a unique `id` and `name` (name is mandatory for creation only). When `updateEnabled` is `false`, all products are inserted as new; if any ID already exists, a `400` error is returned. When `updateEnabled` is `true`, existing products are updated and new one"
+        },
+        {
+          "info": {
+            "name": "Create a product alert for a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/products/:id/alerts/:type",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Product ID"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "path",
+                "description": "Alert type"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Register a contact to receive an alert for a specific product event, such as `back_in_stock`. At least one contact identifier (`ext_id`, `email`, or `sms`) must be provided; when multiple are given, priority is `ext_id` > `email` > `sms`. Returns a `404` error if the product ID does not exist, and a `403` error if product alerts are not enabled for the account."
+        },
+        {
+          "info": {
+            "name": "Return all your categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/categories",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of documents per page"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first document in the page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by category ids"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter by category name"
+              },
+              {
+                "name": "modifiedSince",
+                "value": "",
+                "type": "query",
+                "description": "Filter (urlencoded) the categories modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). **Prefer to pass your timezone in date-time format for accurate result.**\n"
+              },
+              {
+                "name": "createdSince",
+                "value": "",
+                "type": "query",
+                "description": "Filter (urlencoded) the categories created after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). **Prefer to pass your timezone in date-time format for accurate result.**\n"
+              },
+              {
+                "name": "isDeleted",
+                "value": "",
+                "type": "query",
+                "description": "Filter categories by their deletion status. If `false` is passed, only categories that are not deleted will be returned.\n"
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of all ecommerce categories stored in your Brevo account. Results are sorted by creation date in descending order by default, and can be filtered by category IDs, name, modification date, creation date, or deletion status. The response includes a `count` field with the total number of matching categories, and pagination defaults to 50 categories per page (maximum 100)."
+        },
+        {
+          "info": {
+            "name": "Create/Update a category",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/categories",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new ecommerce category or update an existing one, identified by the mandatory `id` field. When `updateEnabled` is set to `false` (the default), the endpoint performs an insert and returns `201`; if the category ID already exists, a `400` error is returned. When `updateEnabled` is `true`, the endpoint performs an upsert, returning `201` for a new category or `204` when an existing category is updated. The `name` field is mandatory for creation but optional for updates."
+        },
+        {
+          "info": {
+            "name": "Get a category details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/categories/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Category ID"
+              }
+            ]
+          },
+          "docs": "Retrieve the full details of a single ecommerce category by its unique ID. The response includes the category name, URL, creation and modification timestamps, and deletion status. Returns a `404` error if no category matches the provided ID."
+        },
+        {
+          "info": {
+            "name": "Create categories in batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/categories/batch",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create or update multiple ecommerce categories in a single request. The `categories` array accepts up to 100 category objects, each requiring a unique `id`. When `updateEnabled` is `false` (the default), all categories are inserted as new; if any ID already exists, a `400` error is returned. When `updateEnabled` is `true`, existing categories are updated and new ones are created via upsert. Duplicate IDs within the same request payload are rejected. The response returns the count of created and "
+        },
+        {
+          "info": {
+            "name": "Get detailed attribution metrics for a single Brevo campaign or workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/ecommerce/attribution/metrics/:conversionSource/:conversionSourceId",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "conversionSource",
+                "value": "",
+                "type": "path",
+                "description": "The Brevo campaign type or workflow type for which data will be retrieved"
+              },
+              {
+                "name": "conversionSourceId",
+                "value": "",
+                "type": "path",
+                "description": "The Brevo campaign or automation workflow id for which data will be retrieved"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed attribution metrics for a single Brevo campaign or automation workflow, identified by its conversion source type and ID. The response includes orders count, revenue, average basket value, and the number of new customers attributed to that specific campaign or workflow."
+        },
+        {
+          "info": {
+            "name": "Get attributed product sales for a single Brevo campaign or workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/ecommerce/attribution/products/:conversionSource/:conversionSourceId",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "conversionSource",
+                "value": "",
+                "type": "path",
+                "description": "The Brevo campaign or automation workflow type for which data will be retrieved"
+              },
+              {
+                "name": "conversionSourceId",
+                "value": "",
+                "type": "path",
+                "description": "The Brevo campaign or automation workflow id for which data will be retrieved"
+              }
+            ]
+          },
+          "docs": "Retrieve the list of products whose sales have been attributed to a specific Brevo campaign or automation workflow. Each product entry includes its ID, name, SKU, image URL, product URL, price, revenue, and orders count. The conversion source type must be one of `email_campaign`, `sms_campaign`, `automation_workflow_email`, or `automation_workflow_sms`."
+        },
+        {
+          "info": {
+            "name": "Get attribution metrics for one or more Brevo campaigns or workflows",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/ecommerce/attribution/metrics",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "periodFrom",
+                "value": "",
+                "type": "query",
+                "description": "When getting metrics for a specific period, define the starting datetime in RFC3339 format"
+              },
+              {
+                "name": "periodTo",
+                "value": "",
+                "type": "query",
+                "description": "When getting metrics for a specific period, define the end datetime in RFC3339 format"
+              },
+              {
+                "name": "emailCampaignId[]",
+                "value": "",
+                "type": "query",
+                "description": "The email campaign ID(s) to get metrics for"
+              },
+              {
+                "name": "smsCampaignId[]",
+                "value": "",
+                "type": "query",
+                "description": "The SMS campaign ID(s) to get metrics for"
+              },
+              {
+                "name": "automationWorkflowEmailId[]",
+                "value": "",
+                "type": "query",
+                "description": "The automation workflow ID(s) to get email attribution metrics for"
+              },
+              {
+                "name": "automationWorkflowSmsId[]",
+                "value": "",
+                "type": "query",
+                "description": "The automation workflow ID(s) to get SMS attribution metrics for"
+              }
+            ]
+          },
+          "docs": "Retrieve aggregated ecommerce attribution metrics for one or more Brevo email campaigns, SMS campaigns, or automation workflows. You can optionally filter by a date range using `periodFrom` and `periodTo` in RFC3339 format. The response includes per-source metrics (orders count, revenue, and average basket) as well as aggregated totals across all requested sources."
+        },
+        {
+          "info": {
+            "name": "Activate the eCommerce app",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/ecommerce/activate",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Getting access to Brevo eCommerce."
+        },
+        {
+          "info": {
+            "name": "Get the ISO 4217 compliant display currency code for your Brevo account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/ecommerce/config/displayCurrency",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieve the ISO 4217 display currency code currently configured for your Brevo ecommerce account. This currency is used to display monetary values across the ecommerce dashboard and reports. Returns a `403` error if ecommerce is not activated on the account."
+        },
+        {
+          "info": {
+            "name": "Set the ISO 4217 compliant display currency code for your Brevo account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/ecommerce/config/displayCurrency",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set or update the ISO 4217 display currency code for your Brevo ecommerce account. This currency determines how monetary values are displayed in the ecommerce dashboard and reports. The provided currency code must be a valid ISO 4217 code; invalid codes result in a `422` error. Returns a `403` error if ecommerce is not activated on the account."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "coupons",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all your coupon collections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/couponCollections",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of documents returned per page"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first document on the page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results by creation time in ascending/descending order"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "The field used to sort coupon collections"
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of all coupon collections in your Brevo account. Results can be sorted by creation date, remaining coupons count, or expiration date, in ascending or descending order. Pagination defaults to 50 collections per page (maximum 100)."
+        },
+        {
+          "info": {
+            "name": "Create а coupon collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/couponCollections",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new coupon collection with a name and a default coupon value. You can optionally set an expiration date in RFC3339 format and configure alert thresholds to receive email notifications when remaining coupons or remaining days before expiration fall below a specified number. The collection ID is auto-generated as a UUID and returned in the response."
+        },
+        {
+          "info": {
+            "name": "Get a coupon collection by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/couponCollections/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the collection to return"
+              }
+            ]
+          },
+          "docs": "Retrieve the details of a single coupon collection by its UUID. The response includes the collection name, default coupon value, total and remaining coupon counts, and creation timestamp. Returns a `404` error if no collection matches the provided ID."
+        },
+        {
+          "info": {
+            "name": "Update a coupon collection by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.brevo.com/v3/couponCollections/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the collection to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing coupon collection by its UUID. You can modify the default coupon value, set or remove the expiration date (pass `null` to remove), and configure or disable alert thresholds for remaining coupons or remaining days. Only the fields included in the request body are updated; omitted fields remain unchanged."
+        },
+        {
+          "info": {
+            "name": "Create coupons for a coupon collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/coupons",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add coupons to an existing coupon collection. The `coupons` array must contain between 1 and 10,000 unique coupon code strings, all associated with the specified `collectionId`. Coupon creation is processed asynchronously and a `204` status is returned immediately upon acceptance. Returns a `404` error if the specified coupon collection does not exist."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "payments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a payment request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/payments/requests",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new payment request for a Brevo contact. The request requires a reference (displayed on the payment page), a contact ID, and a cart with currency and amount in cents. You can optionally configure a custom success redirect URL and enable email notifications with reminders. Returns the payment request ID and its public payment URL. A `403` error is returned if Brevo Payments is not activated or the account is not validated."
+        },
+        {
+          "info": {
+            "name": "Get payment request details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/payments/requests/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the payment Request"
+              }
+            ]
+          },
+          "docs": "Retrieve the details of a specific payment request by its ID. The response includes the reference, status (created, sent, reminderSent, or paid), cart details, notification configuration, contact ID, and the number of reminders sent. Returns a `404` error if no payment request matches the provided ID."
+        },
+        {
+          "info": {
+            "name": "Delete a payment request.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/payments/requests/:id",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the payment request."
+              }
+            ]
+          },
+          "docs": "Delete a payment request by its UUID. Once deleted, the payment request can no longer be accessed or paid. Returns a `404` error if no payment request matches the provided ID, and a `403` error if Brevo Payments is not activated or the account is not validated."
         }
       ]
     }

@@ -1,0 +1,102 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Brevo Contacts Agent Status Messages API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api-key",
+      "value": "{{api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Messages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send a message as an agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/conversations/messages",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a chat message within a conversation as an agent. The message is delivered to the visitor in real time through the Brevo chat widget."
+        },
+        {
+          "info": {
+            "name": "Get a message",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/conversations/messages/:messageId",
+            "params": [
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the chat message."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific chat message by its unique identifier including the message text, sender, and timestamp."
+        },
+        {
+          "info": {
+            "name": "Update a message",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.brevo.com/v3/conversations/messages/:messageId",
+            "params": [
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the chat message."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the text content of an existing chat message. Only agent messages can be updated."
+        },
+        {
+          "info": {
+            "name": "Delete a message",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/conversations/messages/:messageId",
+            "params": [
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the chat message."
+              }
+            ]
+          },
+          "docs": "Permanently deletes a chat message from a conversation."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

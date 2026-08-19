@@ -1,0 +1,112 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.brevo.com/changelog
+docs: https://developers.brevo.com/changelog
+machine_readable: https://developers.brevo.com/changelog/llms.txt
+description: >-
+  Brevo runs a dated developer changelog on its Fern-hosted portal, with entries back to
+  March 2023 and a machine-readable index at /changelog/llms.txt. Entries are explicitly
+  sectioned into "Breaking changes" and "Added", and breaking changes carry effective dates
+  — which makes this one of the more agent-legible changelogs in the marketing-API cohort.
+  There is no semantic version on the API itself; the version stays v3 in the URI path and
+  change is communicated entirely through this feed and the per-SDK release notes.
+scheme:
+  api_versioning: uri-path (v3, unchanged)
+  changelog_versioning: date-based entries
+  current_api_version: v3
+  entry_count_published: 52
+  earliest_entry: '2023-03-29'
+  latest_entry: '2026-08-06'
+sdk_changelogs:
+- {sdk: Node.js, url: 'https://developers.brevo.com/guides/node-js/changelog', package: '@getbrevo/brevo'}
+- {sdk: Python, url: 'https://developers.brevo.com/guides/python/changelog', package: brevo-python}
+- {sdk: PHP, url: 'https://developers.brevo.com/guides/php/changelog', package: getbrevo/brevo-php}
+entries:
+- date: '2026-08-06'
+  url: https://developers.brevo.com/changelog/2026/8/6
+  title: Product import guide now documents alternativePrice
+  breaking: false
+  additions: [alternativePrice field documented on create-update-product and create-update-batch-products]
+- date: '2026-07-30'
+  url: https://developers.brevo.com/changelog/2026/7/30
+  title: JS Tracker — document EXT_ID in Brevo.identify()
+  breaking: false
+  additions: [EXT_ID attribute passing documented alongside email_id for SMS/WHATSAPP/LANDLINE_NUMBER]
+- date: '2026-07-21'
+  url: https://developers.brevo.com/changelog/2026/7/21
+  title: Transactional Email — clarified contactPixelTrackingConsent behavior
+  breaking: false
+  additions: []
+  highlights:
+  - Documentation clarification only; behavior unchanged. Corrects earlier wording that a
+    missing field would block the send.
+- date: '2026-07-20'
+  url: https://developers.brevo.com/changelog/2026/7/20
+  title: Email Campaigns — UTM parameter customization
+  breaking: false
+  additions: [utmCampaign, utmContent, utmTerm request fields, 'utmCampaignValue/utmContent/utmTerm/utmID/utmMedium/utmSource response fields']
+  operations: [createEmailCampaign, updateEmailCampaign, getEmailCampaigns, getEmailCampaign]
+- date: '2026-07-02'
+  url: https://developers.brevo.com/changelog/2026/7/2
+  title: Brevo CLI v2.0.0 upgrade notice; Deals API filters
+  breaking: true
+  highlights:
+  - "@getbrevo/cli 2.0.0 is a major release with breaking changes; v1.1.1 and earlier must migrate."
+  additions:
+  - 'GET /crm/deals documents filters[attributes.deal_owner], filters[attributes.deal_stage], filters[attributes.pipeline]'
+- date: '2026-06-30'
+  url: https://developers.brevo.com/changelog/2026/6/30
+  title: Consent Groups API and Wallet pass install URLs
+  breaking: false
+  additions:
+  - 'Consent groups CRUD at /contacts/consent-groups (403 CONSENT_GROUP_NOT_ENABLED when the feature is off)'
+  - importContacts accepts consentGroupIds
+  - getContactInfo returns a consentGroups array
+  - 'GET /wallet/passes/{passId}/installUrl/{contactId}'
+- date: '2026-06-03'
+  url: https://developers.brevo.com/changelog/2026/6/3
+  title: OAuth apps now support scopes
+  breaking: false
+  additions:
+  - Granular per-app OAuth scopes; consent screen and token scope claim
+  - 'New apps default to contacts:read, contacts:write, crm:read, crm:write'
+  - CLI commands `brevo app available-scopes` and `brevo app update --scope`
+- date: '2026-05-14'
+  url: https://developers.brevo.com/changelog/2026/5/14
+  title: 'Major SDK releases: Node.js v6.0.0, PHP v5.0.0, Python v5.0.0'
+  breaking: true
+  highlights:
+  - Opt-in major releases; existing v4.x/v5.x integrations unaffected unless upgraded.
+  - >-
+    Brevo states the renaming effort was to make endpoints, parameters and models more
+    self-descriptive "both for developers and for AI agents working against the Brevo API".
+- date: '2026-05-12'
+  url: https://developers.brevo.com/changelog/2026/5/12
+  title: 'Deprecation notice: POST /contacts/batch'
+  breaking: true
+  deprecation:
+    operation: POST /contacts/batch
+    effective: '2026-10-30'
+    replacement: POST /v3/contacts/import
+    note: The deprecated endpoint may stop functioning after the deprecation date.
+- date: '2026-05-01'
+  url: https://developers.brevo.com/changelog/2026/5/1
+  title: Contacts category attributes valueStr; Ecommerce product search and alternative price
+  breaking: true
+  highlights:
+  - 'getAttributes: the integer `value` field now returns 0 for non-numeric category values; clients must migrate to the new `valueStr` string field.'
+  additions: [valueStr on category attribute enumeration items, search query parameter on getProducts]
+- date: '2026-04-27'
+  url: https://developers.brevo.com/changelog/2026/4/27
+  title: Coupons webhooks documentation
+  breaking: false
+  additions: [unique_coupon_sent marketing webhook event documented]
+- date: '2026-04-21'
+  url: https://developers.brevo.com/changelog/2026/4/21
+  title: Batch events body wrapper, contact merge ID response, loyalty transaction filter
+  breaking: true
+  highlights:
+  - 'POST /events/batch: the event array must now be wrapped as {"events":[...]}; event_name and identifiers are required.'
+  additions: ['getId on createContact (with forceMerge)', loyaltySubscriptionId filter on loyalty transaction history]
+window:
+  note: Recent window only — 12 of 52 published entries. The live changelog is the source of truth.

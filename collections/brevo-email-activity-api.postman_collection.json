@@ -1,0 +1,581 @@
+{
+  "item": [
+    {
+      "id": "891cdc3d-2e7a-463f-b35c-b767e30a4aec",
+      "name": "Email Activity",
+      "description": {
+        "content": "Track and retrieve transactional email activity including delivery status, opens, clicks, and bounces.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e69323ac-a83e-43d0-8563-9cd0888b109b",
+          "name": "Get transactional email activity events",
+          "request": {
+            "name": "Get transactional email activity events",
+            "description": {
+              "content": "Retrieves all transactional email activity as unaggregated events. Returns individual event records for deliveries, opens, clicks, bounces, spam reports, and other email activity.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "smtp",
+                "statistics",
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "Maximum number of results to return per request."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Number of results to skip for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>",
+                  "description": "Start date for the event query in YYYY-MM-DD format."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>",
+                  "description": "End date for the event query in YYYY-MM-DD format."
+                },
+                {
+                  "disabled": false,
+                  "key": "event",
+                  "value": "<string>",
+                  "description": "Filter by event type such as delivered, opened, clicked, hardBounce, softBounce, blocked, spam, or unsubscribed."
+                },
+                {
+                  "disabled": false,
+                  "key": "email",
+                  "value": "<email>",
+                  "description": "Filter events by recipient email address."
+                },
+                {
+                  "disabled": false,
+                  "key": "messageId",
+                  "value": "<string>",
+                  "description": "Filter events by the unique message identifier."
+                },
+                {
+                  "disabled": false,
+                  "key": "templateId",
+                  "value": "<long>",
+                  "description": "Filter events by the template ID used for sending."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e10e875c-c009-45f3-8c5d-54ee4b797593",
+              "name": "Transactional email events retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "smtp",
+                    "statistics",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "event",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<email>"
+                    },
+                    {
+                      "key": "messageId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "templateId",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"events\": [\n    {\n      \"email\": \"FNmer8MAv4yeq@HIpzfnGKvPsS.fg\",\n      \"date\": \"1985-06-12T04:40:42.595Z\",\n      \"messageId\": \"string\",\n      \"event\": \"hardBounce\",\n      \"reason\": \"string\",\n      \"tag\": \"string\",\n      \"subject\": \"string\",\n      \"templateId\": 4854\n    },\n    {\n      \"email\": \"YyLeCChXGAVPEX@hCskhNYlLKkALGhPEBLHQLpoBQK.rt\",\n      \"date\": \"1981-05-15T11:14:10.944Z\",\n      \"messageId\": \"string\",\n      \"event\": \"sent\",\n      \"reason\": \"string\",\n      \"tag\": \"string\",\n      \"subject\": \"string\",\n      \"templateId\": 2770\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8074bce-3e97-4902-a95b-950de4e57d54",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "smtp",
+                    "statistics",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "event",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<email>"
+                    },
+                    {
+                      "key": "messageId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "templateId",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f3fb696a-6df5-41ed-a3a8-f5f4ad3cafe8",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "smtp",
+                    "statistics",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "event",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<email>"
+                    },
+                    {
+                      "key": "messageId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "templateId",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1e81b454-ac06-409c-b539-75318f8b7e60",
+          "name": "Get aggregated transactional email statistics",
+          "request": {
+            "name": "Get aggregated transactional email statistics",
+            "description": {
+              "content": "Retrieves aggregated statistics for transactional email activity over a specified period. Returns totals for requests, delivered, opens, clicks, bounces, and other metrics.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "smtp",
+                "statistics",
+                "aggregatedReport"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>",
+                  "description": "Start date for the report in YYYY-MM-DD format."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>",
+                  "description": "End date for the report in YYYY-MM-DD format."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "918c8d4a-f369-45e5-8378-7daf6f9bc89c",
+              "name": "Aggregated email statistics retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "smtp",
+                    "statistics",
+                    "aggregatedReport"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"range\": \"string\",\n  \"requests\": 869,\n  \"delivered\": 365,\n  \"hardBounces\": 1244,\n  \"softBounces\": 9902,\n  \"clicks\": 4660,\n  \"uniqueClicks\": 6110,\n  \"opens\": 7250,\n  \"uniqueOpens\": 7996,\n  \"spamReports\": 3343,\n  \"blocked\": 6295,\n  \"invalid\": 2205,\n  \"unsubscribed\": 250\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d770a8b-a0a8-46e4-b746-9ca5620e92e4",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "smtp",
+                    "statistics",
+                    "aggregatedReport"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "136ac81a-5f94-40c0-a468-205dd3aae931",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "smtp",
+                    "statistics",
+                    "aggregatedReport"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.brevo.com/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "84a9cbd1-98dd-4f17-a025-5014fb0820ee",
+    "name": "Brevo Contacts Agent Status Email Activity API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Brevo Contacts API provides programmatic access to contact management features including creating, updating, and deleting contacts. Developers can organize contacts into lists, apply attributes and tags, import contacts in bulk, and build audience segments for targeted campaigns. The API also supports managing folders, contact attributes, and custom fields to structure contact data according to business needs.\n\nContact Support:\n Name: Brevo Support",
+      "type": "text/plain"
+    }
+  }
+}

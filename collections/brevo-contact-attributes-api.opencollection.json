@@ -1,0 +1,91 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Brevo Contacts Agent Status Contact Attributes API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api-key",
+      "value": "{{api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Contact Attributes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all contact attributes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/contacts/attributes"
+          },
+          "docs": "Retrieves all custom contact attributes defined in the account including their types and enumeration values."
+        },
+        {
+          "info": {
+            "name": "Create a contact attribute",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/contacts/attributes/:attributeCategory/:attributeName",
+            "params": [
+              {
+                "name": "attributeCategory",
+                "value": "",
+                "type": "path",
+                "description": "Category of the attribute such as normal, transactional, category, calculated, or global."
+              },
+              {
+                "name": "attributeName",
+                "value": "",
+                "type": "path",
+                "description": "Name for the new attribute."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new custom contact attribute in the specified category. Attributes extend the contact profile with additional data fields."
+        },
+        {
+          "info": {
+            "name": "Delete a contact attribute",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/contacts/attributes/:attributeCategory/:attributeName",
+            "params": [
+              {
+                "name": "attributeCategory",
+                "value": "",
+                "type": "path",
+                "description": "Category of the attribute to delete."
+              },
+              {
+                "name": "attributeName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the attribute to delete."
+              }
+            ]
+          },
+          "docs": "Permanently deletes a custom contact attribute from the account."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

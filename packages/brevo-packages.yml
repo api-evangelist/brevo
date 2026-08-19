@@ -1,0 +1,117 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.brevo.com/docs/api-clients
+docs: https://developers.brevo.com/docs/api-clients
+description: >-
+  Brevo publishes seven official server-side SDKs plus a first-party developer CLI, all
+  under the github.com/getbrevo organization and listed on the SDKs and libraries docs page.
+  The JavaScript, Python and PHP SDKs are on a shared release train (5.x/6.x, all republished
+  2026-08-10). Java, C#, Go and Ruby lag materially behind that train: the Go client has not
+  shipped since 2025-02, Ruby since 2025-06, C# since 2026-02. The legacy pre-rebrand
+  packages (sib-api-v3-sdk on npm and PyPI) are superseded and are recorded here as
+  deprecated predecessors, not as current clients.
+packages:
+- language: javascript
+  registry: npm
+  name: "@getbrevo/brevo"
+  url: https://www.npmjs.com/package/@getbrevo/brevo
+  repository: https://github.com/getbrevo/brevo-node
+  install: npm install @getbrevo/brevo
+  official: true
+  version: 6.0.3
+  published: '2026-08-10'
+  docs: https://developers.brevo.com/guides/node-js
+- language: javascript
+  registry: npm
+  name: "@getbrevo/cli"
+  url: https://www.npmjs.com/package/@getbrevo/cli
+  install: npm install -g @getbrevo/cli
+  official: true
+  version: 2.0.2
+  published: '2026-08-06'
+  kind: cli
+  docs: https://developers.brevo.com/docs/cli-reference
+  note: >-
+    First-party developer CLI (binary `brevo`). Also distributed via Homebrew tap
+    getbrevo/tap/brevo. Command surface captured in cli/brevo-cli.yml. Ships an
+    agent-context/AGENTS.md and a Claude Code skill installer (`brevo skill:cli install`).
+- language: python
+  registry: pypi
+  name: brevo-python
+  url: https://pypi.org/project/brevo-python/
+  repository: https://github.com/getbrevo/brevo-python
+  install: pip install brevo-python
+  official: true
+  version: 5.0.2
+  published: '2026-08-10'
+  docs: https://developers.brevo.com/guides/python
+- language: php
+  registry: packagist
+  name: getbrevo/brevo-php
+  url: https://packagist.org/packages/getbrevo/brevo-php
+  repository: https://github.com/getbrevo/brevo-php
+  install: composer require getbrevo/brevo-php
+  official: true
+  version: 5.0.2
+  published: '2026-08-10'
+  docs: https://developers.brevo.com/guides/php
+- language: java
+  registry: maven
+  name: com.brevo:brevo
+  url: https://central.sonatype.com/artifact/com.brevo/brevo
+  repository: https://github.com/getbrevo/brevo-java
+  install: "implementation 'com.brevo:brevo:1.1.9'"
+  official: true
+  version: 1.1.9
+  published: '2026-07-29'
+- language: csharp
+  registry: nuget
+  name: brevo_csharp
+  url: https://www.nuget.org/packages/brevo_csharp
+  repository: https://github.com/getbrevo/brevo-csharp
+  install: dotnet add package brevo_csharp
+  official: true
+  version: 1.1.2
+  published: '2026-02-13'
+- language: go
+  registry: go
+  name: github.com/getbrevo/brevo-go
+  url: https://pkg.go.dev/github.com/getbrevo/brevo-go
+  repository: https://github.com/getbrevo/brevo-go
+  install: go get github.com/getbrevo/brevo-go
+  official: true
+  version: v1.1.3
+  published: '2025-02-07'
+  note: >-
+    Latest tag per proxy.golang.org is v1.1.3 (2025-02-07) — the oldest release of any
+    official Brevo client, 18 months behind the JS/Python/PHP train.
+- language: ruby
+  registry: rubygems
+  name: brevo
+  url: https://rubygems.org/gems/brevo
+  repository: https://github.com/getbrevo/brevo-ruby
+  install: gem install brevo
+  official: true
+  version: 4.0.0
+  published: '2025-06-25'
+superseded:
+- language: javascript
+  registry: npm
+  name: sib-api-v3-sdk
+  url: https://www.npmjs.com/package/sib-api-v3-sdk
+  official: true
+  version: 8.5.0
+  published: '2022-12-26'
+  note: Pre-rebrand Sendinblue Node SDK. Superseded by @getbrevo/brevo.
+- language: python
+  registry: pypi
+  name: sib-api-v3-sdk
+  url: https://pypi.org/project/sib-api-v3-sdk/
+  official: true
+  version: 7.6.0
+  published: '2023-03-20'
+  note: Pre-rebrand Sendinblue Python SDK. Superseded by brevo-python.
+summary:
+  official_count: 8
+  languages: [javascript, python, php, java, csharp, go, ruby]
+  github_org: https://github.com/getbrevo

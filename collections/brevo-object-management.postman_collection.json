@@ -1,0 +1,1118 @@
+{
+  "item": [
+    {
+      "id": "bbef0fe5-3edf-4dd0-b762-3fd9d86206b7",
+      "name": "customObjects",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a30473d1-9dce-4576-8663-a689b350236d",
+          "name": "Create/Update object records in bulk",
+          "request": {
+            "name": "Create/Update object records in bulk",
+            "description": {
+              "content": "<Note title=\"Enterprise access only\">Custom objects are only available to Enterprise plans.\nThis feature is in beta. These are subject to change.</Note>\nPerforms bulk create or update (upsert) operations for object records in a single asynchronous request. This endpoint is optimized for high-volume data imports and synchronization scenarios.\n\n**How Upsert Works:**\n- **Create**: Omit `identifiers`, or provide only `ext_id` (if it doesn't already exist). A new record is created with a Brevo-generated `id`.\n- **Update**: Provide `id` (Brevo internal ID) or an `ext_id` that already exists. The matching record is updated with the new attribute values.\n- **Important:** `id` is for **updates only**. Providing an `id` that does not belong to an existing record will fail during async processing (the HTTP response will still be 202, but the record will be rejected in the background). To create a new record with a stable external reference, use `ext_id` instead.\n\n**Request Structure:**\nEach object record in the `records` array can include:\n- `identifiers`: Either `id` (internal Brevo ID) or `ext_id` (your external system ID) — required for updates. **Note:** use `id` (singular), not `ids`.\n- `attributes`: Key-value pairs where each key is the attribute **key** (e.g., `company_name`), not the attribute label (e.g., \"Company Name\").\n- `associations`: Controls linking and unlinking of associated records (optional). Each entry specifies:\n    - `object_type`: The type of the associated object\n    - `action`: `link` (default) to create the association, or `unlink` to remove it\n    - `records`: The associated records to link or unlink (each identified by `ext_id` or `id`)\n    - **Unlink is idempotent** — unlinking a non-existing association is a no-op (no error returned)\n    - `link` and `unlink` actions can be submitted for the same `object_type` in a single record entry\n    - Both associated records must already exist before a link can be created\n\n> **Common mistake:** Passing the attribute **label** (the display name you see in the UI) instead of the attribute **key** will cause the attribute to be silently ignored and the record may not be created as expected.\n\n**Asynchronous Processing:**\n- Returns immediately with a `processId` (HTTP 202 Accepted)\n- Use the processId to track status via the Get process API\n\n**API and Schema Limitations:**\n- Max 1000 object records per request\n- Max request body size: 1 MB\n- Max 500 attributes per object record (matches the schema limit of 500 attributes per object)\n- Unknown attribute keys are silently ignored (no error, no attribute creation)\n- Max 10 association records per associated object-type in each record of the request. If you need more, send multiple requests.\n\n**Important Behaviors:**\n- The object schema must be created before upserting records\n- Unknown attribute keys are silently ignored (no error, no creation)\n- Both associated object records must already exist before creating a link association\n- Unlink operations are idempotent: attempting to unlink a non-existing association returns success\n- `link` and `unlink` actions can be submitted for the same `object_type` in a single record entry\n- Contact objects cannot be created via this endpoint\n- For `category` and `multiple_category` attributes, pass the option **key** as the value (not the option label or option ID).\n- The `id` identifier (internal Brevo ID) can only be used for **updating** existing records. To create new records, either omit identifiers (Brevo auto-generates an ID) or provide an `ext_id`.\n\n**Errors:**\n- Make sure both object records exist before associating them, else the API will return an error.\n- This route does not create objects. The object where the object records are upserted by this API must be created already else the API will return an error \"invalid object type\".",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "objects",
+                ":object_type",
+                "batch",
+                "upsert"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "object_type",
+                  "description": "(Required) Object type for the records to upsert. Must be a previously created custom object type. Only lowercase alphanumeric characters and underscores are allowed (max 32 characters)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                "key": "api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"records\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "61cdf224-8f25-435d-ae85-0470a7c5b54c",
+              "name": "Batch request accepted for processing of upsert object records.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "objects",
+                    ":object_type",
+                    "batch",
+                    "upsert"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "object_type",
+                      "description": "(Required) Object type for the records to upsert. Must be a previously created custom object type. Only lowercase alphanumeric characters and underscores are allowed (max 32 characters)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"records\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"processId\": 4875\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "51ec442a-99eb-4be8-8e14-f2b561f9e3e7",
+              "name": "Bad request (e.g., invalid organization ID, invalid object_type, records cannot be empty or more than 1000)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "objects",
+                    ":object_type",
+                    "batch",
+                    "upsert"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "object_type",
+                      "description": "(Required) Object type for the records to upsert. Must be a previously created custom object type. Only lowercase alphanumeric characters and underscores are allowed (max 32 characters)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"records\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73c52fa3-2072-48db-a2d2-a8cf30c29ade",
+              "name": "Custom objects are not available on this account, or upsert of Brevo standard object records is not supported via this endpoint.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "objects",
+                    ":object_type",
+                    "batch",
+                    "upsert"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "object_type",
+                      "description": "(Required) Object type for the records to upsert. Must be a previously created custom object type. Only lowercase alphanumeric characters and underscores are allowed (max 32 characters)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"records\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d343e27-07f3-4e44-ab3b-53639a202097",
+              "name": "Object not found for the provided organization or object type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "objects",
+                    ":object_type",
+                    "batch",
+                    "upsert"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "object_type",
+                      "description": "(Required) Object type for the records to upsert. Must be a previously created custom object type. Only lowercase alphanumeric characters and underscores are allowed (max 32 characters)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"records\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2a55615b-0089-416e-b2cb-2e01c1e5a74e",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "objects",
+                    ":object_type",
+                    "batch",
+                    "upsert"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "object_type",
+                      "description": "(Required) Object type for the records to upsert. Must be a previously created custom object type. Only lowercase alphanumeric characters and underscores are allowed (max 32 characters)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"records\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "73ad247f-750c-4130-8130-0161cdb51ecf",
+          "name": "Get the list of object records and total records count for an object.",
+          "request": {
+            "name": "Get the list of object records and total records count for an object.",
+            "description": {
+              "content": "<Note title=\"Enterprise access only\">Custom objects are only available to Enterprise plans.\nThis feature is in beta. These are subject to change.</Note>\nThis API retrieves a list of object records along with their associated records and provides the total count of records for the specified object. **Note**: Contact as object type is not supported in this endpoint.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "objects",
+                ":object_type",
+                "records"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<long>",
+                  "description": "(Required) Number of records returned per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_num",
+                  "value": "<long>",
+                  "description": "(Required) Page number for pagination. It's used to fetch the object records on a provided page number. Must be a valid positive integer."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "desc",
+                  "description": "Sort order, must be 'asc' or 'desc'. Default to 'desc' if not provided."
+                },
+                {
+                  "disabled": false,
+                  "key": "association",
+                  "value": "<string>",
+                  "description": "Whether to include associations, must be 'true' or 'false'. Default to 'false' if not provided."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "object_type",
+                  "description": "(Required) Object type for the records to retrieve. Must be a previously created custom object type. Contact as object type is not supported in this endpoint."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                "key": "api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "28301800-ca59-43ca-977b-cf59dc64f24f",
+              "name": "A list of object records for an object type. If association param is set true it will return 5 associated records per association for an object type.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "objects",
+                    ":object_type",
+                    "records"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page_num",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "association",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "object_type",
+                      "description": "(Required) Object type for the records to retrieve. Must be a previously created custom object type. Contact as object type is not supported in this endpoint."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 9525,\n  \"records\": [\n    {\n      \"associations\": [\n        {\n          \"object_type\": \"string\",\n          \"records\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        {\n          \"object_type\": \"string\",\n          \"records\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"attributes\": {},\n      \"createdAt\": \"2013-07-30T06:06:20.150Z\",\n      \"identifiers\": {\n        \"ext_id\": \"string\",\n        \"id\": 671\n      },\n      \"updatedAt\": \"1983-02-12T23:21:51.501Z\"\n    },\n    {\n      \"associations\": [\n        {\n          \"object_type\": \"string\",\n          \"records\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        {\n          \"object_type\": \"string\",\n          \"records\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"attributes\": {},\n      \"createdAt\": \"1964-04-27T22:17:55.286Z\",\n      \"identifiers\": {\n        \"ext_id\": \"string\",\n        \"id\": 9842\n      },\n      \"updatedAt\": \"1959-11-11T21:26:02.029Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8ecb8420-9d91-49ec-8602-af9702cca935",
+              "name": "Bad request (e.g., invalid object_type, invalid page number provided)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "objects",
+                    ":object_type",
+                    "records"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page_num",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "association",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "object_type",
+                      "description": "(Required) Object type for the records to retrieve. Must be a previously created custom object type. Contact as object type is not supported in this endpoint."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bcc33aa2-e288-4443-9b04-fde15cdcf8c8",
+              "name": "Custom objects are not available on this account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "objects",
+                    ":object_type",
+                    "records"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page_num",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "association",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "object_type",
+                      "description": "(Required) Object type for the records to retrieve. Must be a previously created custom object type. Contact as object type is not supported in this endpoint."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7acc197e-0417-400d-b369-42fdf7847e26",
+              "name": "primary attribute not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "objects",
+                    ":object_type",
+                    "records"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page_num",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "association",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "object_type",
+                      "description": "(Required) Object type for the records to retrieve. Must be a previously created custom object type. Contact as object type is not supported in this endpoint."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Failed Dependency (WebDAV) (RFC 4918)",
+              "code": 424,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "999795ff-5479-4cad-ba06-439f67efbefd",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "objects",
+                    ":object_type",
+                    "records"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page_num",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "association",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "object_type",
+                      "description": "(Required) Object type for the records to retrieve. Must be a previously created custom object type. Contact as object type is not supported in this endpoint."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3d5f228c-442e-47d1-86c3-70d44c44ebe6",
+          "name": "Delete multiple object records (up to 1000) asynchronously",
+          "request": {
+            "name": "Delete multiple object records (up to 1000) asynchronously",
+            "description": {
+              "content": "Use this endpoint to delete multiple object records of the same object-type in one request.\nThe request is accepted and processed asynchronously. You can track the status of the deletion process using the returned **processId**.\n**Limitations:** - Each request can contain up to **1000** object record identifiers - Either `ids` or `ext_ids` must be provided, but **not both** in the same request - Deletion of Brevo standard object records is not supported via this endpoint - If more records must be deleted, send multiple batch requests\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "objects",
+                ":object_type",
+                "batch",
+                "delete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "object_type",
+                  "description": "(Required) Object type for the records to delete"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                "key": "api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifiers\": {}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7c58e899-ad44-4024-85c3-d39e6be01dbb",
+              "name": "Batch request accepted for deletion - process started",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "objects",
+                    ":object_type",
+                    "batch",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "object_type",
+                      "description": "(Required) Object type for the records to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifiers\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"processId\": 2164,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8542b1fb-5fe8-4fe2-9382-51c6f5657592",
+              "name": "Invalid request (e.g., invalid object_type, invalid request body, both ids and ext_ids provided, or exceeds 1000 identifiers limit)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "objects",
+                    ":object_type",
+                    "batch",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "object_type",
+                      "description": "(Required) Object type for the records to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifiers\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6e250f21-af21-4aa4-aa33-47be98642029",
+              "name": "Deletion of Brevo standard object records is not supported via this endpoint",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "objects",
+                    ":object_type",
+                    "batch",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "object_type",
+                      "description": "(Required) Object type for the records to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifiers\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "557b4861-1cb5-43d4-8346-e9c877485afb",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "objects",
+                    ":object_type",
+                    "batch",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "object_type",
+                      "description": "(Required) Object type for the records to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifiers\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.brevo.com/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "451272ec-6bbb-4482-b07d-2abb65b72e05",
+    "name": "Object Management",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

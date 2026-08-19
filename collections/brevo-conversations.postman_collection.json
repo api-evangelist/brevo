@@ -1,444 +1,27 @@
 {
   "item": [
     {
-      "id": "da3795cc-7fe3-4e57-9504-a83afc0ad646",
-      "name": "Agent Status",
+      "id": "5065d754-efcb-4555-998c-f97cd7574011",
+      "name": "conversations",
       "description": {
-        "content": "Manage agent online status for conversation availability.",
+        "content": "",
         "type": "text/plain"
       },
       "item": [
         {
-          "id": "1ec974c0-67ee-4628-b9e4-744fe5726b96",
-          "name": "Set agent status to online",
+          "id": "1430c628-2a43-4611-b205-177badfe189e",
+          "name": "Delete a message sent by an agent",
           "request": {
-            "name": "Set agent status to online",
+            "name": "Delete a message sent by an agent",
             "description": {
-              "content": "Sets an agent's status to online for approximately 2-3 minutes. This endpoint should be pinged every minute for as long as the agent needs to be considered available for conversations.",
+              "content": "Delete a message sent by an agent. Only messages of type `agent` can be deleted.",
               "type": "text/plain"
             },
             "url": {
               "path": [
                 "conversations",
-                "agentOnlinePing"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"agentId\": \"<string>\",\n  \"receivedFrom\": \"<string>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "cf6fe407-b83a-4767-8d3f-8782ccc7c3cf",
-              "name": "Agent status set to online successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    "agentOnlinePing"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "api-key",
-                    "value": "<API Key>"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"agentId\": \"<string>\",\n  \"receivedFrom\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "No Content",
-              "code": 204,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "42b93c8b-bc09-43ef-9a26-bc26ed0cdfd1",
-              "name": "Bad request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    "agentOnlinePing"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "api-key",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"agentId\": \"<string>\",\n  \"receivedFrom\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "ee688077-bfdf-4376-9ee6-f28605fce769",
-              "name": "Unauthorized",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    "agentOnlinePing"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "api-key",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"agentId\": \"<string>\",\n  \"receivedFrom\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        }
-      ],
-      "event": []
-    },
-    {
-      "id": "019aeb63-739e-4f54-b998-262bc816527d",
-      "name": "Automated Messages",
-      "description": {
-        "content": "Create, manage, and retrieve automated messages pushed to visitors.",
-        "type": "text/plain"
-      },
-      "item": [
-        {
-          "id": "edd087ac-6b80-44db-b3cb-dedab6d0780b",
-          "name": "Send an automated message",
-          "request": {
-            "name": "Send an automated message",
-            "description": {
-              "content": "Creates and sends an automated message to a visitor. Automated messages can be used for proactive engagement, welcome messages, or scripted bot responses.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "conversations",
-                "pushedMessages"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"visitorId\": \"<string>\",\n  \"text\": \"<string>\",\n  \"agentId\": \"<string>\",\n  \"groupId\": \"<string>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "488604fb-3773-4f01-8570-5e4ba2279e7b",
-              "name": "Automated message sent successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    "pushedMessages"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "api-key",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"visitorId\": \"<string>\",\n  \"text\": \"<string>\",\n  \"agentId\": \"<string>\",\n  \"groupId\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": \"string\",\n  \"visitorId\": \"string\",\n  \"text\": \"string\",\n  \"agentId\": \"string\",\n  \"createdAt\": \"1949-08-25T10:31:40.891Z\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "64fc171c-2591-45a2-ab45-465709b1e369",
-              "name": "Bad request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    "pushedMessages"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "api-key",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"visitorId\": \"<string>\",\n  \"text\": \"<string>\",\n  \"agentId\": \"<string>\",\n  \"groupId\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "85d0544e-f340-4be5-9e72-aef4a3a76bf7",
-              "name": "Unauthorized",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    "pushedMessages"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "api-key",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"visitorId\": \"<string>\",\n  \"text\": \"<string>\",\n  \"agentId\": \"<string>\",\n  \"groupId\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "eedec7f0-61ee-4a93-879e-d6ada30d1274",
-          "name": "Get an automated message",
-          "request": {
-            "name": "Get an automated message",
-            "description": {
-              "content": "Retrieves the details of a specific automated message by its unique identifier.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "conversations",
-                "pushedMessages",
-                ":pushedMessageId"
+                "messages",
+                ":id"
               ],
               "host": [
                 "{{baseUrl}}"
@@ -449,30 +32,36 @@
                   "disabled": false,
                   "type": "any",
                   "value": "<string>",
-                  "key": "pushedMessageId",
-                  "description": "(Required) Unique identifier of the automated message."
+                  "key": "id",
+                  "description": "(Required) ID of the message"
                 }
               ]
             },
             "header": [
               {
+                "disabled": false,
+                "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                "key": "api-key",
+                "value": "<string>"
+              },
+              {
                 "key": "Accept",
                 "value": "application/json"
               }
             ],
-            "method": "GET",
+            "method": "DELETE",
             "auth": null
           },
           "response": [
             {
-              "id": "b84ae0bd-78ed-4c73-a9be-8a442ea4dfc1",
-              "name": "Automated message retrieved successfully",
+              "id": "48c677b3-4abe-4541-bf37-a1748f695eec",
+              "name": "The message was deleted from the conversation.",
               "originalRequest": {
                 "url": {
                   "path": [
                     "conversations",
-                    "pushedMessages",
-                    ":pushedMessageId"
+                    "messages",
+                    ":id"
                   ],
                   "host": [
                     "{{baseUrl}}"
@@ -483,49 +72,47 @@
                       "disabled": false,
                       "type": "any",
                       "value": "<string>",
-                      "key": "pushedMessageId",
-                      "description": "(Required) Unique identifier of the automated message."
+                      "key": "id",
+                      "description": "(Required) ID of the message"
                     }
                   ]
                 },
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
                     "key": "api-key",
-                    "value": "<API Key>"
+                    "value": "<string>"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "GET",
+                "method": "DELETE",
                 "body": {}
               },
-              "status": "OK",
-              "code": 200,
+              "status": "No Content",
+              "code": 204,
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"string\",\n  \"visitorId\": \"string\",\n  \"text\": \"string\",\n  \"agentId\": \"string\",\n  \"createdAt\": \"1949-08-25T10:31:40.891Z\"\n}",
+              "body": "{}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "2ab426dc-2022-4534-9d1c-280ad3325d04",
-              "name": "Unauthorized",
+              "id": "6e2ba23d-a46f-4020-9c62-963a4e27a3ca",
+              "name": "bad request",
               "originalRequest": {
                 "url": {
                   "path": [
                     "conversations",
-                    "pushedMessages",
-                    ":pushedMessageId"
+                    "messages",
+                    ":id"
                   ],
                   "host": [
                     "{{baseUrl}}"
@@ -536,49 +123,47 @@
                       "disabled": false,
                       "type": "any",
                       "value": "<string>",
-                      "key": "pushedMessageId",
-                      "description": "(Required) Unique identifier of the automated message."
+                      "key": "id",
+                      "description": "(Required) ID of the message"
                     }
                   ]
                 },
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
                     "key": "api-key",
-                    "value": "<API Key>"
+                    "value": "<string>"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "GET",
+                "method": "DELETE",
                 "body": {}
               },
-              "status": "Unauthorized",
-              "code": 401,
+              "status": "Bad Request",
+              "code": 400,
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "body": "{\n  \"code\": \"Returned when query params are invalid\",\n  \"message\": \"string\"\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "15806192-3fb6-4534-b288-8d4a878d4af5",
-              "name": "Automated message not found",
+              "id": "d447e429-3859-41a5-be2e-55b6b116b5b4",
+              "name": "Returned when the message is not found.",
               "originalRequest": {
                 "url": {
                   "path": [
                     "conversations",
-                    "pushedMessages",
-                    ":pushedMessageId"
+                    "messages",
+                    ":id"
                   ],
                   "host": [
                     "{{baseUrl}}"
@@ -589,26 +174,24 @@
                       "disabled": false,
                       "type": "any",
                       "value": "<string>",
-                      "key": "pushedMessageId",
-                      "description": "(Required) Unique identifier of the automated message."
+                      "key": "id",
+                      "description": "(Required) ID of the message"
                     }
                   ]
                 },
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
                     "key": "api-key",
-                    "value": "<API Key>"
+                    "value": "<string>"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "GET",
+                "method": "DELETE",
                 "body": {}
               },
               "status": "Not Found",
@@ -619,7 +202,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             }
@@ -630,19 +213,19 @@
           }
         },
         {
-          "id": "75b313a2-7e77-4215-94e4-1fca4253aed0",
-          "name": "Update an automated message",
+          "id": "3f2bc013-ed39-4356-8369-f9850ec3b5b7",
+          "name": "Update a message sent by an agent",
           "request": {
-            "name": "Update an automated message",
+            "name": "Update a message sent by an agent",
             "description": {
-              "content": "Updates the content of an existing automated message.",
+              "content": "Update the text of a message sent by an agent. Only messages of type `agent` can be edited. The `text` and `html` fields of the message will be updated.",
               "type": "text/plain"
             },
             "url": {
               "path": [
                 "conversations",
-                "pushedMessages",
-                ":pushedMessageId"
+                "messages",
+                ":id"
               ],
               "host": [
                 "{{baseUrl}}"
@@ -653,12 +236,18 @@
                   "disabled": false,
                   "type": "any",
                   "value": "<string>",
-                  "key": "pushedMessageId",
-                  "description": "(Required) Unique identifier of the automated message."
+                  "key": "id",
+                  "description": "(Required) ID of the message"
                 }
               ]
             },
             "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                "key": "api-key",
+                "value": "<string>"
+              },
               {
                 "key": "Content-Type",
                 "value": "application/json"
@@ -682,14 +271,14 @@
           },
           "response": [
             {
-              "id": "4bee4c16-5be8-4028-b6e0-282044430537",
-              "name": "Automated message updated successfully",
+              "id": "d64fe5c5-9b8e-4196-9a27-41de9b4f6355",
+              "name": "Updated message is returned as a response.",
               "originalRequest": {
                 "url": {
                   "path": [
                     "conversations",
-                    "pushedMessages",
-                    ":pushedMessageId"
+                    "messages",
+                    ":id"
                   ],
                   "host": [
                     "{{baseUrl}}"
@@ -700,19 +289,17 @@
                       "disabled": false,
                       "type": "any",
                       "value": "<string>",
-                      "key": "pushedMessageId",
-                      "description": "(Required) Unique identifier of the automated message."
+                      "key": "id",
+                      "description": "(Required) ID of the message"
                     }
                   ]
                 },
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
                     "key": "api-key",
-                    "value": "<API Key>"
+                    "value": "<string>"
                   },
                   {
                     "key": "Accept",
@@ -738,19 +325,19 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"string\",\n  \"visitorId\": \"string\",\n  \"text\": \"string\",\n  \"agentId\": \"string\",\n  \"createdAt\": \"1949-08-25T10:31:40.891Z\"\n}",
+              "body": "{\n  \"agentId\": \"string\",\n  \"agentName\": \"string\",\n  \"agentUserpic\": \"string\",\n  \"attachments\": [\n    {\n      \"name\": \"string\",\n      \"link\": \"string\",\n      \"mimeType\": \"string\",\n      \"isImage\": false,\n      \"isSticker\": true,\n      \"isInline\": false,\n      \"inlineId\": \"string\",\n      \"size\": 9098,\n      \"imageInfo\": {\n        \"width\": 4487,\n        \"height\": 6572,\n        \"previewLink\": \"string\"\n      },\n      \"isAllowedFileType\": true\n    },\n    {\n      \"name\": \"string\",\n      \"link\": \"string\",\n      \"mimeType\": \"string\",\n      \"isImage\": false,\n      \"isSticker\": true,\n      \"isInline\": false,\n      \"inlineId\": \"string\",\n      \"size\": 4306,\n      \"imageInfo\": {\n        \"width\": 5767,\n        \"height\": 6171,\n        \"previewLink\": \"string\"\n      },\n      \"isAllowedFileType\": false\n    }\n  ],\n  \"bcc\": [\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    }\n  ],\n  \"cc\": [\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    }\n  ],\n  \"createdAt\": 9920,\n  \"file\": {\n    \"name\": \"string\",\n    \"link\": \"string\",\n    \"mimeType\": \"string\",\n    \"isImage\": true,\n    \"isSticker\": false,\n    \"isInline\": true,\n    \"inlineId\": \"string\",\n    \"size\": 1366,\n    \"imageInfo\": {\n      \"width\": 5221,\n      \"height\": 157,\n      \"previewLink\": \"string\"\n    },\n    \"isAllowedFileType\": true\n  },\n  \"forwardedToSourceStatus\": {\n    \"error\": \"string\",\n    \"isSuccess\": true\n  },\n  \"from\": {\n    \"email\": \"string\",\n    \"name\": \"string\"\n  },\n  \"html\": \"string\",\n  \"id\": \"string\",\n  \"integrations\": {},\n  \"isBot\": true,\n  \"isMissed\": true,\n  \"isMissedByVisitor\": false,\n  \"isPushed\": true,\n  \"isTrigger\": false,\n  \"rawUnsafeHtml\": \"string\",\n  \"receivedFrom\": \"string\",\n  \"replyTo\": {\n    \"email\": \"string\",\n    \"name\": \"string\"\n  },\n  \"sourceMessageId\": \"string\",\n  \"subject\": \"string\",\n  \"text\": \"string\",\n  \"to\": [\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    }\n  ],\n  \"type\": \"visitor\",\n  \"isSentViaJsApi\": false,\n  \"messageType\": \"string\",\n  \"isForward\": true,\n  \"source\": {},\n  \"visitorId\": \"string\"\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "a44d2e5c-9a65-4ffc-9b59-ed5a75ba610a",
-              "name": "Bad request",
+              "id": "5b3620a5-dcd8-4708-931a-540282e766fe",
+              "name": "bad request",
               "originalRequest": {
                 "url": {
                   "path": [
                     "conversations",
-                    "pushedMessages",
-                    ":pushedMessageId"
+                    "messages",
+                    ":id"
                   ],
                   "host": [
                     "{{baseUrl}}"
@@ -761,19 +348,17 @@
                       "disabled": false,
                       "type": "any",
                       "value": "<string>",
-                      "key": "pushedMessageId",
-                      "description": "(Required) Unique identifier of the automated message."
+                      "key": "id",
+                      "description": "(Required) ID of the message"
                     }
                   ]
                 },
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
                     "key": "api-key",
-                    "value": "<API Key>"
+                    "value": "<string>"
                   },
                   {
                     "key": "Accept",
@@ -799,19 +384,19 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "body": "{\n  \"code\": \"campaign_processing\",\n  \"message\": \"string\"\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "3b2b3530-66de-4709-9670-451354de35db",
-              "name": "Unauthorized",
+              "id": "bfff3ef0-0502-48d1-9f29-b83e58ffa39b",
+              "name": "Returned when the message is not found.",
               "originalRequest": {
                 "url": {
                   "path": [
                     "conversations",
-                    "pushedMessages",
-                    ":pushedMessageId"
+                    "messages",
+                    ":id"
                   ],
                   "host": [
                     "{{baseUrl}}"
@@ -822,80 +407,17 @@
                       "disabled": false,
                       "type": "any",
                       "value": "<string>",
-                      "key": "pushedMessageId",
-                      "description": "(Required) Unique identifier of the automated message."
+                      "key": "id",
+                      "description": "(Required) ID of the message"
                     }
                   ]
                 },
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
                     "key": "api-key",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"text\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "8afd13d7-4afc-4d81-bbcd-d73cb19936e0",
-              "name": "Automated message not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    "pushedMessages",
-                    ":pushedMessageId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "pushedMessageId",
-                      "description": "(Required) Unique identifier of the automated message."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "api-key",
-                    "value": "<API Key>"
+                    "value": "<string>"
                   },
                   {
                     "key": "Accept",
@@ -921,7 +443,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             }
@@ -932,19 +454,19 @@
           }
         },
         {
-          "id": "f69d5441-36e7-41ad-a587-10815074cbd1",
-          "name": "Delete an automated message",
+          "id": "e48ba879-355f-4a94-963e-01de712c8dea",
+          "name": "Get a message",
           "request": {
-            "name": "Delete an automated message",
+            "name": "Get a message",
             "description": {
-              "content": "Permanently deletes an automated message.",
+              "content": "Retrieve a single message by its ID.",
               "type": "text/plain"
             },
             "url": {
               "path": [
                 "conversations",
-                "pushedMessages",
-                ":pushedMessageId"
+                "messages",
+                ":id"
               ],
               "host": [
                 "{{baseUrl}}"
@@ -955,30 +477,36 @@
                   "disabled": false,
                   "type": "any",
                   "value": "<string>",
-                  "key": "pushedMessageId",
-                  "description": "(Required) Unique identifier of the automated message."
+                  "key": "id",
+                  "description": "(Required) ID of the message"
                 }
               ]
             },
             "header": [
               {
+                "disabled": false,
+                "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                "key": "api-key",
+                "value": "<string>"
+              },
+              {
                 "key": "Accept",
                 "value": "application/json"
               }
             ],
-            "method": "DELETE",
+            "method": "GET",
             "auth": null
           },
           "response": [
             {
-              "id": "cce035df-af6c-44f8-8033-49405656caf0",
-              "name": "Automated message deleted successfully",
+              "id": "3ffcc2a5-c6d4-45e8-8b58-e6a1972956f0",
+              "name": "Requested message is returned as a response.",
               "originalRequest": {
                 "url": {
                   "path": [
                     "conversations",
-                    "pushedMessages",
-                    ":pushedMessageId"
+                    "messages",
+                    ":id"
                   ],
                   "host": [
                     "{{baseUrl}}"
@@ -989,98 +517,47 @@
                       "disabled": false,
                       "type": "any",
                       "value": "<string>",
-                      "key": "pushedMessageId",
-                      "description": "(Required) Unique identifier of the automated message."
+                      "key": "id",
+                      "description": "(Required) ID of the message"
                     }
                   ]
                 },
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
                     "key": "api-key",
-                    "value": "<API Key>"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "No Content",
-              "code": 204,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "c781bd2e-c1ec-4ec5-a434-11daeefc51af",
-              "name": "Unauthorized",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    "pushedMessages",
-                    ":pushedMessageId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "pushedMessageId",
-                      "description": "(Required) Unique identifier of the automated message."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "api-key",
-                    "value": "<API Key>"
+                    "value": "<string>"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "DELETE",
+                "method": "GET",
                 "body": {}
               },
-              "status": "Unauthorized",
-              "code": 401,
+              "status": "OK",
+              "code": 200,
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "body": "{\n  \"agentId\": \"string\",\n  \"agentName\": \"string\",\n  \"agentUserpic\": \"string\",\n  \"attachments\": [\n    {\n      \"name\": \"string\",\n      \"link\": \"string\",\n      \"mimeType\": \"string\",\n      \"isImage\": false,\n      \"isSticker\": true,\n      \"isInline\": false,\n      \"inlineId\": \"string\",\n      \"size\": 9098,\n      \"imageInfo\": {\n        \"width\": 4487,\n        \"height\": 6572,\n        \"previewLink\": \"string\"\n      },\n      \"isAllowedFileType\": true\n    },\n    {\n      \"name\": \"string\",\n      \"link\": \"string\",\n      \"mimeType\": \"string\",\n      \"isImage\": false,\n      \"isSticker\": true,\n      \"isInline\": false,\n      \"inlineId\": \"string\",\n      \"size\": 4306,\n      \"imageInfo\": {\n        \"width\": 5767,\n        \"height\": 6171,\n        \"previewLink\": \"string\"\n      },\n      \"isAllowedFileType\": false\n    }\n  ],\n  \"bcc\": [\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    }\n  ],\n  \"cc\": [\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    }\n  ],\n  \"createdAt\": 9920,\n  \"file\": {\n    \"name\": \"string\",\n    \"link\": \"string\",\n    \"mimeType\": \"string\",\n    \"isImage\": true,\n    \"isSticker\": false,\n    \"isInline\": true,\n    \"inlineId\": \"string\",\n    \"size\": 1366,\n    \"imageInfo\": {\n      \"width\": 5221,\n      \"height\": 157,\n      \"previewLink\": \"string\"\n    },\n    \"isAllowedFileType\": true\n  },\n  \"forwardedToSourceStatus\": {\n    \"error\": \"string\",\n    \"isSuccess\": true\n  },\n  \"from\": {\n    \"email\": \"string\",\n    \"name\": \"string\"\n  },\n  \"html\": \"string\",\n  \"id\": \"string\",\n  \"integrations\": {},\n  \"isBot\": true,\n  \"isMissed\": true,\n  \"isMissedByVisitor\": false,\n  \"isPushed\": true,\n  \"isTrigger\": false,\n  \"rawUnsafeHtml\": \"string\",\n  \"receivedFrom\": \"string\",\n  \"replyTo\": {\n    \"email\": \"string\",\n    \"name\": \"string\"\n  },\n  \"sourceMessageId\": \"string\",\n  \"subject\": \"string\",\n  \"text\": \"string\",\n  \"to\": [\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    }\n  ],\n  \"type\": \"visitor\",\n  \"isSentViaJsApi\": false,\n  \"messageType\": \"string\",\n  \"isForward\": true,\n  \"source\": {},\n  \"visitorId\": \"string\"\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "57d64347-ed40-4448-929e-921972685a54",
-              "name": "Automated message not found",
+              "id": "c317865d-3dab-4707-b4c6-67d44ba2c1ad",
+              "name": "bad request",
               "originalRequest": {
                 "url": {
                   "path": [
                     "conversations",
-                    "pushedMessages",
-                    ":pushedMessageId"
+                    "messages",
+                    ":id"
                   ],
                   "host": [
                     "{{baseUrl}}"
@@ -1091,26 +568,75 @@
                       "disabled": false,
                       "type": "any",
                       "value": "<string>",
-                      "key": "pushedMessageId",
-                      "description": "(Required) Unique identifier of the automated message."
+                      "key": "id",
+                      "description": "(Required) ID of the message"
                     }
                   ]
                 },
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
                     "key": "api-key",
-                    "value": "<API Key>"
+                    "value": "<string>"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "DELETE",
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"The sum of all IP weights must equal 100\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8d22730b-5ab0-4337-91c0-38a05c5db8c8",
+              "name": "Returned when the message is not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "conversations",
+                    "messages",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of the message"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
                 "body": {}
               },
               "status": "Not Found",
@@ -1121,7 +647,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             }
@@ -1130,25 +656,14 @@
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           }
-        }
-      ],
-      "event": []
-    },
-    {
-      "id": "79aac470-560f-41e1-b616-da1eee1eede2",
-      "name": "Messages",
-      "description": {
-        "content": "Send and manage chat messages as an agent or automated bot within conversations.",
-        "type": "text/plain"
-      },
-      "item": [
+        },
         {
-          "id": "17c6d41d-5a35-4cfa-aba1-07a85de274ea",
+          "id": "80cf5e64-f67b-40ef-9ec3-b87abe0366f6",
           "name": "Send a message as an agent",
           "request": {
             "name": "Send a message as an agent",
             "description": {
-              "content": "Sends a chat message within a conversation as an agent. The message is delivered to the visitor in real time through the Brevo chat widget.",
+              "content": "Send a message as an agent to an existing visitor's conversation. You must provide either `agentId` alone, or all three of `agentEmail` + `agentName` + `receivedFrom` to identify the agent.",
               "type": "text/plain"
             },
             "url": {
@@ -1164,6 +679,12 @@
             },
             "header": [
               {
+                "disabled": false,
+                "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                "key": "api-key",
+                "value": "<string>"
+              },
+              {
                 "key": "Content-Type",
                 "value": "application/json"
               },
@@ -1176,7 +697,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"visitorId\": \"<string>\",\n  \"text\": \"<string>\",\n  \"agentId\": \"<string>\",\n  \"agentName\": \"<string>\"\n}",
+              "raw": "{\n  \"text\": \"<string>\",\n  \"visitorId\": \"<string>\",\n  \"agentEmail\": \"<email>\",\n  \"agentId\": \"<string>\",\n  \"agentName\": \"<string>\",\n  \"receivedFrom\": \"<string>\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1186,8 +707,8 @@
           },
           "response": [
             {
-              "id": "68025b16-273d-46e1-abf5-53df7c262ae0",
-              "name": "Message sent successfully",
+              "id": "8536097b-d0a5-4eac-9c9e-79f3f6b1b6f2",
+              "name": "Newly created message is returned as a response.",
               "originalRequest": {
                 "url": {
                   "path": [
@@ -1202,12 +723,10 @@
                 },
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
                     "key": "api-key",
-                    "value": "<API Key>"
+                    "value": "<string>"
                   },
                   {
                     "key": "Accept",
@@ -1217,7 +736,7 @@
                 "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"visitorId\": \"<string>\",\n  \"text\": \"<string>\",\n  \"agentId\": \"<string>\",\n  \"agentName\": \"<string>\"\n}",
+                  "raw": "{\n  \"text\": \"<string>\",\n  \"visitorId\": \"<string>\",\n  \"agentEmail\": \"<email>\",\n  \"agentId\": \"<string>\",\n  \"agentName\": \"<string>\",\n  \"receivedFrom\": \"<string>\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1233,13 +752,13 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"string\",\n  \"type\": \"visitor\",\n  \"text\": \"string\",\n  \"visitorId\": \"string\",\n  \"agentId\": \"string\",\n  \"agentName\": \"string\",\n  \"createdAt\": \"1953-01-25T03:51:19.014Z\"\n}",
+              "body": "{\n  \"agentId\": \"string\",\n  \"agentName\": \"string\",\n  \"agentUserpic\": \"string\",\n  \"attachments\": [\n    {\n      \"name\": \"string\",\n      \"link\": \"string\",\n      \"mimeType\": \"string\",\n      \"isImage\": false,\n      \"isSticker\": true,\n      \"isInline\": false,\n      \"inlineId\": \"string\",\n      \"size\": 9098,\n      \"imageInfo\": {\n        \"width\": 4487,\n        \"height\": 6572,\n        \"previewLink\": \"string\"\n      },\n      \"isAllowedFileType\": true\n    },\n    {\n      \"name\": \"string\",\n      \"link\": \"string\",\n      \"mimeType\": \"string\",\n      \"isImage\": false,\n      \"isSticker\": true,\n      \"isInline\": false,\n      \"inlineId\": \"string\",\n      \"size\": 4306,\n      \"imageInfo\": {\n        \"width\": 5767,\n        \"height\": 6171,\n        \"previewLink\": \"string\"\n      },\n      \"isAllowedFileType\": false\n    }\n  ],\n  \"bcc\": [\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    }\n  ],\n  \"cc\": [\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    }\n  ],\n  \"createdAt\": 9920,\n  \"file\": {\n    \"name\": \"string\",\n    \"link\": \"string\",\n    \"mimeType\": \"string\",\n    \"isImage\": true,\n    \"isSticker\": false,\n    \"isInline\": true,\n    \"inlineId\": \"string\",\n    \"size\": 1366,\n    \"imageInfo\": {\n      \"width\": 5221,\n      \"height\": 157,\n      \"previewLink\": \"string\"\n    },\n    \"isAllowedFileType\": true\n  },\n  \"forwardedToSourceStatus\": {\n    \"error\": \"string\",\n    \"isSuccess\": true\n  },\n  \"from\": {\n    \"email\": \"string\",\n    \"name\": \"string\"\n  },\n  \"html\": \"string\",\n  \"id\": \"string\",\n  \"integrations\": {},\n  \"isBot\": true,\n  \"isMissed\": true,\n  \"isMissedByVisitor\": false,\n  \"isPushed\": true,\n  \"isTrigger\": false,\n  \"rawUnsafeHtml\": \"string\",\n  \"receivedFrom\": \"string\",\n  \"replyTo\": {\n    \"email\": \"string\",\n    \"name\": \"string\"\n  },\n  \"sourceMessageId\": \"string\",\n  \"subject\": \"string\",\n  \"text\": \"string\",\n  \"to\": [\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    }\n  ],\n  \"type\": \"visitor\",\n  \"isSentViaJsApi\": false,\n  \"messageType\": \"string\",\n  \"isForward\": true,\n  \"source\": {},\n  \"visitorId\": \"string\"\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "8c5d8488-0e08-4ddf-8192-254ba0de17a3",
-              "name": "Bad request",
+              "id": "42e7a5fd-c47d-4ddb-9442-b680ae3a0620",
+              "name": "bad request",
               "originalRequest": {
                 "url": {
                   "path": [
@@ -1254,12 +773,10 @@
                 },
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
                     "key": "api-key",
-                    "value": "<API Key>"
+                    "value": "<string>"
                   },
                   {
                     "key": "Accept",
@@ -1269,7 +786,7 @@
                 "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"visitorId\": \"<string>\",\n  \"text\": \"<string>\",\n  \"agentId\": \"<string>\",\n  \"agentName\": \"<string>\"\n}",
+                  "raw": "{\n  \"text\": \"<string>\",\n  \"visitorId\": \"<string>\",\n  \"agentEmail\": \"<email>\",\n  \"agentId\": \"<string>\",\n  \"agentName\": \"<string>\",\n  \"receivedFrom\": \"<string>\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1285,59 +802,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "1ae9bb12-e10c-423a-88ad-7bf66098c1e6",
-              "name": "Unauthorized",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    "messages"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "api-key",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"visitorId\": \"<string>\",\n  \"text\": \"<string>\",\n  \"agentId\": \"<string>\",\n  \"agentName\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\"\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             }
@@ -1348,19 +813,19 @@
           }
         },
         {
-          "id": "36685032-3bf4-47f0-a9ec-fa96b52774fc",
-          "name": "Get a message",
+          "id": "b2779892-ed43-476e-89ee-b32bff401c8f",
+          "name": "Delete an automated message",
           "request": {
-            "name": "Get a message",
+            "name": "Delete an automated message",
             "description": {
-              "content": "Retrieves the details of a specific chat message by its unique identifier including the message text, sender, and timestamp.",
+              "content": "Delete an automated (pushed) message by its ID.",
               "type": "text/plain"
             },
             "url": {
               "path": [
                 "conversations",
-                "messages",
-                ":messageId"
+                "pushedMessages",
+                ":id"
               ],
               "host": [
                 "{{baseUrl}}"
@@ -1371,30 +836,36 @@
                   "disabled": false,
                   "type": "any",
                   "value": "<string>",
-                  "key": "messageId",
-                  "description": "(Required) Unique identifier of the chat message."
+                  "key": "id",
+                  "description": "(Required) ID of the message"
                 }
               ]
             },
             "header": [
               {
+                "disabled": false,
+                "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                "key": "api-key",
+                "value": "<string>"
+              },
+              {
                 "key": "Accept",
                 "value": "application/json"
               }
             ],
-            "method": "GET",
+            "method": "DELETE",
             "auth": null
           },
           "response": [
             {
-              "id": "b0b32f2c-6592-49b5-92ce-58241a02f7f3",
-              "name": "Message retrieved successfully",
+              "id": "903d5378-23e1-4541-8e79-7a2dbf317fcd",
+              "name": "The message was deleted from the conversation.",
               "originalRequest": {
                 "url": {
                   "path": [
                     "conversations",
-                    "messages",
-                    ":messageId"
+                    "pushedMessages",
+                    ":id"
                   ],
                   "host": [
                     "{{baseUrl}}"
@@ -1405,49 +876,47 @@
                       "disabled": false,
                       "type": "any",
                       "value": "<string>",
-                      "key": "messageId",
-                      "description": "(Required) Unique identifier of the chat message."
+                      "key": "id",
+                      "description": "(Required) ID of the message"
                     }
                   ]
                 },
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
                     "key": "api-key",
-                    "value": "<API Key>"
+                    "value": "<string>"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "GET",
+                "method": "DELETE",
                 "body": {}
               },
-              "status": "OK",
-              "code": 200,
+              "status": "No Content",
+              "code": 204,
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"string\",\n  \"type\": \"visitor\",\n  \"text\": \"string\",\n  \"visitorId\": \"string\",\n  \"agentId\": \"string\",\n  \"agentName\": \"string\",\n  \"createdAt\": \"1953-01-25T03:51:19.014Z\"\n}",
+              "body": "{}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "ca81c51a-2685-4d10-8489-e95c64007bc7",
-              "name": "Unauthorized",
+              "id": "4ec24516-71ec-4588-a1d3-8ee717f45898",
+              "name": "bad request",
               "originalRequest": {
                 "url": {
                   "path": [
                     "conversations",
-                    "messages",
-                    ":messageId"
+                    "pushedMessages",
+                    ":id"
                   ],
                   "host": [
                     "{{baseUrl}}"
@@ -1458,49 +927,47 @@
                       "disabled": false,
                       "type": "any",
                       "value": "<string>",
-                      "key": "messageId",
-                      "description": "(Required) Unique identifier of the chat message."
+                      "key": "id",
+                      "description": "(Required) ID of the message"
                     }
                   ]
                 },
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
                     "key": "api-key",
-                    "value": "<API Key>"
+                    "value": "<string>"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "GET",
+                "method": "DELETE",
                 "body": {}
               },
-              "status": "Unauthorized",
-              "code": 401,
+              "status": "Bad Request",
+              "code": 400,
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "body": "{\n  \"code\": \"duplicate_parameter\",\n  \"message\": \"string\"\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "41079b8f-f176-4d13-b28b-7d01878efb05",
-              "name": "Message not found",
+              "id": "ff810d4f-411b-494b-8026-d456b4b6ab5e",
+              "name": "Returned when the message is not found.",
               "originalRequest": {
                 "url": {
                   "path": [
                     "conversations",
-                    "messages",
-                    ":messageId"
+                    "pushedMessages",
+                    ":id"
                   ],
                   "host": [
                     "{{baseUrl}}"
@@ -1511,26 +978,24 @@
                       "disabled": false,
                       "type": "any",
                       "value": "<string>",
-                      "key": "messageId",
-                      "description": "(Required) Unique identifier of the chat message."
+                      "key": "id",
+                      "description": "(Required) ID of the message"
                     }
                   ]
                 },
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
                     "key": "api-key",
-                    "value": "<API Key>"
+                    "value": "<string>"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "GET",
+                "method": "DELETE",
                 "body": {}
               },
               "status": "Not Found",
@@ -1541,7 +1006,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             }
@@ -1552,19 +1017,19 @@
           }
         },
         {
-          "id": "dc4b1be9-a47b-4ed7-85cb-62e49494bda0",
-          "name": "Update a message",
+          "id": "c5862230-b51c-480b-8995-d24ce04a28dc",
+          "name": "Update an automated message",
           "request": {
-            "name": "Update a message",
+            "name": "Update an automated message",
             "description": {
-              "content": "Updates the text content of an existing chat message. Only agent messages can be updated.",
+              "content": "Update the text of an automated (pushed) message. The `text` and `html` fields of the message will be updated.",
               "type": "text/plain"
             },
             "url": {
               "path": [
                 "conversations",
-                "messages",
-                ":messageId"
+                "pushedMessages",
+                ":id"
               ],
               "host": [
                 "{{baseUrl}}"
@@ -1575,12 +1040,18 @@
                   "disabled": false,
                   "type": "any",
                   "value": "<string>",
-                  "key": "messageId",
-                  "description": "(Required) Unique identifier of the chat message."
+                  "key": "id",
+                  "description": "(Required) ID of the message"
                 }
               ]
             },
             "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                "key": "api-key",
+                "value": "<string>"
+              },
               {
                 "key": "Content-Type",
                 "value": "application/json"
@@ -1604,14 +1075,14 @@
           },
           "response": [
             {
-              "id": "e79417e8-08e4-4143-b47f-f621b6732bb7",
-              "name": "Message updated successfully",
+              "id": "657af780-7daa-4bec-b81d-9eea13ba3a63",
+              "name": "Updated message is returned as a response.",
               "originalRequest": {
                 "url": {
                   "path": [
                     "conversations",
-                    "messages",
-                    ":messageId"
+                    "pushedMessages",
+                    ":id"
                   ],
                   "host": [
                     "{{baseUrl}}"
@@ -1622,19 +1093,17 @@
                       "disabled": false,
                       "type": "any",
                       "value": "<string>",
-                      "key": "messageId",
-                      "description": "(Required) Unique identifier of the chat message."
+                      "key": "id",
+                      "description": "(Required) ID of the message"
                     }
                   ]
                 },
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
                     "key": "api-key",
-                    "value": "<API Key>"
+                    "value": "<string>"
                   },
                   {
                     "key": "Accept",
@@ -1660,19 +1129,19 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"string\",\n  \"type\": \"visitor\",\n  \"text\": \"string\",\n  \"visitorId\": \"string\",\n  \"agentId\": \"string\",\n  \"agentName\": \"string\",\n  \"createdAt\": \"1953-01-25T03:51:19.014Z\"\n}",
+              "body": "{\n  \"agentId\": \"string\",\n  \"agentName\": \"string\",\n  \"agentUserpic\": \"string\",\n  \"attachments\": [\n    {\n      \"name\": \"string\",\n      \"link\": \"string\",\n      \"mimeType\": \"string\",\n      \"isImage\": false,\n      \"isSticker\": true,\n      \"isInline\": false,\n      \"inlineId\": \"string\",\n      \"size\": 9098,\n      \"imageInfo\": {\n        \"width\": 4487,\n        \"height\": 6572,\n        \"previewLink\": \"string\"\n      },\n      \"isAllowedFileType\": true\n    },\n    {\n      \"name\": \"string\",\n      \"link\": \"string\",\n      \"mimeType\": \"string\",\n      \"isImage\": false,\n      \"isSticker\": true,\n      \"isInline\": false,\n      \"inlineId\": \"string\",\n      \"size\": 4306,\n      \"imageInfo\": {\n        \"width\": 5767,\n        \"height\": 6171,\n        \"previewLink\": \"string\"\n      },\n      \"isAllowedFileType\": false\n    }\n  ],\n  \"bcc\": [\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    }\n  ],\n  \"cc\": [\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    }\n  ],\n  \"createdAt\": 9920,\n  \"file\": {\n    \"name\": \"string\",\n    \"link\": \"string\",\n    \"mimeType\": \"string\",\n    \"isImage\": true,\n    \"isSticker\": false,\n    \"isInline\": true,\n    \"inlineId\": \"string\",\n    \"size\": 1366,\n    \"imageInfo\": {\n      \"width\": 5221,\n      \"height\": 157,\n      \"previewLink\": \"string\"\n    },\n    \"isAllowedFileType\": true\n  },\n  \"forwardedToSourceStatus\": {\n    \"error\": \"string\",\n    \"isSuccess\": true\n  },\n  \"from\": {\n    \"email\": \"string\",\n    \"name\": \"string\"\n  },\n  \"html\": \"string\",\n  \"id\": \"string\",\n  \"integrations\": {},\n  \"isBot\": true,\n  \"isMissed\": true,\n  \"isMissedByVisitor\": false,\n  \"isPushed\": true,\n  \"isTrigger\": false,\n  \"rawUnsafeHtml\": \"string\",\n  \"receivedFrom\": \"string\",\n  \"replyTo\": {\n    \"email\": \"string\",\n    \"name\": \"string\"\n  },\n  \"sourceMessageId\": \"string\",\n  \"subject\": \"string\",\n  \"text\": \"string\",\n  \"to\": [\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    }\n  ],\n  \"type\": \"visitor\",\n  \"isSentViaJsApi\": false,\n  \"messageType\": \"string\",\n  \"isForward\": true,\n  \"source\": {},\n  \"visitorId\": \"string\"\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "35b0f64f-b980-4493-bba7-b8537fc05ef9",
-              "name": "Bad request",
+              "id": "a8b48377-1259-4dfd-b210-5d89cf1f42b6",
+              "name": "bad request",
               "originalRequest": {
                 "url": {
                   "path": [
                     "conversations",
-                    "messages",
-                    ":messageId"
+                    "pushedMessages",
+                    ":id"
                   ],
                   "host": [
                     "{{baseUrl}}"
@@ -1683,19 +1152,17 @@
                       "disabled": false,
                       "type": "any",
                       "value": "<string>",
-                      "key": "messageId",
-                      "description": "(Required) Unique identifier of the chat message."
+                      "key": "id",
+                      "description": "(Required) ID of the message"
                     }
                   ]
                 },
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
                     "key": "api-key",
-                    "value": "<API Key>"
+                    "value": "<string>"
                   },
                   {
                     "key": "Accept",
@@ -1721,19 +1188,19 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "body": "{\n  \"code\": \"Category id not found\",\n  \"message\": \"string\"\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "ae13c4ff-da8c-466e-a7b9-6fb5da0a9d1e",
-              "name": "Unauthorized",
+              "id": "0d1a70b4-ef7d-48df-8833-c2c6f0372ec9",
+              "name": "Returned when the message is not found.",
               "originalRequest": {
                 "url": {
                   "path": [
                     "conversations",
-                    "messages",
-                    ":messageId"
+                    "pushedMessages",
+                    ":id"
                   ],
                   "host": [
                     "{{baseUrl}}"
@@ -1744,80 +1211,17 @@
                       "disabled": false,
                       "type": "any",
                       "value": "<string>",
-                      "key": "messageId",
-                      "description": "(Required) Unique identifier of the chat message."
+                      "key": "id",
+                      "description": "(Required) ID of the message"
                     }
                   ]
                 },
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
                     "key": "api-key",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"text\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "c485d3ce-f44a-4fa2-b7ad-a60994978343",
-              "name": "Message not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    "messages",
-                    ":messageId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "messageId",
-                      "description": "(Required) Unique identifier of the chat message."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "api-key",
-                    "value": "<API Key>"
+                    "value": "<string>"
                   },
                   {
                     "key": "Accept",
@@ -1843,7 +1247,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             }
@@ -1854,19 +1258,19 @@
           }
         },
         {
-          "id": "a319007a-f706-4c9f-a9ed-f740846ce637",
-          "name": "Delete a message",
+          "id": "acd0f1d0-cd7d-4594-9898-832b4bef41ea",
+          "name": "Get an automated message",
           "request": {
-            "name": "Delete a message",
+            "name": "Get an automated message",
             "description": {
-              "content": "Permanently deletes a chat message from a conversation.",
+              "content": "Retrieve a single automated (pushed) message by its ID.",
               "type": "text/plain"
             },
             "url": {
               "path": [
                 "conversations",
-                "messages",
-                ":messageId"
+                "pushedMessages",
+                ":id"
               ],
               "host": [
                 "{{baseUrl}}"
@@ -1877,30 +1281,36 @@
                   "disabled": false,
                   "type": "any",
                   "value": "<string>",
-                  "key": "messageId",
-                  "description": "(Required) Unique identifier of the chat message."
+                  "key": "id",
+                  "description": "(Required) ID of the message sent previously"
                 }
               ]
             },
             "header": [
               {
+                "disabled": false,
+                "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                "key": "api-key",
+                "value": "<string>"
+              },
+              {
                 "key": "Accept",
                 "value": "application/json"
               }
             ],
-            "method": "DELETE",
+            "method": "GET",
             "auth": null
           },
           "response": [
             {
-              "id": "5303e2c7-1e95-4a9a-8eed-d9a6bc634053",
-              "name": "Message deleted successfully",
+              "id": "f1a5e711-0979-434c-a483-82a0492bcba6",
+              "name": "Requested message is returned as a response.",
               "originalRequest": {
                 "url": {
                   "path": [
                     "conversations",
-                    "messages",
-                    ":messageId"
+                    "pushedMessages",
+                    ":id"
                   ],
                   "host": [
                     "{{baseUrl}}"
@@ -1911,98 +1321,47 @@
                       "disabled": false,
                       "type": "any",
                       "value": "<string>",
-                      "key": "messageId",
-                      "description": "(Required) Unique identifier of the chat message."
+                      "key": "id",
+                      "description": "(Required) ID of the message sent previously"
                     }
                   ]
                 },
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
                     "key": "api-key",
-                    "value": "<API Key>"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "No Content",
-              "code": 204,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "2d29b8e5-2dec-442a-8e72-1059039aaabf",
-              "name": "Unauthorized",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    "messages",
-                    ":messageId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "messageId",
-                      "description": "(Required) Unique identifier of the chat message."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "api-key",
-                    "value": "<API Key>"
+                    "value": "<string>"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "DELETE",
+                "method": "GET",
                 "body": {}
               },
-              "status": "Unauthorized",
-              "code": 401,
+              "status": "OK",
+              "code": 200,
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "body": "{\n  \"agentId\": \"string\",\n  \"agentName\": \"string\",\n  \"agentUserpic\": \"string\",\n  \"attachments\": [\n    {\n      \"name\": \"string\",\n      \"link\": \"string\",\n      \"mimeType\": \"string\",\n      \"isImage\": false,\n      \"isSticker\": true,\n      \"isInline\": false,\n      \"inlineId\": \"string\",\n      \"size\": 9098,\n      \"imageInfo\": {\n        \"width\": 4487,\n        \"height\": 6572,\n        \"previewLink\": \"string\"\n      },\n      \"isAllowedFileType\": true\n    },\n    {\n      \"name\": \"string\",\n      \"link\": \"string\",\n      \"mimeType\": \"string\",\n      \"isImage\": false,\n      \"isSticker\": true,\n      \"isInline\": false,\n      \"inlineId\": \"string\",\n      \"size\": 4306,\n      \"imageInfo\": {\n        \"width\": 5767,\n        \"height\": 6171,\n        \"previewLink\": \"string\"\n      },\n      \"isAllowedFileType\": false\n    }\n  ],\n  \"bcc\": [\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    }\n  ],\n  \"cc\": [\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    }\n  ],\n  \"createdAt\": 9920,\n  \"file\": {\n    \"name\": \"string\",\n    \"link\": \"string\",\n    \"mimeType\": \"string\",\n    \"isImage\": true,\n    \"isSticker\": false,\n    \"isInline\": true,\n    \"inlineId\": \"string\",\n    \"size\": 1366,\n    \"imageInfo\": {\n      \"width\": 5221,\n      \"height\": 157,\n      \"previewLink\": \"string\"\n    },\n    \"isAllowedFileType\": true\n  },\n  \"forwardedToSourceStatus\": {\n    \"error\": \"string\",\n    \"isSuccess\": true\n  },\n  \"from\": {\n    \"email\": \"string\",\n    \"name\": \"string\"\n  },\n  \"html\": \"string\",\n  \"id\": \"string\",\n  \"integrations\": {},\n  \"isBot\": true,\n  \"isMissed\": true,\n  \"isMissedByVisitor\": false,\n  \"isPushed\": true,\n  \"isTrigger\": false,\n  \"rawUnsafeHtml\": \"string\",\n  \"receivedFrom\": \"string\",\n  \"replyTo\": {\n    \"email\": \"string\",\n    \"name\": \"string\"\n  },\n  \"sourceMessageId\": \"string\",\n  \"subject\": \"string\",\n  \"text\": \"string\",\n  \"to\": [\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    }\n  ],\n  \"type\": \"visitor\",\n  \"isSentViaJsApi\": false,\n  \"messageType\": \"string\",\n  \"isForward\": true,\n  \"source\": {},\n  \"visitorId\": \"string\"\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "7555b871-d4ad-4d74-9915-0d5592e72317",
-              "name": "Message not found",
+              "id": "c57fa34f-de3f-46a9-ac09-c843c803fdb3",
+              "name": "bad request",
               "originalRequest": {
                 "url": {
                   "path": [
                     "conversations",
-                    "messages",
-                    ":messageId"
+                    "pushedMessages",
+                    ":id"
                   ],
                   "host": [
                     "{{baseUrl}}"
@@ -2013,26 +1372,75 @@
                       "disabled": false,
                       "type": "any",
                       "value": "<string>",
-                      "key": "messageId",
-                      "description": "(Required) Unique identifier of the chat message."
+                      "key": "id",
+                      "description": "(Required) ID of the message sent previously"
                     }
                   ]
                 },
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
                     "key": "api-key",
-                    "value": "<API Key>"
+                    "value": "<string>"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "DELETE",
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"method_not_allowed\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "97486e3d-3e68-44d4-b5c6-a271fe666f52",
+              "name": "Returned when the message is not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "conversations",
+                    "pushedMessages",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of the message sent previously"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
                 "body": {}
               },
               "status": "Not Found",
@@ -2043,7 +1451,522 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e9a1deea-e110-4833-abc5-2341f9474a27",
+          "name": "Send an automated message to a visitor",
+          "request": {
+            "name": "Send an automated message to a visitor",
+            "description": {
+              "content": "Send an automated (pushed) message to a visitor on behalf of an agent. Example use cases: order status updates, announcing new features in your web app, etc.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "conversations",
+                "pushedMessages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                "key": "api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"<string>\",\n  \"visitorId\": \"<string>\",\n  \"agentId\": \"<string>\",\n  \"groupId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0ea09fa5-dd50-403e-9338-761826be5a89",
+              "name": "Newly created message is returned as a response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "conversations",
+                    "pushedMessages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"text\": \"<string>\",\n  \"visitorId\": \"<string>\",\n  \"agentId\": \"<string>\",\n  \"groupId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"agentId\": \"string\",\n  \"agentName\": \"string\",\n  \"agentUserpic\": \"string\",\n  \"attachments\": [\n    {\n      \"name\": \"string\",\n      \"link\": \"string\",\n      \"mimeType\": \"string\",\n      \"isImage\": false,\n      \"isSticker\": true,\n      \"isInline\": false,\n      \"inlineId\": \"string\",\n      \"size\": 9098,\n      \"imageInfo\": {\n        \"width\": 4487,\n        \"height\": 6572,\n        \"previewLink\": \"string\"\n      },\n      \"isAllowedFileType\": true\n    },\n    {\n      \"name\": \"string\",\n      \"link\": \"string\",\n      \"mimeType\": \"string\",\n      \"isImage\": false,\n      \"isSticker\": true,\n      \"isInline\": false,\n      \"inlineId\": \"string\",\n      \"size\": 4306,\n      \"imageInfo\": {\n        \"width\": 5767,\n        \"height\": 6171,\n        \"previewLink\": \"string\"\n      },\n      \"isAllowedFileType\": false\n    }\n  ],\n  \"bcc\": [\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    }\n  ],\n  \"cc\": [\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    }\n  ],\n  \"createdAt\": 9920,\n  \"file\": {\n    \"name\": \"string\",\n    \"link\": \"string\",\n    \"mimeType\": \"string\",\n    \"isImage\": true,\n    \"isSticker\": false,\n    \"isInline\": true,\n    \"inlineId\": \"string\",\n    \"size\": 1366,\n    \"imageInfo\": {\n      \"width\": 5221,\n      \"height\": 157,\n      \"previewLink\": \"string\"\n    },\n    \"isAllowedFileType\": true\n  },\n  \"forwardedToSourceStatus\": {\n    \"error\": \"string\",\n    \"isSuccess\": true\n  },\n  \"from\": {\n    \"email\": \"string\",\n    \"name\": \"string\"\n  },\n  \"html\": \"string\",\n  \"id\": \"string\",\n  \"integrations\": {},\n  \"isBot\": true,\n  \"isMissed\": true,\n  \"isMissedByVisitor\": false,\n  \"isPushed\": true,\n  \"isTrigger\": false,\n  \"rawUnsafeHtml\": \"string\",\n  \"receivedFrom\": \"string\",\n  \"replyTo\": {\n    \"email\": \"string\",\n    \"name\": \"string\"\n  },\n  \"sourceMessageId\": \"string\",\n  \"subject\": \"string\",\n  \"text\": \"string\",\n  \"to\": [\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"email\": \"string\",\n      \"name\": \"string\"\n    }\n  ],\n  \"type\": \"visitor\",\n  \"isSentViaJsApi\": false,\n  \"messageType\": \"string\",\n  \"isForward\": true,\n  \"source\": {},\n  \"visitorId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f64adac-11eb-4086-a7e4-9a8ffee4aeec",
+              "name": "bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "conversations",
+                    "pushedMessages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"text\": \"<string>\",\n  \"visitorId\": \"<string>\",\n  \"agentId\": \"<string>\",\n  \"groupId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"OTP code has expired\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2c774dd3-6530-494c-b1b9-48f2e2444050",
+          "name": "Sets agent's status to online for 2-3 minutes",
+          "request": {
+            "name": "Sets agent's status to online for 2-3 minutes",
+            "description": {
+              "content": "Sets the agent's status to online for 2-3 minutes. We recommend pinging this endpoint every minute for as long as the agent has to be considered online. You must provide either `agentId` alone, or all three of `agentEmail` + `agentName` + `receivedFrom`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "conversations",
+                "agentOnlinePing"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                "key": "api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"agentEmail\": \"<email>\",\n  \"agentId\": \"<string>\",\n  \"agentName\": \"<string>\",\n  \"receivedFrom\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "99e0507b-88fd-4ee7-a2d9-c98eb9aba521",
+              "name": "Status of the agent was set successfully. Response body will be empty.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "conversations",
+                    "agentOnlinePing"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"agentEmail\": \"<email>\",\n  \"agentId\": \"<string>\",\n  \"agentName\": \"<string>\",\n  \"receivedFrom\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cfe85cfc-24c4-4cdf-8ef5-3283606c2281",
+              "name": "bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "conversations",
+                    "agentOnlinePing"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"agentEmail\": \"<email>\",\n  \"agentId\": \"<string>\",\n  \"agentName\": \"<string>\",\n  \"receivedFrom\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not_acceptable\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9a656f07-3663-4869-ba8d-f67ad311b876",
+          "name": "Set visitor group assignment",
+          "request": {
+            "name": "Set visitor group assignment",
+            "description": {
+              "content": "Assigns a visitor to a specific agent group or removes them from their current group.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "conversations",
+                "visitorGroup"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                "key": "api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"groupId\": {}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "46fc13af-9be8-41a7-9683-5c3c0f131be2",
+              "name": "Visitor assigned to group",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "conversations",
+                    "visitorGroup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"groupId\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"groupId\": {},\n  \"visitorId\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "39762f49-8406-446b-8511-01ed6b67da13",
+              "name": "bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "conversations",
+                    "visitorGroup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"groupId\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"permission_denied\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5ec22c47-bc8f-45fe-80dc-f86d20971110",
+              "name": "Returned when the visitor is not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "conversations",
+                    "visitorGroup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"groupId\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             }
@@ -2065,29 +1988,12 @@
       "key": "baseUrl"
     }
   ],
-  "auth": {
-    "type": "apikey",
-    "apikey": [
-      {
-        "key": "key",
-        "value": "api-key"
-      },
-      {
-        "key": "value",
-        "value": "{{apiKey}}"
-      },
-      {
-        "key": "in",
-        "value": "header"
-      }
-    ]
-  },
   "info": {
-    "_postman_id": "5bfc97df-5645-4885-993a-6e11dfa69405",
-    "name": "Brevo Conversations API",
+    "_postman_id": "83033e27-b044-4231-93ac-8e746735e25a",
+    "name": "Conversations",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "description": {
-      "content": "The Brevo Conversations API provides programmatic access to live chat and messaging features for customer support and engagement. It enables developers to manage chat conversations, send and receive messages, and integrate Brevo's chat widget into websites and applications. The API supports real-time communication with site visitors and can be used to build custom chat interfaces, automate responses, and route conversations to appropriate team members.\n\nContact Support:\n Name: Brevo Support",
+      "content": "",
       "type": "text/plain"
     }
   }

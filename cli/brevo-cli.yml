@@ -1,0 +1,89 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.brevo.com/docs/cli-reference
+docs: https://developers.brevo.com/docs/cli-reference
+description: >-
+  The Brevo CLI (`brevo`) is a first-party developer tool whose scope is deliberately
+  narrow: it manages OAuth applications. It does not wrap the REST API — there is no
+  `brevo contacts list` or `brevo email send`. Its purpose is to make creating a scoped
+  OAuth app a terminal operation instead of a partner application form, and to scaffold and
+  run a local OAuth test server so the flow can be walked before anything is deployed. It
+  also ships its own agent context: an `agent-context/AGENTS.md` bundled in the npm package
+  and a Claude Code skill installable with `brevo skill:cli install`, which auto-refreshes
+  whenever the CLI version changes.
+binary: brevo
+package: "@getbrevo/cli"
+version: 2.0.2
+published: '2026-08-06'
+requires: Node.js >= 20.15.0
+install:
+- {method: npm, command: npm install -g @getbrevo/cli}
+- {method: yarn, command: yarn global add @getbrevo/cli}
+- {method: homebrew, command: brew install getbrevo/tap/brevo, note: Installs Node.js as a dependency}
+upgrade:
+- npm install -g @getbrevo/cli@latest
+- yarn global add @getbrevo/cli@latest
+- brew upgrade getbrevo/tap/brevo
+breaking_change:
+  version: 2.0.0
+  date: '2026-07-02'
+  note: >-
+    v2.0.0 introduced breaking changes; Brevo's changelog tells anyone on v1.1.1 or earlier
+    to migrate. Some commands do not work as expected on older versions.
+commands:
+- group: authentication
+  commands:
+  - {name: 'brevo login', description: 'Authenticate via browser (opens oauth-cli.brevo.com); credentials saved to ~/.brevo/credentials.json', flags: ['--browser', '--json']}
+  - {name: 'brevo logout', description: 'Clear stored credentials and cached app client ID/secret', flags: ['--force', '--json']}
+  - {name: 'brevo whoami', description: Show the currently authenticated user, flags: ['--json']}
+- group: apps
+  commands:
+  - {name: 'brevo app init', description: Initialize a new app project}
+  - {name: 'brevo app create', description: Create a new OAuth app}
+  - {name: 'brevo app list', description: List OAuth apps on the account}
+  - {name: 'brevo app credentials', description: Show app credentials, flags: ['--reveal-secret']}
+  - {name: 'brevo app update', description: 'Push app-config.json to Brevo; add scopes or redirect URIs', flags: ['--scope <scope>', '--redirect-uri <url>', '--logo-uri <url>']}
+  - {name: 'brevo app available-scopes', description: 'List every scope the Brevo identity provider supports', flags: ['--web', '--json']}
+  - {name: 'brevo app scaffold', description: 'Generate starter code for an existing app — 11 files including an Express OAuth test server with .env.local pre-populated', flags: ['--app-id <id>', '--json']}
+  - {name: 'brevo app start oauth', description: 'Start the scaffolded OAuth test server locally', flags: ['--port <port>'], default_port: 3009}
+  - {name: 'brevo app delete', description: 'Delete an OAuth app (irreversible)', flags: ['--app-id <id>', '--force', '--json']}
+- group: agent context
+  commands:
+  - {name: 'brevo skill:cli install', description: 'Install the brevo-cli Claude Code skill into ~/.claude/skills/', flags: ['--json']}
+  - {name: 'brevo skill:cli uninstall', description: Remove the brevo-cli skill, flags: ['--json']}
+key_flows:
+- name: Create a scoped OAuth app from the terminal
+  steps: [brevo login, brevo app create, 'brevo app update --scope contacts:read', brevo app credentials]
+- name: Run the OAuth flow locally before deploying
+  steps: ['brevo app scaffold --app-id <id>', 'npm --prefix src/oauth install', brevo app start oauth]
+- name: Discover the live scope catalog
+  steps: ['brevo app available-scopes --json']
+  note: Same catalog published at https://oauth.brevo.com/realms/partner/.well-known/oauth-authorization-server
+config_file:
+  name: app-config.json
+  location: project root, written by `brevo app scaffold`
+  fields:
+    appId: App ID assigned by Brevo — do not edit
+    appName: Display name
+    logoUri: Optional logo URL
+    cliVersion: CLI version that created the project
+    minCliVersion: Minimum CLI version required; CLI warns at startup if older
+    auth.type: always "private"
+    auth.scopes: 'OAuth scopes requested; new apps default to [contacts:read, contacts:write, crm:read, crm:write]'
+    auth.redirectUrls: Registered redirect URLs — must match exactly during authorization
+    distribution: always "private"
+exit_codes:
+  0: Success
+  1: General error
+  2: Aborted (Ctrl+C or SIGTERM)
+  3: Authentication failure (401)
+  4: Network error (API unreachable)
+  5: Not found (404)
+agent_context:
+  agents_md: skills/brevo-cli-AGENTS.md
+  agents_md_source: https://unpkg.com/@getbrevo/cli@2.0.2/agent-context/AGENTS.md
+  claude_skill: 'brevo skill:cli install'
+  note: >-
+    Provider-published agent instructions, harvested verbatim. Brevo explicitly tells
+    non-Claude agents NOT to run the skill installer and to read AGENTS.md instead, and
+    tells agents not to fall back to raw HTTP against api.brevo.com for app management.

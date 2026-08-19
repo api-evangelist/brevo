@@ -1,0 +1,75 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Brevo Contacts Agent Status Transactional Emails API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api-key",
+      "value": "{{api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transactional Emails",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send a transactional email",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/smtp/email",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a transactional email to one or more recipients. Supports personalization with dynamic parameters, template-based content, attachments, and scheduled delivery. Can also send to multiple recipients in a single call."
+        },
+        {
+          "info": {
+            "name": "Batch send transactional emails",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/smtp/email/batch",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends multiple transactional emails in a single API call. Each email in the batch can have different recipients, content, and parameters. Template placeholders can fetch values from the contact database."
+        },
+        {
+          "info": {
+            "name": "Get the content of a sent transactional email",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/smtp/email/:messageId",
+            "params": [
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "The unique message identifier of the sent transactional email."
+              }
+            ]
+          },
+          "docs": "Retrieves the personalized content of a previously sent transactional email including the rendered HTML body, subject line, and recipient information."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1000 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Marketing Campaigns",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "emailCampaigns",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Return all your created email campaigns",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/emailCampaigns",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter on the type of the campaigns"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter on the status of the campaign"
+              },
+              {
+                "name": "statistics",
+                "value": "",
+                "type": "query",
+                "description": "Filter on the type of statistics required. Example: **globalStats** value will only fetch globalStats info of the campaign in the returned response. This option only returns data for events that occurred in the last 6 months. For older campaigns, it is advisable to use the **Get Campaign Report** endpoint."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if endDate is used.** Starting (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. **Prefer to pass your timezone in date-time format for accurate result.** Only available if `status` is not passed or is set to `sent`. The date range between `startDate` and `endDate` must not exceed 2 years. `startDate` must not be in the future.\n"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if startDate is used.** Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. **Prefer to pass your timezone in date-time format for accurate result.** Only available if `status` is not passed or is set to `sent`. The date range between `startDate` and `endDate` must not exceed 2 years. `endDate` must not be in the future.\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of documents per page"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first document in the page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+              },
+              {
+                "name": "excludeHtmlContent",
+                "value": "",
+                "type": "query",
+                "description": "Use this flag to exclude htmlContent from the response body. If set to **true**, the htmlContent field will be returned as an empty string in the response body."
+              },
+              {
+                "name": "excludePdfAttachment",
+                "value": "",
+                "type": "query",
+                "description": "Use this flag to filter out campaigns that have a PDF attachment. If set to **true**, only campaigns without a PDF attachment (or with no attachment at all) will be returned."
+              }
+            ]
+          },
+          "docs": "<Note>The response payload for this endpoint has changed\nYou now need to specify which type of statistics you would like to retrieve. For more information visit [this page](https://developers.brevo.com/changelog/2023/2/7).</Note>"
+        },
+        {
+          "info": {
+            "name": "Create an email campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/emailCampaigns",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new email campaign. The campaign requires at minimum a name and sender details, and is created in draft status by default. You must provide email content via one of three mutually exclusive options: htmlContent (inline HTML), htmlUrl (remote URL), or templateId (existing template); additionally, A/B testing can be enabled by setting abTesting to true with subjectA and subjectB, but this is incompatible with sendAtBestTime."
+        },
+        {
+          "info": {
+            "name": "Get an email campaign report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/emailCampaigns/:campaignId",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "Id of the campaign"
+              },
+              {
+                "name": "statistics",
+                "value": "",
+                "type": "query",
+                "description": "Filter on the type of statistics required. Example: **globalStats** value will only fetch globalStats info of the campaign in the returned response. `statsByDevice` and `statsByBrowser` are only available when retrieving a single campaign (not in the list endpoint)."
+              },
+              {
+                "name": "excludeHtmlContent",
+                "value": "",
+                "type": "query",
+                "description": "Use this flag to exclude htmlContent from the response body. If set to **true**, htmlContent field will be returned as empty string in the response body"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information about a specific email campaign by its ID, including recipients, statistics, and HTML content. Use the statistics query parameter to select which statistics to include (globalStats, linksStats, statsByDomain, statsByDevice, or statsByBrowser); statsByDevice and statsByBrowser are only available on this single-campaign endpoint. You can exclude HTML content from the response by setting excludeHtmlContent to true."
+        },
+        {
+          "info": {
+            "name": "Update an email campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.brevo.com/v3/emailCampaigns/:campaignId",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "Id of the campaign"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing email campaign''s properties such as name, subject, content, sender, recipients, schedule, and A/B testing configuration. The campaign must exist and the request body must contain at least one valid field to update. Only draft or scheduled campaigns can be modified; if sendAtBestTime is enabled, IP warmup will be automatically disabled."
+        },
+        {
+          "info": {
+            "name": "Delete an email campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/emailCampaigns/:campaignId",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "id of the campaign"
+              }
+            ]
+          },
+          "docs": "Delete an email campaign by its campaign ID. Only campaigns that have not been scheduled can be deleted; attempting to delete a campaign that has already been scheduled will return a 403 permission denied error. Related data in templates, newsletter builder, and schedule collections is also cleaned up."
+        },
+        {
+          "info": {
+            "name": "Send an email campaign immediately, based on campaignId",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/emailCampaigns/:campaignId/sendNow",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "Id of the campaign"
+              }
+            ]
+          },
+          "docs": "Send an existing email campaign immediately by scheduling it for the current time. The campaign must have valid recipients and content configured before sending. The system verifies your account''s send limit and credit balance before dispatching; if credits are insufficient, a 402 error is returned."
+        },
+        {
+          "info": {
+            "name": "Send an email campaign to your test list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/emailCampaigns/:campaignId/sendTest",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "Id of the campaign"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a test version of an email campaign to specified email addresses or your entire test list. If the emailTo array is left empty, the test mail will be sent to all addresses in your test list. You can send a maximum of 50 test emails per day."
+        },
+        {
+          "info": {
+            "name": "Update an email campaign status",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.brevo.com/v3/emailCampaigns/:campaignId/status",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "Id of the campaign"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the status of an email campaign, such as suspending, archiving, or replicating it. Available status values include suspended, archive, darchive, sent, queued, replicate, replicateTemplate, cancel, and draft. Note that the replicateTemplate status is only available for template type campaigns."
+        },
+        {
+          "info": {
+            "name": "Get a shared template url",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/emailCampaigns/:campaignId/sharedUrl",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "Id of the campaign or template"
+              }
+            ]
+          },
+          "docs": "Get a unique URL to share & import an email template from one Brevo account to another."
+        },
+        {
+          "info": {
+            "name": "Export the recipients of an email campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/emailCampaigns/:campaignId/exportRecipients",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "Id of the campaign"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Export the recipients of a sent email campaign as an asynchronous process, filtered by recipient type (e.g. openers, clickers, hardBounces). The recipientsType field is required and determines which subset of recipients to export. An optional notifyURL webhook will be called once the export is complete, and the response returns a processId to track the export status."
+        },
+        {
+          "info": {
+            "name": "Send the report of a campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/emailCampaigns/:campaignId/sendReport",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "Id of the campaign"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "A PDF will be sent to the specified email addresses"
+        },
+        {
+          "info": {
+            "name": "Get an A/B test email campaign results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/emailCampaigns/:campaignId/abTestCampaignResult",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "Id of the A/B test campaign"
+              }
+            ]
+          },
+          "docs": "Obtain winning version of an A/B test email campaign"
+        },
+        {
+          "info": {
+            "name": "Upload an image to your account's image gallery",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/emailCampaigns/images",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upload an image to your account''s image gallery by providing an absolute URL to the image. The maximum allowed image size is 2MB and supported formats are jpeg, jpg, png, bmp, and gif; local file uploads are not supported."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "smsCampaigns",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns the information for all your created SMS campaigns",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/smsCampaigns",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Status of campaign."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if endDate is used.** Starting (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent SMS campaigns. **Prefer to pass your timezone in date-time format for accurate result.** Only available if `status` is not passed or is set to `sent`. `startDate` must not be in the future.\n"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if startDate is used.** Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent SMS campaigns. **Prefer to pass your timezone in date-time format for accurate result.** Only available if `status` is not passed or is set to `sent`. `endDate` must not be in the future.\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of documents per page"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Beginning point in the list to retrieve from."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of all your SMS campaigns with their statistics and recipient information. Results can be filtered by status and date range, with a default limit of 500 and maximum of 1000 per page. The sort order defaults to descending by creation date; date filters are only available when status is not passed or is set to sent."
+        },
+        {
+          "info": {
+            "name": "Creates an SMS campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/smsCampaigns",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new SMS campaign with the required name, sender, and content fields. The sender name is limited to 11 alphanumeric characters or 15 numeric characters, and the content should stay within 160 characters per SMS segment. If a scheduledAt date is provided, listIds in recipients become mandatory; accounts under validation are limited to 4 total campaigns and campaigns with more than 10 recipients will be saved as draft."
+        },
+        {
+          "info": {
+            "name": "Get an SMS campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/smsCampaigns/:campaignId",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "id of the SMS campaign"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information about a specific SMS campaign by its ID, including campaign content, sender, recipients with list names, statistics (delivered, sent, bounces, unsubscriptions, answered), and tags. Unlike the list endpoint, recipients are returned as objects with id and name fields rather than plain IDs."
+        },
+        {
+          "info": {
+            "name": "Update an SMS campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.brevo.com/v3/smsCampaigns/:campaignId",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "id of the SMS campaign"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing SMS campaign''s properties such as name, sender, content, recipients, scheduled date, organisation prefix, and unsubscribe instructions. The request body must contain at least one valid field to update. The campaign must exist and must be of type SMS; if a scheduledAt is provided, valid recipients must be present either in the request or already configured on the campaign."
+        },
+        {
+          "info": {
+            "name": "Delete an SMS campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/smsCampaigns/:campaignId",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "id of the SMS campaign"
+              }
+            ]
+          },
+          "docs": "Delete an SMS campaign by its campaign ID. Only campaigns that have not been scheduled or sent can be deleted; attempting to delete a campaign that is queued, in process, or has been sent with recipients will return a 403 permission denied error."
+        },
+        {
+          "info": {
+            "name": "Send your SMS campaign immediately",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/smsCampaigns/:campaignId/sendNow",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "id of the campaign"
+              }
+            ]
+          },
+          "docs": "Send an existing SMS campaign immediately by scheduling it for the current time. The system verifies your account''s SMS credit balance before dispatching; if credits are insufficient or the remaining credit is less than the number of recipients, a 402 error is returned. The campaign must have valid recipients and content already configured."
+        },
+        {
+          "info": {
+            "name": "Update a campaign's status",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.brevo.com/v3/smsCampaigns/:campaignId/status",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "id of the campaign"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the status of an SMS campaign, such as suspending, archiving, or replicating it. Available status values include suspended, archive, darchive, sent, queued, replicate, replicateTemplate, cancel, and draft. Note that the replicateTemplate status is only available for template type campaigns."
+        },
+        {
+          "info": {
+            "name": "Send a test SMS campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/smsCampaigns/:campaignId/sendTest",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "Id of the SMS campaign"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a test SMS to a specified phone number to preview the campaign before sending it to all recipients. The phone number must belong to one of your existing contacts in your Brevo account and must not be blacklisted. The number should include the country code (e.g. 33689965433)."
+        },
+        {
+          "info": {
+            "name": "Export an SMS campaign's recipients",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/smsCampaigns/:campaignId/exportRecipients",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "id of the campaign"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "It returns the background process ID which on completion calls the notify URL that you have set in the input."
+        },
+        {
+          "info": {
+            "name": "Send an SMS campaign's report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/smsCampaigns/:campaignId/sendReport",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "id of the campaign"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send report of Sent and Archived campaign, to the specified email addresses, with respective data and a pdf attachment in detail."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "whatsAppCampaigns",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a WhatsApp campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/whatsappCampaigns/:campaignId",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "Id of the campaign"
+              }
+            ]
+          },
+          "docs": "<Note>You can use this API for WhatsApp only if you have setup your WhatsApp account on Brevo platform. To setup your WhatsApp account, follow the steps in the guide below.\n[Activating Whatsapp](https://developers.brevo.com/docs/whatsapp-campaigns-1) in your account</Note>\n<Note>This API requires the List and Segment ids as recipients in Body params.You can use the below Contact endpoints to get the required information.\n[Get all the Lists](https://developers.brevo.com/reference/getlists-1)\n[Get"
+        },
+        {
+          "info": {
+            "name": "Update a WhatsApp campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.brevo.com/v3/whatsappCampaigns/:campaignId",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "id of the campaign"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<Note>You can use this API for WhatsApp only if you have setup your WhatsApp account on Brevo platform. To setup your WhatsApp account, follow the steps in the guide below.\n[Activating Whatsapp](https://developers.brevo.com/docs/whatsapp-campaigns-1) in your account</Note>\n<Note>This API requires the List and Segment ids as recipients in Body params.You can use the below Contact endpoints to get the required information.\n[Get all the Lists](https://developers.brevo.com/reference/getlists-1)\n[Get"
+        },
+        {
+          "info": {
+            "name": "Delete a WhatsApp campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.brevo.com/v3/whatsappCampaigns/:campaignId",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "id of the campaign"
+              }
+            ]
+          },
+          "docs": "Delete a WhatsApp campaign by its campaign ID. The campaign must exist; if the campaign ID is not found, a 404 error is returned. This action is permanent and cannot be undone."
+        },
+        {
+          "info": {
+            "name": "Return all your created WhatsApp templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/whatsappCampaigns/template-list",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if endDate is used**. Starting (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the templates created. **Prefer to pass your timezone in date-time format for accurate result**\n"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if startDate is used**. Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the templates created. **Prefer to pass your timezone in date-time format for accurate result**\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of documents per page"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first document in the page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in the ascending/descending order of record modification. Default order is **descending** if `sort` is not passed"
+              },
+              {
+                "name": "source",
+                "value": "",
+                "type": "query",
+                "description": "source of the template"
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of all your WhatsApp templates with their status, category, language, and metadata. Results can be filtered by creation date range and optionally by source (Automation or Conversations), with a default limit of 50 and maximum of 100 per page. The sort order defaults to descending by modification date."
+        },
+        {
+          "info": {
+            "name": "Return all your created WhatsApp campaigns",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/whatsappCampaigns",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if endDate is used**. Starting (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the WhatsApp campaigns created. **Prefer to pass your timezone in date-time format for accurate result**\n"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if startDate is used**. Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the WhatsApp campaigns created. **Prefer to pass your timezone in date-time format for accurate result**\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of documents per page"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first document in the page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in the ascending/descending order of record modification. Default order is **descending** if `sort` is not passed"
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of all your WhatsApp campaigns with their statistics and metadata. Results can be filtered by creation date range using startDate and endDate, with a default limit of 50 and maximum of 100 per page. The sort order defaults to descending by modification date."
+        },
+        {
+          "info": {
+            "name": "Create and Send a WhatsApp campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/whatsappCampaigns",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<Note>You can use this API for WhatsApp only if you have setup your WhatsApp account on Brevo platform. To setup your WhatsApp account, follow the steps in the guide below.\n[Activating Whatsapp](https://developers.brevo.com/docs/whatsapp-campaigns-1) in your account</Note>\n<Note>This API requires the List and Segment ids as recipients in Body params.You can use the below Contact endpoints to get the required information.\n[Get all the Lists](https://developers.brevo.com/reference/getlists-1)\n[Get"
+        },
+        {
+          "info": {
+            "name": "Get your WhatsApp API account information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/whatsappCampaigns/config",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "<Note>You can use this API for WhatsApp only if you have setup your WhatsApp account on Brevo platform. To setup your WhatsApp account, follow the steps in the guide below.\n[Activating WhatsApp](https://developers.brevo.com/docs/whatsapp-campaigns-1) in your account</Note>"
+        },
+        {
+          "info": {
+            "name": "Create a WhatsApp template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/whatsappCampaigns/template",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<Note>You can use this API for WhatsApp only if you have setup your WhatsApp account on Brevo platform. To setup your WhatsApp account, follow the steps in the guide below.\n[Activating WhatsApp](https://developers.brevo.com/docs/whatsapp-campaigns-1) in your account</Note>"
+        },
+        {
+          "info": {
+            "name": "Send your WhatsApp template for approval",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/whatsappCampaigns/template/approval/:templateId",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "path",
+                "description": "id of the template"
+              }
+            ]
+          },
+          "docs": "<Note>You can use this API for WhatsApp only if you have setup your WhatsApp account on Brevo platform. To setup your WhatsApp account, follow the steps in the guide below.\n[Activating WhatsApp](https://developers.brevo.com/docs/whatsapp-campaigns-1) in your account</Note>"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

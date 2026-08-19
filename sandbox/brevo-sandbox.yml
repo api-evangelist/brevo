@@ -1,0 +1,77 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.brevo.com/docs/using-sandbox-mode
+docs:
+- https://developers.brevo.com/docs/using-sandbox-mode
+- https://developers.brevo.com/docs/cli-reference
+description: >-
+  Brevo has no separate test environment and no test/live key pair. There is one account,
+  one API key, one host — and a single per-request header that suppresses delivery on the
+  transactional email endpoint. That is the whole sandbox. Everything else on the surface
+  (campaigns, contacts, CRM, ecommerce, loyalty) writes to production data with no dry-run
+  mode, which is the material fact for anyone letting an agent drive this API.
+test_live_separation:
+  supported: false
+  key_prefixes: null
+  modes: null
+  note: >-
+    No test-mode credential exists. The same api-key authorizes real sends. Contrast with
+    providers that issue sk_test_/sk_live_ pairs — there is nothing here to key an
+    environment off, so isolation must be handled by using a separate Brevo account.
+sandbox_modes:
+- name: Transactional email sandbox (drop)
+  applies_to: POST /v3/smtp/email (operationId sendTransacEmail)
+  mechanism: header
+  header: X-Sib-Sandbox
+  value: drop
+  location: >-
+    Set inside the `headers` object of the JSON request body, not as an HTTP request
+    header — the same unusual placement as idempotencyKey.
+  behaviour:
+  - No emails are sent to recipients
+  - No email logs are created in the Brevo account
+  - A 201 success response with a messageId is still returned
+  limitations: >-
+    Validates request format only. Does not exercise delivery, does not produce webhook
+    events, and does not test template rendering end to end.
+  example: |
+    curl --request POST \
+      --url https://api.brevo.com/v3/smtp/email \
+      --header 'api-key: YOUR_API_KEY' \
+      --header 'content-type: application/json' \
+      --data '{
+        "sender": {"name":"Sender Name","email":"sender@example.com"},
+        "headers": {"X-Sib-Sandbox": "drop"},
+        "to": [{"email":"recipient@example.com","name":"Recipient Name"}],
+        "subject": "Login Email confirmation",
+        "htmlContent": "<html><body><h1>Confirm your email</h1></body></html>"
+      }'
+local_test_tooling:
+- name: brevo app start oauth
+  kind: local OAuth test server
+  docs: https://developers.brevo.com/docs/cli-reference
+  description: >-
+    The Brevo CLI scaffolds and runs a local OAuth test server so an integration can walk
+    the authorization-code flow against the partner realm without deploying anything. It
+    reads `auth.scopes` from app-config.json and joins them for the `scope=` parameter.
+    This is the closest thing Brevo ships to a developer sandbox, and it covers auth only.
+- name: Postman workspace
+  url: https://www.postman.com/sib-apiv3/workspace/sendinblue
+  description: >-
+    Public forkable workspace with every endpoint and a pre-configured environment holding
+    an {{api-key}} variable. Requires a real account key — it is an exploration surface,
+    not an isolated sandbox.
+- name: Developer portal playground
+  url: https://developers.brevo.com/reference
+  description: >-
+    The API reference runs live requests against production. Using it requires
+    whitelisting your current IP under the account's Authorized IPs setting.
+test_values:
+  test_cards: null
+  test_bank_accounts: null
+  magic_identifiers: null
+  test_clocks: null
+  note: >-
+    Brevo publishes no magic test identifiers, no test recipient addresses, and no time
+    simulation. Recorded as absent rather than omitted — this is a real gap for anyone
+    building automated integration tests.

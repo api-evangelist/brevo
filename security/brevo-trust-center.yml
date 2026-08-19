@@ -1,0 +1,44 @@
+generated: '2026-08-13'
+method: searched
+probe: true
+url: https://www.brevo.com/features/data-security/
+description: >-
+  Brevo has no trust-center subdomain — trust.brevo.com and security.brevo.com do not
+  resolve. Its compliance posture is published as a marketing product page,
+  /features/data-security/, which names one certification (ISO/IEC 27001:2022, with a
+  downloadable certificate) and states support for GDPR, CASL and CCPA. There is no SOC 2
+  report, no subprocessor list at a discoverable URL, and no continuous-monitoring portal
+  (Vanta/Drata/SafeBase style). The claims are real and provider-published; the surface
+  around them is thin, and that distinction is recorded rather than flattened.
+certifications:
+- {name: 'ISO/IEC 27001:2022', status: certified, evidence_url: 'https://www.brevo.com/features/data-security/', note: Certificate offered for download from the page}
+compliance_programs:
+- {name: GDPR, claim: 'Practices that support GDPR', jurisdiction: EU}
+- {name: CASL, claim: 'Practices that support CASL', jurisdiction: Canada}
+- {name: CCPA, claim: 'Practices that support CCPA', jurisdiction: 'California, US'}
+not_found:
+- {name: SOC 2, note: No SOC 2 Type I or II report referenced on any public Brevo page found in this pass}
+- {name: HIPAA, note: Not claimed}
+- {name: PCI DSS, note: Not claimed}
+- {name: FedRAMP, note: Not claimed}
+- {name: 'CSA STAR', note: Not claimed}
+security_controls_published:
+- EU-located data centres
+- Account data encrypted before backup
+- Backups replicated across three geographical locations
+- Multi-factor authentication
+- IP address whitelisting (see authentication/brevo-authentication.yml)
+subdomains_probed:
+- {url: 'https://trust.brevo.com/', status: 000, note: does not resolve}
+- {url: 'https://security.brevo.com/', status: 000, note: does not resolve}
+- {url: 'https://www.brevo.com/legal/security/', status: 404}
+legal:
+  terms_of_service: https://www.brevo.com/legal/termsofuse/
+  privacy_policy: https://www.brevo.com/legal/privacypolicy/
+  anti_spam_policy: https://www.brevo.com/legal/antispampolicy/
+  legal_index: https://www.brevo.com/legal/
+  responsible_disclosure: https://www.brevo.com/legal/responsible-disclosure/
+evidence:
+- {source: 'https://www.brevo.com/features/data-security/', http_status: 200, keywords: ['iso 27001:2022', gdpr, ccpa, casl, encryption, multi-factor authentication]}
+x-evidence:
+  fetched: '2026-08-13'

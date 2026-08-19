@@ -1,0 +1,106 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Transactional WhatsApp",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "transactionalWhatsApp",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send a WhatsApp message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/whatsapp/sendMessage",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<Note>You can use this API for WhatsApp only if you have setup your WhatsApp account on Brevo platform. To setup your WhatsApp account, follow the steps in the guide below.\n[Activating Whatsapp](https://developers.brevo.com/docs/whatsapp-campaigns-1) in your account</Note>\nThis endpoint is used to send a WhatsApp message. <br/>(**The first message you send using the API must contain a Template ID. You must create a template on WhatsApp on the Brevo platform to fetch the Template ID.**)"
+        },
+        {
+          "info": {
+            "name": "Get all your WhatsApp activity (unaggregated events)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/whatsapp/statistics/events",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number limitation for the result returned"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Beginning point in the list to retrieve from"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if endDate is used.** Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate\n"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "**Mandatory if startDate is used.** Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate\n"
+              },
+              {
+                "name": "days",
+                "value": "",
+                "type": "query",
+                "description": "Number of days in the past including today (positive integer). _Not compatible with 'startDate' and 'endDate'_\n"
+              },
+              {
+                "name": "contactNumber",
+                "value": "",
+                "type": "query",
+                "description": "Filter results for specific contact (WhatsApp Number with country code. Example, 85264318721)"
+              },
+              {
+                "name": "event",
+                "value": "",
+                "type": "query",
+                "description": "Filter the report for a specific event type"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+              }
+            ]
+          },
+          "docs": "This endpoint will show the unaggregated statistics for WhatsApp activity (30 days by default if `startDate` and `endDate` or `days` is not passed. The date range can not exceed 90 days)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

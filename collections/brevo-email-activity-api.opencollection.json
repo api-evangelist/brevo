@@ -1,0 +1,112 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Brevo Contacts Agent Status Email Activity API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api-key",
+      "value": "{{api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Email Activity",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get transactional email activity events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/smtp/statistics/events",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return per request."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to skip for pagination."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date for the event query in YYYY-MM-DD format."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End date for the event query in YYYY-MM-DD format."
+              },
+              {
+                "name": "event",
+                "value": "",
+                "type": "query",
+                "description": "Filter by event type such as delivered, opened, clicked, hardBounce, softBounce, blocked, spam, or unsubscribed."
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by recipient email address."
+              },
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by the unique message identifier."
+              },
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by the template ID used for sending."
+              }
+            ]
+          },
+          "docs": "Retrieves all transactional email activity as unaggregated events. Returns individual event records for deliveries, opens, clicks, bounces, spam reports, and other email activity."
+        },
+        {
+          "info": {
+            "name": "Get aggregated transactional email statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/smtp/statistics/aggregatedReport",
+            "params": [
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date for the report in YYYY-MM-DD format."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End date for the report in YYYY-MM-DD format."
+              }
+            ]
+          },
+          "docs": "Retrieves aggregated statistics for transactional email activity over a specified period. Returns totals for requests, delivered, opens, clicks, bounces, and other metrics."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

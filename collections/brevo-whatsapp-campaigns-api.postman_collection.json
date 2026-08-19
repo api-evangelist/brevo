@@ -1,0 +1,1197 @@
+{
+  "item": [
+    {
+      "id": "408bbeb9-e3fb-416b-a825-ae3917ce68be",
+      "name": "WhatsApp Campaigns",
+      "description": {
+        "content": "Create, manage, and send WhatsApp marketing campaigns.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f8789c2c-610e-44c1-94c3-43fa7ff27fbe",
+          "name": "Return all WhatsApp campaigns",
+          "request": {
+            "name": "Return all WhatsApp campaigns",
+            "description": {
+              "content": "Retrieves a paginated list of all WhatsApp campaigns created in the account. Supports filtering by status and date range.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "whatsappCampaigns"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "Maximum number of results to return per request."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Number of results to skip for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>",
+                  "description": "Filter campaigns created on or after this date."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>",
+                  "description": "Filter campaigns created on or before this date."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "Sort direction for the results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d42d231d-0a97-4735-b3e2-45afa47c13fe",
+              "name": "WhatsApp campaigns retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "whatsappCampaigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 9843,\n  \"campaigns\": [\n    {\n      \"id\": 2296,\n      \"campaignName\": \"string\",\n      \"campaignStatus\": \"scheduled\",\n      \"templateId\": 8927,\n      \"scheduledAt\": \"1971-06-14T04:56:32.291Z\",\n      \"recipients\": {\n        \"lists\": [\n          3441,\n          2142\n        ],\n        \"segments\": [\n          1908,\n          9164\n        ]\n      },\n      \"statistics\": {\n        \"sent\": 4460,\n        \"delivered\": 2102,\n        \"read\": 3868\n      },\n      \"createdAt\": \"1988-12-25T06:12:58.968Z\",\n      \"modifiedAt\": \"2026-02-22T06:23:21.437Z\"\n    },\n    {\n      \"id\": 2348,\n      \"campaignName\": \"string\",\n      \"campaignStatus\": \"archive\",\n      \"templateId\": 1224,\n      \"scheduledAt\": \"1972-11-02T06:13:19.540Z\",\n      \"recipients\": {\n        \"lists\": [\n          8419,\n          661\n        ],\n        \"segments\": [\n          5244,\n          6096\n        ]\n      },\n      \"statistics\": {\n        \"sent\": 9443,\n        \"delivered\": 3698,\n        \"read\": 9535\n      },\n      \"createdAt\": \"1962-09-06T02:42:21.515Z\",\n      \"modifiedAt\": \"2003-03-04T13:48:13.246Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4320f75e-2d40-4df6-aeeb-42ad71f70cbe",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "whatsappCampaigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "868f980b-76b1-4b67-a69d-7bd170b44109",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "whatsappCampaigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5d5000c1-0152-4b96-876c-fc50e9bf2eec",
+          "name": "Create and send a WhatsApp campaign",
+          "request": {
+            "name": "Create and send a WhatsApp campaign",
+            "description": {
+              "content": "Creates a new WhatsApp marketing campaign with the specified template, recipients, and scheduling options.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "whatsappCampaigns"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"templateId\": \"<long>\",\n  \"recipients\": {\n    \"listIds\": [\n      \"<long>\",\n      \"<long>\"\n    ],\n    \"segments\": [\n      \"<long>\",\n      \"<long>\"\n    ]\n  },\n  \"scheduledAt\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d9ea9bc4-174f-4326-862f-1c8a486490f7",
+              "name": "WhatsApp campaign created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "whatsappCampaigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"templateId\": \"<long>\",\n  \"recipients\": {\n    \"listIds\": [\n      \"<long>\",\n      \"<long>\"\n    ],\n    \"segments\": [\n      \"<long>\",\n      \"<long>\"\n    ]\n  },\n  \"scheduledAt\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 6824\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d3d3780a-bfdb-4e02-89d3-6c068a85a893",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "whatsappCampaigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"templateId\": \"<long>\",\n  \"recipients\": {\n    \"listIds\": [\n      \"<long>\",\n      \"<long>\"\n    ],\n    \"segments\": [\n      \"<long>\",\n      \"<long>\"\n    ]\n  },\n  \"scheduledAt\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2614602a-ccdb-4336-b048-730325ad9811",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "whatsappCampaigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"templateId\": \"<long>\",\n  \"recipients\": {\n    \"listIds\": [\n      \"<long>\",\n      \"<long>\"\n    ],\n    \"segments\": [\n      \"<long>\",\n      \"<long>\"\n    ]\n  },\n  \"scheduledAt\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "82da1227-4080-416d-ac40-db45a2ed3497",
+          "name": "Get a WhatsApp campaign",
+          "request": {
+            "name": "Get a WhatsApp campaign",
+            "description": {
+              "content": "Retrieves the details of a specific WhatsApp campaign including template, recipients, and delivery statistics.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "whatsappCampaigns",
+                ":campaignId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "campaignId",
+                  "description": "(Required) Unique identifier of the WhatsApp campaign."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "87583394-e3c6-4e04-b987-b588e45c7400",
+              "name": "WhatsApp campaign retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "whatsappCampaigns",
+                    ":campaignId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "campaignId",
+                      "description": "(Required) Unique identifier of the WhatsApp campaign."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 9497,\n  \"campaignName\": \"string\",\n  \"campaignStatus\": \"sent\",\n  \"templateId\": 7635,\n  \"scheduledAt\": \"1992-06-12T08:13:10.356Z\",\n  \"recipients\": {\n    \"lists\": [\n      915,\n      450\n    ],\n    \"segments\": [\n      6415,\n      1077\n    ]\n  },\n  \"statistics\": {\n    \"sent\": 4383,\n    \"delivered\": 473,\n    \"read\": 1527\n  },\n  \"createdAt\": \"1996-06-03T01:44:16.610Z\",\n  \"modifiedAt\": \"1961-06-07T10:28:06.506Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7a7e40a6-3f86-4ec4-84cd-17d918536646",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "whatsappCampaigns",
+                    ":campaignId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "campaignId",
+                      "description": "(Required) Unique identifier of the WhatsApp campaign."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "477738d2-0a3c-40bf-8b31-827887693c4c",
+              "name": "Campaign not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "whatsappCampaigns",
+                    ":campaignId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "campaignId",
+                      "description": "(Required) Unique identifier of the WhatsApp campaign."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3da9de70-0965-4a49-aa41-2b17b26f6862",
+          "name": "Update a WhatsApp campaign",
+          "request": {
+            "name": "Update a WhatsApp campaign",
+            "description": {
+              "content": "Updates an existing WhatsApp campaign with new template, recipients, or scheduling options. Only draft campaigns can be updated.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "whatsappCampaigns",
+                ":campaignId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "campaignId",
+                  "description": "(Required) Unique identifier of the WhatsApp campaign."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"campaignName\": \"<string>\",\n  \"templateId\": \"<long>\",\n  \"scheduledAt\": \"<dateTime>\",\n  \"recipients\": {\n    \"listIds\": [\n      \"<long>\",\n      \"<long>\"\n    ],\n    \"segments\": [\n      \"<long>\",\n      \"<long>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "282be0f9-7729-46d7-aac7-8824281fb09c",
+              "name": "Campaign updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "whatsappCampaigns",
+                    ":campaignId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "campaignId",
+                      "description": "(Required) Unique identifier of the WhatsApp campaign."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"campaignName\": \"<string>\",\n  \"templateId\": \"<long>\",\n  \"scheduledAt\": \"<dateTime>\",\n  \"recipients\": {\n    \"listIds\": [\n      \"<long>\",\n      \"<long>\"\n    ],\n    \"segments\": [\n      \"<long>\",\n      \"<long>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "deb7c838-6b14-4a1b-b2d0-092c88e6a3bf",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "whatsappCampaigns",
+                    ":campaignId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "campaignId",
+                      "description": "(Required) Unique identifier of the WhatsApp campaign."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"campaignName\": \"<string>\",\n  \"templateId\": \"<long>\",\n  \"scheduledAt\": \"<dateTime>\",\n  \"recipients\": {\n    \"listIds\": [\n      \"<long>\",\n      \"<long>\"\n    ],\n    \"segments\": [\n      \"<long>\",\n      \"<long>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "843f22eb-e365-4a8e-876b-2cc32cfb9cc7",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "whatsappCampaigns",
+                    ":campaignId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "campaignId",
+                      "description": "(Required) Unique identifier of the WhatsApp campaign."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"campaignName\": \"<string>\",\n  \"templateId\": \"<long>\",\n  \"scheduledAt\": \"<dateTime>\",\n  \"recipients\": {\n    \"listIds\": [\n      \"<long>\",\n      \"<long>\"\n    ],\n    \"segments\": [\n      \"<long>\",\n      \"<long>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "06eef581-f7af-4055-8bf1-def7d7a73a78",
+              "name": "Campaign not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "whatsappCampaigns",
+                    ":campaignId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "campaignId",
+                      "description": "(Required) Unique identifier of the WhatsApp campaign."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"campaignName\": \"<string>\",\n  \"templateId\": \"<long>\",\n  \"scheduledAt\": \"<dateTime>\",\n  \"recipients\": {\n    \"listIds\": [\n      \"<long>\",\n      \"<long>\"\n    ],\n    \"segments\": [\n      \"<long>\",\n      \"<long>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "76ffbdfc-4efc-4253-8923-3d2c48165fe3",
+          "name": "Delete a WhatsApp campaign",
+          "request": {
+            "name": "Delete a WhatsApp campaign",
+            "description": {
+              "content": "Permanently deletes a WhatsApp campaign by its unique identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "whatsappCampaigns",
+                ":campaignId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "campaignId",
+                  "description": "(Required) Unique identifier of the WhatsApp campaign."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "76e8e280-ddd7-44f1-af5d-511f0c4b805a",
+              "name": "Campaign deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "whatsappCampaigns",
+                    ":campaignId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "campaignId",
+                      "description": "(Required) Unique identifier of the WhatsApp campaign."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d9b8b1f5-23d5-4689-8ccd-7b7f2a38693b",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "whatsappCampaigns",
+                    ":campaignId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "campaignId",
+                      "description": "(Required) Unique identifier of the WhatsApp campaign."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f35e22f4-edc5-4de2-a30b-6a9cc7d88a76",
+              "name": "Campaign not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "whatsappCampaigns",
+                    ":campaignId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "campaignId",
+                      "description": "(Required) Unique identifier of the WhatsApp campaign."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.brevo.com/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0c58a1b6-2f9b-4977-92da-d336680d2a3d",
+    "name": "Brevo Contacts Agent Status WhatsApp Campaigns API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Brevo Contacts API provides programmatic access to contact management features including creating, updating, and deleting contacts. Developers can organize contacts into lists, apply attributes and tags, import contacts in bulk, and build audience segments for targeted campaigns. The API also supports managing folders, contact attributes, and custom fields to structure contact data according to business needs.\n\nContact Support:\n Name: Brevo Support",
+      "type": "text/plain"
+    }
+  }
+}

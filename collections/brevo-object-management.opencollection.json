@@ -1,0 +1,125 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Object Management",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "customObjects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create/Update object records in bulk",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/objects/:object_type/batch/upsert",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "object_type",
+                "value": "",
+                "type": "path",
+                "description": "Object type for the records to upsert. Must be a previously created custom object type. Only lowercase alphanumeric characters and underscores are allowed (max 32 characters)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<Note title=\"Enterprise access only\">Custom objects are only available to Enterprise plans.\nThis feature is in beta. These are subject to change.</Note>\nPerforms bulk create or update (upsert) operations for object records in a single asynchronous request. This endpoint is optimized for high-volume data imports and synchronization scenarios.\n\n**How Upsert Works:**\n- **Create**: Omit `identifiers`, or provide only `ext_id` (if it doesn't already exist). A new record is created with a Brevo-genera"
+        },
+        {
+          "info": {
+            "name": "Get the list of object records and total records count for an object.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.brevo.com/v3/objects/:object_type/records",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "object_type",
+                "value": "",
+                "type": "path",
+                "description": "Object type for the records to retrieve. Must be a previously created custom object type. Contact as object type is not supported in this endpoint."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of records returned per page"
+              },
+              {
+                "name": "page_num",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination. It's used to fetch the object records on a provided page number. Must be a valid positive integer."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order, must be 'asc' or 'desc'. Default to 'desc' if not provided."
+              },
+              {
+                "name": "association",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include associations, must be 'true' or 'false'. Default to 'false' if not provided."
+              }
+            ]
+          },
+          "docs": "<Note title=\"Enterprise access only\">Custom objects are only available to Enterprise plans.\nThis feature is in beta. These are subject to change.</Note>\nThis API retrieves a list of object records along with their associated records and provides the total count of records for the specified object. **Note**: Contact as object type is not supported in this endpoint."
+        },
+        {
+          "info": {
+            "name": "Delete multiple object records (up to 1000) asynchronously",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.brevo.com/v3/objects/:object_type/batch/delete",
+            "headers": [
+              {
+                "name": "api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "object_type",
+                "value": "",
+                "type": "path",
+                "description": "Object type for the records to delete"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Use this endpoint to delete multiple object records of the same object-type in one request.\nThe request is accepted and processed asynchronously. You can track the status of the deletion process using the returned **processId**.\n**Limitations:** - Each request can contain up to **1000** object record identifiers - Either `ids` or `ext_ids` must be provided, but **not both** in the same request - Deletion of Brevo standard object records is not supported via this endpoint - If more records must b"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

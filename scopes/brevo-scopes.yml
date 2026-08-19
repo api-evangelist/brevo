@@ -1,0 +1,93 @@
+generated: '2026-08-13'
+method: searched
+source: https://oauth.brevo.com/realms/partner/.well-known/oauth-authorization-server
+docs: https://developers.brevo.com/docs/oauth-scopes
+description: >-
+  Brevo added OAuth 2.0 scopes to its partner apps on 2026-06-03. The catalog is published
+  live and machine-readable in the `scopes_supported` field of the RFC 8414 metadata at the
+  partner realm — the same list the `brevo app available-scopes` CLI command reads — so
+  this artifact is probed from the provider's own discovery document rather than scraped.
+  Note the published OpenAPI specs declare only the `api-key` apiKey scheme, so the scope
+  catalog is NOT derivable from the specs; it exists only on the OAuth server and in the
+  docs.
+naming_convention: "{resource}[.{sub-resource}]:{action}"
+notes:
+- ":write does NOT imply :read — an app that lists contacts before updating them must
+  request both contacts:read and contacts:write."
+- Scope paths are prefixes; `/contacts` covers every endpoint under `/contacts/...`.
+- ":read authorizes GET; :write authorizes POST, PUT, PATCH and DELETE on the same paths."
+- New apps default to [contacts:read, contacts:write, crm:read, crm:write].
+- Tokens are signed JWTs carrying a space-separated `scope` claim; RFC 7662 introspection
+  is available at https://oauth.brevo.com/realms/partner/oauth/introspect.
+schemes:
+- name: OAuth2
+  source: https://oauth.brevo.com/realms/partner/.well-known/oauth-authorization-server
+  issuer: https://oauth.brevo.com/realms/partner
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://oauth.brevo.com/realms/partner/oauth/authorize
+    tokenUrl: https://oauth.brevo.com/realms/partner/oauth/token
+  - flow: clientCredentials
+    tokenUrl: https://oauth.brevo.com/realms/partner/oauth/token
+  refresh_supported: true
+  pkce: [plain, S256]
+  revocation_endpoint: https://oauth.brevo.com/realms/partner/oauth/revoke
+  introspection_endpoint: https://oauth.brevo.com/realms/partner/oauth/introspect
+  userinfo_endpoint: https://oauth.brevo.com/realms/partner/oauth/userinfo
+  jwks_uri: https://oauth.brevo.com/realms/partner/public-keys
+  token_endpoint_auth_methods: [client_secret_basic, client_secret_post]
+scopes:
+- {scope: all, description: Full access to every resource the app is entitled to, category: global}
+- {scope: 'account:read', description: Read account settings and details, category: account}
+- {scope: 'account:write', description: Modify account settings, category: account}
+- {scope: 'organization:read', description: Read organization users, permissions and activity, category: account}
+- {scope: 'organization:write', description: Manage organization users and permissions, category: account}
+- {scope: 'webhooks:read', description: Read webhook subscriptions, category: webhooks}
+- {scope: 'webhooks:write', description: Create, update and delete webhook subscriptions, category: webhooks}
+- {scope: 'campaigns.email:read', description: Read email campaigns and their results, category: campaigns}
+- {scope: 'campaigns.email:write', description: Create, update, send and delete email campaigns, category: campaigns}
+- {scope: 'campaigns.sms:read', description: Read SMS campaigns and their results, category: campaigns}
+- {scope: 'campaigns.sms:write', description: Create, update, send and delete SMS campaigns, category: campaigns}
+- {scope: 'campaigns.whatsapp:read', description: Read WhatsApp campaigns and templates, category: campaigns}
+- {scope: 'campaigns.whatsapp:write', description: Create, update, send and delete WhatsApp campaigns, category: campaigns}
+- {scope: 'contacts:read', description: Read contacts, lists, folders, segments and attributes, category: contacts}
+- {scope: 'contacts:write', description: Create, update, import and delete contacts and lists, category: contacts}
+- {scope: 'crm:read', description: Read CRM deals, companies, tasks, notes, pipelines and files, category: crm}
+- {scope: 'crm:write', description: Create, update and delete CRM objects, category: crm}
+- {scope: 'conversations:read', description: Read chat messages and automated messages, category: conversations}
+- {scope: 'conversations:write', description: Send and manage chat and automated messages, category: conversations}
+- {scope: 'objects:read', description: Read custom object records, category: objects}
+- {scope: 'objects:write', description: Upsert and delete custom object records, category: objects}
+- {scope: 'ecommerce:read', description: Read products, categories, orders and attribution metrics, category: ecommerce}
+- {scope: 'ecommerce:write', description: Create and update products, categories, orders and coupons, category: ecommerce}
+- {scope: 'events:read', description: Read tracked events, category: events}
+- {scope: 'events:write', description: Create individual and batched events, category: events}
+- {scope: 'loyalty:read', description: Read loyalty programs, balances, tiers and rewards, category: loyalty}
+- {scope: 'loyalty:write', description: Create and manage loyalty programs, transactions and vouchers, category: loyalty}
+- {scope: 'transactional.email:read', description: Read transactional email logs, statistics and templates, category: transactional}
+- {scope: 'transactional.email:write', description: Send transactional email and manage transactional templates, category: transactional}
+- {scope: 'transactional.sms:read', description: Read transactional SMS statistics and events, category: transactional}
+- {scope: 'transactional.sms:write', description: Send transactional SMS, category: transactional}
+- {scope: 'transactional.whatsapp:read', description: Read transactional WhatsApp event reports, category: transactional}
+- {scope: 'transactional.whatsapp:write', description: Send transactional WhatsApp messages, category: transactional}
+- {scope: openid, description: OIDC — request an ID token, category: oidc}
+- {scope: profile, description: OIDC — basic profile claims, category: oidc}
+- {scope: email, description: OIDC — email claim, category: oidc}
+- {scope: offline_access, description: OIDC — issue a refresh token, category: oidc}
+scope_count: 37
+errors:
+- {status: 400, error: invalid_scope, when: Requested scope is not in the catalog, or exceeds the scopes registered on the app}
+- {status: 400, error: invalid_request, when: scope parameter missing or malformed}
+mcp_scopes:
+  issuer: https://mcp.brevo.com
+  scopes_supported: [all]
+  note: >-
+    The hosted MCP server runs its own authorization server with a single coarse scope,
+    "all" — it does not reuse the 37-scope partner catalog. Brevo's own docs warn the MCP
+    token "grants full read/write access to your account". That is a real least-privilege
+    gap between the two agent surfaces and is recorded, not smoothed over.
+x-evidence:
+  fetched: '2026-08-13'
+  url: https://oauth.brevo.com/realms/partner/.well-known/oauth-authorization-server
+  http_status: 200
+  raw: well-known/brevo-oauth-authorization-server.json

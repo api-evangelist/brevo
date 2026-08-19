@@ -1,0 +1,65 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.brevo.com/docs/getting-started-with-js-implementation
+description: >-
+  Brevo ships three client-side surfaces distinct from its server-side SDKs: a browser
+  tracker SDK loaded from cdn.brevo.com, the Conversations live-chat widget with a
+  JavaScript configuration and control API, and installable wallet passes generated
+  server-side but installed in a customer's Apple/Google Wallet. None is distributed through
+  a package registry — all are CDN script tags or hosted surfaces — so none carries a
+  pinned version an integrator can reason about.
+families:
+- name: Brevo Tracker (browser SDK)
+  kind: script-loader
+  loader: https://cdn.brevo.com/js/sdk-loader.js
+  registry: cdn
+  version: null
+  version_note: >-
+    The loader URL is unpinned and floats to whatever cdn.brevo.com currently serves; the
+    snippet carries an inline `// Version: 2.0` comment but there is no versioned URL form
+    and no jsDelivr/unpkg metadata endpoint (cdn.brevo.com is Brevo's own CDN). A consumer
+    cannot tell which build they are running — recorded as the finding, not guessed.
+  global: window.Brevo
+  init: 'Brevo.push(["init", { client_key: "YOUR_CLIENT_KEY" }])'
+  install: Script tag before the closing </head>, snippet obtained from app.brevo.com/automation/parameters
+  docs: https://developers.brevo.com/docs/getting-started-with-js-implementation
+  capabilities:
+  - Identify users (Brevo.identify — supports EXT_ID alongside email_id, SMS, WHATSAPP, LANDLINE_NUMBER)
+  - Track page views
+  - Track link clicks
+  - Track custom events
+  alternatives:
+  - {name: REST implementation, docs: 'https://developers.brevo.com/docs/tracker-rest-implementation', note: Same tracking surface without the browser SDK}
+  - {name: Google Tag Manager, note: Supported installation path}
+  - {name: Platform plugins, note: WordPress and PrestaShop plugins bundle the snippet}
+  legacy_docs: https://tracker-doc.brevo.com/docs/getting-started-1
+- name: Conversations chat widget
+  kind: embedded-widget
+  registry: cdn
+  version: null
+  version_note: Widget code is copied from conversations-app.brevo.com settings; no versioned distribution URL is published.
+  global: window.BrevoConversationsSetup (configuration), window.BrevoConversations (control API)
+  docs:
+  - https://developers.brevo.com/docs/customize-the-widget
+  - https://developers.brevo.com/docs/javascript-api-reference
+  settings_examples:
+  - {name: buttonStyle, type: String, values: [tab, round]}
+  - {name: buttonPosition, type: String, values: [bl, bc, br, lt, lm, lb, rt, rm, rb]}
+  - {name: chatHeight, type: Number}
+  - {name: colors, type: Object, note: 'e.g. buttonText, buttonBg'}
+  - {name: startHidden, type: Boolean}
+  note: >-
+    Configuration must be assigned to window.BrevoConversationsSetup BEFORE the widget
+    script tag. Settings set in code override the values configured in the Conversations
+    widget settings UI.
+  management_url: https://conversations-app.brevo.com/settings/integrations/widget
+- name: Wallet passes
+  kind: hosted-surface
+  docs: https://developers.brevo.com/docs/loyalty-overview
+  backing_operation: getWalletPassInstallUrl
+  path: '/wallet/passes/{passId}/installUrl/{contactId}'
+  description: >-
+    A per-contact installation URL for an Apple Wallet or Google Wallet pass. The returned
+    URL encodes the pass, contact and organization identifiers as an encrypted token, so it
+    can be shared over email, SMS or a QR code for the contact to install the pass.
+  added: '2026-06-30'

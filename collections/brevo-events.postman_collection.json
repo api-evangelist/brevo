@@ -1,0 +1,868 @@
+{
+  "item": [
+    {
+      "id": "9b4afb55-e33e-458e-99b5-057965018652",
+      "name": "event",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "abcdecb7-ddee-43c6-97cd-fc9858e3bfef",
+          "name": "Get events",
+          "request": {
+            "name": "Get events",
+            "description": {
+              "content": "<Note>\nThis endpoint currently only supports custom events.\n</Note>\n\nRetrieve a list of events filtered by various criteria.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "contact_id",
+                  "value": "<long>",
+                  "description": "Filter by contact ID (repeatable)"
+                },
+                {
+                  "disabled": false,
+                  "key": "contact_id",
+                  "value": "<long>",
+                  "description": "Filter by contact ID (repeatable)"
+                },
+                {
+                  "disabled": false,
+                  "key": "event_name",
+                  "value": "<string>",
+                  "description": "Filter by event name (repeatable)"
+                },
+                {
+                  "disabled": false,
+                  "key": "event_name",
+                  "value": "<string>",
+                  "description": "Filter by event name (repeatable)"
+                },
+                {
+                  "disabled": false,
+                  "key": "object_type",
+                  "value": "<string>",
+                  "description": "Filter by object type (repeatable)"
+                },
+                {
+                  "disabled": false,
+                  "key": "object_type",
+                  "value": "<string>",
+                  "description": "Filter by object type (repeatable)"
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<string>",
+                  "description": "Mandatory if endDate is used. Start of date range (YYYY-MM-DD or RFC3339). Defaults to 6 months ago when omitted alongside endDate. Must be ≤ endDate."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<string>",
+                  "description": "Mandatory if startDate is used. End of date range (YYYY-MM-DD or RFC3339). Must be ≥ startDate."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100",
+                  "description": "Max events to return. Default 100, min 1, max 10000."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Events to skip for pagination. Default 0, min 0."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                "key": "api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b58f77fd-1812-442b-ab5c-473408ea8a50",
+              "name": "List of events and total count for pagination",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contact_id",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "contact_id",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "event_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "event_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 6041,\n  \"events\": [\n    {\n      \"contact_id\": 6518,\n      \"event_date\": \"1989-06-19T19:39:39.412Z\",\n      \"event_name\": \"string\",\n      \"event_filter_id\": \"string\",\n      \"object_type\": \"string\",\n      \"event_properties\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {},\n        \"key_3\": {},\n        \"key_4\": {}\n      },\n      \"contact_properties\": {\n        \"key_0\": {},\n        \"key_1\": {}\n      }\n    },\n    {\n      \"contact_id\": 9511,\n      \"event_date\": \"2023-06-20T12:14:40.574Z\",\n      \"event_name\": \"string\",\n      \"event_filter_id\": \"string\",\n      \"object_type\": \"string\",\n      \"event_properties\": {\n        \"key_0\": {},\n        \"key_1\": {}\n      },\n      \"contact_properties\": {\n        \"key_0\": {}\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "005e3b52-f553-45e8-b287-f34355bfae9b",
+              "name": "bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contact_id",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "contact_id",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "event_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "event_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9a00584d-4c82-48d9-9054-421962c92a88",
+              "name": "bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contact_id",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "contact_id",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "event_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "event_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"Invalid OTP code provided\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "68252092-683a-49a9-b6a0-ccef71ab118a",
+              "name": "bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contact_id",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "contact_id",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "event_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "event_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"OTP code has expired\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "58afccef-12d2-43dc-b3c7-7a1ec24cdb4a",
+          "name": "Create an event",
+          "request": {
+            "name": "Create an event",
+            "description": {
+              "content": "Create an event to track a contact's interaction.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                "key": "api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event_name\": \"<string>\",\n  \"identifiers\": {\n    \"contact_id\": \"<long>\",\n    \"email_id\": \"<string>\",\n    \"ext_id\": \"<string>\",\n    \"landline_number_id\": \"<string>\",\n    \"phone_id\": \"<string>\",\n    \"whatsapp_id\": \"<string>\"\n  },\n  \"contact_properties\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  },\n  \"event_date\": \"<dateTime>\",\n  \"event_properties\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"object\": {\n    \"identifiers\": {\n      \"ext_id\": \"<string>\",\n      \"id\": \"<string>\"\n    },\n    \"type\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7e7ad82e-610d-4269-bf57-b34851b81783",
+              "name": "Event posted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event_name\": \"<string>\",\n  \"identifiers\": {\n    \"contact_id\": 3947,\n    \"email_id\": \"string\",\n    \"ext_id\": \"string\",\n    \"landline_number_id\": \"string\",\n    \"phone_id\": \"string\",\n    \"whatsapp_id\": \"string\"\n  },\n  \"contact_properties\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"event_date\": \"<dateTime>\",\n  \"event_properties\": {\n    \"key_0\": \"string\"\n  },\n  \"object\": {\n    \"identifiers\": {\n      \"ext_id\": \"string\",\n      \"id\": \"string\"\n    },\n    \"type\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1486d45e-13c9-4c03-8ec0-eae61bd22775",
+              "name": "bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event_name\": \"<string>\",\n  \"identifiers\": {\n    \"contact_id\": 3947,\n    \"email_id\": \"string\",\n    \"ext_id\": \"string\",\n    \"landline_number_id\": \"string\",\n    \"phone_id\": \"string\",\n    \"whatsapp_id\": \"string\"\n  },\n  \"contact_properties\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"event_date\": \"<dateTime>\",\n  \"event_properties\": {\n    \"key_0\": \"string\"\n  },\n  \"object\": {\n    \"identifiers\": {\n      \"ext_id\": \"string\",\n      \"id\": \"string\"\n    },\n    \"type\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"Campaign ID not found\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f46c2233-3b4c-4668-9ba3-da47901d6c85",
+              "name": "bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event_name\": \"<string>\",\n  \"identifiers\": {\n    \"contact_id\": 3947,\n    \"email_id\": \"string\",\n    \"ext_id\": \"string\",\n    \"landline_number_id\": \"string\",\n    \"phone_id\": \"string\",\n    \"whatsapp_id\": \"string\"\n  },\n  \"contact_properties\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"event_date\": \"<dateTime>\",\n  \"event_properties\": {\n    \"key_0\": \"string\"\n  },\n  \"object\": {\n    \"identifiers\": {\n      \"ext_id\": \"string\",\n      \"id\": \"string\"\n    },\n    \"type\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"duplicate_request\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bc185eb9-cf20-4a9a-8077-bea6e6a3167b",
+          "name": "Create events in batch",
+          "request": {
+            "name": "Create events in batch",
+            "description": {
+              "content": "Create multiple events to track contacts' interactions in a single request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "events",
+                "batch"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                "key": "api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"events\": [\n    {\n      \"event_name\": \"<string>\",\n      \"identifiers\": {\n        \"contact_id\": \"<long>\",\n        \"email_id\": \"<string>\",\n        \"ext_id\": \"<string>\",\n        \"landline_number_id\": \"<string>\",\n        \"phone_id\": \"<string>\",\n        \"whatsapp_id\": \"<string>\"\n      },\n      \"contact_properties\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\"\n      },\n      \"event_date\": \"<string>\",\n      \"event_properties\": {\n        \"key_0\": \"<string>\"\n      },\n      \"object\": {\n        \"identifiers\": {\n          \"ext_id\": \"<string>\",\n          \"id\": \"<string>\"\n        },\n        \"type\": \"<string>\"\n      }\n    },\n    {\n      \"event_name\": \"<string>\",\n      \"identifiers\": {\n        \"contact_id\": \"<long>\",\n        \"email_id\": \"<string>\",\n        \"ext_id\": \"<string>\",\n        \"landline_number_id\": \"<string>\",\n        \"phone_id\": \"<string>\",\n        \"whatsapp_id\": \"<string>\"\n      },\n      \"contact_properties\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\",\n        \"key_2\": \"<string>\",\n        \"key_3\": \"<string>\"\n      },\n      \"event_date\": \"<string>\",\n      \"event_properties\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\"\n      },\n      \"object\": {\n        \"identifiers\": {\n          \"ext_id\": \"<string>\",\n          \"id\": \"<string>\"\n        },\n        \"type\": \"<string>\"\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5b9fd255-91ff-47f6-bfcf-2f2522663098",
+              "name": "Batch accepted - all events have been added to the processing queue",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"event_name\": \"string\",\n      \"identifiers\": {\n        \"contact_id\": 636,\n        \"email_id\": \"string\",\n        \"ext_id\": \"string\",\n        \"landline_number_id\": \"string\",\n        \"phone_id\": \"string\",\n        \"whatsapp_id\": \"string\"\n      },\n      \"contact_properties\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"event_date\": \"string\",\n      \"event_properties\": {\n        \"key_0\": \"string\"\n      },\n      \"object\": {\n        \"identifiers\": {\n          \"ext_id\": \"string\",\n          \"id\": \"string\"\n        },\n        \"type\": \"string\"\n      }\n    },\n    {\n      \"event_name\": \"string\",\n      \"identifiers\": {\n        \"contact_id\": 2311,\n        \"email_id\": \"string\",\n        \"ext_id\": \"string\",\n        \"landline_number_id\": \"string\",\n        \"phone_id\": \"string\",\n        \"whatsapp_id\": \"string\"\n      },\n      \"contact_properties\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"event_date\": \"string\",\n      \"event_properties\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"object\": {\n        \"identifiers\": {\n          \"ext_id\": \"string\",\n          \"id\": \"string\"\n        },\n        \"type\": \"string\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"count\": 7514\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf6b546e-5700-4af7-9a8a-0ae384ef26f8",
+              "name": "Bad request - all events in the batch failed validation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"event_name\": \"string\",\n      \"identifiers\": {\n        \"contact_id\": 636,\n        \"email_id\": \"string\",\n        \"ext_id\": \"string\",\n        \"landline_number_id\": \"string\",\n        \"phone_id\": \"string\",\n        \"whatsapp_id\": \"string\"\n      },\n      \"contact_properties\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"event_date\": \"string\",\n      \"event_properties\": {\n        \"key_0\": \"string\"\n      },\n      \"object\": {\n        \"identifiers\": {\n          \"ext_id\": \"string\",\n          \"id\": \"string\"\n        },\n        \"type\": \"string\"\n      }\n    },\n    {\n      \"event_name\": \"string\",\n      \"identifiers\": {\n        \"contact_id\": 2311,\n        \"email_id\": \"string\",\n        \"ext_id\": \"string\",\n        \"landline_number_id\": \"string\",\n        \"phone_id\": \"string\",\n        \"whatsapp_id\": \"string\"\n      },\n      \"contact_properties\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"event_date\": \"string\",\n      \"event_properties\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"object\": {\n        \"identifiers\": {\n          \"ext_id\": \"string\",\n          \"id\": \"string\"\n        },\n        \"type\": \"string\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"total_events\": 4388,\n  \"successful_events\": 7673,\n  \"failed_events\": 612,\n  \"errors\": [\n    {\n      \"eventIndex\": [\n        9097,\n        711\n      ],\n      \"message\": \"string\"\n    },\n    {\n      \"eventIndex\": [\n        6324,\n        3534\n      ],\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "023ab89a-6bfb-476d-9691-2e9661393de5",
+              "name": "bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key should be passed in the request headers as `api-key` for authentication.",
+                    "key": "api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"event_name\": \"string\",\n      \"identifiers\": {\n        \"contact_id\": 636,\n        \"email_id\": \"string\",\n        \"ext_id\": \"string\",\n        \"landline_number_id\": \"string\",\n        \"phone_id\": \"string\",\n        \"whatsapp_id\": \"string\"\n      },\n      \"contact_properties\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"event_date\": \"string\",\n      \"event_properties\": {\n        \"key_0\": \"string\"\n      },\n      \"object\": {\n        \"identifiers\": {\n          \"ext_id\": \"string\",\n          \"id\": \"string\"\n        },\n        \"type\": \"string\"\n      }\n    },\n    {\n      \"event_name\": \"string\",\n      \"identifiers\": {\n        \"contact_id\": 2311,\n        \"email_id\": \"string\",\n        \"ext_id\": \"string\",\n        \"landline_number_id\": \"string\",\n        \"phone_id\": \"string\",\n        \"whatsapp_id\": \"string\"\n      },\n      \"contact_properties\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"event_date\": \"string\",\n      \"event_properties\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"object\": {\n        \"identifiers\": {\n          \"ext_id\": \"string\",\n          \"id\": \"string\"\n        },\n        \"type\": \"string\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"missing_parameter\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.brevo.com/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a0f20de4-9350-431b-bc55-054856b9e12e",
+    "name": "Events",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}
