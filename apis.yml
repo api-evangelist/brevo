@@ -21,6 +21,25 @@ tags:
 - Campaigns
 - CRM
 - Sales
+- E-Commerce
+- Loyalty
+- Event
+- Live Chat
+- Email
+- SMS
+- Automation
+- Messaging
+- Contacts
+tags_raw:
+- Marketing
+- Marketing Automation
+- Email Marketing
+- Transactional Email
+- SMS Marketing
+- WhatsApp
+- Campaigns
+- CRM
+- Sales
 - Ecommerce
 - Loyalty
 - Events
@@ -396,6 +415,8 @@ apis:
   humanURL: https://developers.brevo.com/reference
   baseURL: https://api.brevo.com/v3
   tags:
+  - Message
+  tags_raw:
   - Messages
   properties:
   - type: OpenAPI
@@ -427,6 +448,8 @@ apis:
   humanURL: https://developers.brevo.com/reference
   baseURL: https://api.brevo.com/v3
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
@@ -458,6 +481,8 @@ apis:
   humanURL: https://developers.brevo.com/reference
   baseURL: https://api.brevo.com/v3
   tags:
+  - Product
+  tags_raw:
   - Products
   properties:
   - type: OpenAPI
@@ -605,6 +630,8 @@ apis:
   humanURL: https://developers.brevo.com/reference
   baseURL: https://api.brevo.com/v3
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
@@ -747,6 +774,12 @@ apis:
   - CRM
   - Deals
   - Companies
+  - Task
+  - Pipelines
+  tags_raw:
+  - CRM
+  - Deals
+  - Companies
   - Tasks
   - Pipelines
   properties:
@@ -766,6 +799,13 @@ apis:
   humanURL: https://developers.brevo.com/reference
   baseURL: https://api.brevo.com/v3
   tags:
+  - Account
+  - Senders
+  - Domains
+  - Webhook
+  - User
+  - Subaccounts
+  tags_raw:
   - Accounts
   - Senders
   - Domains
@@ -788,6 +828,10 @@ apis:
   humanURL: https://developers.brevo.com/reference
   baseURL: https://api.brevo.com/v3
   tags:
+  - Event
+  - Tracking
+  - Automation
+  tags_raw:
   - Events
   - Tracking
   - Automation
@@ -828,6 +872,10 @@ apis:
   humanURL: https://developers.brevo.com/reference
   baseURL: https://api.brevo.com/v3
   tags:
+  - Wallets
+  - Passes
+  - Mobile
+  tags_raw:
   - Wallet
   - Passes
   - Mobile
