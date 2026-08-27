@@ -245,9 +245,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/brevo-contacts-api-openapi.yml
-  - type: OpenAPI
-    name: Brevo Contact Management (provider-published)
-    url: openapi/brevo-contact-management-openapi.yml
   - type: Documentation
     url: https://developers.brevo.com/docs/send-a-transactional-email
   - type: GraphQL
@@ -268,7 +265,8 @@ apis:
     url: asyncapi/brevo-webhooks-asyncapi.yml
 - aid: brevo:brevo-email-activity-api
   name: brevo Email Activity API
-  description: Track and retrieve transactional email activity including delivery status, opens, clicks, and bounces.
+  description: >-
+    Track and retrieve transactional email activity including delivery status, opens, clicks, and bounces.
   humanURL: https://developers.brevo.com/reference
   baseURL: https://api.brevo.com/v3
   tags:
@@ -304,9 +302,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/brevo-email-campaigns-api-openapi.yml
-  - type: OpenAPI
-    name: Brevo Marketing Campaigns (provider-published)
-    url: openapi/brevo-marketing-campaigns-openapi.yml
   - type: Documentation
     url: https://developers.brevo.com/docs/send-a-transactional-email
   - type: GraphQL
@@ -421,9 +416,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/brevo-messages-api-openapi.yml
-  - type: OpenAPI
-    name: Brevo Conversations (provider-published)
-    url: openapi/brevo-conversations-openapi.yml
   - type: Documentation
     url: https://developers.brevo.com/docs/send-a-transactional-email
   - type: GraphQL
@@ -454,9 +446,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/brevo-orders-api-openapi.yml
-  - type: OpenAPI
-    name: Brevo Ecommerce (provider-published)
-    url: openapi/brevo-ecommerce-openapi.yml
   - type: Documentation
     url: https://developers.brevo.com/docs/send-a-transactional-email
   - type: GraphQL
@@ -563,8 +552,8 @@ apis:
     url: asyncapi/brevo-webhooks-asyncapi.yml
 - aid: brevo:brevo-transactional-emails-api
   name: brevo Transactional Emails API
-  description: Send and manage transactional emails including order confirmations, password resets, and account
-    notifications.
+  description: >-
+    Send and manage transactional emails including order confirmations, password resets, and account notifications.
   humanURL: https://developers.brevo.com/reference
   baseURL: https://api.brevo.com/v3
   tags:
@@ -572,9 +561,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/brevo-transactional-emails-api-openapi.yml
-  - type: OpenAPI
-    name: Brevo Email API (provider-published)
-    url: openapi/brevo-email-api-openapi.yml
   - type: Documentation
     url: https://developers.brevo.com/docs/send-a-transactional-email
   - type: GraphQL
@@ -603,9 +589,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/brevo-transactional-sms-api-openapi.yml
-  - type: OpenAPI
-    name: Brevo Transactional SMS (provider-published)
-    url: openapi/brevo-transactional-sms-openapi.yml
   - type: Documentation
     url: https://developers.brevo.com/docs/send-a-transactional-email
   - type: GraphQL
@@ -626,7 +609,8 @@ apis:
     url: asyncapi/brevo-webhooks-asyncapi.yml
 - aid: brevo:brevo-webhooks-api
   name: brevo Webhooks API
-  description: Create, manage, and configure webhook subscriptions for receiving real-time event notifications.
+  description: >-
+    Create, manage, and configure webhook subscriptions for receiving real-time event notifications.
   humanURL: https://developers.brevo.com/reference
   baseURL: https://api.brevo.com/v3
   tags:
@@ -684,7 +668,8 @@ apis:
     url: asyncapi/brevo-webhooks-asyncapi.yml
 - aid: brevo:brevo-whatsapp-messages-api
   name: brevo WhatsApp Messages API
-  description: Send transactional WhatsApp messages to recipients using approved templates or plain text.
+  description: >-
+    Send transactional WhatsApp messages to recipients using approved templates or plain text.
   humanURL: https://developers.brevo.com/reference
   baseURL: https://api.brevo.com/v3
   tags:
@@ -692,9 +677,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/brevo-whatsapp-messages-api-openapi.yml
-  - type: OpenAPI
-    name: Brevo Transactional WhatsApp (provider-published)
-    url: openapi/brevo-transactional-whatsapp-openapi.yml
   - type: Documentation
     url: https://developers.brevo.com/docs/send-a-transactional-email
   - type: GraphQL
@@ -741,153 +723,786 @@ apis:
     url: https://developers.brevo.com/docs/transactional-webhooks
   - type: AsyncAPI
     url: asyncapi/brevo-webhooks-asyncapi.yml
-- aid: brevo:brevo-loyalty-api
-  name: Brevo Loyalty API
-  description: Build and operate reward programs programmatically — create and publish loyalty programs, define
-    point balances and limits, enroll contacts, run the two-phase credit/debit transaction lifecycle, issue and
-    redeem vouchers, and manage tier groups and tiers.
+- aid: brevo:brevo-account-api
+  name: Brevo Account API
+  description: The account API from Brevo — 2 operation(s) for account.
   humanURL: https://developers.brevo.com/reference
   baseURL: https://api.brevo.com/v3
   tags:
-  - Loyalty
-  - Rewards
-  - Points
-  - Tiers
-  - Vouchers
+  - account
   properties:
   - type: OpenAPI
-    url: openapi/brevo-loyalty-openapi.yml
+    url: openapi/brevo-account-api-openapi.yml
   - type: Documentation
     url: https://developers.brevo.com/docs/loyalty-overview
   - type: APIReference
     url: https://developers.brevo.com/reference
   - type: AsyncAPI
     url: asyncapi/brevo-webhooks-asyncapi.yml
-- aid: brevo:brevo-sales-crm-api
-  name: Brevo Sales CRM API
-  description: Manage the Brevo Sales CRM object graph — deals, companies, tasks, notes, files and pipelines — including
-    linking and unlinking deals to contacts and companies, bulk import, and server-side filtering of deals by owner,
-    stage and pipeline.
-  humanURL: https://developers.brevo.com/reference
-  baseURL: https://api.brevo.com/v3
-  tags:
-  - CRM
-  - Deals
-  - Companies
-  - Task
-  - Pipelines
-  tags_raw:
-  - CRM
-  - Deals
-  - Companies
-  - Tasks
-  - Pipelines
-  properties:
-  - type: OpenAPI
-    url: openapi/brevo-sales-crm-openapi.yml
   - type: Documentation
     url: https://developers.brevo.com/reference
-  - type: APIReference
-    url: https://developers.brevo.com/reference
-  - type: AsyncAPI
-    url: asyncapi/brevo-webhooks-asyncapi.yml
-- aid: brevo:brevo-accounts-and-settings-api
-  name: Brevo Accounts and Settings API
-  description: 'Account-level administration: sender identities and IPs, sending domain creation and authentication,
-    webhook subscriptions, organization users and permissions, master-account and sub-account management, background
-    process status, and external RSS feeds.'
-  humanURL: https://developers.brevo.com/reference
-  baseURL: https://api.brevo.com/v3
-  tags:
-  - Account
-  - Senders
-  - Domains
-  - Webhook
-  - User
-  - Subaccounts
-  tags_raw:
-  - Accounts
-  - Senders
-  - Domains
-  - Webhooks
-  - Users
-  - Sub-accounts
-  properties:
-  - type: OpenAPI
-    url: openapi/brevo-accounts-and-settings-openapi.yml
   - type: Documentation
     url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
-  - type: APIReference
-    url: https://developers.brevo.com/reference
-  - type: AsyncAPI
-    url: asyncapi/brevo-webhooks-asyncapi.yml
-- aid: brevo:brevo-events-api
-  name: Brevo Events API
-  description: Track contact interactions by creating individual or batched events against a contact identifier,
-    feeding automation triggers and segmentation. Batch requests wrap the event array in an events object.
-  humanURL: https://developers.brevo.com/reference
-  baseURL: https://api.brevo.com/v3
-  tags:
-  - Event
-  - Tracking
-  - Automation
-  tags_raw:
-  - Events
-  - Tracking
-  - Automation
-  properties:
-  - type: OpenAPI
-    url: openapi/brevo-events-openapi.yml
   - type: Documentation
     url: https://developers.brevo.com/docs/event-endpoints
-  - type: APIReference
-    url: https://developers.brevo.com/reference
-  - type: AsyncAPI
-    url: asyncapi/brevo-webhooks-asyncapi.yml
-- aid: brevo:brevo-object-management-api
-  name: Brevo Object Management API
-  description: Generic create, read and delete over account-defined custom object record types, letting an account
-    model data Brevo does not ship natively — subscription dates, store locations, bookings — and use it in customer
-    journeys.
-  humanURL: https://developers.brevo.com/reference
-  baseURL: https://api.brevo.com/v3
-  tags:
-  - Custom Objects
-  - Records
-  - Data Model
-  properties:
-  - type: OpenAPI
-    url: openapi/brevo-object-management-openapi.yml
   - type: Documentation
     url: https://developers.brevo.com/docs/custom-objects-management
-  - type: APIReference
-    url: https://developers.brevo.com/reference
-  - type: AsyncAPI
-    url: asyncapi/brevo-webhooks-asyncapi.yml
-- aid: brevo:brevo-wallet-api
-  name: Brevo Wallet API
-  description: Generate a per-contact installation URL for an Apple Wallet or Google Wallet pass. The returned URL
-    encodes the pass, contact and organization identifiers in an encrypted token so it can be shared by email, SMS
-    or QR code.
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-balance-api
+  name: Brevo Balance API
+  description: The balance API from Brevo — 12 operation(s) for balance.
   humanURL: https://developers.brevo.com/reference
   baseURL: https://api.brevo.com/v3
   tags:
-  - Wallets
-  - Passes
-  - Mobile
-  tags_raw:
-  - Wallet
-  - Passes
-  - Mobile
+  - balance
   properties:
   - type: OpenAPI
-    url: openapi/brevo-wallet-openapi.yml
+    url: openapi/brevo-balance-api-openapi.yml
   - type: Documentation
-    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+    url: https://developers.brevo.com/docs/loyalty-overview
   - type: APIReference
     url: https://developers.brevo.com/reference
   - type: AsyncAPI
     url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-companies-api
+  name: Brevo Companies API
+  description: The companies API from Brevo — 6 operation(s) for companies.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - companies
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-companies-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-consentgroups-api
+  name: Brevo Consent Groups API
+  description: The consentGroups API from Brevo — 2 operation(s) for consentgroups.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - consentGroups
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-consentgroups-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-conversations-api
+  name: Brevo Conversations API
+  description: The conversations API from Brevo — 6 operation(s) for conversations.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - conversations
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-conversations-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-coupons-api
+  name: Brevo Coupons API
+  description: The coupons API from Brevo — 3 operation(s) for coupons.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - coupons
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-coupons-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-customobjects-api
+  name: Brevo Custom Objects API
+  description: The customObjects API from Brevo — 3 operation(s) for customobjects.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - customObjects
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-customobjects-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-deals-api
+  name: Brevo Deals API
+  description: The deals API from Brevo — 8 operation(s) for deals.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - deals
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-deals-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-domains-api
+  name: Brevo Domains API
+  description: The domains API from Brevo — 3 operation(s) for domains.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - domains
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-domains-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-ecommerce-api
+  name: Brevo Ecommerce API
+  description: The ecommerce API from Brevo — 15 operation(s) for ecommerce.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - ecommerce
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-ecommerce-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-emailcampaigns-api
+  name: Brevo Email Campaigns API
+  description: The emailCampaigns API from Brevo — 10 operation(s) for emailcampaigns.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - emailCampaigns
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-emailcampaigns-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-event-api
+  name: Brevo Event API
+  description: The event API from Brevo — 2 operation(s) for event.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - event
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-event-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-externalfeeds-api
+  name: Brevo External Feeds API
+  description: The externalFeeds API from Brevo — 2 operation(s) for externalfeeds.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - externalFeeds
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-externalfeeds-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-files-api
+  name: Brevo Files API
+  description: The files API from Brevo — 3 operation(s) for files.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - files
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-files-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-inboundparsing-api
+  name: Brevo Inbound Parsing API
+  description: The inboundParsing API from Brevo — 3 operation(s) for inboundparsing.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - inboundParsing
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-inboundparsing-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-masteraccount-api
+  name: Brevo Master Account API
+  description: The masterAccount API from Brevo — 21 operation(s) for masteraccount.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - masterAccount
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-masteraccount-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-notes-api
+  name: Brevo Notes API
+  description: The notes API from Brevo — 2 operation(s) for notes.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - notes
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-notes-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-payments-api
+  name: Brevo Payments API
+  description: The payments API from Brevo — 2 operation(s) for payments.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - payments
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-payments-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-process-api
+  name: Brevo Process API
+  description: The process API from Brevo — 2 operation(s) for process.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - process
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-process-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-program-api
+  name: Brevo Program API
+  description: The program API from Brevo — 7 operation(s) for program.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - program
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-program-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-reward-api
+  name: Brevo Reward API
+  description: The reward API from Brevo — 9 operation(s) for reward.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - reward
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-reward-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-smscampaigns-api
+  name: Brevo Sms Campaigns API
+  description: The smsCampaigns API from Brevo — 7 operation(s) for smscampaigns.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - smsCampaigns
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-smscampaigns-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-tasks-api
+  name: Brevo Tasks API
+  description: The tasks API from Brevo — 3 operation(s) for tasks.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - tasks
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-tasks-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-tier-api
+  name: Brevo Tier API
+  description: The tier API from Brevo — 6 operation(s) for tier.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - tier
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-tier-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-transactionalemails-api
+  name: Brevo Transactional Emails API
+  description: The transactionalEmails API from Brevo — 18 operation(s) for transactionalemails.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - transactionalEmails
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-transactionalemails-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-transactionalsms-api
+  name: Brevo Transactional Sms API
+  description: The transactionalSms API from Brevo — 4 operation(s) for transactionalsms.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - transactionalSms
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-transactionalsms-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-transactionalwhatsapp-api
+  name: Brevo Transactional Whats App API
+  description: The transactionalWhatsApp API from Brevo — 2 operation(s) for transactionalwhatsapp.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - transactionalWhatsApp
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-transactionalwhatsapp-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-user-api
+  name: Brevo User API
+  description: The user API from Brevo — 6 operation(s) for user.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - user
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-user-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-wallet-api
+  name: Brevo Wallet API
+  description: The wallet API from Brevo — 1 operation(s) for wallet.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - wallet
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-wallet-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
+- aid: brevo:brevo-whatsappcampaigns-api
+  name: Brevo Whats App Campaigns API
+  description: The whatsAppCampaigns API from Brevo — 6 operation(s) for whatsappcampaigns.
+  humanURL: https://developers.brevo.com/reference
+  baseURL: https://api.brevo.com/v3
+  tags:
+  - whatsAppCampaigns
+  properties:
+  - type: OpenAPI
+    url: openapi/brevo-whatsappcampaigns-api-openapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/docs/loyalty-overview
+  - type: APIReference
+    url: https://developers.brevo.com/reference
+  - type: AsyncAPI
+    url: asyncapi/brevo-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://developers.brevo.com/reference
+  - type: Documentation
+    url: https://developers.brevo.com/docs/getting-started-with-senders-and-domains
+  - type: Documentation
+    url: https://developers.brevo.com/docs/event-endpoints
+  - type: Documentation
+    url: https://developers.brevo.com/docs/custom-objects-management
+  - type: Documentation
+    url: https://developers.brevo.com/reference/get-wallet-pass-install-url
 common:
 - type: AgenticAccess
   url: agentic-access/brevo-agentic-access.yml
