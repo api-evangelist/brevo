@@ -6,6 +6,18 @@ description: Brevo (formerly Sendinblue) is a French customer-relationship platf
   api.brevo.com/v3. Brevo publishes thirteen OpenAPI 3.1 definitions covering 285 operations, advertises them through
   an RFC 9727 API catalog at its developer portal, ships seven official SDKs and a first-party CLI for OAuth app
   management, and operates a hosted MCP server exposing 27 modules to AI agents.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/brevo.png
 url: https://raw.githubusercontent.com/api-evangelist/brevo/refs/heads/main/apis.yml
 created: '2026-05-04'
