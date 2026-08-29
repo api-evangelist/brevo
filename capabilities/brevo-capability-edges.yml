@@ -1,0 +1,215 @@
+slug: brevo
+provider: Brevo
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 20
+edges:
+- tag: deals
+  spec_file: brevo-deals-api-openapi.yml
+  capability_id: BC-410.30
+  capability_id_l1: BC-410
+  capability_name: Opportunity & Pipeline Management
+  confidence: 0.9
+  evidence: '''Get all deals'', ''Create a deal'', ''Get pipeline stages'', schema Pipeline / Deal / DealAttributes'
+  reason: CRM deal and pipeline lifecycle operations are exactly opportunity and pipeline management.
+- tag: program
+  spec_file: brevo-program-api-openapi.yml
+  capability_id: BC-420.40
+  capability_id_l1: BC-420
+  capability_name: Loyalty & Retention Management
+  confidence: 0.9
+  evidence: POST /loyalty/config/programs  createNewLP  Create loyalty program ... POST /loyalty/config/programs/{pid}/publish  publishLoyaltyProgram
+  reason: Explicitly configures, publishes and subscribes members to loyalty programs, with tier and reward
+    balances in the response schemas — loyalty programme management.
+- tag: reward
+  spec_file: brevo-reward-api-openapi.yml
+  capability_id: BC-420.40
+  capability_id_l1: BC-420
+  capability_name: Loyalty & Retention Management
+  confidence: 0.88
+  evidence: POST /loyalty/offer/programs/{pid}/offers  createReward  Create a reward ... POST /loyalty/offer/programs/{pid}/rewards/redeem  redeemVoucher
+  reason: Creation, attribution, redemption and revocation of loyalty rewards and vouchers within a loyalty
+    program — the reward-issuance side of loyalty programme management.
+- tag: tier
+  spec_file: brevo-tier-api-openapi.yml
+  capability_id: BC-420.40
+  capability_id_l1: BC-420
+  capability_name: Loyalty & Retention Management
+  confidence: 0.88
+  evidence: GET /loyalty/tier/programs/{pid}/tiers  getLoyaltyProgramTier  List tiers ... POST /loyalty/tier/programs/{pid}/contacts/{cid}/tiers/{tid}  addSubscriptionToTier  Assign
+    a tier
+  reason: Tier groups, upgrade/downgrade strategies and tier assignment to contacts within a loyalty program
+    — tier structure of a loyalty programme, not SaaS plan tiers.
+- tag: Email Campaigns
+  spec_file: brevo-email-campaigns-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.85
+  evidence: POST /emailCampaigns  createEmailCampaign; POST /emailCampaigns/{campaignId}/sendNow  Send
+    an email campaign immediately
+  reason: Full lifecycle of email marketing campaigns including creation, scheduling and sending — email/digital
+    marketing campaign execution.
+- tag: balance
+  spec_file: brevo-balance-api-openapi.yml
+  capability_id: BC-420.40
+  capability_id_l1: BC-420
+  capability_name: Loyalty & Retention Management
+  confidence: 0.85
+  evidence: GET /loyalty/balance/programs/{pid}/contact-balances  getContactBalances  Get balance list
+  reason: Operations define and manage point/reward balance definitions, limits and transaction history
+    within loyalty programs ('LoyaltyBalanceProgramsPidTransactionHistory...'), which is loyalty programme
+    administration.
+- tag: contacts
+  spec_file: brevo-contacts-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.85
+  evidence: '''Create contact attribute'', ''Get all the lists'', ''Get contacts in a list'', schema getContactDetails
+    / ContactsSegments...'
+  reason: Operations create and maintain contact records, attributes, lists and segments — the customer
+    master data of the marketing platform.
+- tag: Contact Attributes
+  spec_file: brevo-contact-attributes-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.8
+  evidence: GET /contacts/attributes  listContactAttributes  List all contact attributes; 'managing folders,
+    contact attributes, and custom fields to structure contact data'
+  reason: Defines and maintains the attribute/custom-field model for contact records — customer/contact
+    master data structure, i.e. Customer Data Management.
+- tag: emailCampaigns
+  spec_file: brevo-emailcampaigns-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.8
+  evidence: '''Create an email campaign'', ''Send an email campaign immediately, based on campaignId'',
+    ''Get an A/B test email campaign results'''
+  reason: Creation, sending and reporting of email marketing campaigns is digital marketing execution;
+    could also be read as demand generation, hence 0.8 on the L2.
+- tag: WhatsApp Campaigns
+  spec_file: brevo-whatsapp-campaigns-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.78
+  evidence: POST /whatsappCampaigns  createWhatsAppCampaign  Create and send a WhatsApp campaign
+  reason: Full lifecycle of outbound marketing campaigns on a digital messaging channel (create, send,
+    update, delete campaigns) — digital marketing / marketing automation execution.
+- tag: webhooks
+  spec_file: brevo-webhooks-api-openapi.yml
+  capability_id: BC-4270.80
+  capability_id_l1: BC-4270
+  capability_name: Webhook & Event Subscription Management
+  confidence: 0.78
+  evidence: POST /webhooks  createWebhook  Create a webhook; POST /webhooks/export  exportWebhooksHistory  Export
+    webhook history
+  reason: Full CRUD over outbound webhook subscriptions with event lists, auth config, channel/type and
+    delivery-history export — this is precisely the webhook & event subscription lifecycle capability
+    the frame names, rather than generic plumbing to be discarded.
+- tag: Import
+  spec_file: brevo-import-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.75
+  evidence: POST /contacts/import  importContacts  Import contacts; 'import contacts in bulk'
+  reason: Bulk ingestion of contact records into the contact database — population and maintenance of
+    the customer/contact master data.
+- tag: coupons
+  spec_file: brevo-coupons-api-openapi.yml
+  capability_id: BC-440.30
+  capability_id_l1: BC-440
+  capability_name: Discount & Promotion Management
+  confidence: 0.75
+  evidence: POST /couponCollections createCouponCollection 'Create а coupon collection'; POST /coupons
+    'Create coupons for a coupon collection'
+  reason: Creation and management of coupon collections is promotional discount management for the ecommerce/loyalty
+    layer.
+- tag: Messages
+  spec_file: brevo-messages-api-openapi.yml
+  capability_id: BC-430.10
+  capability_id_l1: BC-430
+  capability_name: Customer Inquiry Management
+  confidence: 0.72
+  evidence: POST /conversations/messages  sendMessageAsAgent  Send a message as an agent
+  reason: Operations manage messages within live-chat conversations sent by an agent, i.e. inbound/outbound
+    handling of customer contacts in Brevo's chat product. That is customer inquiry handling rather than
+    campaign marketing; the 'Contacts' title is spurious per tag-splitting.
+- tag: Contact Lists
+  spec_file: brevo-contact-lists-api-openapi.yml
+  capability_id: BC-420.20
+  capability_id_l1: BC-420
+  capability_name: Customer Segmentation Management
+  confidence: 0.7
+  evidence: POST /contacts/lists/{listId}/contacts/add  addContactsToList; 'build audience segments for
+    targeted campaigns'
+  reason: Creates and maintains contact lists and membership used as marketing audiences — closest fit
+    is customer segmentation/audience management; could equally be read as customer data management, hence
+    0.7.
+- tag: Email Templates
+  spec_file: brevo-email-templates-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.7
+  evidence: POST /smtp/templates  createSmtpTemplate  Create an email template
+  reason: Authoring and maintenance of reusable email templates used for marketing and transactional sends
+    — marketing content/asset management within digital marketing; could also map to content marketing,
+    hence 0.7.
+- tag: conversations
+  spec_file: brevo-conversations-api-openapi.yml
+  capability_id: BC-430.10
+  capability_id_l1: BC-430
+  capability_name: Customer Inquiry Management
+  confidence: 0.7
+  evidence: '''Send a message as an agent'', ''Send an automated message to a visitor'', "Sets agent''s
+    status to online for 2-3 minutes"'
+  reason: Live-chat agent messaging with site visitors is inbound customer contact handling; sub-capability
+    between inquiry management and contact-centre operations is somewhat ambiguous.
+- tag: masterAccount
+  spec_file: brevo-masteraccount-api-openapi.yml
+  capability_id: BC-4230.10
+  capability_id_l1: BC-4230
+  capability_name: Tenant Provisioning & Lifecycle
+  confidence: 0.7
+  evidence: POST /corporate/subAccount  createANewSubAccountUnderAMasterAccount ... DELETE /corporate/subAccount/{id}  deleteASubAccount
+    ... PUT /corporate/subAccount/{id}/plan  updateSubAccountPlan
+  reason: Operations create, inspect, delete and re-plan sub-accounts beneath a master (corporate) account,
+    issue SSO tokens and API keys, and toggle per-sub-account applications. That is provisioning and lifecycle
+    management of tenants in a multi-tenant SaaS fleet, with some overlap into per-tenant configuration.
+- tag: smsCampaigns
+  spec_file: brevo-smscampaigns-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.7
+  evidence: POST /smsCampaigns  createSmsCampaign  Creates an SMS campaign ... POST /smsCampaigns/{campaignId}/sendNow  Send
+    your SMS campaign immediately
+  reason: Full lifecycle of outbound SMS marketing campaigns including scheduling, test sends, recipient
+    export and campaign reports — digital/automated marketing channel execution. Ambiguity is only over
+    whether this sits under digital marketing or demand generation.
+- tag: user
+  spec_file: brevo-user-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: GET /organization/user/{email}/permissions  getUserPermission  Check user permission; POST
+    /organization/user/invitation/send  inviteuser  Send invitation to user
+  reason: Operations invite organisation users, revoke/resend invitations and edit privileges — account
+    provisioning and access-rights administration, i.e. identity & access management. Some chance the
+    intended reading is tenant user lifecycle (BC-4230.50), but no SSO/SCIM surface is present, so IAM
+    is the safer fit.
