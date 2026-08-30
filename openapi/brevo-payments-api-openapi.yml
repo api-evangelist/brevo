@@ -1,0 +1,518 @@
+openapi: 3.2.0
+info:
+  title: Ecommerce Payments API
+  version: 1.0.0
+servers:
+- url: https://api.brevo.com/v3
+  description: https://api.brevo.com/v3
+tags:
+- name: payments
+paths:
+  /payments/requests:
+    post:
+      operationId: createPaymentRequest
+      summary: Create a payment request
+      description: Create a new payment request for a Brevo contact. The request requires a reference (displayed on the payment page), a contact ID, and a cart with currency and amount in cents. You can optionally configure a custom success redirect URL and enable email notifications with reminders. Returns the payment request ID and its public payment URL. A `403` error is returned if Brevo Payments is not activated or the account is not validated.
+      tags:
+      - payments
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Payment request created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payments_createPaymentRequest_Response_201'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePaymentRequestRequestBadRequestError'
+        '401':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePaymentRequestRequestUnauthorizedError'
+        '403':
+          description: Permission denied. Either you don't have access to Brevo Payments or your Brevo Payments account is not validated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: 'Create a payment request
+
+          '
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cart:
+                  $ref: '#/components/schemas/cart'
+                configuration:
+                  $ref: '#/components/schemas/configuration'
+                contactId:
+                  type: integer
+                  format: int64
+                  description: 'Brevo ID of the contact requested to pay.
+
+                    '
+                description:
+                  type: string
+                  description: 'Description of payment request.
+
+                    '
+                notification:
+                  $ref: '#/components/schemas/notification'
+                reference:
+                  type: string
+                  description: 'Reference of the payment request, it will appear on the payment page.
+
+                    '
+              required:
+              - cart
+              - contactId
+              - reference
+  /payments/requests/{id}:
+    get:
+      operationId: getPaymentRequest
+      summary: Get payment request details
+      description: Retrieve the details of a specific payment request by its ID. The response includes the reference, status (created, sent, reminderSent, or paid), cart details, notification configuration, contact ID, and the number of reminders sent. Returns a `404` error if no payment request matches the provided ID.
+      tags:
+      - payments
+      parameters:
+      - name: id
+        in: path
+        description: Id of the payment Request
+        required: true
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Payment request details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payments_getPaymentRequest_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPaymentRequestRequestBadRequestError'
+        '401':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPaymentRequestRequestUnauthorizedError'
+        '403':
+          description: Permission denied. Either you don't have access to Brevo Payments or your Brevo Payments account is not validated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: Payment request not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+    delete:
+      operationId: deletePaymentRequest
+      summary: Delete a payment request.
+      description: Delete a payment request by its UUID. Once deleted, the payment request can no longer be accessed or paid. Returns a `404` error if no payment request matches the provided ID, and a `403` error if Brevo Payments is not activated or the account is not validated.
+      tags:
+      - payments
+      parameters:
+      - name: id
+        in: path
+        description: ID of the payment request.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Payment request deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletePaymentRequestRequestUnauthorizedError'
+        '403':
+          description: Permission denied. Either you don't have access to Brevo Payments or your Brevo Payments account is not validated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: Payment request not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+components:
+  schemas:
+    NotificationChannel:
+      type: string
+      enum:
+      - email
+      description: 'Channel used to send the notifications.
+
+        '
+      title: NotificationChannel
+    Payments_getPaymentRequest_Response_200:
+      type: object
+      properties:
+        cart:
+          $ref: '#/components/schemas/cart'
+        configuration:
+          $ref: '#/components/schemas/configuration'
+        contactId:
+          type: integer
+          format: int64
+          description: 'Brevo ID of the contact requested to pay.
+
+            '
+        notification:
+          $ref: '#/components/schemas/notification'
+        numberOfRemindersSent:
+          type: integer
+          format: int64
+          description: 'number of reminders sent.
+
+            '
+        reference:
+          type: string
+          description: 'Reference of the payment request, it will appear on the payment page.
+
+            '
+        status:
+          $ref: '#/components/schemas/PaymentsRequestsIdGetResponsesContentApplicationJsonSchemaStatus'
+          description: Status of the payment request.
+      required:
+      - cart
+      - notification
+      - reference
+      - status
+      title: Payments_getPaymentRequest_Response_200
+    DeletePaymentRequestRequestUnauthorizedError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/PaymentsRequestsIdDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeletePaymentRequestRequestUnauthorizedError
+    cart:
+      type: object
+      properties:
+        currency:
+          $ref: '#/components/schemas/CartCurrency'
+          description: 'Currency code for the payment amount.
+
+            '
+        specificAmount:
+          type: integer
+          format: int64
+          description: 'Payment amount, in cents. e.g. if you want to request €12.00, then the amount in cents is 1200.
+
+            '
+      required:
+      - currency
+      - specificAmount
+      description: 'Specify the payment currency and amount.
+
+        '
+      title: cart
+    CartCurrency:
+      type: string
+      enum:
+      - EUR
+      description: 'Currency code for the payment amount.
+
+        '
+      title: CartCurrency
+    Payments_createPaymentRequest_Response_201:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID of the object created
+        url:
+          type: string
+          description: URL of the payment request created
+      required:
+      - id
+      title: Payments_createPaymentRequest_Response_201
+    PaymentsRequestsIdGetResponsesContentApplicationJsonSchemaStatus:
+      type: string
+      enum:
+      - created
+      - sent
+      - reminderSent
+      - paid
+      description: Status of the payment request.
+      title: PaymentsRequestsIdGetResponsesContentApplicationJsonSchemaStatus
+    PaymentsRequestsIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: PaymentsRequestsIdGetResponsesContentApplicationJsonSchemaCode
+    notification:
+      type: object
+      properties:
+        channel:
+          $ref: '#/components/schemas/NotificationChannel'
+          description: 'Channel used to send the notifications.
+
+            '
+        text:
+          type: string
+          description: 'Use this field if you want to give more context to your contact about the payment request.
+
+            '
+      required:
+      - channel
+      - text
+      description: 'Optional. Use this object if you want to let Brevo send an email to the contact, with the payment request URL. If empty, no notifications (message and reminders) will be sent.
+
+        '
+      title: notification
+    PaymentsRequestsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: PaymentsRequestsPostResponsesContentApplicationJsonSchemaCode
+    CreatePaymentRequestRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/PaymentsRequestsPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreatePaymentRequestRequestBadRequestError
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
+    GetPaymentRequestRequestUnauthorizedError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/PaymentsRequestsIdGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetPaymentRequestRequestUnauthorizedError
+    GetPaymentRequestRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/PaymentsRequestsIdGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetPaymentRequestRequestBadRequestError
+    PaymentsRequestsIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: PaymentsRequestsIdDeleteResponsesContentApplicationJsonSchemaCode
+    configuration:
+      type: object
+      properties:
+        customSuccessUrl:
+          type: string
+          format: url
+          description: 'Absolute URL of the custom success page.
+
+            '
+      required:
+      - customSuccessUrl
+      description: 'Optional. Redirect contact to a custom success page once payment is successful. If empty the default Brevo page will be displayed once a payment is validated
+
+        '
+      title: configuration
+    CreatePaymentRequestRequestUnauthorizedError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/PaymentsRequestsPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreatePaymentRequestRequestUnauthorizedError
+  securitySchemes:
+    api-key:
+      type: apiKey
+      in: header
+      name: api-key
+      description: The API key should be passed in the request headers as `api-key` for authentication.

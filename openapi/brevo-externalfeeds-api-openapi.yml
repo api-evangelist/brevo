@@ -1,0 +1,1092 @@
+openapi: 3.2.0
+info:
+  title: Accounts and Settings External Feeds API
+  version: 1.0.0
+servers:
+- url: https://api.brevo.com/v3
+  description: https://api.brevo.com/v3
+tags:
+- name: externalFeeds
+paths:
+  /feeds:
+    get:
+      operationId: getAllExternalFeeds
+      summary: Get all external feeds
+      description: 'Retrieves all external feeds from your Brevo account with filtering and pagination.
+
+
+        **Use this to:**
+
+        - Get an overview of all external data feeds
+
+        - Find feeds by name using search functionality
+
+        - Filter feeds by creation date range
+
+        - Browse feeds by authentication type
+
+        - Monitor feed library organization and usage
+
+
+        **Key information returned:**
+
+        - Feed details (UUID, name, URL, authentication type)
+
+        - Feed configuration and settings
+
+        - Creation and modification timestamps
+
+        - Feed status and error information
+
+        - Authentication and header configurations
+
+
+        **Important considerations:**
+
+        - External feeds enable dynamic content in email campaigns
+
+        - Feeds must be accessible from Brevo servers
+
+        - Authentication credentials are securely stored
+
+        - Feed performance affects campaign delivery
+
+        - Use pagination for accounts with many feeds
+
+        - Date range filtering limited to 30 days maximum
+
+        - Search functionality works on feed name matching
+
+        - Internal feeds are system-managed and cannot be modified
+
+        '
+      tags:
+      - externalFeeds
+      parameters:
+      - name: search
+        in: query
+        description: Can be used to filter records by search keyword on feed name
+        required: false
+        schema:
+          type: string
+      - name: startDate
+        in: query
+        description: 'Mandatory if `endDate` is used. Starting date (YYYY-MM-DD) from which
+
+          you want to fetch the list. Can be maximum 30 days older than current
+
+          date.'
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: endDate
+        in: query
+        description: 'Mandatory if `startDate` is used. Ending date (YYYY-MM-DD) till which
+
+          you want to fetch the list. Maximum time period that can be selected is
+
+          one month.'
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: sort
+        in: query
+        description: 'Sort the results in the ascending/descending order of record creation.
+
+          Default order is **descending** if `sort` is not passed.'
+        required: false
+        schema:
+          $ref: '#/components/schemas/FeedsGetParametersSort'
+          default: desc
+      - name: authType
+        in: query
+        description: Filter the records by `authType` of the feed.
+        required: false
+        schema:
+          $ref: '#/components/schemas/FeedsGetParametersAuthType'
+      - name: limit
+        in: query
+        description: Number of documents returned per page.
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 50
+      - name: offset
+        in: query
+        description: Index of the first document on the page.
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 0
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: External feeds retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/External_Feeds_getAllExternalFeeds_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllExternalFeedsRequestBadRequestError'
+        '404':
+          description: Record not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+    post:
+      operationId: createExternalFeed
+      summary: Create external feed
+      description: 'Creates a new external feed for dynamic content in email campaigns.
+
+
+        **Use this to:**
+
+        - Set up external data sources for dynamic content
+
+        - Configure authentication for protected feeds
+
+        - Enable real-time content updates in campaigns
+
+        - Establish connections to product catalogs, blogs, or APIs
+
+
+        **Key information returned:**
+
+        - Created feed UUID for reference in campaigns
+
+        - Success confirmation
+
+
+        **Important considerations:**
+
+        - Feed URL must be accessible from Brevo infrastructure
+
+        - Authentication credentials are securely encrypted
+
+        - Test feed accessibility before campaign use
+
+        - Consider feed response time for campaign performance
+
+        - Monitor feed reliability and uptime
+
+        - Use caching for frequently accessed feeds
+
+        - Maximum 5 retry attempts allowed for failed requests
+
+        - Custom headers support for API integration requirements
+
+        '
+      tags:
+      - externalFeeds
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: External feed created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/External_Feeds_createExternalFeed_Response_201'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateExternalFeedRequestBadRequestError'
+      requestBody:
+        description: External feed configuration
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the feed
+                url:
+                  type: string
+                  format: url
+                  description: URL of the external data source
+                authType:
+                  $ref: '#/components/schemas/FeedsPostRequestBodyContentApplicationJsonSchemaAuthType'
+                  default: noAuth
+                  description: Authentication type for accessing the feed
+                username:
+                  type: string
+                  description: Username for basic authentication (required if authType is 'basic')
+                password:
+                  type: string
+                  description: Password for basic authentication (required if authType is 'basic')
+                token:
+                  type: string
+                  description: Token for token-based authentication (required if authType is 'token')
+                maxRetries:
+                  type: integer
+                  default: 5
+                  description: Maximum number of retry attempts for failed requests
+                cache:
+                  type: boolean
+                  default: true
+                  description: Whether to cache the feed response
+                headers:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/FeedsPostRequestBodyContentApplicationJsonSchemaHeadersItems'
+                  description: Custom HTTP headers for the feed request
+              required:
+              - name
+              - url
+  /feeds/{uuid}:
+    get:
+      operationId: getExternalFeedByUUID
+      summary: Get external feed details
+      description: 'Retrieves details of a specific external feed by its UUID.
+
+
+        **Use this to:**
+
+        - Get complete configuration of an external feed
+
+        - Check feed authentication settings
+
+        - Review feed personalization options
+
+        - Verify feed URL and parameters
+
+        - Monitor feed modification history
+
+
+        **Key information returned:**
+
+        - Complete feed configuration and settings
+
+        - Authentication credentials and headers
+
+        - Personalization and fallback settings
+
+        - Creation and modification timestamps
+
+        - Cache and retry configurations
+
+
+        **Important considerations:**
+
+        - UUID must exist in your account
+
+        - Provides complete feed information for troubleshooting
+
+        - Essential before making modifications
+
+        - Shows current feed health status
+
+        - Useful for debugging feed issues
+
+        '
+      tags:
+      - externalFeeds
+      parameters:
+      - name: uuid
+        in: path
+        description: UUID of the feed to fetch
+        required: true
+        schema:
+          type: string
+          format: uuidv4
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: External feed details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/External_Feeds_getExternalFeedByUUID_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetExternalFeedByUUIDRequestBadRequestError'
+        '404':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetExternalFeedByUUIDRequestNotFoundError'
+    put:
+      operationId: updateExternalFeed
+      summary: Update external feed
+      description: 'Updates configuration of an existing external feed.
+
+
+        **Use this to:**
+
+        - Update feed URLs when data sources change
+
+        - Modify authentication credentials
+
+        - Change cache and retry settings
+
+        - Update custom headers
+
+        - Rename feeds for better organization
+
+
+        **Key information returned:**
+
+        - Success confirmation message
+
+
+        **Important considerations:**
+
+        - Only provided fields will be updated
+
+        - Feed UUID must exist in your account
+
+        - Authentication changes require verification
+
+        - URL changes should be tested before campaign use
+
+        - Monitor campaigns using this feed after updates
+
+        '
+      tags:
+      - externalFeeds
+      parameters:
+      - name: uuid
+        in: path
+        description: UUID of the feed to update
+        required: true
+        schema:
+          type: string
+          format: uuidv4
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: External feed updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateExternalFeedRequestBadRequestError'
+        '404':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateExternalFeedRequestNotFoundError'
+      requestBody:
+        description: Feed configuration updates
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the feed
+                url:
+                  type: string
+                  format: url
+                  description: URL of the external data source
+                authType:
+                  $ref: '#/components/schemas/FeedsUuidPutRequestBodyContentApplicationJsonSchemaAuthType'
+                  description: Authentication type for accessing the feed
+                username:
+                  type: string
+                  description: Username for basic authentication
+                password:
+                  type: string
+                  description: Password for basic authentication
+                token:
+                  type: string
+                  description: Token for token-based authentication
+                headers:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/FeedsUuidPutRequestBodyContentApplicationJsonSchemaHeadersItems'
+                  description: Custom HTTP headers for the feed request
+                maxRetries:
+                  type: integer
+                  description: Maximum number of retry attempts for failed requests
+                cache:
+                  type: boolean
+                  description: Whether to cache the feed response
+    delete:
+      operationId: deleteExternalFeed
+      summary: Delete external feed
+      description: 'Deletes an external feed from your Brevo account.
+
+
+        **Use this to:**
+
+        - Remove external feeds that are no longer needed
+
+        - Clean up unused data sources
+
+        - Remove test or outdated feeds
+
+        - Maintain organized feed library
+
+
+        **Key information returned:**
+
+        - Success confirmation message
+
+
+        **Important considerations:**
+
+        - This action is PERMANENT and cannot be undone
+
+        - Feed configuration and history will be lost
+
+        - Check if feed is used in active campaigns before deletion
+
+        - Remove feed references from email templates
+
+        - Consider deactivating instead of deleting if unsure
+
+        '
+      tags:
+      - externalFeeds
+      parameters:
+      - name: uuid
+        in: path
+        description: UUID of the feed to delete
+        required: true
+        schema:
+          type: string
+          format: uuidv4
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: External feed deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteExternalFeedRequestBadRequestError'
+        '404':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteExternalFeedRequestNotFoundError'
+components:
+  schemas:
+    FeedsUuidPutRequestBodyContentApplicationJsonSchemaHeadersItems:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Header name
+        value:
+          type: string
+          description: Header value
+      required:
+      - name
+      - value
+      title: FeedsUuidPutRequestBodyContentApplicationJsonSchemaHeadersItems
+    External_Feeds_getAllExternalFeeds_Response_200:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Total number of feeds
+        feeds:
+          type: array
+          items:
+            $ref: '#/components/schemas/FeedsGetResponsesContentApplicationJsonSchemaFeedsItems'
+          description: List of external feeds
+      required:
+      - count
+      - feeds
+      title: External Feeds_getAllExternalFeeds_Response_200
+    UpdateExternalFeedRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/FeedsUuidPutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UpdateExternalFeedRequestBadRequestError
+    FeedsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: FeedsPostResponsesContentApplicationJsonSchemaCode
+    FeedsPostRequestBodyContentApplicationJsonSchemaHeadersItems:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Header name
+        value:
+          type: string
+          description: Header value
+      required:
+      - name
+      - value
+      title: FeedsPostRequestBodyContentApplicationJsonSchemaHeadersItems
+    GetExternalFeedByUUIDRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/FeedsUuidGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetExternalFeedByUUIDRequestNotFoundError
+    FeedsGetResponsesContentApplicationJsonSchemaFeedsItemsHeadersItems:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Header name
+        value:
+          type: string
+          description: Header value
+      required:
+      - name
+      - value
+      title: FeedsGetResponsesContentApplicationJsonSchemaFeedsItemsHeadersItems
+    FeedsUuidGetResponsesContentApplicationJsonSchemaAuthType:
+      type: string
+      enum:
+      - basic
+      - token
+      - noAuth
+      description: Authentication type for accessing the feed
+      title: FeedsUuidGetResponsesContentApplicationJsonSchemaAuthType
+    FeedsUuidPutResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: FeedsUuidPutResponsesContentApplicationJsonSchemaCode
+    DeleteExternalFeedRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/FeedsUuidDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteExternalFeedRequestBadRequestError
+    FeedsGetResponsesContentApplicationJsonSchemaFeedsItemsAuthType:
+      type: string
+      enum:
+      - basic
+      - token
+      - noAuth
+      description: Authentication type for accessing the feed
+      title: FeedsGetResponsesContentApplicationJsonSchemaFeedsItemsAuthType
+    UpdateExternalFeedRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/FeedsUuidPutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UpdateExternalFeedRequestNotFoundError
+    DeleteExternalFeedRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/FeedsUuidDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteExternalFeedRequestNotFoundError
+    FeedsUuidGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: FeedsUuidGetResponsesContentApplicationJsonSchemaCode
+    FeedsUuidDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: FeedsUuidDeleteResponsesContentApplicationJsonSchemaCode
+    FeedsPostRequestBodyContentApplicationJsonSchemaAuthType:
+      type: string
+      enum:
+      - basic
+      - token
+      - noAuth
+      default: noAuth
+      description: Authentication type for accessing the feed
+      title: FeedsPostRequestBodyContentApplicationJsonSchemaAuthType
+    FeedsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: FeedsGetResponsesContentApplicationJsonSchemaCode
+    FeedsUuidPutRequestBodyContentApplicationJsonSchemaAuthType:
+      type: string
+      enum:
+      - basic
+      - token
+      - noAuth
+      description: Authentication type for accessing the feed
+      title: FeedsUuidPutRequestBodyContentApplicationJsonSchemaAuthType
+    FeedsGetParametersAuthType:
+      type: string
+      enum:
+      - basic
+      - token
+      - noAuth
+      title: FeedsGetParametersAuthType
+    External_Feeds_getExternalFeedByUUID_Response_200:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuidv4
+          description: Unique identifier of the feed
+        name:
+          type: string
+          description: Name of the feed
+        url:
+          type: string
+          format: url
+          description: URL of the external data source
+        authType:
+          $ref: '#/components/schemas/FeedsUuidGetResponsesContentApplicationJsonSchemaAuthType'
+          description: Authentication type for accessing the feed
+        username:
+          type:
+          - string
+          - 'null'
+          description: Username for basic authentication. Only returned when authType is 'basic'. Excluded from response when authType is 'token'.
+        password:
+          type:
+          - string
+          - 'null'
+          description: Password for basic authentication. Only returned when authType is 'basic'. Excluded from response when authType is 'token'.
+        token:
+          type:
+          - string
+          - 'null'
+          description: Token for token-based authentication. Only returned when authType is 'token'. Excluded from response when authType is 'basic' or 'noAuth'.
+        headers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/FeedsUuidGetResponsesContentApplicationJsonSchemaHeadersItems'
+          description: Custom HTTP headers for the feed request
+        maxRetries:
+          type: integer
+          description: Maximum number of retry attempts for failed requests
+        cache:
+          type: boolean
+          description: Whether to cache the feed response
+        createdAt:
+          type: string
+          format: date-time
+          description: Feed creation timestamp
+        modifiedAt:
+          type: string
+          format: date-time
+          description: Feed last modification timestamp
+      required:
+      - id
+      - name
+      - url
+      - authType
+      - maxRetries
+      - cache
+      - createdAt
+      - modifiedAt
+      title: External Feeds_getExternalFeedByUUID_Response_200
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
+    GetExternalFeedByUUIDRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/FeedsUuidGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetExternalFeedByUUIDRequestBadRequestError
+    FeedsGetResponsesContentApplicationJsonSchemaFeedsItems:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuidv4
+          description: Unique identifier of the feed
+        name:
+          type: string
+          description: Name of the feed
+        url:
+          type: string
+          format: url
+          description: URL of the external data source
+        authType:
+          $ref: '#/components/schemas/FeedsGetResponsesContentApplicationJsonSchemaFeedsItemsAuthType'
+          description: Authentication type for accessing the feed
+        username:
+          type: string
+          description: Username for basic authentication. Only returned when authType is 'basic'. Excluded when authType is 'token'.
+        password:
+          type: string
+          description: Password for basic authentication. Only returned when authType is 'basic'. Excluded when authType is 'token'.
+        token:
+          type: string
+          description: Token for token-based authentication. Only returned when authType is 'token'. Excluded when authType is 'basic' or 'noAuth'.
+        maxRetries:
+          type: integer
+          description: Maximum number of retry attempts for failed requests
+        cache:
+          type: boolean
+          description: Whether to cache the feed response
+        headers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/FeedsGetResponsesContentApplicationJsonSchemaFeedsItemsHeadersItems'
+          description: Custom HTTP headers for the feed request
+        createdAt:
+          type: string
+          format: date-time
+          description: Feed creation timestamp
+        modifiedAt:
+          type: string
+          format: date-time
+          description: Feed last modification timestamp
+      required:
+      - id
+      - name
+      - url
+      - authType
+      - maxRetries
+      - cache
+      - createdAt
+      - modifiedAt
+      title: FeedsGetResponsesContentApplicationJsonSchemaFeedsItems
+    FeedsGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: FeedsGetParametersSort
+    External_Feeds_createExternalFeed_Response_201:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuidv4
+          description: UUID of the created feed
+      required:
+      - id
+      title: External Feeds_createExternalFeed_Response_201
+    FeedsUuidGetResponsesContentApplicationJsonSchemaHeadersItems:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Header name
+        value:
+          type: string
+          description: Header value
+      required:
+      - name
+      - value
+      title: FeedsUuidGetResponsesContentApplicationJsonSchemaHeadersItems
+    CreateExternalFeedRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/FeedsPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreateExternalFeedRequestBadRequestError
+    GetAllExternalFeedsRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/FeedsGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetAllExternalFeedsRequestBadRequestError
+  securitySchemes:
+    api-key:
+      type: apiKey
+      in: header
+      name: api-key
+      description: The API key should be passed in the request headers as `api-key` for authentication.

@@ -1,0 +1,1465 @@
+openapi: 3.2.0
+info:
+  title: Marketing Campaigns Whats App Campaigns API
+  version: 1.0.0
+servers:
+- url: https://api.brevo.com/v3
+  description: https://api.brevo.com/v3
+tags:
+- name: whatsAppCampaigns
+paths:
+  /whatsappCampaigns/{campaignId}:
+    get:
+      operationId: getWhatsAppCampaign
+      summary: Get a WhatsApp campaign
+      description: '<Note>You can use this API for WhatsApp only if you have setup your WhatsApp account on Brevo platform. To setup your WhatsApp account, follow the steps in the guide below.
+
+        [Activating Whatsapp](https://developers.brevo.com/docs/whatsapp-campaigns-1) in your account</Note>
+
+        <Note>This API requires the List and Segment ids as recipients in Body params.You can use the below Contact endpoints to get the required information.
+
+        [Get all the Lists](https://developers.brevo.com/reference/getlists-1)
+
+        [Get all the Segments](https://developers.brevo.com/reference/getsegments)</Note>'
+      tags:
+      - whatsAppCampaigns
+      parameters:
+      - name: campaignId
+        in: path
+        description: Id of the campaign
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get whatsApp campaign information on the basis of campaignId
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WhatsApp_Campaigns_getWhatsAppCampaign_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetWhatsAppCampaignRequestBadRequestError'
+        '404':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetWhatsAppCampaignRequestNotFoundError'
+    delete:
+      operationId: deleteWhatsAppCampaign
+      summary: Delete a WhatsApp campaign
+      description: Delete a WhatsApp campaign by its campaign ID. The campaign must exist; if the campaign ID is not found, a 404 error is returned. This action is permanent and cannot be undone.
+      tags:
+      - whatsAppCampaigns
+      parameters:
+      - name: campaignId
+        in: path
+        description: id of the campaign
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: WhatsApp campaign has been deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteWhatsAppCampaignRequestBadRequestError'
+        '404':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteWhatsAppCampaignRequestNotFoundError'
+    put:
+      operationId: updateWhatsAppCampaign
+      summary: Update a WhatsApp campaign
+      description: '<Note>You can use this API for WhatsApp only if you have setup your WhatsApp account on Brevo platform. To setup your WhatsApp account, follow the steps in the guide below.
+
+        [Activating Whatsapp](https://developers.brevo.com/docs/whatsapp-campaigns-1) in your account</Note>
+
+        <Note>This API requires the List and Segment ids as recipients in Body params.You can use the below Contact endpoints to get the required information.
+
+        [Get all the Lists](https://developers.brevo.com/reference/getlists-1)
+
+        [Get all the Segments](https://developers.brevo.com/reference/getsegments)</Note>'
+      tags:
+      - whatsAppCampaigns
+      parameters:
+      - name: campaignId
+        in: path
+        description: id of the campaign
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: WhatsApp campaign has been deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateWhatsAppCampaignRequestBadRequestError'
+      requestBody:
+        description: Values to update a WhatsApp Campaign
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                campaignName:
+                  type: string
+                  description: Name of the campaign
+                campaignStatus:
+                  $ref: '#/components/schemas/WhatsappCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaCampaignStatus'
+                  default: scheduled
+                  description: Status of the campaign
+                recipients:
+                  $ref: '#/components/schemas/WhatsappCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaRecipients'
+                  description: Segment ids and List ids to include/exclude from campaign
+                rescheduleFor:
+                  type: string
+                  description: 'Reschedule the sending UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) of campaign. **Prefer to pass your timezone in date-time format for accurate result.For example: **2017-06-01T12:30:00+02:00** Use this field to update the scheduledAt of any existing draft or scheduled WhatsApp campaign.
+
+                    '
+  /whatsappCampaigns/template-list:
+    get:
+      operationId: getWhatsAppTemplates
+      summary: Return all your created WhatsApp templates
+      description: Retrieve a paginated list of all your WhatsApp templates with their status, category, language, and metadata. Results can be filtered by creation date range and optionally by source (Automation or Conversations), with a default limit of 50 and maximum of 100 per page. The sort order defaults to descending by modification date.
+      tags:
+      - whatsAppCampaigns
+      parameters:
+      - name: startDate
+        in: query
+        description: '**Mandatory if endDate is used**. Starting (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the templates created. **Prefer to pass your timezone in date-time format for accurate result**
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: endDate
+        in: query
+        description: '**Mandatory if startDate is used**. Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the templates created. **Prefer to pass your timezone in date-time format for accurate result**
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Number of documents per page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 50
+      - name: offset
+        in: query
+        description: Index of the first document in the page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 0
+      - name: sort
+        in: query
+        description: Sort the results in the ascending/descending order of record modification. Default order is **descending** if `sort` is not passed
+        required: false
+        schema:
+          $ref: '#/components/schemas/WhatsappCampaignsTemplateListGetParametersSort'
+          default: desc
+      - name: source
+        in: query
+        description: source of the template
+        required: false
+        schema:
+          $ref: '#/components/schemas/WhatsappCampaignsTemplateListGetParametersSource'
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: WhatsApp templates informations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WhatsApp_Campaigns_getWhatsAppTemplates_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetWhatsAppTemplatesRequestBadRequestError'
+  /whatsappCampaigns:
+    post:
+      operationId: createWhatsAppCampaign
+      summary: Create and Send a WhatsApp campaign
+      description: '<Note>You can use this API for WhatsApp only if you have setup your WhatsApp account on Brevo platform. To setup your WhatsApp account, follow the steps in the guide below.
+
+        [Activating Whatsapp](https://developers.brevo.com/docs/whatsapp-campaigns-1) in your account</Note>
+
+        <Note>This API requires the List and Segment ids as recipients in Body params.You can use the below Contact endpoints to get the required information.
+
+        [Get all the Lists](https://developers.brevo.com/reference/getlists-1)
+
+        [Get all the Segments](https://developers.brevo.com/reference/getsegments)</Note>'
+      tags:
+      - whatsAppCampaigns
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WhatsApp_Campaigns_createWhatsAppCampaign_Response_201'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateWhatsAppCampaignRequestBadRequestError'
+      requestBody:
+        description: Values to create a WhatsApp Campaign
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the WhatsApp campaign creation
+                recipients:
+                  $ref: '#/components/schemas/WhatsappCampaignsPostRequestBodyContentApplicationJsonSchemaRecipients'
+                  description: Segment ids and List ids to include/exclude from campaign
+                scheduledAt:
+                  type: string
+                  description: 'Sending UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). **Prefer to pass your timezone in date-time format for accurate result.For example: **2017-06-01T12:30:00+02:00**
+
+                    '
+                templateId:
+                  type: integer
+                  description: Id of the WhatsApp template in **approved** state
+              required:
+              - name
+              - recipients
+              - scheduledAt
+              - templateId
+    get:
+      operationId: getWhatsAppCampaigns
+      summary: Return all your created WhatsApp campaigns
+      description: Retrieve a paginated list of all your WhatsApp campaigns with their statistics and metadata. Results can be filtered by creation date range using startDate and endDate, with a default limit of 50 and maximum of 100 per page. The sort order defaults to descending by modification date.
+      tags:
+      - whatsAppCampaigns
+      parameters:
+      - name: startDate
+        in: query
+        description: '**Mandatory if endDate is used**. Starting (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the WhatsApp campaigns created. **Prefer to pass your timezone in date-time format for accurate result**
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: endDate
+        in: query
+        description: '**Mandatory if startDate is used**. Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the WhatsApp campaigns created. **Prefer to pass your timezone in date-time format for accurate result**
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Number of documents per page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 50
+      - name: offset
+        in: query
+        description: Index of the first document in the page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 0
+      - name: sort
+        in: query
+        description: Sort the results in the ascending/descending order of record modification. Default order is **descending** if `sort` is not passed
+        required: false
+        schema:
+          $ref: '#/components/schemas/WhatsappCampaignsGetParametersSort'
+          default: desc
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: WhatsApp campaigns information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WhatsApp_Campaigns_getWhatsAppCampaigns_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetWhatsAppCampaignsRequestBadRequestError'
+  /whatsappCampaigns/config:
+    get:
+      operationId: getWhatsAppConfig
+      summary: Get your WhatsApp API account information
+      description: '<Note>You can use this API for WhatsApp only if you have setup your WhatsApp account on Brevo platform. To setup your WhatsApp account, follow the steps in the guide below.
+
+        [Activating WhatsApp](https://developers.brevo.com/docs/whatsapp-campaigns-1) in your account</Note>'
+      tags:
+      - whatsAppCampaigns
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get all the information of your WhatsApp API account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WhatsApp_Campaigns_getWhatsAppConfig_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetWhatsAppConfigRequestBadRequestError'
+  /whatsappCampaigns/template:
+    post:
+      operationId: createWhatsAppTemplate
+      summary: Create a WhatsApp template
+      description: '<Note>You can use this API for WhatsApp only if you have setup your WhatsApp account on Brevo platform. To setup your WhatsApp account, follow the steps in the guide below.
+
+        [Activating WhatsApp](https://developers.brevo.com/docs/whatsapp-campaigns-1) in your account</Note>'
+      tags:
+      - whatsAppCampaigns
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WhatsApp_Campaigns_createWhatsAppTemplate_Response_201'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateWhatsAppTemplateRequestBadRequestError'
+      requestBody:
+        description: Values to create a WhatsApp Template
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bodyText:
+                  type: string
+                  description: Body of the template. **Maximum allowed characters are 1024**
+                category:
+                  $ref: '#/components/schemas/WhatsappCampaignsTemplatePostRequestBodyContentApplicationJsonSchemaCategory'
+                  description: Category of the template
+                headerText:
+                  type: string
+                  description: 'Text content of the header in the template.  **Maximum allowed characters are 45** **Use this field to add text content in template header and if mediaUrl is empty**
+
+                    '
+                language:
+                  type: string
+                  description: 'Language of the template. For Example :
+
+                    **en** for English
+
+                    '
+                mediaUrl:
+                  type: string
+                  description: 'Absolute url of the media file **(no local file)** for the header. **Use this field in you want to add media in Template header and headerText is empty** Allowed extensions for media files are: #### jpeg | png | mp4 | pdf
+
+                    '
+                name:
+                  type: string
+                  description: Name of the template
+                source:
+                  $ref: '#/components/schemas/WhatsappCampaignsTemplatePostRequestBodyContentApplicationJsonSchemaSource'
+                  description: source of the template
+              required:
+              - bodyText
+              - category
+              - language
+              - name
+  /whatsappCampaigns/template/approval/{templateId}:
+    post:
+      operationId: sendWhatsAppTemplateApproval
+      summary: Send your WhatsApp template for approval
+      description: '<Note>You can use this API for WhatsApp only if you have setup your WhatsApp account on Brevo platform. To setup your WhatsApp account, follow the steps in the guide below.
+
+        [Activating WhatsApp](https://developers.brevo.com/docs/whatsapp-campaigns-1) in your account</Note>'
+      tags:
+      - whatsAppCampaigns
+      parameters:
+      - name: templateId
+        in: path
+        description: id of the template
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: WhatsApp template sent for approval
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WhatsApp_Campaigns_sendWhatsAppTemplateApproval_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendWhatsAppTemplateApprovalRequestBadRequestError'
+components:
+  schemas:
+    WhatsappCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaCampaignStatus:
+      type: string
+      enum:
+      - draft
+      - scheduled
+      - pending
+      - approved
+      - running
+      - suspended
+      - rejected
+      - sent
+      description: Status of the WhatsApp Campaign
+      title: WhatsappCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaCampaignStatus
+    WhatsappCampaignsTemplateListGetResponsesContentApplicationJsonSchemaTemplatesItems:
+      type: object
+      properties:
+        category:
+          type: string
+          description: category of the template
+        createdAt:
+          type: string
+          description: Creation UTC date-time of the whatsApp template (YYYY-MM-DDTHH:mm:ss.SSSZ)
+        errorReason:
+          type: string
+          description: Error reason in the template creation
+        id:
+          type: integer
+          format: int64
+          description: ID of the whatsApp template
+        language:
+          type: string
+          description: Language in which template exists
+        modifiedAt:
+          type: string
+          description: UTC date-time of last modification of the whatsApp template (YYYY-MM-DDTHH:mm:ss.SSSZ)
+        name:
+          type: string
+          description: Name of the whatsApp template
+        status:
+          type: string
+          description: Status of the whatsApp template
+        type:
+          type: string
+          description: Type of the whatsApp template
+      required:
+      - category
+      - createdAt
+      - id
+      - language
+      - modifiedAt
+      - name
+      - status
+      - type
+      title: WhatsappCampaignsTemplateListGetResponsesContentApplicationJsonSchemaTemplatesItems
+    CreateWhatsAppCampaignRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/WhatsappCampaignsPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreateWhatsAppCampaignRequestBadRequestError
+    CreateWhatsAppTemplateRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/WhatsappCampaignsTemplatePostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreateWhatsAppTemplateRequestBadRequestError
+    GetWhatsAppCampaignRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/WhatsappCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetWhatsAppCampaignRequestBadRequestError
+    WhatsappCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: WhatsappCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaCode
+    WhatsappCampaignsConfigGetResponsesContentApplicationJsonSchemaPhoneNumberNameStatus:
+      type: string
+      enum:
+      - APPROVED
+      - PENDING
+      - REJECTED
+      description: Status of the name associated with WhatsApp Phone number
+      title: WhatsappCampaignsConfigGetResponsesContentApplicationJsonSchemaPhoneNumberNameStatus
+    WhatsappCampaignsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: WhatsappCampaignsPostResponsesContentApplicationJsonSchemaCode
+    WhatsappCampaignsCampaignIdPutResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: WhatsappCampaignsCampaignIdPutResponsesContentApplicationJsonSchemaCode
+    DeleteWhatsAppCampaignRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/WhatsappCampaignsCampaignIdDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteWhatsAppCampaignRequestNotFoundError
+    WhatsappCampaignsTemplateListGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: WhatsappCampaignsTemplateListGetResponsesContentApplicationJsonSchemaCode
+    variablesItems:
+      type: object
+      properties:
+        datatype:
+          type: string
+        default:
+          type: string
+        name:
+          type: string
+      title: variablesItems
+    WhatsApp_Campaigns_createWhatsAppCampaign_Response_201:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID of the object created
+      required:
+      - id
+      title: WhatsApp Campaigns_createWhatsAppCampaign_Response_201
+    WhatsappCampaignsTemplatePostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: WhatsappCampaignsTemplatePostResponsesContentApplicationJsonSchemaCode
+    WhatsappCampaignsPostRequestBodyContentApplicationJsonSchemaRecipients:
+      type: object
+      properties:
+        excludedListIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: List ids to exclude from the campaign
+        listIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: '**Mandatory if scheduledAt is not empty**. List Ids to send the campaign to
+
+            '
+        segments:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: '**Mandatory if listIds are not used**. Segment ids to send the campaign to.
+
+            '
+      description: Segment ids and List ids to include/exclude from campaign
+      title: WhatsappCampaignsPostRequestBodyContentApplicationJsonSchemaRecipients
+    WhatsApp_Campaigns_getWhatsAppTemplates_Response_200:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: Number of whatsApp templates retrieved
+        templates:
+          type: array
+          items:
+            $ref: '#/components/schemas/WhatsappCampaignsTemplateListGetResponsesContentApplicationJsonSchemaTemplatesItems'
+      title: WhatsApp Campaigns_getWhatsAppTemplates_Response_200
+    WhatsappCampStats:
+      type: object
+      properties:
+        delivered:
+          type: integer
+        notSent:
+          type: integer
+        read:
+          type: integer
+        sent:
+          type: integer
+        unsubscribe:
+          type: integer
+      required:
+      - delivered
+      - notSent
+      - read
+      - sent
+      - unsubscribe
+      title: WhatsappCampStats
+    WhatsappCampaignsTemplateListGetParametersSource:
+      type: string
+      enum:
+      - Automation
+      - Conversations
+      title: WhatsappCampaignsTemplateListGetParametersSource
+    WhatsApp_Campaigns_sendWhatsAppTemplateApproval_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: WhatsApp Campaigns_sendWhatsAppTemplateApproval_Response_200
+    GetWhatsAppCampaignsRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/WhatsappCampaignsGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetWhatsAppCampaignsRequestBadRequestError
+    WhatsappCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaTemplate:
+      type: object
+      properties:
+        body_variables:
+          type: array
+          items:
+            $ref: '#/components/schemas/variablesItems'
+          description: array of variables item variables
+        button_type:
+          type: string
+        category:
+          type: string
+          description: description of the template
+        components:
+          type: array
+          items:
+            $ref: '#/components/schemas/WhatsappCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaTemplateComponentsItems'
+          description: array of component item objects
+        contains_button:
+          type: boolean
+        display_header:
+          type: boolean
+        header_type:
+          type: string
+          description: type of header
+        header_variables:
+          type: array
+          items:
+            $ref: '#/components/schemas/variablesItems'
+          description: array of variables item object
+        hide_footer:
+          type: boolean
+        language:
+          type: string
+          description: language of the template
+        name:
+          type: string
+          description: name of the template
+      title: WhatsappCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaTemplate
+    WhatsappCampaignsGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: WhatsappCampaignsGetParametersSort
+    WhatsappCampaignsTemplateApprovalTemplateIdPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: WhatsappCampaignsTemplateApprovalTemplateIdPostResponsesContentApplicationJsonSchemaCode
+    DeleteWhatsAppCampaignRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/WhatsappCampaignsCampaignIdDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteWhatsAppCampaignRequestBadRequestError
+    WhatsApp_Campaigns_getWhatsAppCampaigns_Response_200:
+      type: object
+      properties:
+        campaigns:
+          type: array
+          items:
+            $ref: '#/components/schemas/WhatsappCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItems'
+        count:
+          type: integer
+          format: int64
+          description: Number of WhatsApp campaigns retrieved
+      title: WhatsApp Campaigns_getWhatsAppCampaigns_Response_200
+    GetWhatsAppConfigRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/WhatsappCampaignsConfigGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetWhatsAppConfigRequestBadRequestError
+    WhatsappCampaignsConfigGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: WhatsappCampaignsConfigGetResponsesContentApplicationJsonSchemaCode
+    WhatsappCampaignsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: WhatsappCampaignsGetResponsesContentApplicationJsonSchemaCode
+    WhatsappCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaRecipients:
+      type: object
+      properties:
+        excludedLists:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: List of excluded list IDs
+        includedLists:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: List of included list IDs
+        segments:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: List of segment IDs
+        type:
+          type: string
+          description: Type of recipients (list or segment)
+      description: Recipients of the WhatsApp Campaign
+      title: WhatsappCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaRecipients
+    WhatsappCampaignsCampaignIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: WhatsappCampaignsCampaignIdDeleteResponsesContentApplicationJsonSchemaCode
+    WhatsappCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItems:
+      type: object
+      properties:
+        campaignName:
+          type: string
+          description: Name of the WhatsApp Campaign
+        campaignStatus:
+          $ref: '#/components/schemas/WhatsappCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsCampaignStatus'
+          description: Status of the Whatsapp Campaign
+        createdAt:
+          type: string
+          description: Creation UTC date-time of the WhatsApp campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)
+        errorReason:
+          type: string
+          description: Error Reason associated with the WhatsApp campaign sending
+        id:
+          type: integer
+          format: int64
+          description: ID of the WhatsApp Campaign
+        invalidatedContacts:
+          type: integer
+          format: int64
+          description: Count of invalidated contacts
+        modifiedAt:
+          type: string
+          description: UTC date-time of last modification of the WhatsApp campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)
+        readPercentage:
+          type: string
+          title: float
+          description: Read percentage of the the whatsapp campaign created
+        scheduledAt:
+          type: string
+          description: UTC date-time on which WhatsApp campaign is scheduled. Should be in YYYY-MM-DDTHH:mm:ss.SSSZ format
+        stats:
+          $ref: '#/components/schemas/WhatsappCampStats'
+        templateId:
+          type: string
+          description: Id of the WhatsApp template
+      required:
+      - campaignName
+      - campaignStatus
+      - createdAt
+      - id
+      - modifiedAt
+      - scheduledAt
+      - templateId
+      title: WhatsappCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItems
+    WhatsappCampaignsConfigGetResponsesContentApplicationJsonSchemaPhoneNumberQuality:
+      type: string
+      enum:
+      - GREEN
+      - YELLOW
+      - RED
+      description: Quality status of phone number associated with WhatsApp account. There are three quality ratings. example - **High (GREEN) , Medium (YELLOW) and Low(RED)**
+      title: WhatsappCampaignsConfigGetResponsesContentApplicationJsonSchemaPhoneNumberQuality
+    WhatsappCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsCampaignStatus:
+      type: string
+      enum:
+      - draft
+      - scheduled
+      - pending
+      - approved
+      - running
+      - suspended
+      - rejected
+      - sent
+      description: Status of the Whatsapp Campaign
+      title: WhatsappCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsCampaignStatus
+    GetWhatsAppTemplatesRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/WhatsappCampaignsTemplateListGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetWhatsAppTemplatesRequestBadRequestError
+    WhatsappCampaignsTemplatePostRequestBodyContentApplicationJsonSchemaSource:
+      type: string
+      enum:
+      - Automation
+      - Conversations
+      description: source of the template
+      title: WhatsappCampaignsTemplatePostRequestBodyContentApplicationJsonSchemaSource
+    SendWhatsAppTemplateApprovalRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/WhatsappCampaignsTemplateApprovalTemplateIdPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: SendWhatsAppTemplateApprovalRequestBadRequestError
+    GetWhatsAppCampaignRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/WhatsappCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetWhatsAppCampaignRequestNotFoundError
+    WhatsApp_Campaigns_getWhatsAppConfig_Response_200:
+      type: object
+      properties:
+        businessStatus:
+          type: string
+          description: Verification status information of the Business account
+        phoneNumberNameStatus:
+          $ref: '#/components/schemas/WhatsappCampaignsConfigGetResponsesContentApplicationJsonSchemaPhoneNumberNameStatus'
+          description: Status of the name associated with WhatsApp Phone number
+        phoneNumberQuality:
+          $ref: '#/components/schemas/WhatsappCampaignsConfigGetResponsesContentApplicationJsonSchemaPhoneNumberQuality'
+          description: Quality status of phone number associated with WhatsApp account. There are three quality ratings. example - **High (GREEN) , Medium (YELLOW) and Low(RED)**
+        sendingLimit:
+          type: string
+          description: Sending limit of the WhatsApp account
+        whatsappBusinessAccountId:
+          type: string
+          description: Id of the WhatsApp business account
+        whatsappBusinessAccountStatus:
+          $ref: '#/components/schemas/WhatsappCampaignsConfigGetResponsesContentApplicationJsonSchemaWhatsappBusinessAccountStatus'
+          description: Status information related to WhatsApp Api account
+      title: WhatsApp Campaigns_getWhatsAppConfig_Response_200
+    WhatsappCampaignsConfigGetResponsesContentApplicationJsonSchemaWhatsappBusinessAccountStatus:
+      type: string
+      enum:
+      - APPROVED
+      - PENDING
+      - REJECTED
+      description: Status information related to WhatsApp Api account
+      title: WhatsappCampaignsConfigGetResponsesContentApplicationJsonSchemaWhatsappBusinessAccountStatus
+    UpdateWhatsAppCampaignRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/WhatsappCampaignsCampaignIdPutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UpdateWhatsAppCampaignRequestBadRequestError
+    WhatsappCampaignsTemplateListGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: WhatsappCampaignsTemplateListGetParametersSort
+    WhatsappCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaCampaignStatus:
+      type: string
+      enum:
+      - scheduled
+      - suspended
+      default: scheduled
+      description: Status of the campaign
+      title: WhatsappCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaCampaignStatus
+    WhatsappCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaTemplateComponentsItems:
+      type: object
+      properties:
+        text:
+          type: string
+        type:
+          type: string
+      title: WhatsappCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaTemplateComponentsItems
+    WhatsappCampaignsTemplatePostRequestBodyContentApplicationJsonSchemaCategory:
+      type: string
+      enum:
+      - MARKETING
+      - UTILITY
+      description: Category of the template
+      title: WhatsappCampaignsTemplatePostRequestBodyContentApplicationJsonSchemaCategory
+    WhatsApp_Campaigns_getWhatsAppCampaign_Response_200:
+      type: object
+      properties:
+        campaignName:
+          type: string
+          description: Name of the WhatsApp Campaign
+        campaignStatus:
+          $ref: '#/components/schemas/WhatsappCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaCampaignStatus'
+          description: Status of the WhatsApp Campaign
+        createdAt:
+          type: string
+          description: Creation UTC date-time of the WhatsApp campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)
+        id:
+          type: integer
+          format: int64
+          description: ID of the WhatsApp Campaign
+        modifiedAt:
+          type: string
+          description: UTC date-time of last modification of the WhatsApp campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)
+        scheduledAt:
+          type: string
+          description: UTC date-time on which WhatsApp campaign is scheduled. Should be in YYYY-MM-DDTHH:mm:ss.SSSZ format
+        recipients:
+          $ref: '#/components/schemas/WhatsappCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaRecipients'
+          description: Recipients of the WhatsApp Campaign
+        senderNumber:
+          type: string
+          description: Sender of the WhatsApp Campaign
+        stats:
+          $ref: '#/components/schemas/WhatsappCampStats'
+        template:
+          $ref: '#/components/schemas/WhatsappCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaTemplate'
+      required:
+      - campaignName
+      - campaignStatus
+      - createdAt
+      - id
+      - modifiedAt
+      - recipients
+      - senderNumber
+      - template
+      title: WhatsApp Campaigns_getWhatsAppCampaign_Response_200
+    WhatsApp_Campaigns_createWhatsAppTemplate_Response_201:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID of the object created
+      required:
+      - id
+      title: WhatsApp Campaigns_createWhatsAppTemplate_Response_201
+    WhatsappCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaRecipients:
+      type: object
+      properties:
+        excludedListIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: List ids to exclude from the campaign
+        listIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: '**Mandatory if scheduledAt is not empty**. List Ids to send the campaign to
+
+            '
+        segments:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: '**Mandatory if listIds are not used**. Segment ids to send the campaign to.
+
+            '
+      description: Segment ids and List ids to include/exclude from campaign
+      title: WhatsappCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaRecipients
+  securitySchemes:
+    api-key:
+      type: apiKey
+      in: header
+      name: api-key
+      description: The API key should be passed in the request headers as `api-key` for authentication.

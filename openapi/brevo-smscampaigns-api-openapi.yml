@@ -1,0 +1,1627 @@
+openapi: 3.2.0
+info:
+  title: Marketing Campaigns Sms Campaigns API
+  version: 1.0.0
+servers:
+- url: https://api.brevo.com/v3
+  description: https://api.brevo.com/v3
+tags:
+- name: smsCampaigns
+paths:
+  /smsCampaigns:
+    get:
+      operationId: getSmsCampaigns
+      summary: Returns the information for all your created SMS campaigns
+      description: Retrieve a paginated list of all your SMS campaigns with their statistics and recipient information. Results can be filtered by status and date range, with a default limit of 500 and maximum of 1000 per page. The sort order defaults to descending by creation date; date filters are only available when status is not passed or is set to sent.
+      tags:
+      - smsCampaigns
+      parameters:
+      - name: status
+        in: query
+        description: Status of campaign.
+        required: false
+        schema:
+          $ref: '#/components/schemas/SmsCampaignsGetParametersStatus'
+      - name: startDate
+        in: query
+        description: '**Mandatory if endDate is used.** Starting (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent SMS campaigns. **Prefer to pass your timezone in date-time format for accurate result.** Only available if `status` is not passed or is set to `sent`. `startDate` must not be in the future.
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: endDate
+        in: query
+        description: '**Mandatory if startDate is used.** Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent SMS campaigns. **Prefer to pass your timezone in date-time format for accurate result.** Only available if `status` is not passed or is set to `sent`. `endDate` must not be in the future.
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Number of documents per page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 500
+      - name: offset
+        in: query
+        description: Beginning point in the list to retrieve from.
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 0
+      - name: sort
+        in: query
+        description: Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed
+        required: false
+        schema:
+          $ref: '#/components/schemas/SmsCampaignsGetParametersSort'
+          default: desc
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: SMS campaigns information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SMS_Campaigns_getSmsCampaigns_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSmsCampaignsRequestBadRequestError'
+    post:
+      operationId: createSmsCampaign
+      summary: Creates an SMS campaign
+      description: Create a new SMS campaign with the required name, sender, and content fields. The sender name is limited to 11 alphanumeric characters or 15 numeric characters, and the content should stay within 160 characters per SMS segment. If a scheduledAt date is provided, listIds in recipients become mandatory; accounts under validation are limited to 4 total campaigns and campaigns with more than 10 recipients will be saved as draft.
+      tags:
+      - smsCampaigns
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SMS_Campaigns_createSmsCampaign_Response_201'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateSmsCampaignRequestBadRequestError'
+      requestBody:
+        description: Values to create an SMS Campaign
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  description: 'Content of the message. The **maximum characters used per SMS is 160**, if used more than that, it will be counted as more than one SMS.
+
+                    '
+                name:
+                  type: string
+                  description: Name of the campaign
+                organisationPrefix:
+                  type: string
+                  description: A recognizable prefix will ensure your audience knows who you are. Recommended by U.S. carriers. This will be added as your Brand Name before the message content. **Prefer verifying maximum length of 160 characters including this prefix in message content to avoid multiple sending of same sms.**
+                recipients:
+                  $ref: '#/components/schemas/SmsCampaignsPostRequestBodyContentApplicationJsonSchemaRecipients'
+                scheduledAt:
+                  type: string
+                  description: 'UTC date-time on which the campaign has to run (YYYY-MM-DDTHH:mm:ss.SSSZ). **Prefer to pass your timezone in date-time format for accurate result.**
+
+                    '
+                sender:
+                  type: string
+                  description: 'Name of the sender. **The number of characters is limited to 11 for alphanumeric characters and 15 for numeric characters**
+
+                    '
+                unicodeEnabled:
+                  type: boolean
+                  default: false
+                  description: 'Format of the message. It indicates whether the content should be treated as unicode or not.
+
+                    '
+                unsubscribeInstruction:
+                  type: string
+                  description: Instructions to unsubscribe from future communications. Recommended by U.S. carriers. Must include **STOP** keyword. This will be added as instructions after the end of message content. **Prefer verifying maximum length of 160 characters including this instructions in message content to avoid multiple sending of same sms.**
+              required:
+              - content
+              - name
+              - sender
+  /smsCampaigns/{campaignId}:
+    get:
+      operationId: getSmsCampaign
+      summary: Get an SMS campaign
+      description: Retrieve detailed information about a specific SMS campaign by its ID, including campaign content, sender, recipients with list names, statistics (delivered, sent, bounces, unsubscriptions, answered), and tags. Unlike the list endpoint, recipients are returned as objects with id and name fields rather than plain IDs.
+      tags:
+      - smsCampaigns
+      parameters:
+      - name: campaignId
+        in: path
+        description: id of the SMS campaign
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: SMS campaign information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SMS_Campaigns_getSmsCampaign_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSmsCampaignRequestBadRequestError'
+        '404':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSmsCampaignRequestNotFoundError'
+    put:
+      operationId: updateSmsCampaign
+      summary: Update an SMS campaign
+      description: Update an existing SMS campaign''s properties such as name, sender, content, recipients, scheduled date, organisation prefix, and unsubscribe instructions. The request body must contain at least one valid field to update. The campaign must exist and must be of type SMS; if a scheduledAt is provided, valid recipients must be present either in the request or already configured on the campaign.
+      tags:
+      - smsCampaigns
+      parameters:
+      - name: campaignId
+        in: path
+        description: id of the SMS campaign
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: SMS campaign updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateSmsCampaignRequestBadRequestError'
+        '404':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateSmsCampaignRequestNotFoundError'
+      requestBody:
+        description: Values to update an SMS Campaign
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  description: 'Content of the message. The **maximum characters used per SMS is 160**, if used more than that, it will be counted as more than one SMS
+
+                    '
+                name:
+                  type: string
+                  description: Name of the campaign
+                organisationPrefix:
+                  type: string
+                  description: A recognizable prefix will ensure your audience knows who you are. Recommended by U.S. carriers. This will be added as your Brand Name before the message content. **Prefer verifying maximum length of 160 characters including this prefix in message content to avoid multiple sending of same sms.**
+                recipients:
+                  $ref: '#/components/schemas/SmsCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaRecipients'
+                scheduledAt:
+                  type: string
+                  description: 'UTC date-time on which the campaign has to run (YYYY-MM-DDTHH:mm:ss.SSSZ). **Prefer to pass your timezone in date-time format for accurate result.**
+
+                    '
+                sender:
+                  type: string
+                  description: 'Name of the sender. **The number of characters is limited to 11 for alphanumeric characters and 15 for numeric characters**
+
+                    '
+                unicodeEnabled:
+                  type: boolean
+                  default: false
+                  description: 'Format of the message. It indicates whether the content should be treated as unicode or not.
+
+                    '
+                unsubscribeInstruction:
+                  type: string
+                  description: Instructions to unsubscribe from future communications. Recommended by U.S. carriers. Must include **STOP** keyword. This will be added as instructions after the end of message content. **Prefer verifying maximum length of 160 characters including this instructions in message content to avoid multiple sending of same sms.**
+    delete:
+      operationId: deleteSmsCampaign
+      summary: Delete an SMS campaign
+      description: Delete an SMS campaign by its campaign ID. Only campaigns that have not been scheduled or sent can be deleted; attempting to delete a campaign that is queued, in process, or has been sent with recipients will return a 403 permission denied error.
+      tags:
+      - smsCampaigns
+      parameters:
+      - name: campaignId
+        in: path
+        description: id of the SMS campaign
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: SMS campaign has been deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteSmsCampaignRequestBadRequestError'
+        '404':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteSmsCampaignRequestNotFoundError'
+  /smsCampaigns/{campaignId}/sendNow:
+    post:
+      operationId: sendSmsCampaignNow
+      summary: Send your SMS campaign immediately
+      description: Send an existing SMS campaign immediately by scheduling it for the current time. The system verifies your account''s SMS credit balance before dispatching; if credits are insufficient or the remaining credit is less than the number of recipients, a 402 error is returned. The campaign must have valid recipients and content already configured.
+      tags:
+      - smsCampaigns
+      parameters:
+      - name: campaignId
+        in: path
+        description: id of the campaign
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: SMS campaign has been scheduled
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: SMS Campaign could not be sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '402':
+          description: You don't have enough credit to send your campaign. Please update your plan
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendSmsCampaignNowRequestNotFoundError'
+  /smsCampaigns/{campaignId}/status:
+    put:
+      operationId: updateSmsCampaignStatus
+      summary: Update a campaign's status
+      description: Update the status of an SMS campaign, such as suspending, archiving, or replicating it. Available status values include suspended, archive, darchive, sent, queued, replicate, replicateTemplate, cancel, and draft. Note that the replicateTemplate status is only available for template type campaigns.
+      tags:
+      - smsCampaigns
+      parameters:
+      - name: campaignId
+        in: path
+        description: id of the campaign
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: The campaign status has been updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateSmsCampaignStatusRequestBadRequestError'
+        '404':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateSmsCampaignStatusRequestNotFoundError'
+      requestBody:
+        description: Status of the campaign.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateCampaignStatus'
+  /smsCampaigns/{campaignId}/sendTest:
+    post:
+      operationId: sendTestSms
+      summary: Send a test SMS campaign
+      description: Send a test SMS to a specified phone number to preview the campaign before sending it to all recipients. The phone number must belong to one of your existing contacts in your Brevo account and must not be blacklisted. The number should include the country code (e.g. 33689965433).
+      tags:
+      - smsCampaigns
+      parameters:
+      - name: campaignId
+        in: path
+        description: Id of the SMS campaign
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Test SMS has been sent successfully to the recipient
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Test SMS could not be sent to the following email addresses
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendTestSmsRequestBadRequestError'
+        '404':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendTestSmsRequestNotFoundError'
+      requestBody:
+        description: 'Mobile number of the recipient with the country code. This number **must belong to one of your contacts in Brevo account and must not be blacklisted**
+
+          '
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phoneNumber:
+                  type: string
+                  description: 'Mobile number of the recipient with the country code. This number **must belong to one of your contacts in Brevo account and must not be blacklisted**
+
+                    '
+  /smsCampaigns/{campaignId}/exportRecipients:
+    post:
+      operationId: requestSmsRecipientExport
+      summary: Export an SMS campaign's recipients
+      description: It returns the background process ID which on completion calls the notify URL that you have set in the input.
+      tags:
+      - smsCampaigns
+      parameters:
+      - name: campaignId
+        in: path
+        description: id of the campaign
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '202':
+          description: process id created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SMS_Campaigns_requestSmsRecipientExport_Response_202'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestSmsRecipientExportRequestBadRequestError'
+        '404':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestSmsRecipientExportRequestNotFoundError'
+      requestBody:
+        description: Values to send for a recipient export request
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                notifyURL:
+                  type: string
+                  format: url
+                  description: URL that will be called once the export process is finished. For reference, https://help.brevo.com/hc/en-us/articles/360007666479
+                recipientsType:
+                  $ref: '#/components/schemas/SmsCampaignsCampaignIdExportRecipientsPostRequestBodyContentApplicationJsonSchemaRecipientsType'
+                  description: Filter the recipients based on how they interacted with the campaign
+              required:
+              - recipientsType
+  /smsCampaigns/{campaignId}/sendReport:
+    post:
+      operationId: sendSmsReport
+      summary: Send an SMS campaign's report
+      description: Send report of Sent and Archived campaign, to the specified email addresses, with respective data and a pdf attachment in detail.
+      tags:
+      - smsCampaigns
+      parameters:
+      - name: campaignId
+        in: path
+        description: id of the campaign
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Report has been successfully sent to the defined recipients
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendSmsReportRequestBadRequestError'
+        '404':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendSmsReportRequestNotFoundError'
+      requestBody:
+        description: Values for send a report
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/sendReport'
+components:
+  schemas:
+    SendReportEmail:
+      type: object
+      properties:
+        body:
+          type: string
+          description: Custom text message to be presented in the report email.
+        to:
+          type: array
+          items:
+            type: string
+            format: email
+          description: Email addresses of the recipients
+      required:
+      - body
+      - to
+      description: Custom attributes for the report email.
+      title: SendReportEmail
+    sendReport:
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/SendReportEmail'
+          description: Custom attributes for the report email.
+        language:
+          $ref: '#/components/schemas/SendReportLanguage'
+          default: fr
+          description: Language of email content for campaign report sending.
+      required:
+      - email
+      title: sendReport
+    SmsCampaignsCampaignIdSendTestPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmsCampaignsCampaignIdSendTestPostResponsesContentApplicationJsonSchemaCode
+    SmsCampaignsPostRequestBodyContentApplicationJsonSchemaRecipients:
+      type: object
+      properties:
+        exclusionListIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: List ids which have to be excluded from a campaign
+        listIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: 'Lists Ids to send the campaign to. **REQUIRED if scheduledAt is not empty**
+
+            '
+      required:
+      - listIds
+      title: SmsCampaignsPostRequestBodyContentApplicationJsonSchemaRecipients
+    SmsCampaignsGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: SmsCampaignsGetParametersSort
+    SmsCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaStatus:
+      type: string
+      enum:
+      - draft
+      - sent
+      - archive
+      - queued
+      - suspended
+      - inProcess
+      description: Status of the SMS Campaign
+      title: SmsCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaStatus
+    SMS_Campaigns_createSmsCampaign_Response_201:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID of the object created
+      required:
+      - id
+      title: SMS Campaigns_createSmsCampaign_Response_201
+    SendTestSmsRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Response code
+        message:
+          type: string
+          description: Response message
+        unexistingSms:
+          type: array
+          items:
+            type: string
+            format: email
+        withoutListSms:
+          type: array
+          items:
+            type: string
+            format: email
+      required:
+      - code
+      - message
+      title: SendTestSmsRequestBadRequestError
+    SmsCampaignsCampaignIdPutResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmsCampaignsCampaignIdPutResponsesContentApplicationJsonSchemaCode
+    DeleteSmsCampaignRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmsCampaignsCampaignIdDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteSmsCampaignRequestBadRequestError
+    SendSmsCampaignNowRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmsCampaignsCampaignIdSendNowPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: SendSmsCampaignNowRequestNotFoundError
+    SMS_Campaigns_getSmsCampaigns_Response_200:
+      type: object
+      properties:
+        campaigns:
+          type: array
+          items:
+            $ref: '#/components/schemas/SmsCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItems'
+        count:
+          type: integer
+          format: int64
+          description: Number of SMS campaigns retrieved
+      title: SMS Campaigns_getSmsCampaigns_Response_200
+    UpdateSmsCampaignRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmsCampaignsCampaignIdPutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UpdateSmsCampaignRequestBadRequestError
+    SendSmsReportRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmsCampaignsCampaignIdSendReportPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: SendSmsReportRequestNotFoundError
+    GetSmsCampaignsRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmsCampaignsGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetSmsCampaignsRequestBadRequestError
+    SmsCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsStatus:
+      type: string
+      enum:
+      - draft
+      - sent
+      - archive
+      - queued
+      - suspended
+      - inProcess
+      description: Status of the SMS Campaign
+      title: SmsCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsStatus
+    SmsCampaignsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmsCampaignsGetResponsesContentApplicationJsonSchemaCode
+    SmsCampaignsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmsCampaignsPostResponsesContentApplicationJsonSchemaCode
+    RequestSmsRecipientExportRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmsCampaignsCampaignIdExportRecipientsPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: RequestSmsRecipientExportRequestNotFoundError
+    RequestSmsRecipientExportRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmsCampaignsCampaignIdExportRecipientsPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: RequestSmsRecipientExportRequestBadRequestError
+    GetSmsCampaignRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmsCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetSmsCampaignRequestBadRequestError
+    SmsCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaRecipientsExclusionListsItems:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID of the exclusion list
+        name:
+          type: string
+          description: Name of the exclusion list
+      title: SmsCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaRecipientsExclusionListsItems
+    DeleteSmsCampaignRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmsCampaignsCampaignIdDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteSmsCampaignRequestNotFoundError
+    SmsCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmsCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaCode
+    SmsCampaignsCampaignIdExportRecipientsPostRequestBodyContentApplicationJsonSchemaRecipientsType:
+      type: string
+      enum:
+      - all
+      - delivered
+      - answered
+      - softBounces
+      - hardBounces
+      - unsubscribed
+      description: Filter the recipients based on how they interacted with the campaign
+      title: SmsCampaignsCampaignIdExportRecipientsPostRequestBodyContentApplicationJsonSchemaRecipientsType
+    SmsCampaignsCampaignIdExportRecipientsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmsCampaignsCampaignIdExportRecipientsPostResponsesContentApplicationJsonSchemaCode
+    SmsCampaignsCampaignIdSendNowPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmsCampaignsCampaignIdSendNowPostResponsesContentApplicationJsonSchemaCode
+    SMS_Campaigns_getSmsCampaign_Response_200:
+      type: object
+      properties:
+        content:
+          type: string
+          description: Content of the SMS Campaign
+        createdAt:
+          type: string
+          description: Creation UTC date-time of the SMS campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)
+        id:
+          type: integer
+          format: int64
+          description: ID of the SMS Campaign
+        modifiedAt:
+          type: string
+          description: UTC date-time of last modification of the SMS campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)
+        name:
+          type: string
+          description: Name of the SMS Campaign
+        organisationPrefix:
+          type: string
+          description: A recognizable prefix added as the Brand Name before the message content. Empty string if not set.
+        scheduledAt:
+          type: string
+          description: UTC date-time on which SMS campaign is scheduled. Should be in YYYY-MM-DDTHH:mm:ss.SSSZ format. Empty string if not scheduled.
+        sender:
+          type: string
+          description: Sender of the SMS Campaign
+        sentDate:
+          type: string
+          description: UTC date-time on which the SMS campaign was sent (YYYY-MM-DDTHH:mm:ss.SSSZ). Only available if the campaign status is 'sent'.
+        status:
+          $ref: '#/components/schemas/SmsCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaStatus'
+          description: Status of the SMS Campaign
+        unsubscribeInstruction:
+          type: string
+          description: Instructions to unsubscribe from future communications. Empty string if not set.
+        recipients:
+          $ref: '#/components/schemas/SmsCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaRecipients'
+          description: Recipients of the SMS campaign. For a single campaign, lists and exclusion lists are returned as objects with id and name.
+        statistics:
+          $ref: '#/components/schemas/getSmsCampaignStats'
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags (labels) associated with the SMS campaign. Only available when retrieving a single campaign.
+      required:
+      - content
+      - createdAt
+      - id
+      - modifiedAt
+      - name
+      - sender
+      - status
+      - recipients
+      - statistics
+      title: SMS Campaigns_getSmsCampaign_Response_200
+    UpdateSmsCampaignRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmsCampaignsCampaignIdPutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UpdateSmsCampaignRequestNotFoundError
+    SmsCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaRecipients:
+      type: object
+      properties:
+        exclusionListIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: List ids which have to be excluded from a campaign
+        listIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: 'Lists Ids to send the campaign to. **REQUIRED if scheduledAt is not empty**
+
+            '
+      required:
+      - listIds
+      title: SmsCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaRecipients
+    SmsCampaignsCampaignIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmsCampaignsCampaignIdDeleteResponsesContentApplicationJsonSchemaCode
+    GetSmsCampaignRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmsCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetSmsCampaignRequestNotFoundError
+    SendSmsReportRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmsCampaignsCampaignIdSendReportPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: SendSmsReportRequestBadRequestError
+    SmsCampaignsCampaignIdStatusPutResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmsCampaignsCampaignIdStatusPutResponsesContentApplicationJsonSchemaCode
+    UpdateCampaignStatusStatus:
+      type: string
+      enum:
+      - suspended
+      - archive
+      - darchive
+      - sent
+      - queued
+      - replicate
+      - replicateTemplate
+      - cancel
+      - draft
+      description: 'Note:- **replicateTemplate** status will be available **only for template type campaigns.**
+
+        '
+      title: UpdateCampaignStatusStatus
+    UpdateSmsCampaignStatusRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmsCampaignsCampaignIdStatusPutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UpdateSmsCampaignStatusRequestBadRequestError
+    getCampaignRecipients:
+      type: object
+      properties:
+        excludedSegments:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: Segment IDs excluded from the campaign
+        exclusionLists:
+          type: array
+          items:
+            type: integer
+            format: int64
+        lists:
+          type: array
+          items:
+            type: integer
+            format: int64
+        segments:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: Segment IDs included in the campaign
+      required:
+      - exclusionLists
+      - lists
+      title: getCampaignRecipients
+    CreateSmsCampaignRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmsCampaignsPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreateSmsCampaignRequestBadRequestError
+    updateCampaignStatus:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/UpdateCampaignStatusStatus'
+          description: 'Note:- **replicateTemplate** status will be available **only for template type campaigns.**
+
+            '
+      description: Status of the campaign
+      title: updateCampaignStatus
+    SendTestSmsRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmsCampaignsCampaignIdSendTestPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: SendTestSmsRequestNotFoundError
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
+    getSmsCampaignStats:
+      type: object
+      properties:
+        answered:
+          type: integer
+          format: int64
+          description: Number of replies to the SMS
+        delivered:
+          type: integer
+          format: int64
+          description: Number of delivered SMS
+        hardBounces:
+          type: integer
+          format: int64
+          description: Number of hardbounced SMS
+        processing:
+          type: integer
+          format: int64
+          description: Number of processing SMS
+        sent:
+          type: integer
+          format: int64
+          description: Number of sent SMS
+        softBounces:
+          type: integer
+          format: int64
+          description: Number of softbounced SMS
+        unsubscriptions:
+          type: integer
+          format: int64
+          description: Number of unsubscription SMS
+      required:
+      - answered
+      - delivered
+      - hardBounces
+      - processing
+      - sent
+      - softBounces
+      - unsubscriptions
+      title: getSmsCampaignStats
+    SendReportLanguage:
+      type: string
+      enum:
+      - fr
+      - es
+      - pt
+      - it
+      - de
+      - en
+      default: fr
+      description: Language of email content for campaign report sending.
+      title: SendReportLanguage
+    SmsCampaignsGetParametersStatus:
+      type: string
+      enum:
+      - suspended
+      - archive
+      - sent
+      - queued
+      - draft
+      - inProcess
+      title: SmsCampaignsGetParametersStatus
+    SmsCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaRecipients:
+      type: object
+      properties:
+        exclusionLists:
+          type: array
+          items:
+            $ref: '#/components/schemas/SmsCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaRecipientsExclusionListsItems'
+        lists:
+          type: array
+          items:
+            $ref: '#/components/schemas/SmsCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaRecipientsListsItems'
+      description: Recipients of the SMS campaign. For a single campaign, lists and exclusion lists are returned as objects with id and name.
+      title: SmsCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaRecipients
+    SMS_Campaigns_requestSmsRecipientExport_Response_202:
+      type: object
+      properties:
+        processId:
+          type: integer
+          format: int64
+          description: Id of the process created
+      required:
+      - processId
+      title: SMS Campaigns_requestSmsRecipientExport_Response_202
+    SmsCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaRecipientsListsItems:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID of the list
+        name:
+          type: string
+          description: Name of the list
+      title: SmsCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaRecipientsListsItems
+    SmsCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItems:
+      type: object
+      properties:
+        content:
+          type: string
+          description: Content of the SMS Campaign
+        createdAt:
+          type: string
+          description: Creation UTC date-time of the SMS campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)
+        id:
+          type: integer
+          format: int64
+          description: ID of the SMS Campaign
+        modifiedAt:
+          type: string
+          description: UTC date-time of last modification of the SMS campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)
+        name:
+          type: string
+          description: Name of the SMS Campaign
+        organisationPrefix:
+          type: string
+          description: A recognizable prefix added as the Brand Name before the message content. Empty string if not set.
+        scheduledAt:
+          type: string
+          description: UTC date-time on which SMS campaign is scheduled. Should be in YYYY-MM-DDTHH:mm:ss.SSSZ format. Empty string if not scheduled.
+        sender:
+          type: string
+          description: Sender of the SMS Campaign
+        sentDate:
+          type: string
+          description: UTC date-time on which the SMS campaign was sent (YYYY-MM-DDTHH:mm:ss.SSSZ). Only available if the campaign status is 'sent'.
+        status:
+          $ref: '#/components/schemas/SmsCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsStatus'
+          description: Status of the SMS Campaign
+        unsubscribeInstruction:
+          type: string
+          description: Instructions to unsubscribe from future communications. Empty string if not set.
+        recipients:
+          $ref: '#/components/schemas/getCampaignRecipients'
+        statistics:
+          $ref: '#/components/schemas/getSmsCampaignStats'
+      required:
+      - content
+      - createdAt
+      - id
+      - modifiedAt
+      - name
+      - sender
+      - status
+      - recipients
+      - statistics
+      title: SmsCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItems
+    UpdateSmsCampaignStatusRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmsCampaignsCampaignIdStatusPutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UpdateSmsCampaignStatusRequestNotFoundError
+    SmsCampaignsCampaignIdSendReportPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmsCampaignsCampaignIdSendReportPostResponsesContentApplicationJsonSchemaCode
+  securitySchemes:
+    api-key:
+      type: apiKey
+      in: header
+      name: api-key
+      description: The API key should be passed in the request headers as `api-key` for authentication.

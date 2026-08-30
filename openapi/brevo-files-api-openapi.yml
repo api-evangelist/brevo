@@ -1,0 +1,589 @@
+openapi: 3.2.0
+info:
+  title: Sales CRM Files API
+  version: 1.0.0
+servers:
+- url: https://api.brevo.com/v3
+  description: https://api.brevo.com/v3
+tags:
+- name: files
+paths:
+  /crm/files:
+    get:
+      operationId: getAllFiles
+      summary: Get all files
+      description: Retrieve a paginated list of CRM files with optional filtering by entity type, entity IDs, and date range. Results are sorted by creation date in descending order by default, with a default limit of 50 files per page.
+      tags:
+      - files
+      parameters:
+      - name: entity
+        in: query
+        description: Filter by file entity type
+        required: false
+        schema:
+          $ref: '#/components/schemas/CrmFilesGetParametersEntity'
+      - name: entityIds
+        in: query
+        description: Filter by file entity IDs
+        required: false
+        schema:
+          type: string
+      - name: dateFrom
+        in: query
+        description: dateFrom to date range filter type (timestamp in milliseconds)
+        required: false
+        schema:
+          type: integer
+      - name: dateTo
+        in: query
+        description: dateTo to date range filter type (timestamp in milliseconds)
+        required: false
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        description: Index of the first document of the page
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - name: limit
+        in: query
+        description: Number of documents per page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 50
+      - name: sort
+        in: query
+        description: Sort the results in the ascending/descending order. Default order is **descending** by creation if `sort` is not passed
+        required: false
+        schema:
+          $ref: '#/components/schemas/CrmFilesGetParametersSort'
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns files list with filters
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FileData'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllFilesRequestBadRequestError'
+    post:
+      operationId: uploadAFile
+      summary: Upload a file
+      description: Upload a file and associate it with a contact, company, or deal. The file must be sent as multipart form data with a maximum size of 10 MB. You can optionally link the file to a specific entity by providing the corresponding entity ID.
+      tags:
+      - files
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Returns the created File with additional details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileData'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadAFileRequestBadRequestError'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                companyId:
+                  type: string
+                contactId:
+                  type: integer
+                  format: int64
+                dealId:
+                  type: string
+                file:
+                  type: string
+                  format: binary
+                  description: File data to create a file.
+              required:
+              - file
+  /crm/files/{id}:
+    get:
+      operationId: downloadAFile
+      summary: Download a file
+      description: Get a temporary download URL for a CRM file by its identifier. The returned URL is valid for 5 minutes only and provides direct access to the file content.
+      tags:
+      - files
+      parameters:
+      - name: id
+        in: path
+        description: File id to download.
+        required: true
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns downloadable file link. Valid for next 5 minutes only.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Files_downloadAFile_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DownloadAFileRequestBadRequestError'
+        '404':
+          description: Returned when item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+    delete:
+      operationId: deleteAFile
+      summary: Delete a file
+      description: Permanently delete a CRM file by its identifier. This removes the file from storage and unlinks it from any associated contacts, companies, or deals.
+      tags:
+      - files
+      parameters:
+      - name: id
+        in: path
+        description: File id to delete.
+        required: true
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Returned when file is deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteAFileRequestBadRequestError'
+        '404':
+          description: Returned when item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+  /crm/files/{id}/data:
+    get:
+      operationId: getFileDetails
+      summary: Get file details
+      description: Retrieve the metadata and details of a specific CRM file by its identifier. This returns information such as the file name, size, type, creation date, and associated entities, but does not include the file content itself.
+      tags:
+      - files
+      parameters:
+      - name: id
+        in: path
+        description: File id to get file data.
+        required: true
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returned when file is found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileData'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFileDetailsRequestBadRequestError'
+        '404':
+          description: Returned when item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+components:
+  schemas:
+    UploadAFileRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CrmFilesPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UploadAFileRequestBadRequestError
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
+    CrmFilesGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      title: CrmFilesGetParametersSort
+    DeleteAFileRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CrmFilesIdDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteAFileRequestBadRequestError
+    CrmFilesIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CrmFilesIdGetResponsesContentApplicationJsonSchemaCode
+    CrmFilesGetParametersEntity:
+      type: string
+      enum:
+      - companies
+      - deals
+      - contacts
+      title: CrmFilesGetParametersEntity
+    GetAllFilesRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CrmFilesGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetAllFilesRequestBadRequestError
+    CrmFilesGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CrmFilesGetResponsesContentApplicationJsonSchemaCode
+    FileData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique file id
+        name:
+          type: string
+          description: Name of uploaded file
+        authorId:
+          type: string
+          description: Account id of user which created the file
+        contactId:
+          type: integer
+          format: int64
+          description: Contact id of contact on which file is uploaded
+        dealId:
+          type: string
+          description: Deal id linked to a file
+        companyId:
+          type: string
+          description: Company id linked to a file
+        size:
+          type: integer
+          format: int64
+          description: Size of file in bytes
+        createdAt:
+          type: string
+          format: date-time
+          description: File created date/time
+      description: File data that is uploaded
+      title: FileData
+    DownloadAFileRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CrmFilesIdGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DownloadAFileRequestBadRequestError
+    CrmFilesIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CrmFilesIdDeleteResponsesContentApplicationJsonSchemaCode
+    CrmFilesIdDataGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CrmFilesIdDataGetResponsesContentApplicationJsonSchemaCode
+    Files_downloadAFile_Response_200:
+      type: object
+      properties:
+        fileUrl:
+          type: string
+          description: A unique link to download the requested file.
+      description: Downloadable file link
+      title: Files_downloadAFile_Response_200
+    GetFileDetailsRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CrmFilesIdDataGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetFileDetailsRequestBadRequestError
+    CrmFilesPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CrmFilesPostResponsesContentApplicationJsonSchemaCode
+  securitySchemes:
+    api-key:
+      type: apiKey
+      in: header
+      name: api-key
+      description: The API key should be passed in the request headers as `api-key` for authentication.

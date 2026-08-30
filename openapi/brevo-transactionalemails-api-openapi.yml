@@ -1,0 +1,3483 @@
+openapi: 3.2.0
+info:
+  title: Transactional Emails API
+  version: 1.0.0
+servers:
+- url: https://api.brevo.com/v3
+  description: https://api.brevo.com/v3
+tags:
+- name: transactionalEmails
+paths:
+  /smtp/email:
+    post:
+      operationId: sendTransacEmail
+      summary: Send a transactional email
+      description: Send a transactional email to one or more recipients, either using inline HTML content or a pre-built template via `templateId`. You can schedule emails for future delivery using `scheduledAt` (UTC, up to 5-minute delay), send multiple personalized versions with `messageVersions` (max 2000 total recipients, 99 per version), and attach files via URL or base64-encoded content. A `sender` and `subject` are required when no `templateId` is provided; when a `templateId` is used, the template''s sender and subject are applied unless overridden.
+      tags:
+      - transactionalEmails
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Transactional email sent successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transactional_emails_sendTransacEmail_Response_201'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendTransacEmailRequestBadRequestError'
+      requestBody:
+        description: Request body parameters for sending a transactional email
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                attachment:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/SmtpEmailPostRequestBodyContentApplicationJsonSchemaAttachmentItems'
+                  description: 'Array of attachment objects. Each attachment must include either an absolute URL (no local file paths) or base64-encoded content, along with the attachment filename. The `name` field is required when `content` is provided. Supported file extensions: xlsx, xls, ods, docx, docm, doc, csv, pdf, txt, gif, jpg, jpeg, png, tif, tiff, rtf, bmp, cgm, css, shtml, html, htm, zip, xml, ppt, pptx, tar, ez, ics, mobi, msg, pub, eps, odt, mp3, m4a, m4v, wma, ogg, flac, wav, aif, aifc, aiff, mp4, mov, avi, mkv, mpeg, mpg, wmv, pkpass, xlsm. When `templateId` is specified: if the template uses the New Template Language format, both `url` and `content` attachment types are supported; if the template uses the Old Template Language format, the `attachment` parameter is ignored.
+
+                    '
+                batchId:
+                  type: string
+                  description: UUIDv4 identifier for the scheduled batch of transactional emails. If omitted, a valid UUIDv4 batch identifier is automatically generated.
+                bcc:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/SmtpEmailPostRequestBodyContentApplicationJsonSchemaBccItems'
+                  description: 'Array of BCC recipient objects. Each object contains an email address and an optional name.
+
+                    '
+                cc:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/SmtpEmailPostRequestBodyContentApplicationJsonSchemaCcItems'
+                  description: 'Array of CC recipient objects. Each object contains an email address and an optional name.
+
+                    '
+                headers:
+                  type: object
+                  additionalProperties:
+                    description: Any type
+                  description: 'Custom email headers (non-standard headers) to include in the email. The `sender.ip` header can be set to specify the IP address used for sending transactional emails (dedicated IP users only). Header names must use Title-Case-Format (words separated by hyphens with the first letter of each word capitalized). Headers not in this format are automatically converted. Standard email headers are not supported. Example: `{"sender.ip":"1.2.3.4", "X-Mailin-custom":"some_custom_value", "Idempotency-Key":"abc-123"}`
+
+                    '
+                htmlContent:
+                  type: string
+                  description: 'HTML body content of the email. Required when `templateId` is not provided. Ignored when `templateId` is provided.
+
+                    '
+                messageVersions:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/SmtpEmailPostRequestBodyContentApplicationJsonSchemaMessageVersionsItems'
+                  description: 'Array of message version objects for sending customized email variants. The `templateId` can be customized per version only if a global `templateId` is provided. The `htmlContent` and `textContent` can be customized per version only if at least one of these is present in the global parameters. Global parameters such as `to` (required), `bcc`, `cc`, `replyTo`, and `subject` can be customized per version. Maximum total recipients per API request is 2000. Maximum recipients per message version is 99. Individual `params` objects must not exceed 100 KB. Cumulative `params` across all versions must not exceed 1000 KB. See https://developers.brevo.com/docs/batch-send-transactional-emails for detailed usage instructions.
+
+                    '
+                params:
+                  type: object
+                  additionalProperties:
+                    description: Any type
+                  description: 'Key-value pairs for template variable substitution. Only applicable when the template uses the New Template Language format.
+
+                    '
+                replyTo:
+                  $ref: '#/components/schemas/SmtpEmailPostRequestBodyContentApplicationJsonSchemaReplyTo'
+                  description: 'Reply-to email address (required) and optional display name. Recipients will use this address when replying to the email.
+
+                    '
+                scheduledAt:
+                  type: string
+                  format: date-time
+                  description: 'UTC date-time when the email should be sent (format: YYYY-MM-DDTHH:mm:ss.SSSZ). Include timezone information in the date-time value. Scheduled emails may be delayed by up to 5 minutes.'
+                sender:
+                  $ref: '#/components/schemas/SmtpEmailPostRequestBodyContentApplicationJsonSchemaSender'
+                  description: 'Sender information. Required when `templateId` is not provided. Specify either an email address (with optional name) or a sender ID. The `name` field is ignored when `id` is provided.
+
+                    '
+                subject:
+                  type: string
+                  description: 'Email subject line. Required when `templateId` is not provided.
+
+                    '
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of tags for categorizing and filtering emails
+                templateId:
+                  type: integer
+                  format: int64
+                  description: Template identifier
+                textContent:
+                  type: string
+                  description: 'Plain text body content of the email. Ignored when `templateId` is provided.
+
+                    '
+                to:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/SmtpEmailPostRequestBodyContentApplicationJsonSchemaToItems'
+                  description: 'Array of recipient objects. Each object contains an email address and an optional display name. Required when `messageVersions` is not provided. Ignored when `messageVersions` is provided. Example: `[{"name":"Jimmy", "email":"jimmy@example.com"}, {"name":"Joe", "email":"joe@example.com"}]`
+
+                    '
+  /smtp/emails:
+    get:
+      operationId: getTransacEmailsList
+      summary: Get the list of transactional emails on the basis of allowed filters
+      description: This endpoint will show the list of emails for past 30 days by default. To retrieve emails before that time, please pass startDate and endDate in query filters.
+      tags:
+      - transactionalEmails
+      parameters:
+      - name: email
+        in: query
+        description: '**Mandatory if templateId and messageId are not passed in query filters.** Email address to which transactional email has been sent.
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: templateId
+        in: query
+        description: '**Mandatory if email and messageId are not passed in query filters.** Id of the template that was used to compose transactional email.
+
+          '
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - name: messageId
+        in: query
+        description: '**Mandatory if templateId and email are not passed in query filters.** Message ID of the transactional email sent.
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: startDate
+        in: query
+        description: '**Mandatory if endDate is used.** Starting date (YYYY-MM-DD) from which you want to fetch the list. **Maximum time period that can be selected is one month**.
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: endDate
+        in: query
+        description: '**Mandatory if startDate is used.** Ending date (YYYY-MM-DD) till which you want to fetch the list. **Maximum time period that can be selected is one month.**
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: sort
+        in: query
+        description: Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed
+        required: false
+        schema:
+          $ref: '#/components/schemas/SmtpEmailsGetParametersSort'
+          default: desc
+      - name: limit
+        in: query
+        description: Number of documents returned per page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 500
+      - name: offset
+        in: query
+        description: Index of the first document in the page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 0
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of transactional emails
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transactional_emails_getTransacEmailsList_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTransacEmailsListRequestBadRequestError'
+  /smtp/emails/{uuid}:
+    get:
+      operationId: getTransacEmailContent
+      summary: Get the personalized content of a sent transactional email
+      description: '<Note title="How to get uuid">You can get the uuid using either of the following methods:
+
+        Send a GET request to https://api.brevo.com/v3/smtp/emails and pass the message_id in the url. Use your api-key to authenticate the request and you will get your uuid as a response.
+
+        The uuid can also be fetched from the transactional logs page in your Brevo account, from the address URL.</Note>'
+      tags:
+      - transactionalEmails
+      parameters:
+      - name: uuid
+        in: path
+        description: Unique id of the transactional email that has been sent to a particular contact
+        required: true
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Transactional email content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transactional_emails_getTransacEmailContent_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTransacEmailContentRequestBadRequestError'
+        '404':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTransacEmailContentRequestNotFoundError'
+  /smtp/email/{identifier}:
+    delete:
+      operationId: deleteScheduledEmailById
+      summary: Delete scheduled emails by batchId or messageId
+      description: Delete scheduled batch of emails by batchId or single scheduled email by messageId
+      tags:
+      - transactionalEmails
+      parameters:
+      - name: identifier
+        in: path
+        description: The `batchId` of scheduled emails batch (must be a valid UUIDv4) or the `messageId` of scheduled email (enclosed in angle brackets with @ sign, e.g. `<...@domain>`).
+        required: true
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Scheduled email(s) deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteScheduledEmailByIdRequestBadRequestError'
+        '404':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteScheduledEmailByIdRequestNotFoundError'
+  /smtp/emailStatus/{identifier}:
+    get:
+      operationId: getScheduledEmailById
+      summary: Fetch scheduled emails by batchId or messageId
+      description: Fetch scheduled batch of emails by batchId or single scheduled email by messageId (Can retrieve data upto 30 days old)
+      tags:
+      - transactionalEmails
+      parameters:
+      - name: identifier
+        in: path
+        description: The `batchId` of scheduled emails batch (must be a valid UUIDv4) or the `messageId` of scheduled email (enclosed in angle brackets with @ sign, e.g. `<...@domain>`). When using `messageId`, the `limit`, `offset`, `sort`, and `status` query parameters are ignored.
+        required: true
+        schema:
+          type: string
+      - name: startDate
+        in: query
+        description: Mandatory if `endDate` is used. Starting date (YYYY-MM-DD) from which you want to fetch the list. Cannot be more than 30 days older than the current date.
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: endDate
+        in: query
+        description: Mandatory if `startDate` is used. Ending date (YYYY-MM-DD) till which you want to fetch the list. Maximum time period that can be selected is one month.
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: sort
+        in: query
+        description: Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed. Not valid when identifier is `messageId`.
+        required: false
+        schema:
+          $ref: '#/components/schemas/SmtpEmailStatusIdentifierGetParametersSort'
+          default: desc
+      - name: status
+        in: query
+        description: Filter the records by `status` of the scheduled email batch or message. Not valid when identifier is `messageId`.
+        required: false
+        schema:
+          $ref: '#/components/schemas/SmtpEmailStatusIdentifierGetParametersStatus'
+      - name: limit
+        in: query
+        description: Number of documents returned per page. Not valid when identifier is `messageId`.
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 100
+      - name: offset
+        in: query
+        description: Index of the first document on the page.  Not valid when identifier is `messageId`.
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 0
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Scheduled email batches
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transactional_emails_getScheduledEmailById_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetScheduledEmailByIdRequestBadRequestError'
+        '404':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetScheduledEmailByIdRequestNotFoundError'
+  /smtp/deleteHardbounces:
+    post:
+      operationId: deleteHardbounces
+      summary: Delete hardbounces
+      description: Delete hardbounces. To use carefully (e.g. in case of temporary ISP failures)
+      tags:
+      - transactionalEmails
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: No matching hardbounces found for the given filters. The request was processed successfully but no records were deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transactional_emails_deleteHardbounces_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteHardbouncesRequestBadRequestError'
+      requestBody:
+        description: values to delete hardbounces
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contactEmail:
+                  type: string
+                  format: email
+                  description: Target a specific email address
+                endDate:
+                  type: string
+                  description: Ending date (YYYY-MM-DD) of the time period for deletion. The hardbounces until this date will be deleted. Must be greater than or equal to the startDate
+                startDate:
+                  type: string
+                  description: Starting date (YYYY-MM-DD) of the time period for deletion. The hardbounces occurred after this date will be deleted. Must be less than or equal to the endDate
+  /smtp/statistics/reports:
+    get:
+      operationId: getSmtpReport
+      summary: Get your transactional email activity aggregated per day
+      description: This endpoint will show the aggregated stats per day for the past 10 days by default if `startDate` and `endDate` OR `days` is not passed. The date range can not exceed 30 days.
+      tags:
+      - transactionalEmails
+      parameters:
+      - name: limit
+        in: query
+        description: Number of documents returned per page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 10
+      - name: offset
+        in: query
+        description: Index of the first document on the page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 0
+      - name: startDate
+        in: query
+        description: '**Mandatory if endDate is used.** Starting date of the report (YYYY-MM-DD)
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: endDate
+        in: query
+        description: '**Mandatory if startDate is used.** Ending date of the report (YYYY-MM-DD)
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: days
+        in: query
+        description: 'Number of days in the past including today (positive integer, maximum 30). _Not compatible with ''startDate'' and ''endDate''_
+
+          '
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - name: tag
+        in: query
+        description: Tag of the emails
+        required: false
+        schema:
+          type: string
+      - name: sort
+        in: query
+        description: Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed
+        required: false
+        schema:
+          $ref: '#/components/schemas/SmtpStatisticsReportsGetParametersSort'
+          default: desc
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Aggregated report informations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transactional_emails_getSmtpReport_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSmtpReportRequestBadRequestError'
+  /smtp/statistics/events:
+    get:
+      operationId: getEmailEventReport
+      summary: Get all your transactional email activity (unaggregated events)
+      description: This endpoint will show the aggregated stats for past 30 days by default if `startDate` and `endDate` OR `days` is not passed. The date range can not exceed 90 days
+      tags:
+      - transactionalEmails
+      parameters:
+      - name: limit
+        in: query
+        description: Number limitation for the result returned
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 2500
+      - name: offset
+        in: query
+        description: Beginning point in the list to retrieve from.
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 0
+      - name: startDate
+        in: query
+        description: '**Mandatory if endDate is used.** Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: endDate
+        in: query
+        description: '**Mandatory if startDate is used.** Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: days
+        in: query
+        description: 'Number of days in the past including today (positive integer, maximum 90). _Not compatible with ''startDate'' and ''endDate''_. Defaults to 30 if neither dates nor days are provided.
+
+          '
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - name: email
+        in: query
+        description: Filter the report for a specific email addresses
+        required: false
+        schema:
+          type: string
+          format: email
+      - name: event
+        in: query
+        description: Filter the report for a specific event type
+        required: false
+        schema:
+          $ref: '#/components/schemas/SmtpStatisticsEventsGetParametersEvent'
+      - name: tags
+        in: query
+        description: Filter the report for tags (serialized and urlencoded array)
+        required: false
+        schema:
+          type: string
+      - name: messageId
+        in: query
+        description: Filter on a specific message id
+        required: false
+        schema:
+          type: string
+      - name: templateId
+        in: query
+        description: Filter on a specific template id
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - name: sort
+        in: query
+        description: Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed
+        required: false
+        schema:
+          $ref: '#/components/schemas/SmtpStatisticsEventsGetParametersSort'
+          default: desc
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Email events report informations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transactional_emails_getEmailEventReport_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetEmailEventReportRequestBadRequestError'
+  /smtp/statistics/aggregatedReport:
+    get:
+      operationId: getAggregatedSmtpReport
+      summary: Get your transactional email activity aggregated over a period of time
+      description: This endpoint will show the aggregated stats for past 90 days by default if `startDate` and `endDate` OR `days` is not passed. The date range can not exceed 90 days
+      tags:
+      - transactionalEmails
+      parameters:
+      - name: startDate
+        in: query
+        description: '**Mandatory if endDate is used.** Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: endDate
+        in: query
+        description: '**Mandatory if startDate is used.** Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: days
+        in: query
+        description: 'Number of days in the past including today (positive integer, maximum 90). _Not compatible with ''startDate'' and ''endDate''_. Defaults to 90 if neither dates nor days are provided.
+
+          '
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - name: tag
+        in: query
+        description: Tag of the emails
+        required: false
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Aggregated report informations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transactional_emails_getAggregatedSmtpReport_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAggregatedSmtpReportRequestBadRequestError'
+  /smtp/log/{identifier}:
+    delete:
+      operationId: deleteAnSmtpTransactionalLog
+      summary: Delete an SMTP transactional log
+      description: Delete SMTP transactional log entries identified by a message ID (enclosed in angle brackets with an @ sign) or a valid email address. Optionally narrow the deletion to a specific date range using `from_date` and `to_date` query parameters (YYYY-MM-DD format). The operation also removes any associated stored email preview content.
+      tags:
+      - transactionalEmails
+      parameters:
+      - name: identifier
+        in: path
+        description: MessageId or email address of the transactional log(s) to delete. Must be a valid message ID (enclosed in angle brackets with @ sign) or a valid email address.
+        required: true
+        schema:
+          type: string
+      - name: from_date
+        in: query
+        description: Starting date (YYYY-MM-DD) to narrow down logs for deletion
+        required: false
+        schema:
+          type: string
+      - name: to_date
+        in: query
+        description: Ending date (YYYY-MM-DD) to narrow down logs for deletion
+        required: false
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Transactional Logs deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteAnSmtpTransactionalLogRequestBadRequestError'
+        '404':
+          description: Message ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+  /smtp/templates:
+    get:
+      operationId: getSmtpTemplates
+      summary: Get the list of email templates
+      description: Retrieve a paginated list of all transactional email templates (including automation templates) with their details such as name, subject, sender, status, HTML content, and timestamps. Results default to 50 per page (max 1000) and are sorted in descending creation order unless overridden. You can filter by active/inactive status using `templateStatus` and by editor type using `editorType` (currently only `richTextEditor` is supported).
+      tags:
+      - transactionalEmails
+      parameters:
+      - name: templateStatus
+        in: query
+        description: Filter on the status of the template. Active = true, inactive = false
+        required: false
+        schema:
+          type: boolean
+      - name: limit
+        in: query
+        description: Number of documents returned per page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 50
+      - name: offset
+        in: query
+        description: Index of the first document in the page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 0
+      - name: sort
+        in: query
+        description: Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed
+        required: false
+        schema:
+          $ref: '#/components/schemas/SmtpTemplatesGetParametersSort'
+          default: desc
+      - name: editorType
+        in: query
+        description: Filter on the editor type used to create the template. Currently only `richTextEditor` is supported as a filter value.
+        required: false
+        schema:
+          $ref: '#/components/schemas/SmtpTemplatesGetParametersEditorType'
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: transactional email templates informations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transactional_emails_getSmtpTemplates_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSmtpTemplatesRequestBadRequestError'
+    post:
+      operationId: createSmtpTemplate
+      summary: Create an email template
+      description: Create a new transactional email template with the specified sender, subject, and content. The `sender`, `subject`, and `templateName` fields are required. Template content can be provided via `htmlContent` (minimum 10 characters) or `htmlUrl`; at least one must be supplied. Templates are created as inactive by default unless `isActive` is explicitly set to `true`.
+      tags:
+      - transactionalEmails
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transactional_emails_createSmtpTemplate_Response_201'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateSmtpTemplateRequestBadRequestError'
+      requestBody:
+        description: values to update in transactional email template
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                attachmentUrl:
+                  type: string
+                  format: url
+                  description: 'Absolute url of the attachment (**no local file**). Extension allowed: #### xlsx, xls, ods, docx, docm, doc, csv, pdf, txt, gif, jpg, jpeg, png, tif, tiff, rtf, bmp, cgm, css, shtml, html, htm, zip, xml, ppt, pptx, tar, ez, ics, mobi, msg, pub and eps''
+
+                    '
+                htmlContent:
+                  type: string
+                  description: 'Body of the message (HTML version). The field must have more than 10 characters. **REQUIRED if htmlUrl is empty**
+
+                    '
+                htmlUrl:
+                  type: string
+                  format: url
+                  description: Url which contents the body of the email message. REQUIRED if htmlContent is empty
+                isActive:
+                  type: boolean
+                  description: Status of template. isActive = true means template is active and isActive = false means template is inactive
+                replyTo:
+                  type: string
+                  format: email
+                  description: Email on which campaign recipients will be able to reply to
+                sender:
+                  $ref: '#/components/schemas/SmtpTemplatesPostRequestBodyContentApplicationJsonSchemaSender'
+                  description: 'Sender details including id or email and name (_optional_). Only one of either Sender''s email or Sender''s ID shall be passed in one request at a time. For example: **{"name":"xyz", "email":"example@abc.com"}** **{"name":"xyz", "id":123}**
+
+                    '
+                subject:
+                  type: string
+                  description: Subject of the template
+                tag:
+                  type: string
+                  description: Tag of the template
+                templateName:
+                  type: string
+                  description: Name of the template
+                toField:
+                  type: string
+                  description: 'To personalize the **To** Field. If you want to include the first name and last name of your recipient, add **{FNAME} {LNAME}**. These contact attributes must already exist in your Brevo account. If input parameter **params** used please use **{{contact.FNAME}} {{contact.LNAME}}** for personalization
+
+                    '
+              required:
+              - sender
+              - subject
+              - templateName
+  /smtp/templates/{templateId}:
+    delete:
+      operationId: deleteSmtpTemplate
+      summary: Delete an inactive email template
+      description: Permanently delete a transactional email template by its numeric ID. Only inactive templates can be deleted; attempting to delete an active template returns a 405 error. To deactivate a template before deletion, use `PUT /smtp/templates/{templateId}` with `isActive` set to `false`. Deletion also removes associated newsletter template data and triggers asynchronous cleanup of shared assets.
+      tags:
+      - transactionalEmails
+      parameters:
+      - name: templateId
+        in: path
+        description: id of the template
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Inactive transactional email template has been deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteSmtpTemplateRequestBadRequestError'
+        '404':
+          description: Template ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+    put:
+      operationId: updateSmtpTemplate
+      summary: Update an email template
+      description: Update an existing transactional email template by its numeric ID or custom template identifier string. All fields in the request body are optional; only the provided fields will be updated. You can update the template name, subject, sender, reply-to address, HTML content (via `htmlContent` or `htmlUrl`), active status, tag, attachment URL, and the personalized `toField`. Only one of sender email or sender ID should be provided per request.
+      tags:
+      - transactionalEmails
+      parameters:
+      - name: templateId
+        in: path
+        description: ID of the template. Can be a numeric template ID or a custom template identifier string.
+        required: true
+        schema:
+          $ref: '#/components/schemas/SmtpTemplatesTemplateIdPutParametersTemplateId'
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: transactional email template updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateSmtpTemplateRequestBadRequestError'
+        '404':
+          description: Template ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: values to update in transactional email template
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                attachmentUrl:
+                  type: string
+                  format: url
+                  description: 'Absolute url of the attachment (**no local file**). Extensions allowed: #### xlsx, xls, ods, docx, docm, doc, csv, pdf, txt, gif, jpg, jpeg, png, tif, tiff, rtf, bmp, cgm, css, shtml, html, htm, zip, xml, ppt, pptx, tar, ez, ics, mobi, msg, pub and eps
+
+                    '
+                htmlContent:
+                  type: string
+                  description: '**Required if htmlUrl is empty**. If the template is designed using Drag & Drop editor via HTML content, then the design page will not have Drag & Drop editor access for that template. Body of the message (HTML must have more than 10 characters)
+
+                    '
+                htmlUrl:
+                  type: string
+                  format: url
+                  description: '**Required if htmlContent is empty**. URL to the body of the email (HTML)
+
+                    '
+                isActive:
+                  type: boolean
+                  description: Status of the template. isActive = false means template is inactive, isActive = true means template is active
+                replyTo:
+                  type: string
+                  format: email
+                  description: Email on which campaign recipients will be able to reply to
+                sender:
+                  $ref: '#/components/schemas/SmtpTemplatesTemplateIdPutRequestBodyContentApplicationJsonSchemaSender'
+                  description: 'Sender details including id or email and name (_optional_). Only one of either Sender''s email or Sender''s ID shall be passed in one request at a time. For example: **{"name":"xyz", "email":"example@abc.com"}** **{"name":"xyz", "id":123}**
+
+                    '
+                subject:
+                  type: string
+                  description: Subject of the email
+                tag:
+                  type: string
+                  description: Tag of the template
+                templateName:
+                  type: string
+                  description: Name of the template
+                toField:
+                  type: string
+                  description: 'To personalize the **To** Field. If you want to include the first name and last name of your recipient, add **{FNAME} {LNAME}**. These contact attributes must already exist in your Brevo account. If input parameter **params** used please use **{{contact.FNAME}} {{contact.LNAME}}** for personalization
+
+                    '
+    get:
+      operationId: getSmtpTemplate
+      summary: Returns the template information
+      description: Retrieve the full details of a specific transactional email template by its numeric ID or custom template identifier string. The response includes the template name, subject, sender information, HTML content, active status, creation and modification timestamps, reply-to address, tag, and a `doiTemplate` flag indicating whether the template is a double opt-in template (detected by the presence of optin-related tags or variables in the content).
+      tags:
+      - transactionalEmails
+      parameters:
+      - name: templateId
+        in: path
+        description: ID of the template. Can be a numeric template ID or a custom template identifier string (alphanumeric, hyphens, and underscores only, max 64 characters, must start with a letter).
+        required: true
+        schema:
+          $ref: '#/components/schemas/SmtpTemplatesTemplateIdGetParametersTemplateId'
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Email template informations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getSmtpTemplateOverview'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSmtpTemplateRequestBadRequestError'
+        '404':
+          description: Template ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+  /smtp/templates/{templateId}/sendTest:
+    post:
+      operationId: sendTestTemplate
+      summary: Send a template to your test list
+      description: Send a test email of the specified transactional template to one or more recipients. Provide an array of email addresses in the `emailTo` field; if left empty, the test mail is sent to your entire test list. You can send a maximum of 50 test emails per day, and all provided email addresses must be valid.
+      tags:
+      - transactionalEmails
+      parameters:
+      - name: templateId
+        in: path
+        description: Id of the template
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Test email has been sent successfully to all recipients
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Test email could not be sent to the following email addresses
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postSendFailed'
+        '404':
+          description: Template ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/sendTestEmail'
+  /smtp/template/preview:
+    post:
+      operationId: postPreviewSmtpEmailTemplates
+      summary: Generate the rendered preview of transactional template
+      description: Generate a fully rendered preview of a transactional email template by resolving dynamic variables. Provide either an `email` address (to populate variables from the contact''s attributes) or a `params` object with key-value pairs for manual substitution; at least one of these is required alongside the mandatory `templateId`. The response includes the rendered HTML, subject, sender details, preview text, and any feed names used in the template.
+      tags:
+      - transactionalEmails
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successfully fetched template's preview fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transactional_emails_postPreviewSmtpEmailTemplates_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostPreviewSmtpEmailTemplatesRequestBadRequestError'
+      requestBody:
+        description: Values to fetch Template preview
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Transactional_emails_postPreviewSmtpEmailTemplates_Request'
+  /smtp/blockedContacts:
+    get:
+      operationId: getTransacBlockedContacts
+      summary: Get the list of blocked or unsubscribed transactional contacts
+      description: Retrieve a paginated list of transactional contacts that have been blocked or unsubscribed, along with the reason for blocking (e.g. hard bounce, admin blocked, spam complaint, or unsubscription via email/API/Marketing Automation). Both `startDate` and `endDate` must be provided together when filtering by date range, and neither date can be in the future. Results default to 50 per page (max 100) and are sorted in descending order of record creation unless overridden with the `sort` parameter.
+      tags:
+      - transactionalEmails
+      parameters:
+      - name: startDate
+        in: query
+        description: '**Mandatory if endDate is used.** Starting date (YYYY-MM-DD) from which you want to fetch the blocked or unsubscribed contacts
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: endDate
+        in: query
+        description: '**Mandatory if startDate is used.** Ending date (YYYY-MM-DD) till which you want to fetch the blocked or unsubscribed contacts
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Number of documents returned per page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 50
+      - name: offset
+        in: query
+        description: Index of the first document on the page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 0
+      - name: senders
+        in: query
+        description: Comma separated list of emails of the senders from which contacts are blocked or unsubscribed
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: sort
+        in: query
+        description: Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed
+        required: false
+        schema:
+          $ref: '#/components/schemas/SmtpBlockedContactsGetParametersSort'
+          default: desc
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of blocked or unsubscribed transactional contacts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transactional_emails_getTransacBlockedContacts_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTransacBlockedContactsRequestBadRequestError'
+  /smtp/blockedContacts/{email}:
+    delete:
+      operationId: unblockOrResubscribeATransactionalContact
+      summary: Unblock or resubscribe a transactional contact
+      description: Unblock or resubscribe a transactional contact by removing their email address from the blacklist. The email address must be URL-encoded in the path parameter and must be a valid email format. If the contact is not found in the blocklist, a 404 error is returned.
+      tags:
+      - transactionalEmails
+      parameters:
+      - name: email
+        in: path
+        description: contact email (urlencoded) to unblock.
+        required: true
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Contact unblocked
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnblockOrResubscribeATransactionalContactRequestBadRequestError'
+        '404':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnblockOrResubscribeATransactionalContactRequestNotFoundError'
+  /smtp/blockedDomains:
+    post:
+      operationId: blockNewDomain
+      summary: Add a new domain to the list of blocked domains
+      description: Blocks a new domain in order to avoid messages being sent to the same
+      tags:
+      - transactionalEmails
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Domain is successfully blocked
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transactional_emails_blockNewDomain_Response_201'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockNewDomainRequestBadRequestError'
+      requestBody:
+        description: Name of the domain to be blocked
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                domain:
+                  type: string
+                  description: name of the domain to be blocked
+              required:
+              - domain
+    get:
+      operationId: getBlockedDomains
+      summary: Get the list of blocked domains
+      description: Get the list of blocked domains
+      tags:
+      - transactionalEmails
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of blocked domains
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transactional_emails_getBlockedDomains_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBlockedDomainsRequestBadRequestError'
+  /smtp/blockedDomains/{domain}:
+    delete:
+      operationId: deleteBlockedDomain
+      summary: Unblock an existing domain from the list of blocked domains
+      description: Unblocks an existing domain from the list of blocked domains
+      tags:
+      - transactionalEmails
+      parameters:
+      - name: domain
+        in: path
+        description: The name of the domain to be deleted
+        required: true
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Domain is successfully deleted from the list of blocked domains
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteBlockedDomainRequestBadRequestError'
+        '404':
+          description: Domain not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+components:
+  schemas:
+    GetTransacBlockedContactsRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmtpBlockedContactsGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetTransacBlockedContactsRequestBadRequestError
+    SmtpTemplatesTemplateIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmtpTemplatesTemplateIdDeleteResponsesContentApplicationJsonSchemaCode
+    Transactional_emails_getTransacBlockedContacts_Response_200:
+      type: object
+      properties:
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/SmtpBlockedContactsGetResponsesContentApplicationJsonSchemaContactsItems'
+        count:
+          type: integer
+          format: int64
+          description: Count of blocked or unsubscribed contact
+      title: Transactional emails_getTransacBlockedContacts_Response_200
+    GetTransacEmailContentRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmtpEmailsUuidGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetTransacEmailContentRequestBadRequestError
+    Transactional_emails_getTransacEmailsList_Response_200:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: Total number of transactional emails available on your account according to the passed filter
+        transactionalEmails:
+          type: array
+          items:
+            $ref: '#/components/schemas/SmtpEmailsGetResponsesContentApplicationJsonSchemaTransactionalEmailsItems'
+      title: Transactional emails_getTransacEmailsList_Response_200
+    SmtpStatisticsAggregatedReportGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmtpStatisticsAggregatedReportGetResponsesContentApplicationJsonSchemaCode
+    SmtpTemplatesTemplateIdPutParametersTemplateId:
+      oneOf:
+      - type: integer
+        format: int64
+      - type: string
+      title: SmtpTemplatesTemplateIdPutParametersTemplateId
+    SmtpEmailsGetResponsesContentApplicationJsonSchemaTransactionalEmailsItems:
+      type: object
+      properties:
+        date:
+          type: string
+          description: Date on which transactional email was sent
+        email:
+          type: string
+          format: email
+          description: Email address to which transactional email has been sent
+        from:
+          type: string
+          format: email
+          description: Email address of the sender from which the email was sent
+        messageId:
+          type: string
+          description: Message Id of the sent email
+        subject:
+          type: string
+          description: Subject of the sent email
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags used for your email
+        templateId:
+          type: integer
+          format: int64
+          description: Id of the template
+        uuid:
+          type: string
+          description: Unique id of the email sent to a particular contact
+      required:
+      - date
+      - email
+      - messageId
+      - subject
+      - uuid
+      title: SmtpEmailsGetResponsesContentApplicationJsonSchemaTransactionalEmailsItems
+    Transactional_emails_postPreviewSmtpEmailTemplates_Response_200:
+      type: object
+      properties:
+        fromEmail:
+          type: string
+          description: Sender email address
+        fromName:
+          type: string
+          description: Sender Name
+        html:
+          type: string
+          description: Html content of the template
+        previewText:
+          type: string
+          description: Preview text of the template
+        subject:
+          type: string
+          description: subject of the template
+        usedFeedNames:
+          type: array
+          items:
+            type: string
+      title: Transactional emails_postPreviewSmtpEmailTemplates_Response_200
+    SmtpEmailPostRequestBodyContentApplicationJsonSchemaMessageVersionsItemsBccItems:
+      type: object
+      properties:
+        contactPixelTrackingConsent:
+          type: boolean
+          description: 'Consent of the recipient in bcc for open (pixel) and click tracking, resolved by the sender at send time. Considered only if the per-contact pixel tracking consent feature is enabled for your account. Pass `true` if this recipient has consented to open and click tracking, in which case the open pixel and tracked links identify the recipient. Pass `false` to anonymise the open and click events (counted in aggregate statistics only). If it is not passed, the recipient is treated as unknown consent status and the email is still sent (the open and click are anonymised unless your account tracks unknown-consent contacts). A value other than `true`/`false` is rejected. Ignored when the feature is not enabled for your account.
+
+            '
+        email:
+          type: string
+          format: email
+          description: BCC recipient email address
+        name:
+          type: string
+          description: 'Display name of the BCC recipient. Maximum length is 70 characters.
+
+            '
+      required:
+      - email
+      title: SmtpEmailPostRequestBodyContentApplicationJsonSchemaMessageVersionsItemsBccItems
+    SmtpTemplatePreviewPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmtpTemplatePreviewPostResponsesContentApplicationJsonSchemaCode
+    SmtpTemplatesTemplateIdPutResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmtpTemplatesTemplateIdPutResponsesContentApplicationJsonSchemaCode
+    SmtpBlockedDomainsDomainDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmtpBlockedDomainsDomainDeleteResponsesContentApplicationJsonSchemaCode
+    SmtpEmailPostRequestBodyContentApplicationJsonSchemaMessageVersionsItemsCcItems:
+      type: object
+      properties:
+        contactPixelTrackingConsent:
+          type: boolean
+          description: 'Consent of the recipient in cc for open (pixel) and click tracking, resolved by the sender at send time. Considered only if the per-contact pixel tracking consent feature is enabled for your account. Pass `true` if this recipient has consented to open and click tracking, in which case the open pixel and tracked links identify the recipient. Pass `false` to anonymise the open and click events (counted in aggregate statistics only). If it is not passed, the recipient is treated as unknown consent status and the email is still sent (the open and click are anonymised unless your account tracks unknown-consent contacts). A value other than `true`/`false` is rejected. Ignored when the feature is not enabled for your account.
+
+            '
+        email:
+          type: string
+          format: email
+          description: CC recipient email address
+        name:
+          type: string
+          description: 'Display name of the CC recipient. Maximum length is 70 characters.
+
+            '
+      required:
+      - email
+      title: SmtpEmailPostRequestBodyContentApplicationJsonSchemaMessageVersionsItemsCcItems
+    SmtpStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItems:
+      type: object
+      properties:
+        date:
+          type: string
+          description: UTC date-time on which the event has been generated
+        email:
+          type: string
+          format: email
+          description: Email address which generates the event
+        event:
+          $ref: '#/components/schemas/SmtpStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItemsEvent'
+          description: Event which occurred
+        from:
+          type: string
+          format: email
+          description: Sender email from which the emails are sent
+        ip:
+          type: string
+          description: IP from which the user has opened the email or clicked on the link (only available if the event is opened or clicks)
+        link:
+          type: string
+          description: The link which is sent to the user (only available if the event is requests or opened or clicks)
+        messageId:
+          type: string
+          description: Message ID which generated the event
+        reason:
+          type: string
+          description: Reason of bounce (only available if the event is hardbounce or softbounce)
+        subject:
+          type: string
+          description: Subject of the event
+        tag:
+          type: string
+          description: Tag of the email which generated the event
+        templateId:
+          type: integer
+          format: int64
+          description: ID of the template (only available if the email is template based)
+      required:
+      - date
+      - email
+      - event
+      - messageId
+      title: SmtpStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItems
+    SmtpEmailsGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: SmtpEmailsGetParametersSort
+    SmtpEmailPostRequestBodyContentApplicationJsonSchemaToItems:
+      type: object
+      properties:
+        contactPixelTrackingConsent:
+          type: boolean
+          description: 'Consent of the recipient for open (pixel) and click tracking, resolved by the sender at send time. Considered only if the per-contact pixel tracking consent feature is enabled for your account. Pass `true` if this recipient has consented to open and click tracking, in which case the open pixel and tracked links identify the recipient. Pass `false` to anonymise the open and click events (counted in aggregate statistics only). If it is not passed, the recipient is treated as unknown consent status and the email is still sent (the open and click are anonymised unless your account tracks unknown-consent contacts). A value other than `true`/`false` is rejected. Ignored when the feature is not enabled for your account.
+
+            '
+        email:
+          type: string
+          format: email
+          description: Email address of the recipient
+        name:
+          type: string
+          description: 'Display name of the recipient. Maximum length is 70 characters.
+
+            '
+      required:
+      - email
+      title: SmtpEmailPostRequestBodyContentApplicationJsonSchemaToItems
+    DeleteScheduledEmailByIdRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmtpEmailIdentifierDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteScheduledEmailByIdRequestBadRequestError
+    GetAggregatedSmtpReportRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmtpStatisticsAggregatedReportGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetAggregatedSmtpReportRequestBadRequestError
+    Transactional_emails_getEmailEventReport_Response_200:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/SmtpStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItems'
+      title: Transactional emails_getEmailEventReport_Response_200
+    GetScheduledEmailByIdRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmtpEmailStatusIdentifierGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetScheduledEmailByIdRequestNotFoundError
+    SmtpEmailPostRequestBodyContentApplicationJsonSchemaBccItems:
+      type: object
+      properties:
+        contactPixelTrackingConsent:
+          type: boolean
+          description: 'Consent of the recipient in bcc for open (pixel) and click tracking, resolved by the sender at send time. Considered only if the per-contact pixel tracking consent feature is enabled for your account. Pass `true` if this recipient has consented to open and click tracking, in which case the open pixel and tracked links identify the recipient. Pass `false` to anonymise the open and click events (counted in aggregate statistics only). If it is not passed, the recipient is treated as unknown consent status and the email is still sent (the open and click are anonymised unless your account tracks unknown-consent contacts). A value other than `true`/`false` is rejected. Ignored when the feature is not enabled for your account.
+
+            '
+        email:
+          type: string
+          format: email
+          description: BCC recipient email address
+        name:
+          type: string
+          description: 'Display name of the BCC recipient. Maximum length is 70 characters.
+
+            '
+      required:
+      - email
+      title: SmtpEmailPostRequestBodyContentApplicationJsonSchemaBccItems
+    SmtpTemplatesGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmtpTemplatesGetResponsesContentApplicationJsonSchemaCode
+    DeleteScheduledEmailByIdRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmtpEmailIdentifierDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteScheduledEmailByIdRequestNotFoundError
+    SmtpEmailPostRequestBodyContentApplicationJsonSchemaSender:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Sender email address. Required when `id` is not provided.
+        id:
+          type: integer
+          format: int64
+          description: Sender identifier. Required when `email` is not provided. Use this field to select a sender with a specific IP pool (dedicated IP users only).
+        name:
+          type: string
+          description: 'Display name of the sender. Maximum length is 70 characters. Only applicable when `email` is provided.
+
+            '
+      description: 'Sender information. Required when `templateId` is not provided. Specify either an email address (with optional name) or a sender ID. The `name` field is ignored when `id` is provided.
+
+        '
+      title: SmtpEmailPostRequestBodyContentApplicationJsonSchemaSender
+    PostPreviewSmtpEmailTemplatesRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmtpTemplatePreviewPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: PostPreviewSmtpEmailTemplatesRequestBadRequestError
+    DeleteBlockedDomainRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmtpBlockedDomainsDomainDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteBlockedDomainRequestBadRequestError
+    DeleteAnSmtpTransactionalLogRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmtpLogIdentifierDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteAnSmtpTransactionalLogRequestBadRequestError
+    GetTransacEmailsListRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmtpEmailsGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetTransacEmailsListRequestBadRequestError
+    SmtpEmailPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmtpEmailPostResponsesContentApplicationJsonSchemaCode
+    SmtpStatisticsEventsGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: SmtpStatisticsEventsGetParametersSort
+    SendTransacEmailRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmtpEmailPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: SendTransacEmailRequestBadRequestError
+    SmtpLogIdentifierDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmtpLogIdentifierDeleteResponsesContentApplicationJsonSchemaCode
+    SmtpStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItemsEvent:
+      type: string
+      enum:
+      - bounces
+      - hardBounces
+      - softBounces
+      - delivered
+      - spam
+      - requests
+      - opened
+      - clicks
+      - invalid
+      - deferred
+      - blocked
+      - unsubscribed
+      - error
+      - loadedByProxy
+      description: Event which occurred
+      title: SmtpStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItemsEvent
+    Transactional_emails_blockNewDomain_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Transactional emails_blockNewDomain_Response_201
+    UnblockOrResubscribeATransactionalContactRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmtpBlockedContactsEmailDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UnblockOrResubscribeATransactionalContactRequestNotFoundError
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
+    SmtpBlockedDomainsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmtpBlockedDomainsPostResponsesContentApplicationJsonSchemaCode
+    DeleteSmtpTemplateRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmtpTemplatesTemplateIdDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteSmtpTemplateRequestBadRequestError
+    SmtpBlockedContactsGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: SmtpBlockedContactsGetParametersSort
+    DeleteHardbouncesRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmtpDeleteHardbouncesPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteHardbouncesRequestBadRequestError
+    postSendFailed:
+      type: object
+      properties:
+        blackListedEmails:
+          type: array
+          items:
+            type: string
+            format: email
+        code:
+          type: string
+          description: Response code
+        message:
+          type: string
+          description: Response message
+        unexistingEmails:
+          type: array
+          items:
+            type: string
+            format: email
+        withoutListEmails:
+          type: array
+          items:
+            type: string
+            format: email
+      required:
+      - code
+      - message
+      title: postSendFailed
+    SmtpEmailStatusIdentifierGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmtpEmailStatusIdentifierGetResponsesContentApplicationJsonSchemaCode
+    SmtpEmailStatusIdentifierGetParametersStatus:
+      type: string
+      enum:
+      - processed
+      - inProgress
+      - queued
+      title: SmtpEmailStatusIdentifierGetParametersStatus
+    SmtpEmailsUuidGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmtpEmailsUuidGetResponsesContentApplicationJsonSchemaCode
+    SmtpStatisticsEventsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmtpStatisticsEventsGetResponsesContentApplicationJsonSchemaCode
+    SmtpDeleteHardbouncesPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmtpDeleteHardbouncesPostResponsesContentApplicationJsonSchemaCode
+    GetBlockedDomainsRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmtpBlockedDomainsGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetBlockedDomainsRequestBadRequestError
+    BlockNewDomainRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmtpBlockedDomainsPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: BlockNewDomainRequestBadRequestError
+    GetSmtpReportRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmtpStatisticsReportsGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetSmtpReportRequestBadRequestError
+    SmtpTemplatesGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: SmtpTemplatesGetParametersSort
+    SmtpEmailsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmtpEmailsGetResponsesContentApplicationJsonSchemaCode
+    SmtpTemplatesPostRequestBodyContentApplicationJsonSchemaSender:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email of the sender
+        id:
+          type: integer
+          format: int64
+          description: 'Select the sender for the template on the basis of sender id. _In order to select a sender with specific pool of IP’s, dedicated ip users shall pass id (instead of email)_.
+
+            '
+        name:
+          type: string
+          description: 'Name of the sender. **If not passed, will be set to default**
+
+            '
+      description: 'Sender details including id or email and name (_optional_). Only one of either Sender''s email or Sender''s ID shall be passed in one request at a time. For example: **{"name":"xyz", "email":"example@abc.com"}** **{"name":"xyz", "id":123}**
+
+        '
+      title: SmtpTemplatesPostRequestBodyContentApplicationJsonSchemaSender
+    SmtpTemplatesTemplateIdPutRequestBodyContentApplicationJsonSchemaSender:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email of the sender
+        id:
+          type: integer
+          format: int64
+          description: 'Select the sender for the template on the basis of sender id. _In order to select a sender with specific pool of IP’s, dedicated ip users shall pass id (instead of email)_.
+
+            '
+        name:
+          type: string
+          description: Name of the sender
+      description: 'Sender details including id or email and name (_optional_). Only one of either Sender''s email or Sender''s ID shall be passed in one request at a time. For example: **{"name":"xyz", "email":"example@abc.com"}** **{"name":"xyz", "id":123}**
+
+        '
+      title: SmtpTemplatesTemplateIdPutRequestBodyContentApplicationJsonSchemaSender
+    SmtpEmailIdentifierDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmtpEmailIdentifierDeleteResponsesContentApplicationJsonSchemaCode
+    SmtpBlockedContactsGetResponsesContentApplicationJsonSchemaContactsItemsReasonCode:
+      type: string
+      enum:
+      - unsubscribedViaMA
+      - unsubscribedViaEmail
+      - adminBlocked
+      - unsubscribedViaApi
+      - hardBounce
+      - contactFlaggedAsSpam
+      description: Reason code for blocking / unsubscribing (This code is safe for comparison)
+      title: SmtpBlockedContactsGetResponsesContentApplicationJsonSchemaContactsItemsReasonCode
+    SmtpEmailPostRequestBodyContentApplicationJsonSchemaMessageVersionsItems:
+      type: object
+      properties:
+        bcc:
+          type: array
+          items:
+            $ref: '#/components/schemas/SmtpEmailPostRequestBodyContentApplicationJsonSchemaMessageVersionsItemsBccItems'
+          description: 'Array of BCC recipient objects. Each object contains an email address and an optional name.
+
+            '
+        cc:
+          type: array
+          items:
+            $ref: '#/components/schemas/SmtpEmailPostRequestBodyContentApplicationJsonSchemaMessageVersionsItemsCcItems'
+          description: 'Array of CC recipient objects. Each object contains an email address and an optional name.
+
+            '
+        htmlContent:
+          type: string
+          description: 'HTML body content of the email. Required when `templateId` is not provided. Ignored when `templateId` is provided.
+
+            '
+        params:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: 'Key-value pairs for template variable substitution. Only applicable when the template uses the New Template Language format.
+
+            '
+        replyTo:
+          $ref: '#/components/schemas/SmtpEmailPostRequestBodyContentApplicationJsonSchemaMessageVersionsItemsReplyTo'
+          description: 'Reply-to email address (required) and optional display name. Recipients will use this address when replying to the email.
+
+            '
+        subject:
+          type: string
+          description: 'Email subject line for this message version
+
+            '
+        textContent:
+          type: string
+          description: 'Plain text body content of the email. Ignored when `templateId` is provided.
+
+            '
+        to:
+          type: array
+          items:
+            $ref: '#/components/schemas/SmtpEmailPostRequestBodyContentApplicationJsonSchemaMessageVersionsItemsToItems'
+          description: 'Array of recipient objects. Each object contains an email address and an optional display name.
+
+            '
+      required:
+      - to
+      title: SmtpEmailPostRequestBodyContentApplicationJsonSchemaMessageVersionsItems
+    SmtpEmailPostRequestBodyContentApplicationJsonSchemaMessageVersionsItemsReplyTo:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email address in reply to
+        name:
+          type: string
+          description: 'Display name for the reply-to address. Maximum length is 70 characters.
+
+            '
+      required:
+      - email
+      description: 'Reply-to email address (required) and optional display name. Recipients will use this address when replying to the email.
+
+        '
+      title: SmtpEmailPostRequestBodyContentApplicationJsonSchemaMessageVersionsItemsReplyTo
+    Transactional_emails_postPreviewSmtpEmailTemplates_Request:
+      oneOf:
+      - description: Any type
+      - description: Any type
+      title: Transactional emails_postPreviewSmtpEmailTemplates_Request
+    UnblockOrResubscribeATransactionalContactRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmtpBlockedContactsEmailDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UnblockOrResubscribeATransactionalContactRequestBadRequestError
+    Transactional_emails_getBlockedDomains_Response_200:
+      type: object
+      properties:
+        domains:
+          type: array
+          items:
+            type: string
+          description: List of all blocked domains
+      required:
+      - domains
+      title: Transactional emails_getBlockedDomains_Response_200
+    SmtpEmailPostRequestBodyContentApplicationJsonSchemaAttachmentItems:
+      type: object
+      properties:
+        content:
+          type: string
+          format: byte
+          description: Base64-encoded attachment data
+        name:
+          type: string
+          description: 'Attachment filename. Required when `content` is provided.
+
+            '
+        url:
+          type: string
+          format: url
+          description: 'Absolute URL of the attachment. Local file paths are not supported.
+
+            '
+      title: SmtpEmailPostRequestBodyContentApplicationJsonSchemaAttachmentItems
+    SmtpTemplatesTemplateIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmtpTemplatesTemplateIdGetResponsesContentApplicationJsonSchemaCode
+    CreateSmtpTemplateRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmtpTemplatesPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreateSmtpTemplateRequestBadRequestError
+    GetSmtpTemplatesRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmtpTemplatesGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetSmtpTemplatesRequestBadRequestError
+    SmtpTemplatesTemplateIdGetParametersTemplateId:
+      oneOf:
+      - type: integer
+        format: int64
+      - type: string
+      title: SmtpTemplatesTemplateIdGetParametersTemplateId
+    SmtpEmailsUuidGetResponsesContentApplicationJsonSchemaEventsItems:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the event that occurred on the sent email
+        time:
+          type: string
+          description: Time at which the event occurred
+      required:
+      - name
+      - time
+      title: SmtpEmailsUuidGetResponsesContentApplicationJsonSchemaEventsItems
+    SmtpStatisticsReportsGetResponsesContentApplicationJsonSchemaReportsItems:
+      type: object
+      properties:
+        blocked:
+          type: integer
+          format: int64
+          description: Number of blocked emails for the date
+        clicks:
+          type: integer
+          format: int64
+          description: Number of clicks for the date
+        date:
+          type: string
+          format: date
+          description: Date of the statistics
+        delivered:
+          type: integer
+          format: int64
+          description: Number of delivered emails for the date
+        hardBounces:
+          type: integer
+          format: int64
+          description: Number of hardbounces for the date
+        invalid:
+          type: integer
+          format: int64
+          description: Number of invalid emails for the date
+        opens:
+          type: integer
+          format: int64
+          description: Number of openings for the date
+        requests:
+          type: integer
+          format: int64
+          description: Number of requests for the date
+        softBounces:
+          type: integer
+          format: int64
+          description: Number of softbounces for the date
+        spamReports:
+          type: integer
+          format: int64
+          description: Number of complaints (spam reports) for the date
+        uniqueClicks:
+          type: integer
+          format: int64
+          description: Number of unique clicks for the date
+        uniqueOpens:
+          type: integer
+          format: int64
+          description: Number of unique openings for the date
+        unsubscribed:
+          type: integer
+          format: int64
+          description: Number of unsubscribed emails for the date
+      required:
+      - blocked
+      - clicks
+      - date
+      - delivered
+      - hardBounces
+      - invalid
+      - opens
+      - requests
+      - softBounces
+      - spamReports
+      - uniqueClicks
+      - uniqueOpens
+      - unsubscribed
+      title: SmtpStatisticsReportsGetResponsesContentApplicationJsonSchemaReportsItems
+    Transactional_emails_getAggregatedSmtpReport_Response_200:
+      type: object
+      properties:
+        blocked:
+          type: integer
+          format: int64
+          description: Number of blocked contact emails for the timeframe
+        clicks:
+          type: integer
+          format: int64
+          description: Number of clicks for the timeframe
+        delivered:
+          type: integer
+          format: int64
+          description: Number of delivered emails for the timeframe
+        hardBounces:
+          type: integer
+          format: int64
+          description: Number of hardbounces for the timeframe
+        invalid:
+          type: integer
+          format: int64
+          description: Number of invalid emails for the timeframe
+        opens:
+          type: integer
+          format: int64
+          description: Number of openings for the timeframe
+        range:
+          type: string
+          description: Time frame of the report
+        requests:
+          type: integer
+          format: int64
+          description: Number of requests for the timeframe
+        softBounces:
+          type: integer
+          format: int64
+          description: Number of softbounces for the timeframe
+        spamReports:
+          type: integer
+          format: int64
+          description: Number of complaint (spam report) for the timeframe
+        uniqueClicks:
+          type: integer
+          format: int64
+          description: Number of unique clicks for the timeframe
+        uniqueOpens:
+          type: integer
+          format: int64
+          description: Number of unique openings for the timeframe
+        unsubscribed:
+          type: integer
+          format: int64
+          description: Number of unsubscribed emails for the timeframe
+      title: Transactional emails_getAggregatedSmtpReport_Response_200
+    UpdateSmtpTemplateRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmtpTemplatesTemplateIdPutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UpdateSmtpTemplateRequestBadRequestError
+    SmtpTemplatesPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmtpTemplatesPostResponsesContentApplicationJsonSchemaCode
+    SmtpEmailPostRequestBodyContentApplicationJsonSchemaMessageVersionsItemsToItems:
+      type: object
+      properties:
+        contactPixelTrackingConsent:
+          type: boolean
+          description: 'Consent of the recipient for open (pixel) and click tracking, resolved by the sender at send time. Considered only if the per-contact pixel tracking consent feature is enabled for your account. Pass `true` if this recipient has consented to open and click tracking, in which case the open pixel and tracked links identify the recipient. Pass `false` to anonymise the open and click events (counted in aggregate statistics only). If it is not passed, the recipient is treated as unknown consent status and the email is still sent (the open and click are anonymised unless your account tracks unknown-consent contacts). A value other than `true`/`false` is rejected. Ignored when the feature is not enabled for your account.
+
+            '
+        email:
+          type: string
+          format: email
+          description: Email address of the recipient
+        name:
+          type: string
+          description: 'Display name of the recipient. Maximum length is 70 characters.
+
+            '
+      required:
+      - email
+      title: SmtpEmailPostRequestBodyContentApplicationJsonSchemaMessageVersionsItemsToItems
+    SmtpBlockedContactsGetResponsesContentApplicationJsonSchemaContactsItems:
+      type: object
+      properties:
+        blockedAt:
+          type: string
+          description: Date when the contact was blocked or unsubscribed on
+        email:
+          type: string
+          format: email
+          description: Email address of the blocked or unsubscribed contact
+        reason:
+          $ref: '#/components/schemas/SmtpBlockedContactsGetResponsesContentApplicationJsonSchemaContactsItemsReason'
+          description: Reason for blocking / unsubscribing
+        senderEmail:
+          type:
+          - string
+          - 'null'
+          format: email
+          description: Sender email address of the blocked or unsubscribed contact
+      required:
+      - blockedAt
+      - email
+      - reason
+      - senderEmail
+      title: SmtpBlockedContactsGetResponsesContentApplicationJsonSchemaContactsItems
+    Transactional_emails_createSmtpTemplate_Response_201:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID of the object created
+      required:
+      - id
+      title: Transactional emails_createSmtpTemplate_Response_201
+    GetSmtpTemplateOverviewSender:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: From email for the template
+        id:
+          type: string
+          description: Sender id of the template
+        name:
+          type: string
+          description: Sender name for the template
+      title: GetSmtpTemplateOverviewSender
+    Transactional_emails_getTransacEmailContent_Response_200:
+      type: object
+      properties:
+        attachmentCount:
+          type: integer
+          format: int64
+          description: Count of the attachments that were sent in the email
+        body:
+          type: string
+          description: Actual content of the transactional email that has been sent
+        date:
+          type: string
+          description: Date on which transactional email was sent
+        email:
+          type: string
+          format: email
+          description: Email address to which transactional email has been sent
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/SmtpEmailsUuidGetResponsesContentApplicationJsonSchemaEventsItems'
+          description: Series of events which occurred on the transactional email
+        subject:
+          type: string
+          description: Subject of the sent email
+        templateId:
+          type: integer
+          format: int64
+          description: Id of the template
+      required:
+      - date
+      - email
+      - events
+      - subject
+      title: Transactional emails_getTransacEmailContent_Response_200
+    Transactional_emails_getScheduledEmailById_Response_200:
+      oneOf:
+      - description: Reference to TransactionalEmailsGetScheduledEmailByIdResponse2000
+      - description: Reference to TransactionalEmailsGetScheduledEmailByIdResponse2001
+      title: Transactional emails_getScheduledEmailById_Response_200
+    GetSmtpTemplateRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmtpTemplatesTemplateIdGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetSmtpTemplateRequestBadRequestError
+    SmtpStatisticsReportsGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: SmtpStatisticsReportsGetParametersSort
+    Transactional_emails_deleteHardbounces_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Transactional emails_deleteHardbounces_Response_200
+    SmtpStatisticsEventsGetParametersEvent:
+      type: string
+      enum:
+      - bounces
+      - hardBounces
+      - softBounces
+      - delivered
+      - spam
+      - requests
+      - opened
+      - clicks
+      - invalid
+      - deferred
+      - blocked
+      - unsubscribed
+      - error
+      - loadedByProxy
+      title: SmtpStatisticsEventsGetParametersEvent
+    SmtpBlockedContactsGetResponsesContentApplicationJsonSchemaContactsItemsReason:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmtpBlockedContactsGetResponsesContentApplicationJsonSchemaContactsItemsReasonCode'
+          description: Reason code for blocking / unsubscribing (This code is safe for comparison)
+        message:
+          type: string
+          description: Reason for blocking / unsubscribing (This string is not safe for comparison)
+      description: Reason for blocking / unsubscribing
+      title: SmtpBlockedContactsGetResponsesContentApplicationJsonSchemaContactsItemsReason
+    SmtpTemplatesGetParametersEditorType:
+      type: string
+      enum:
+      - richTextEditor
+      title: SmtpTemplatesGetParametersEditorType
+    GetTransacEmailContentRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmtpEmailsUuidGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetTransacEmailContentRequestNotFoundError
+    SmtpBlockedContactsEmailDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmtpBlockedContactsEmailDeleteResponsesContentApplicationJsonSchemaCode
+    SmtpStatisticsReportsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmtpStatisticsReportsGetResponsesContentApplicationJsonSchemaCode
+    GetScheduledEmailByIdRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmtpEmailStatusIdentifierGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetScheduledEmailByIdRequestBadRequestError
+    Transactional_emails_getSmtpTemplates_Response_200:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: Count of transactional email templates
+        templates:
+          type: array
+          items:
+            $ref: '#/components/schemas/getSmtpTemplateOverview'
+      title: Transactional emails_getSmtpTemplates_Response_200
+    sendTestEmail:
+      type: object
+      properties:
+        emailTo:
+          type: array
+          items:
+            type: string
+            format: email
+          description: 'List of the email addresses of the recipients whom you wish to send the test mail. _If left empty, the test mail will be sent to your entire test list. You can not send more than 50 test emails per day_.
+
+            '
+      title: sendTestEmail
+    SmtpEmailPostRequestBodyContentApplicationJsonSchemaReplyTo:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email address in reply to
+        name:
+          type: string
+          description: 'Display name for the reply-to address. Maximum length is 70 characters.
+
+            '
+      required:
+      - email
+      description: 'Reply-to email address (required) and optional display name. Recipients will use this address when replying to the email.
+
+        '
+      title: SmtpEmailPostRequestBodyContentApplicationJsonSchemaReplyTo
+    SmtpBlockedContactsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmtpBlockedContactsGetResponsesContentApplicationJsonSchemaCode
+    Transactional_emails_getSmtpReport_Response_200:
+      type: object
+      properties:
+        reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/SmtpStatisticsReportsGetResponsesContentApplicationJsonSchemaReportsItems'
+      title: Transactional emails_getSmtpReport_Response_200
+    SmtpEmailPostRequestBodyContentApplicationJsonSchemaCcItems:
+      type: object
+      properties:
+        contactPixelTrackingConsent:
+          type: boolean
+          description: 'Consent of the recipient in cc for open (pixel) and click tracking, resolved by the sender at send time. Considered only if the per-contact pixel tracking consent feature is enabled for your account. Pass `true` if this recipient has consented to open and click tracking, in which case the open pixel and tracked links identify the recipient. Pass `false` to anonymise the open and click events (counted in aggregate statistics only). If it is not passed, the recipient is treated as unknown consent status and the email is still sent (the open and click are anonymised unless your account tracks unknown-consent contacts). A value other than `true`/`false` is rejected. Ignored when the feature is not enabled for your account.
+
+            '
+        email:
+          type: string
+          format: email
+          description: CC recipient email address
+        name:
+          type: string
+          description: 'Display name of the CC recipient. Maximum length is 70 characters.
+
+            '
+      required:
+      - email
+      title: SmtpEmailPostRequestBodyContentApplicationJsonSchemaCcItems
+    SmtpEmailStatusIdentifierGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: SmtpEmailStatusIdentifierGetParametersSort
+    GetEmailEventReportRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SmtpStatisticsEventsGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetEmailEventReportRequestBadRequestError
+    SmtpBlockedDomainsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SmtpBlockedDomainsGetResponsesContentApplicationJsonSchemaCode
+    getSmtpTemplateOverview:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: Creation UTC date-time of the template (YYYY-MM-DDTHH:mm:ss.SSSZ)
+        doiTemplate:
+          type: boolean
+          description: It is true if template is a valid Double opt-in (DOI) template, otherwise it is false. This field will be available only in case of single template detail call.
+        htmlContent:
+          type: string
+          description: HTML content of the template
+        id:
+          type: integer
+          format: int64
+          description: ID of the template
+        isActive:
+          type: boolean
+          description: Status of template (true=active, false=inactive)
+        modifiedAt:
+          type: string
+          description: Last modification UTC date-time of the template (YYYY-MM-DDTHH:mm:ss.SSSZ)
+        name:
+          type: string
+          description: Name of the template
+        replyTo:
+          type: string
+          format: email
+          description: Email defined as the "Reply to" for the template
+        sender:
+          $ref: '#/components/schemas/GetSmtpTemplateOverviewSender'
+        subject:
+          type: string
+          description: Subject of the template
+        tag:
+          type: string
+          description: Tag of the template
+        testSent:
+          type: boolean
+          description: Status of test sending for the template (true=test email has been sent, false=test email has not been sent)
+        toField:
+          type: string
+          description: Customisation of the "to" field for the template
+        customTemplateId:
+          type: string
+          description: Custom template identifier, if one was assigned during template creation. Only present when the template has a custom ID.
+      required:
+      - createdAt
+      - htmlContent
+      - id
+      - isActive
+      - modifiedAt
+      - name
+      - replyTo
+      - sender
+      - subject
+      - tag
+      - testSent
+      - toField
+      title: getSmtpTemplateOverview
+    Transactional_emails_sendTransacEmail_Response_201:
+      type: object
+      properties:
+        messageId:
+          type: string
+          description: Message ID of the transactional email sent
+        messageIds:
+          type: array
+          items:
+            type: string
+      title: Transactional emails_sendTransacEmail_Response_201
+  securitySchemes:
+    api-key:
+      type: apiKey
+      in: header
+      name: api-key
+      description: The API key should be passed in the request headers as `api-key` for authentication.

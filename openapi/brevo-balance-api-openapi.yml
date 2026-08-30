@@ -1,0 +1,2479 @@
+openapi: 3.2.0
+info:
+  title: Loyalty Balance API
+  version: 1.0.0
+servers:
+- url: https://api.brevo.com/v3
+  description: https://api.brevo.com/v3
+tags:
+- name: balance
+paths:
+  /loyalty/balance/programs/{pid}/balance-definitions:
+    get:
+      operationId: getBalanceDefinitionList
+      summary: Get balance definition list
+      description: Returns balance definition page
+      tags:
+      - balance
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: limit
+        in: query
+        description: Limit the number of records returned
+        required: false
+        schema:
+          type: integer
+          default: 200
+      - name: offset
+        in: query
+        description: Offset to paginate records
+        required: false
+        schema:
+          type: integer
+          default: 0
+      - name: sortField
+        in: query
+        description: Field to sort by
+        required: false
+        schema:
+          $ref: '#/components/schemas/LoyaltyBalanceProgramsPidBalanceDefinitionsGetParametersSortField'
+          default: updated_at
+      - name: sort
+        in: query
+        description: Sort direction
+        required: false
+        schema:
+          $ref: '#/components/schemas/LoyaltyBalanceProgramsPidBalanceDefinitionsGetParametersSort'
+          default: desc
+      - name: version
+        in: query
+        description: Version
+        required: false
+        schema:
+          $ref: '#/components/schemas/LoyaltyBalanceProgramsPidBalanceDefinitionsGetParametersVersion'
+          default: draft
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful retrieval of balance definition page
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Balance_getBalanceDefinitionList_Response_200'
+        '401':
+          description: Request Authentication Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+    post:
+      operationId: createBalanceDefinition
+      summary: Create balance definition
+      description: Creates balance definition and returns information
+      tags:
+      - balance
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful creation of balance definition
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/balanceDefinition'
+        '401':
+          description: Request Authentication Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: No content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: Create Balance Definition Payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                balanceAvailabilityDurationModifier:
+                  $ref: '#/components/schemas/LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationModifier'
+                  description: Defines when the balance expires within the selected duration.
+                balanceAvailabilityDurationUnit:
+                  $ref: '#/components/schemas/LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationUnit'
+                  description: Unit of time for balance validity.
+                balanceAvailabilityDurationValue:
+                  type: integer
+                  description: Number of time units before the balance expires.
+                balanceExpirationDate:
+                  type: string
+                  format: date
+                  description: Fixed expiration date (`dd/mm` format) as an alternative to duration-based expiry.
+                balanceOptionAmountOvertakingStrategy:
+                  $ref: '#/components/schemas/LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceOptionAmountOvertakingStrategy'
+                  description: Defines whether partial credit is allowed when reaching max balance.
+                balanceOptionCreditRounding:
+                  $ref: '#/components/schemas/LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceOptionCreditRounding'
+                  description: Defines rounding strategy for credit transactions.
+                balanceOptionDebitRounding:
+                  $ref: '#/components/schemas/LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceOptionDebitRounding'
+                  description: Defines rounding strategy for debit transactions.
+                description:
+                  type: string
+                  description: Short description of the balance definition.
+                imageRef:
+                  type: string
+                  description: URL of an optional image reference.
+                maxAmount:
+                  type: number
+                  format: double
+                  description: Maximum allowable balance amount.
+                maxCreditAmountLimit:
+                  type: number
+                  format: double
+                  description: Maximum credit allowed per operation.
+                maxDebitAmountLimit:
+                  type: number
+                  format: double
+                  description: Maximum debit allowed per operation.
+                meta:
+                  $ref: '#/components/schemas/LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaMeta'
+                  description: Additional metadata for the balance definition.
+                minAmount:
+                  type: number
+                  format: double
+                  description: Minimum allowable balance amount.
+                name:
+                  type: string
+                  description: Name of the balance definition.
+                unit:
+                  $ref: '#/components/schemas/LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaUnit'
+                  description: Unit of balance measurement.
+              required:
+              - name
+              - unit
+  /loyalty/balance/programs/{pid}/balance-definitions/{bdid}:
+    get:
+      operationId: getBalanceDefinition
+      summary: Get balance definition
+      description: Returns balance definition
+      tags:
+      - balance
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: bdid
+        in: path
+        description: Balance Definition Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: version
+        in: query
+        description: Version
+        required: false
+        schema:
+          $ref: '#/components/schemas/LoyaltyBalanceProgramsPidBalanceDefinitionsBdidGetParametersVersion'
+          default: draft
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful retrieval of balance definition
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/balanceDefinition'
+        '401':
+          description: Request Authentication Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+    put:
+      operationId: updateBalanceDefinition
+      summary: Update balance definition
+      description: Updates Balance definition
+      tags:
+      - balance
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: bdid
+        in: path
+        description: Balance Definition Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful update of balance definition
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/balanceDefinition'
+        '401':
+          description: Request Authentication Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: balance definition doesn't exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '424':
+          description: Failed Dependency Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: Create Balance Definition Payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                balanceAvailabilityDurationModifier:
+                  $ref: '#/components/schemas/LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationModifier'
+                  description: Defines when the balance expires within the selected duration.
+                balanceAvailabilityDurationUnit:
+                  $ref: '#/components/schemas/LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationUnit'
+                  description: Unit of time for balance validity.
+                balanceAvailabilityDurationValue:
+                  type: integer
+                  description: Number of time units before the balance expires.
+                balanceExpirationDate:
+                  type: string
+                  description: Expiration date (`dd/mm` format) or empty if not applicable.
+                balanceOptionAmountOvertakingStrategy:
+                  $ref: '#/components/schemas/LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceOptionAmountOvertakingStrategy'
+                  description: Defines whether partial credit is allowed when reaching max balance.
+                balanceOptionCreditRounding:
+                  $ref: '#/components/schemas/LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceOptionCreditRounding'
+                  description: Rounding strategy for credit transactions.
+                balanceOptionDebitRounding:
+                  $ref: '#/components/schemas/LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceOptionDebitRounding'
+                  description: Rounding strategy for debit transactions.
+                description:
+                  type: string
+                  description: Short description of the balance definition.
+                imageRef:
+                  type: string
+                  description: URL of an optional image reference.
+                maxAmount:
+                  type: number
+                  format: double
+                  description: Maximum allowable balance amount.
+                maxCreditAmountLimit:
+                  type: number
+                  format: double
+                  description: Maximum credit allowed per operation.
+                maxDebitAmountLimit:
+                  type: number
+                  format: double
+                  description: Maximum debit allowed per operation.
+                meta:
+                  $ref: '#/components/schemas/LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaMeta'
+                  description: Optional metadata for the balance definition.
+                minAmount:
+                  type: number
+                  format: double
+                  description: Minimum allowable balance amount.
+                name:
+                  type: string
+                  description: Name of the balance definition.
+                unit:
+                  $ref: '#/components/schemas/LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaUnit'
+                  description: Unit of balance measurement.
+              required:
+              - name
+              - unit
+    delete:
+      operationId: deleteBalanceDefinition
+      summary: Delete balance definition
+      description: Delete Balance definition
+      tags:
+      - balance
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: bdid
+        in: path
+        description: Balance Definition Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Successful deletion of balance definition
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          description: Request Authentication Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+  /loyalty/balance/programs/{pid}/balance-definitions/{bdid}/limits:
+    post:
+      operationId: createBalanceLimit
+      summary: Create balance limits
+      description: Creates balance limit and sends the created UUID along with the data
+      tags:
+      - balance
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: bdid
+        in: path
+        description: Balance Definition Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful creation of balance limit
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/balanceLimit'
+        '401':
+          description: Request Authentication Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '424':
+          description: Failed Dependency Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: Balance Definition Payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                constraintType:
+                  $ref: '#/components/schemas/LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsPostRequestBodyContentApplicationJsonSchemaConstraintType'
+                  description: Defines whether the limit applies to transaction count or amount.
+                durationUnit:
+                  $ref: '#/components/schemas/LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsPostRequestBodyContentApplicationJsonSchemaDurationUnit'
+                  description: Unit of time for which the limit is applicable.
+                durationValue:
+                  type: integer
+                  description: Number of time units for the balance limit.
+                slidingSchedule:
+                  type: boolean
+                  description: Determines if the limit resets on a rolling schedule.
+                transactionType:
+                  $ref: '#/components/schemas/LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsPostRequestBodyContentApplicationJsonSchemaTransactionType'
+                  description: Specifies whether the limit applies to credit or debit transactions.
+                value:
+                  type: integer
+                  description: Maximum allowed value for the specified constraint type.
+              required:
+              - constraintType
+              - durationUnit
+              - durationValue
+              - transactionType
+              - value
+  /loyalty/balance/programs/{pid}/balance-definitions/{bdid}/limits/{blid}:
+    get:
+      operationId: getBalanceLimit
+      summary: Get balance limits
+      description: Fetches balance limits and send the created UUID along with the data
+      tags:
+      - balance
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: bdid
+        in: path
+        description: Balance Definition Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: blid
+        in: path
+        description: Balance Limit Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: version
+        in: query
+        description: Version
+        required: false
+        schema:
+          $ref: '#/components/schemas/LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidGetParametersVersion'
+          default: draft
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful retrieval of balance limit
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/balanceLimit'
+        '401':
+          description: Request Authentication Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: balance limit not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+    delete:
+      operationId: deleteBalanceLimit
+      summary: Delete balance limit
+      description: Delete balance limit
+      tags:
+      - balance
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: bdid
+        in: path
+        description: Balance Definition Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: blid
+        in: path
+        description: Balance Limit Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Successful deletion of balance definition
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          description: Request Authentication Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+    put:
+      operationId: updateBalanceLimit
+      summary: Updates balance limit
+      description: Updates balance limit
+      tags:
+      - balance
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: bdid
+        in: path
+        description: Balance Definition Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: blid
+        in: path
+        description: Balance Limit Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful update of balance limit
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/balanceLimit'
+        '401':
+          description: Request Authentication Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: Balance Limits Payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                constraintType:
+                  $ref: '#/components/schemas/LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidPutRequestBodyContentApplicationJsonSchemaConstraintType'
+                  description: Defines whether the limit applies to transaction count or amount.
+                durationUnit:
+                  $ref: '#/components/schemas/LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidPutRequestBodyContentApplicationJsonSchemaDurationUnit'
+                  description: Unit of time for which the limit is applicable.
+                durationValue:
+                  type: integer
+                  description: Number of time units for the balance limit.
+                slidingSchedule:
+                  type: boolean
+                  description: Determines if the limit resets on a rolling schedule.
+                transactionType:
+                  $ref: '#/components/schemas/LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidPutRequestBodyContentApplicationJsonSchemaTransactionType'
+                  description: Specifies whether the limit applies to credit or debit transactions.
+                value:
+                  type: integer
+                  description: Maximum allowed value for the specified constraint type.
+              required:
+              - constraintType
+              - durationUnit
+              - durationValue
+              - transactionType
+              - value
+  /loyalty/balance/programs/{pid}/subscriptions/{cid}/balances:
+    get:
+      operationId: getSubscriptionBalances
+      summary: Get subscription balances
+      description: Returns subscription balances
+      tags:
+      - balance
+      parameters:
+      - name: cid
+        in: path
+        description: Contact Id
+        required: true
+        schema:
+          type: string
+          format: int
+      - name: pid
+        in: path
+        description: Loyalty Program Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: includeInternal
+        in: query
+        description: Include balances tied to internal definitions.
+        required: false
+        schema:
+          type: boolean
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful retrieval of contact balance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Balance_getSubscriptionBalances_Response_200'
+        '401':
+          description: Request Authentication Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+    post:
+      operationId: createSubscriptionBalances
+      summary: Create subscription balances
+      description: Creates a balance for a contact
+      tags:
+      - balance
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: cid
+        in: path
+        description: Contact Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful creation of balance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Balance_createSubscriptionBalances_Response_200'
+        '401':
+          description: Request Authentication Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: No content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: Create Balance Payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                balanceDefinitionId:
+                  type: string
+                  description: Unique identifier (UUID) of the balance definition associated with the new balance.
+              required:
+              - balanceDefinitionId
+  /loyalty/balance/programs/{pid}/contact-balances:
+    get:
+      operationId: getContactBalances
+      summary: Get balance list
+      description: Returns contact balances for a given balance definition across all subscriptions.
+      tags:
+      - balance
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: includeInternal
+        in: query
+        description: Include balances tied to internal definitions.
+        required: false
+        schema:
+          type: boolean
+      - name: limit
+        in: query
+        description: Limit the number of records returned
+        required: false
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        description: Skip a number of records
+        required: false
+        schema:
+          type: integer
+      - name: sort
+        in: query
+        description: Sort order
+        required: false
+        schema:
+          $ref: '#/components/schemas/LoyaltyBalanceProgramsPidContactBalancesGetParametersSort'
+      - name: sortField
+        in: query
+        description: Field to sort by
+        required: false
+        schema:
+          $ref: '#/components/schemas/LoyaltyBalanceProgramsPidContactBalancesGetParametersSortField'
+      - name: balanceDefinitionId
+        in: query
+        description: Balance Definition ID (required)
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful retrieval of contact balance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Balance_getContactBalances_Response_200'
+        '401':
+          description: Request Authentication Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: subscription data not found for some contacts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+  /loyalty/balance/programs/{pid}/transactions:
+    post:
+      operationId: beginTransaction
+      summary: Create new transaction
+      description: Creates new transaction and returns information
+      tags:
+      - balance
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Transaction created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transaction'
+        '401':
+          description: Request Authentication Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: Transaction not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: Transaction Payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                  format: double
+                  description: Transaction amount. A positive value creates a credit transaction and a negative value creates a debit transaction (unless transactionType is explicitly provided).
+                transactionType:
+                  $ref: '#/components/schemas/LoyaltyBalanceProgramsPidTransactionsPostRequestBodyContentApplicationJsonSchemaTransactionType'
+                  description: Explicit transaction type. If not provided, the type is inferred from the sign of the amount (positive = credit, negative = debit).
+                balanceDefinitionId:
+                  type: string
+                  format: uuid
+                  description: Unique identifier (UUID) of the associated balance definition.
+                contactId:
+                  type: integer
+                  format: int64
+                  description: Unique identifier of the contact involved in the transaction. Required unless `LoyaltySubscriptionId` is provided.
+                LoyaltySubscriptionId:
+                  type: string
+                  description: Unique identifier for the loyalty subscription. Required unless `contactId` is provided.
+                meta:
+                  type: object
+                  additionalProperties:
+                    description: Any type
+                  description: Optional metadata associated with the transaction.
+                ttl:
+                  type: integer
+                  description: Time-to-live for the transaction in seconds. Must be at least 10 seconds if provided.
+                eventTime:
+                  type: string
+                  format: date-time
+                  description: Timestamp specifying when the transaction event occurred (ISO 8601 / RFC 3339 format).
+                autoComplete:
+                  type: boolean
+                  description: Whether the transaction should be automatically completed.
+                balanceExpiryInMinutes:
+                  type: integer
+                  description: Expiry time for the balance in minutes. Must be greater than 0 if provided. Only applicable when autoComplete is true.
+              required:
+              - amount
+              - balanceDefinitionId
+  /loyalty/balance/programs/{pid}/transactions/{tid}/complete:
+    post:
+      operationId: completeTransaction
+      summary: Complete transaction
+      description: Completes transaction
+      tags:
+      - balance
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: tid
+        in: path
+        description: Transaction Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Transaction information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transaction'
+        '401':
+          description: Request Authentication Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: transaction not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+  /loyalty/balance/programs/{pid}/transactions/{tid}/cancel:
+    post:
+      operationId: cancelTransaction
+      summary: Cancel transaction
+      description: Cancels transaction
+      tags:
+      - balance
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: tid
+        in: path
+        description: Transaction Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Transaction information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transaction'
+        '401':
+          description: Request Authentication Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: transaction not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+  /loyalty/balance/programs/{pid}/create-order:
+    post:
+      operationId: createBalanceOrder
+      summary: Create balance order
+      description: Returns created order
+      tags:
+      - balance
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful creation of order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Balance_createBalanceOrder_Response_200'
+        '401':
+          description: Request Authentication Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: Order Payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                  format: double
+                  description: Order amount (must be non-zero).
+                balanceDefinitionId:
+                  type: string
+                  description: Unique identifier (UUID) of the associated balance definition.
+                contactId:
+                  type: integer
+                  description: Unique identifier of the contact placing the order (must be ≥ 1).
+                dueAt:
+                  type: string
+                  description: RFC3339 timestamp specifying when the order is due.
+                expiresAt:
+                  type: string
+                  description: Optional RFC3339 timestamp defining order expiration.
+                meta:
+                  type: object
+                  additionalProperties:
+                    description: Any type
+                  description: Optional metadata associated with the order.
+                source:
+                  $ref: '#/components/schemas/LoyaltyBalanceProgramsPidCreateOrderPostRequestBodyContentApplicationJsonSchemaSource'
+                  description: Specifies the origin of the order.
+              required:
+              - amount
+              - balanceDefinitionId
+              - contactId
+              - dueAt
+              - source
+  /loyalty/balance/programs/{pid}/active-balance:
+    get:
+      operationId: getActiveBalancesApi
+      summary: Get Active Balances API
+      description: Returns Active Balances
+      tags:
+      - balance
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: limit
+        in: query
+        description: Limit
+        required: false
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        description: Offset
+        required: false
+        schema:
+          type: integer
+      - name: sortField
+        in: query
+        description: Sort Field
+        required: false
+        schema:
+          $ref: '#/components/schemas/LoyaltyBalanceProgramsPidActiveBalanceGetParametersSortField'
+      - name: sort
+        in: query
+        description: Sort Order
+        required: false
+        schema:
+          $ref: '#/components/schemas/LoyaltyBalanceProgramsPidActiveBalanceGetParametersSort'
+      - name: contactId
+        in: query
+        description: Contact ID
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: balanceDefinitionId
+        in: query
+        description: Balance Definition ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: includeInternal
+        in: query
+        description: Include balances tied to internal definitions.
+        required: false
+        schema:
+          type: boolean
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful retrieval of active balances
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Balance_getActiveBalancesApi_Response_200'
+        '401':
+          description: Request Authentication Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: subscription not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+  /loyalty/balance/programs/{pid}/transaction-history:
+    get:
+      operationId: getTransactionHistoryApi
+      summary: Get Transaction History API
+      description: Returns transaction history
+      tags:
+      - balance
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program Id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: limit
+        in: query
+        description: Limit the number of records returned
+        required: false
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        description: Page number to retrieve
+        required: false
+        schema:
+          type: integer
+      - name: sortField
+        in: query
+        description: Field to sort by
+        required: false
+        schema:
+          $ref: '#/components/schemas/LoyaltyBalanceProgramsPidTransactionHistoryGetParametersSortField'
+          default: createdAt
+      - name: sort
+        in: query
+        description: Sort order
+        required: false
+        schema:
+          $ref: '#/components/schemas/LoyaltyBalanceProgramsPidTransactionHistoryGetParametersSort'
+      - name: contactId
+        in: query
+        description: Contact ID
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: balanceDefinitionId
+        in: query
+        description: Balance Definition ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: status
+        in: query
+        description: Transaction status filter
+        required: false
+        schema:
+          $ref: '#/components/schemas/LoyaltyBalanceProgramsPidTransactionHistoryGetParametersStatus'
+      - name: transactionType
+        in: query
+        description: Transaction type filter
+        required: false
+        schema:
+          $ref: '#/components/schemas/LoyaltyBalanceProgramsPidTransactionHistoryGetParametersTransactionType'
+      - name: loyaltySubscriptionId
+        in: query
+        description: Loyalty Subscription ID filter
+        required: false
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful retrieval of transaction history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Balance_getTransactionHistoryApi_Response_200'
+        '401':
+          description: Request Authentication Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: subscription not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+components:
+  schemas:
+    LoyaltyBalanceProgramsPidTransactionHistoryGetResponsesContentApplicationJsonSchemaTransactionHistoryItems:
+      type: object
+      properties:
+        amount:
+          type: string
+          title: float
+          description: The transaction amount.
+        transactionType:
+          $ref: '#/components/schemas/LoyaltyBalanceProgramsPidTransactionHistoryGetResponsesContentApplicationJsonSchemaTransactionHistoryItemsTransactionType'
+          description: The type of the transaction.
+        balanceExpirationDate:
+          type: string
+          description: Expiration date of the balance associated with this transaction.
+        cancelledAt:
+          type: string
+          description: Timestamp when the transaction was canceled, if applicable.
+        completedAt:
+          type: string
+          description: Timestamp when the transaction was successfully completed.
+        createdAt:
+          type: string
+          description: Timestamp when the transaction was initiated.
+        id:
+          type: string
+          description: Unique identifier of the transaction.
+        meta:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Optional metadata associated with the transaction.
+        rejectReason:
+          type: string
+          description: Reason for rejection, if the transaction was declined.
+        rejectedAt:
+          type: string
+          description: Timestamp when the transaction was rejected.
+        status:
+          type: string
+          description: Current status of the transaction (e.g., pending, completed, rejected).
+      description: Represents a record of a past transaction, including status and key timestamps.
+      title: LoyaltyBalanceProgramsPidTransactionHistoryGetResponsesContentApplicationJsonSchemaTransactionHistoryItems
+    LoyaltyBalanceProgramsPidSubscriptionsCidBalancesGetResponsesContentApplicationJsonSchemaBalanceItems:
+      type: object
+      properties:
+        balanceDefinitionId:
+          type: string
+          format: uuid
+          description: Balance definition ID.
+        value:
+          type: string
+          title: float
+          description: Aggregate balance value for this definition.
+      title: LoyaltyBalanceProgramsPidSubscriptionsCidBalancesGetResponsesContentApplicationJsonSchemaBalanceItems
+    LoyaltyBalanceProgramsPidBalanceDefinitionsGetParametersVersion:
+      type: string
+      enum:
+      - active
+      - draft
+      default: draft
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsGetParametersVersion
+    balanceDefinition:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the balance definition.
+        name:
+          type: string
+          description: Name of the balance definition.
+        description:
+          type: string
+          description: Short description of the balance definition.
+        imageRef:
+          type: string
+          format: uri
+          description: Optional image reference URL.
+        meta:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Additional metadata for the balance definition.
+        unit:
+          $ref: '#/components/schemas/BalanceDefinitionUnit'
+          description: Unit of balance measurement.
+        minAmount:
+          type: number
+          format: double
+          description: Minimum allowable balance.
+        maxAmount:
+          type: number
+          format: double
+          description: Maximum allowable balance.
+        maxCreditAmountLimit:
+          type: number
+          format: double
+          description: Maximum credit allowed per operation.
+        maxDebitAmountLimit:
+          type: number
+          format: double
+          description: Maximum debit allowed per operation.
+        balanceOptionAmountOvertakingStrategy:
+          $ref: '#/components/schemas/BalanceDefinitionBalanceOptionAmountOvertakingStrategy'
+          description: Partial enables partial credit of balance if maximum balance limit is reached. Strict enables rejection of a transaction if it will breach the max balance limit.
+        balanceOptionCreditRounding:
+          $ref: '#/components/schemas/BalanceDefinitionBalanceOptionCreditRounding'
+          description: Rounding strategy for credit transactions.
+        balanceOptionDebitRounding:
+          $ref: '#/components/schemas/BalanceDefinitionBalanceOptionDebitRounding'
+          description: Rounding strategy for debit transactions.
+        balanceAvailabilityDurationValue:
+          type: integer
+          description: Number of time units before the balance expires.
+        balanceAvailabilityDurationUnit:
+          $ref: '#/components/schemas/BalanceDefinitionBalanceAvailabilityDurationUnit'
+          description: Unit of time for the balance availability duration.
+        balanceAvailabilityDurationModifier:
+          $ref: '#/components/schemas/BalanceDefinitionBalanceAvailabilityDurationModifier'
+          description: Modifier for balance availability duration. startOfPeriod causes expiry at the start of the period, endOfPeriod at the end. noModification uses the exact duration from the credit date.
+        balanceExpirationDate:
+          type: string
+          description: Fixed expiration date in dd/mm format. The balance expires when this date next appears in the calendar. Only one of balanceExpirationDate or balance availability duration fields can be used.
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp of balance definition creation.
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp of the last update.
+        deletedAt:
+          type: string
+          format: date-time
+          description: Timestamp of balance definition deletion (nullable).
+      title: balanceDefinition
+    LoyaltyBalanceProgramsPidBalanceDefinitionsGetParametersSortField:
+      type: string
+      enum:
+      - name
+      - created_at
+      - updated_at
+      default: updated_at
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsGetParametersSortField
+    BalanceDefinitionBalanceOptionDebitRounding:
+      type: string
+      enum:
+      - lower
+      - upper
+      - natural
+      description: Rounding strategy for debit transactions.
+      title: BalanceDefinitionBalanceOptionDebitRounding
+    LoyaltyBalanceProgramsPidActiveBalanceGetResponsesContentApplicationJsonSchemaActiveBalancesItems:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier of the balance entry.
+        amount:
+          type: string
+          title: float
+          description: Current balance amount.
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the balance was created.
+        expiresAt:
+          type: string
+          format: date-time
+          description: Timestamp when the balance expires (if applicable).
+      title: LoyaltyBalanceProgramsPidActiveBalanceGetResponsesContentApplicationJsonSchemaActiveBalancesItems
+    LoyaltyBalanceProgramsPidActiveBalanceGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      title: LoyaltyBalanceProgramsPidActiveBalanceGetParametersSort
+    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceOptionCreditRounding:
+      type: string
+      enum:
+      - lower
+      - upper
+      - natural
+      description: Rounding strategy for credit transactions.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceOptionCreditRounding
+    balanceLimit:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the balance limit.
+        balanceDefinitionId:
+          type: string
+          format: uuid
+          description: Balance definition ID.
+        transactionType:
+          $ref: '#/components/schemas/BalanceLimitTransactionType'
+          description: Specifies whether the limit applies to credit or debit transactions.
+        constraintType:
+          $ref: '#/components/schemas/BalanceLimitConstraintType'
+          description: Defines the type of constraint (transaction count or amount).
+        durationValue:
+          type: integer
+          description: Number of time units the balance limit applies to.
+        durationUnit:
+          $ref: '#/components/schemas/BalanceLimitDurationUnit'
+          description: Time unit for the balance limit.
+        value:
+          type: number
+          format: double
+          description: The maximum allowed value for the defined constraint.
+        slidingSchedule:
+          type: boolean
+          description: Indicates if the limit resets periodically based on a sliding schedule.
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp of when the balance limit was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp of the last update to the balance limit.
+      title: balanceLimit
+    Balance_getSubscriptionBalances_Response_200:
+      type: object
+      properties:
+        loyaltyProgramId:
+          type: string
+          format: uuid
+          description: Unique identifier of the loyalty program.
+        contactId:
+          type: integer
+          format: int64
+          description: Unique identifier of the contact.
+        balance:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoyaltyBalanceProgramsPidSubscriptionsCidBalancesGetResponsesContentApplicationJsonSchemaBalanceItems'
+          description: Aggregate balance per balance definition.
+      title: Balance_getSubscriptionBalances_Response_200
+    LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationModifier:
+      type: string
+      enum:
+      - noModification
+      - startOfPeriod
+      - endOfPeriod
+      description: Defines when the balance expires within the selected duration.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationModifier
+    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidPutRequestBodyContentApplicationJsonSchemaDurationUnit:
+      type: string
+      enum:
+      - day
+      - week
+      - month
+      - year
+      description: Unit of time for which the limit is applicable.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidPutRequestBodyContentApplicationJsonSchemaDurationUnit
+    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationUnit:
+      type: string
+      enum:
+      - day
+      - week
+      - month
+      - year
+      description: Unit of time for balance validity.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationUnit
+    LoyaltyBalanceProgramsPidActiveBalanceGetParametersSortField:
+      type: string
+      enum:
+      - createdAt
+      title: LoyaltyBalanceProgramsPidActiveBalanceGetParametersSortField
+    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaUnit:
+      type: string
+      enum:
+      - POINTS
+      - EUR
+      - USD
+      - MXN
+      - GBP
+      - INR
+      - CAD
+      - SGD
+      - RON
+      - JPY
+      - MYR
+      - CLP
+      - PEN
+      - MAD
+      - AUD
+      - CHF
+      - BRL
+      description: Unit of balance measurement.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaUnit
+    LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceOptionDebitRounding:
+      type: string
+      enum:
+      - lower
+      - upper
+      - natural
+      description: Defines rounding strategy for debit transactions.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceOptionDebitRounding
+    BalanceLimitConstraintType:
+      type: string
+      enum:
+      - transaction
+      - amount
+      description: Defines the type of constraint (transaction count or amount).
+      title: BalanceLimitConstraintType
+    Balance_getTransactionHistoryApi_Response_200:
+      type: object
+      properties:
+        balanceDefinitionId:
+          type: string
+          description: Unique identifier of the associated balance definition.
+        contactId:
+          type: integer
+          description: Unique identifier of the contact related to the transactions.
+        count:
+          type: integer
+          description: Total number of transactions in the history.
+        loyaltyProgramId:
+          type: string
+          description: Unique identifier of the associated loyalty program.
+        transactionHistory:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoyaltyBalanceProgramsPidTransactionHistoryGetResponsesContentApplicationJsonSchemaTransactionHistoryItems'
+          description: List of past transactions associated with the balance.
+      description: Response containing transaction history details for a specific balance and contact.
+      title: Balance_getTransactionHistoryApi_Response_200
+    LoyaltyBalanceProgramsPidTransactionsPostRequestBodyContentApplicationJsonSchemaTransactionType:
+      type: string
+      enum:
+      - credit
+      - debit
+      description: Explicit transaction type. If not provided, the type is inferred from the sign of the amount (positive = credit, negative = debit).
+      title: LoyaltyBalanceProgramsPidTransactionsPostRequestBodyContentApplicationJsonSchemaTransactionType
+    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsPostRequestBodyContentApplicationJsonSchemaConstraintType:
+      type: string
+      enum:
+      - transaction
+      - amount
+      description: Defines whether the limit applies to transaction count or amount.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsPostRequestBodyContentApplicationJsonSchemaConstraintType
+    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidPutRequestBodyContentApplicationJsonSchemaConstraintType:
+      type: string
+      enum:
+      - transaction
+      - amount
+      description: Defines whether the limit applies to transaction count or amount.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidPutRequestBodyContentApplicationJsonSchemaConstraintType
+    TransactionStatus:
+      type: string
+      enum:
+      - pending
+      - complete
+      - rejected
+      - cancelled
+      - expired
+      description: The current status of the transaction.
+      title: TransactionStatus
+    LoyaltyBalanceProgramsPidTransactionHistoryGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      title: LoyaltyBalanceProgramsPidTransactionHistoryGetParametersSort
+    LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaUnit:
+      type: string
+      enum:
+      - POINTS
+      - EUR
+      - USD
+      - MXN
+      - GBP
+      - INR
+      - CAD
+      - SGD
+      - RON
+      - JPY
+      - MYR
+      - CLP
+      - PEN
+      - MAD
+      - AUD
+      - CHF
+      - BRL
+      description: Unit of balance measurement.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaUnit
+    BalanceLimitTransactionType:
+      type: string
+      enum:
+      - credit
+      - debit
+      description: Specifies whether the limit applies to credit or debit transactions.
+      title: BalanceLimitTransactionType
+    LoyaltyBalanceProgramsPidContactBalancesGetResponsesContentApplicationJsonSchemaBalancesItems:
+      type: object
+      properties:
+        contactId:
+          type: integer
+        loyaltySubscriptionId:
+          type: string
+        updatedAt:
+          type: string
+        value:
+          type: number
+          format: double
+      title: LoyaltyBalanceProgramsPidContactBalancesGetResponsesContentApplicationJsonSchemaBalancesItems
+    BalanceDefinitionBalanceAvailabilityDurationModifier:
+      type: string
+      enum:
+      - noModification
+      - startOfPeriod
+      - endOfPeriod
+      description: Modifier for balance availability duration. startOfPeriod causes expiry at the start of the period, endOfPeriod at the end. noModification uses the exact duration from the credit date.
+      title: BalanceDefinitionBalanceAvailabilityDurationModifier
+    LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationUnit:
+      type: string
+      enum:
+      - day
+      - week
+      - month
+      - year
+      description: Unit of time for balance validity.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationUnit
+    LoyaltyBalanceProgramsPidContactBalancesGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      title: LoyaltyBalanceProgramsPidContactBalancesGetParametersSort
+    transaction:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier (UUID) of the transaction.
+        amount:
+          type: string
+          title: float
+          description: The transaction amount.
+        transactionType:
+          $ref: '#/components/schemas/TransactionTransactionType'
+          description: The type of the transaction.
+        meta:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Optional metadata associated with the transaction.
+        status:
+          $ref: '#/components/schemas/TransactionStatus'
+          description: The current status of the transaction.
+        loyaltyProgramId:
+          type: string
+          format: uuid
+          description: Unique identifier (UUID) of the associated loyalty program.
+        balanceDefinitionId:
+          type: string
+          format: uuid
+          description: Unique identifier (UUID) of the associated balance definition.
+        contactId:
+          type: integer
+          format: int64
+          description: Unique identifier of the contact associated with the transaction.
+        eventTime:
+          type: string
+          format: date-time
+          description: Optional timestamp indicating when the transaction event occurred (ISO 8601 format).
+        rejectReason:
+          type: string
+          description: Reason for rejection if the transaction was declined (nullable).
+        rejectedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the transaction was rejected (nullable).
+        expirationDate:
+          type: string
+          format: date-time
+          description: Expiry date of the transaction (nullable).
+        completedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the transaction was completed (nullable).
+        cancelledAt:
+          type: string
+          format: date-time
+          description: Timestamp when the transaction was canceled (nullable).
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the transaction was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the transaction was last updated.
+      description: Represents a transaction involving a balance, including status and timestamps.
+      title: transaction
+    LoyaltyBalanceProgramsPidCreateOrderPostRequestBodyContentApplicationJsonSchemaSource:
+      type: string
+      enum:
+      - engine
+      - user
+      description: Specifies the origin of the order.
+      title: LoyaltyBalanceProgramsPidCreateOrderPostRequestBodyContentApplicationJsonSchemaSource
+    Balance_createBalanceOrder_Response_200:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+          description: Order amount (must not be zero).
+        balanceDefinitionId:
+          type: string
+          description: Optional unique identifier (UUID) of the associated balance definition.
+        contactId:
+          type: integer
+          description: Unique identifier of the contact placing the order (must be ≥ 1).
+        createdAt:
+          type: string
+          description: RFC3339 timestamp indicating when the order was created.
+        dueAt:
+          type: string
+          description: RFC3339 timestamp specifying when the order is due in the future.
+        expiresAt:
+          type: string
+          description: Optional RFC3339 timestamp defining order expiration in the future.
+        id:
+          type: string
+          description: Unique identifier for the balance order.
+        loyaltyProgramId:
+          type: string
+          description: Unique identifier of the loyalty program associated with the order.
+        meta:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Optional metadata associated with the order.
+        processedAt:
+          type: string
+          description: Optional RFC3339 timestamp indicating when the order was processed.
+        transactionid:
+          type: string
+          description: Optional reference to the associated transaction ID.
+        updatedAt:
+          type: string
+          description: RFC3339 timestamp indicating the last update to the order.
+      required:
+      - amount
+      - contactId
+      - createdAt
+      - dueAt
+      - loyaltyProgramId
+      - updatedAt
+      description: Represents an order linked to a balance definition, including amount, due date, and transaction details.
+      title: Balance_createBalanceOrder_Response_200
+    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidGetParametersVersion:
+      type: string
+      enum:
+      - active
+      - draft
+      default: draft
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidGetParametersVersion
+    LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceOptionCreditRounding:
+      type: string
+      enum:
+      - lower
+      - upper
+      - natural
+      description: Defines rounding strategy for credit transactions.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceOptionCreditRounding
+    ? LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceOptionAmountOvertakingStrategy
+    : type: string
+      enum:
+      - strict
+      - partial
+      description: Defines whether partial credit is allowed when reaching max balance.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceOptionAmountOvertakingStrategy
+    LoyaltyBalanceProgramsPidTransactionHistoryGetParametersTransactionType:
+      type: string
+      enum:
+      - credit
+      - debit
+      title: LoyaltyBalanceProgramsPidTransactionHistoryGetParametersTransactionType
+    LoyaltyBalanceProgramsPidTransactionHistoryGetResponsesContentApplicationJsonSchemaTransactionHistoryItemsTransactionType:
+      type: string
+      enum:
+      - credit
+      - debit
+      description: The type of the transaction.
+      title: LoyaltyBalanceProgramsPidTransactionHistoryGetResponsesContentApplicationJsonSchemaTransactionHistoryItemsTransactionType
+    BalanceDefinitionBalanceOptionCreditRounding:
+      type: string
+      enum:
+      - lower
+      - upper
+      - natural
+      description: Rounding strategy for credit transactions.
+      title: BalanceDefinitionBalanceOptionCreditRounding
+    Balance_createSubscriptionBalances_Response_200:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the balance.
+        amount:
+          type: string
+          title: float
+          description: The current amount available in the balance.
+        loyaltyProgramId:
+          type: string
+          format: uuid
+          description: Loyalty program ID.
+        organizationId:
+          type: integer
+          format: int64
+          description: Organization ID.
+        contactId:
+          type: integer
+          format: int64
+          description: Contact ID.
+        balanceDefinitionId:
+          type: string
+          format: uuid
+          description: Balance definition ID.
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp of when the balance was created.
+        expiresAt:
+          type: string
+          format: date-time
+          description: Expiration timestamp of the balance.
+        consumedAt:
+          type: string
+          format: date-time
+          description: Timestamp of when the balance was last consumed.
+      title: Balance_createSubscriptionBalances_Response_200
+    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsPostRequestBodyContentApplicationJsonSchemaDurationUnit:
+      type: string
+      enum:
+      - day
+      - week
+      - month
+      - year
+      description: Unit of time for which the limit is applicable.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsPostRequestBodyContentApplicationJsonSchemaDurationUnit
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
+    TransactionTransactionType:
+      type: string
+      enum:
+      - credit
+      - debit
+      description: The type of the transaction.
+      title: TransactionTransactionType
+    BalanceLimitDurationUnit:
+      type: string
+      enum:
+      - hour
+      - day
+      - week
+      - month
+      - year
+      description: Time unit for the balance limit.
+      title: BalanceLimitDurationUnit
+    LoyaltyBalanceProgramsPidBalanceDefinitionsGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsGetParametersSort
+    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceOptionDebitRounding:
+      type: string
+      enum:
+      - lower
+      - upper
+      - natural
+      description: Rounding strategy for debit transactions.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceOptionDebitRounding
+    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidGetParametersVersion:
+      type: string
+      enum:
+      - active
+      - draft
+      default: draft
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidGetParametersVersion
+    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidPutRequestBodyContentApplicationJsonSchemaTransactionType:
+      type: string
+      enum:
+      - credit
+      - debit
+      description: Specifies whether the limit applies to credit or debit transactions.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidPutRequestBodyContentApplicationJsonSchemaTransactionType
+    LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaMeta:
+      type: object
+      properties:
+        isInternal:
+          type: boolean
+          description: Indicates whether the balance definition is internal.
+      description: Additional metadata for the balance definition.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaMeta
+    ? LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationModifier
+    : type: string
+      enum:
+      - noModification
+      - startOfPeriod
+      - endOfPeriod
+      description: Defines when the balance expires within the selected duration.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationModifier
+    ? LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceOptionAmountOvertakingStrategy
+    : type: string
+      enum:
+      - strict
+      - partial
+      description: Defines whether partial credit is allowed when reaching max balance.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceOptionAmountOvertakingStrategy
+    LoyaltyBalanceProgramsPidTransactionHistoryGetParametersSortField:
+      type: string
+      enum:
+      - createdAt
+      default: createdAt
+      title: LoyaltyBalanceProgramsPidTransactionHistoryGetParametersSortField
+    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsPostRequestBodyContentApplicationJsonSchemaTransactionType:
+      type: string
+      enum:
+      - credit
+      - debit
+      description: Specifies whether the limit applies to credit or debit transactions.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsPostRequestBodyContentApplicationJsonSchemaTransactionType
+    Balance_getContactBalances_Response_200:
+      type: object
+      properties:
+        balanceDefinitionId:
+          type: string
+        balances:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoyaltyBalanceProgramsPidContactBalancesGetResponsesContentApplicationJsonSchemaBalancesItems'
+        count:
+          type: integer
+        loyaltyProgramId:
+          type: string
+      title: Balance_getContactBalances_Response_200
+    LoyaltyBalanceProgramsPidTransactionHistoryGetParametersStatus:
+      type: string
+      enum:
+      - draft
+      - completed
+      - rejected
+      - cancelled
+      - expired
+      title: LoyaltyBalanceProgramsPidTransactionHistoryGetParametersStatus
+    Balance_getActiveBalancesApi_Response_200:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: Total number of active balances.
+        loyaltyProgramId:
+          type: string
+          format: uuid
+          description: Unique identifier of the loyalty program.
+        contactId:
+          type: integer
+          format: int64
+          description: Unique identifier of the contact.
+        balanceDefinitionId:
+          type: string
+          format: uuid
+          description: Unique identifier of the balance definition.
+        activeBalances:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoyaltyBalanceProgramsPidActiveBalanceGetResponsesContentApplicationJsonSchemaActiveBalancesItems'
+          description: List of active balances.
+      description: Active balance response for a specific contact and balance definition.
+      title: Balance_getActiveBalancesApi_Response_200
+    BalanceDefinitionBalanceAvailabilityDurationUnit:
+      type: string
+      enum:
+      - day
+      - week
+      - month
+      - year
+      description: Unit of time for the balance availability duration.
+      title: BalanceDefinitionBalanceAvailabilityDurationUnit
+    Balance_getBalanceDefinitionList_Response_200:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/balanceDefinition'
+          description: list of balance definitions
+      title: Balance_getBalanceDefinitionList_Response_200
+    BalanceDefinitionBalanceOptionAmountOvertakingStrategy:
+      type: string
+      enum:
+      - strict
+      - partial
+      description: Partial enables partial credit of balance if maximum balance limit is reached. Strict enables rejection of a transaction if it will breach the max balance limit.
+      title: BalanceDefinitionBalanceOptionAmountOvertakingStrategy
+    LoyaltyBalanceProgramsPidContactBalancesGetParametersSortField:
+      type: string
+      enum:
+      - updatedAt
+      - value
+      title: LoyaltyBalanceProgramsPidContactBalancesGetParametersSortField
+    BalanceDefinitionUnit:
+      type: string
+      enum:
+      - POINTS
+      - EUR
+      - USD
+      - MXN
+      - GBP
+      - INR
+      - CAD
+      - SGD
+      - RON
+      - JPY
+      - MYR
+      - CLP
+      - PEN
+      - MAD
+      - AUD
+      - CHF
+      - BRL
+      description: Unit of balance measurement.
+      title: BalanceDefinitionUnit
+    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaMeta:
+      type: object
+      properties:
+        isInternal:
+          type: boolean
+          description: Indicates whether the balance definition is internal.
+      description: Optional metadata for the balance definition.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaMeta
+  securitySchemes:
+    api-key:
+      type: apiKey
+      in: header
+      name: api-key
+      description: The API key should be passed in the request headers as `api-key` for authentication.

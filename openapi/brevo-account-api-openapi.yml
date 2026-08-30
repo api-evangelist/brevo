@@ -1,0 +1,580 @@
+openapi: 3.2.0
+info:
+  title: Accounts and Settings Account API
+  version: 1.0.0
+servers:
+- url: https://api.brevo.com/v3
+  description: https://api.brevo.com/v3
+tags:
+- name: account
+paths:
+  /account:
+    get:
+      operationId: getAccount
+      summary: Get account details
+      description: 'Retrieves details of your Brevo account.
+
+
+        **Use this to:**
+
+        - Get account information (email, name, company, address)
+
+        - Check plan details (type, credits, expiration)
+
+        - Get relay information (for transactional emails)
+
+        - Check Marketing Automation status
+
+        - Access organization and user identifiers
+
+
+        **Key information returned:**
+
+        - Complete account details (organization ID, user ID, company information)
+
+        - Address and contact information
+
+        - Plan configurations and credit allocations across different verticals
+
+        - Marketing Automation settings and tracker key (when enabled)
+
+        - SMTP relay configuration for transactional emails
+
+        - Enterprise features availability status
+
+
+        **Important considerations:**
+
+        - Provides comprehensive account overview for billing and configuration management
+
+        - Essential for understanding current plan limitations and feature availability
+
+        - Marketing Automation key is only returned when Marketing Automation is enabled on the account
+
+        - Plan verticals show detailed breakdown across Marketing, Chat, and CRM categories (only returned when plan verticals are available)
+
+        - Relay configuration crucial for transactional email setup and deliverability
+
+        - Enterprise status determines access to advanced features and sub-account management
+
+        '
+      tags:
+      - account
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Account information retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account_getAccount_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountRequestBadRequestError'
+  /organization/activities:
+    get:
+      operationId: getAccountActivity
+      summary: Get user activity logs
+      description: 'Retrieves user activity logs from your organization for security monitoring and audit compliance.
+
+
+        Use this to:
+
+        - Monitor user login activities and access patterns
+
+        - Track account modifications and configuration changes
+
+        - Generate security audit reports and compliance documentation
+
+        - Investigate suspicious activities and unauthorized access
+
+        - Monitor team member actions and account usage
+
+
+        Key information returned:
+
+        - Complete user activity details and timestamps
+
+        - User identification (email, IP address, browser)
+
+        - Action types and activity descriptions
+
+        - Security-relevant events and access logs
+
+        - Historical activity data for audit trails
+
+
+        Note: Requires Enterprise plan for access to organization activity logs.'
+      tags:
+      - account
+      parameters:
+      - name: startDate
+        in: query
+        description: 'Mandatory if endDate is used. Enter start date in UTC date (YYYY-MM-DD)
+
+          format to filter the activity in your account. Maximum time period that
+
+          can be selected is one month. Additionally, you can retrieve activity
+
+          logs from the past 12 months from the date of your search.'
+        required: false
+        schema:
+          type: string
+      - name: endDate
+        in: query
+        description: 'Mandatory if startDate is used. Enter end date in UTC date (YYYY-MM-DD)
+
+          format to filter the activity in your account. Maximum time period that
+
+          can be selected is one month.'
+        required: false
+        schema:
+          type: string
+      - name: email
+        in: query
+        description: Enter the user's email address to filter their activity in the account.
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Number of documents per page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 10
+      - name: offset
+        in: query
+        description: Index of the first document in the page.
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 0
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: list of user activity logs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account_getAccountActivity_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountActivityRequestBadRequestError'
+components:
+  schemas:
+    AccountGetResponsesContentApplicationJsonSchemaAddress:
+      type: object
+      properties:
+        city:
+          type: string
+          description: City information
+        country:
+          type: string
+          description: Country information
+        street:
+          type: string
+          description: Street information
+        zipCode:
+          type: string
+          description: Zip Code information
+      required:
+      - city
+      - country
+      - street
+      - zipCode
+      description: Address informations
+      title: AccountGetResponsesContentApplicationJsonSchemaAddress
+    AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItems:
+      type: object
+      properties:
+        planCategory:
+          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsPlanCategory'
+          description: Category of the plan
+        planType:
+          type: string
+          description: Type of plan within the category
+        name:
+          type: string
+          description: Name of the plan
+        status:
+          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsStatus'
+          description: Current status of the plan
+        startDate:
+          type: string
+          description: Plan start date (Unix timestamp)
+        endDate:
+          type: string
+          description: Plan end date (Unix timestamp)
+        users:
+          oneOf:
+          - $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsUsers'
+          - type: 'null'
+          description: User seat information for the plan
+        credits:
+          type: string
+          description: Credits allocated for this plan category (optional, may not be present for all plan categories)
+      required:
+      - planCategory
+      - planType
+      - name
+      - status
+      title: AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItems
+    Account_getAccount_Response_200:
+      type: object
+      properties:
+        organization_id:
+          type: string
+          description: Unique identifier for the organization
+        user_id:
+          type: integer
+          description: Unique identifier for the user
+        enterprise:
+          type: boolean
+          description: Indicates if the account has enterprise features
+        companyName:
+          type: string
+          description: Name of the company
+        email:
+          type: string
+          format: email
+          description: Login Email
+        firstName:
+          type: string
+          description: First Name
+        lastName:
+          type: string
+          description: Last Name
+        address:
+          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaAddress'
+          description: Address informations
+        marketingAutomation:
+          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaMarketingAutomation'
+        plan:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaPlanItems'
+          description: Information about your plans and credits
+        planVerticals:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItems'
+          description: Detailed information about different plan categories
+        relay:
+          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaRelay'
+          description: Information about your transactional email account
+      required:
+      - organization_id
+      - user_id
+      - enterprise
+      - companyName
+      - email
+      - firstName
+      - lastName
+      - plan
+      - relay
+      title: Account_getAccount_Response_200
+    AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsStatus:
+      type: string
+      enum:
+      - active
+      - inactive
+      description: Current status of the plan
+      title: AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsStatus
+    AccountGetResponsesContentApplicationJsonSchemaRelay:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaRelayData'
+          description: Data regarding the transactional email account
+        enabled:
+          type: boolean
+          description: 'Status of your transactional email Account
+
+            (true=Enabled, false=Disabled)'
+      required:
+      - data
+      - enabled
+      description: Information about your transactional email account
+      title: AccountGetResponsesContentApplicationJsonSchemaRelay
+    GetAccountRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetAccountRequestBadRequestError
+    AccountGetResponsesContentApplicationJsonSchemaPlanItems:
+      type: object
+      properties:
+        credits:
+          type: string
+          title: float
+          description: Remaining credits of the user
+        creditsType:
+          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaPlanItemsCreditsType'
+          description: 'This is the type of the credit, "Send Limit" is one
+
+            of the possible types of credit of a user. "Send
+
+            Limit" implies the total number of emails you can
+
+            send to the subscribers in your account.'
+        endDate:
+          type: string
+          description: 'Date of the period from which the plan will end
+
+            (Unix timestamp format)'
+        startDate:
+          type: string
+          description: 'Date of the period from which the plan will start
+
+            (Unix timestamp format)'
+        type:
+          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaPlanItemsType'
+          description: Displays the plan type of the user
+      required:
+      - credits
+      - creditsType
+      - type
+      title: AccountGetResponsesContentApplicationJsonSchemaPlanItems
+    AccountGetResponsesContentApplicationJsonSchemaPlanItemsType:
+      type: string
+      enum:
+      - payAsYouGo
+      - free
+      - subscription
+      - sms
+      description: Displays the plan type of the user
+      title: AccountGetResponsesContentApplicationJsonSchemaPlanItemsType
+    GetAccountActivityRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/OrganizationActivitiesGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetAccountActivityRequestBadRequestError
+    AccountGetResponsesContentApplicationJsonSchemaMarketingAutomation:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: 'Status of Marketing Automation Plateform activation
+
+            for your account (true=enabled, false=disabled)'
+        key:
+          type: string
+          description: Marketing Automation Tracker ID
+      required:
+      - enabled
+      title: AccountGetResponsesContentApplicationJsonSchemaMarketingAutomation
+    AccountGetResponsesContentApplicationJsonSchemaPlanItemsCreditsType:
+      type: string
+      enum:
+      - sendLimit
+      description: 'This is the type of the credit, "Send Limit" is one
+
+        of the possible types of credit of a user. "Send
+
+        Limit" implies the total number of emails you can
+
+        send to the subscribers in your account.'
+      title: AccountGetResponsesContentApplicationJsonSchemaPlanItemsCreditsType
+    AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsPlanCategory:
+      type: string
+      enum:
+      - Marketing
+      - Chat
+      - CRM
+      description: Category of the plan
+      title: AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsPlanCategory
+    AccountGetResponsesContentApplicationJsonSchemaRelayData:
+      type: object
+      properties:
+        port:
+          type: integer
+          description: Port used for SMTP Relay
+        relay:
+          type: string
+          description: URL of the SMTP Relay
+        userName:
+          type: string
+          format: email
+          description: Email to use as login on transactional platform
+      required:
+      - port
+      - relay
+      - userName
+      description: Data regarding the transactional email account
+      title: AccountGetResponsesContentApplicationJsonSchemaRelayData
+    OrganizationActivitiesGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: OrganizationActivitiesGetResponsesContentApplicationJsonSchemaCode
+    OrganizationActivitiesGetResponsesContentApplicationJsonSchemaLogsItems:
+      type: object
+      properties:
+        action:
+          type: string
+          description: Type of activity in the account.
+        date:
+          type: string
+          description: Time of the activity.
+        user_agent:
+          type: string
+          description: Browser details of the user who performed the activity.
+        user_email:
+          type: string
+          description: 'Email address of the user who performed activity in the
+
+            account.'
+        user_ip:
+          type: string
+          description: 'IP address of the user who performed activity in the
+
+            account.'
+      required:
+      - action
+      - date
+      - user_agent
+      - user_email
+      - user_ip
+      title: OrganizationActivitiesGetResponsesContentApplicationJsonSchemaLogsItems
+    Account_getAccountActivity_Response_200:
+      type: object
+      properties:
+        logs:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationActivitiesGetResponsesContentApplicationJsonSchemaLogsItems'
+          description: Get user activity logs
+      title: Account_getAccountActivity_Response_200
+    AccountGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: AccountGetResponsesContentApplicationJsonSchemaCode
+    AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsUsers:
+      type: object
+      properties:
+        purchasedSeats:
+          type: string
+          description: Number of purchased user seats
+        usedSeats:
+          type: string
+          description: Number of used user seats
+      required:
+      - purchasedSeats
+      - usedSeats
+      description: User seat information for the plan
+      title: AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsUsers
+  securitySchemes:
+    api-key:
+      type: apiKey
+      in: header
+      name: api-key
+      description: The API key should be passed in the request headers as `api-key` for authentication.

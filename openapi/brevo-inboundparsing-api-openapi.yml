@@ -1,0 +1,453 @@
+openapi: 3.2.0
+info:
+  title: Email Inbound Parsing API
+  version: 1.0.0
+servers:
+- url: https://api.brevo.com/v3
+  description: https://api.brevo.com/v3
+tags:
+- name: inboundParsing
+paths:
+  /inbound/events:
+    get:
+      operationId: getInboundEmailEvents
+      summary: Get the list of all the events for the received emails.
+      description: This endpoint will show the list of all the events for the received emails. When no date range is provided, the last 30 days of events are returned by default.
+      tags:
+      - inboundParsing
+      parameters:
+      - name: sender
+        in: query
+        description: Email address of the sender.
+        required: false
+        schema:
+          type: string
+      - name: startDate
+        in: query
+        description: Mandatory if endDate is used. Starting date (YYYY-MM-DD or YYYY-MM-DDTHH:mm:ss.SSSZ) from which you want to fetch the list. Maximum time period that can be selected is 30 days. Must not be in the future.
+        required: false
+        schema:
+          type: string
+      - name: endDate
+        in: query
+        description: Mandatory if startDate is used. Ending date (YYYY-MM-DD or YYYY-MM-DDTHH:mm:ss.SSSZ) till which you want to fetch the list. Maximum time period that can be selected is 30 days. Must not be in the future.
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Number of documents returned per page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 100
+      - name: offset
+        in: query
+        description: Index of the first document on the page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 0
+      - name: sort
+        in: query
+        description: Sort the results in the ascending/descending order of record creation
+        required: false
+        schema:
+          $ref: '#/components/schemas/InboundEventsGetParametersSort'
+          default: desc
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of events for received emails.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Inbound_Parsing_getInboundEmailEvents_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetInboundEmailEventsRequestBadRequestError'
+  /inbound/events/{uuid}:
+    get:
+      operationId: getInboundEmailEventsByUuid
+      summary: Fetch all events history for one particular received email.
+      description: This endpoint will show the list of all events history for one particular received email.
+      tags:
+      - inboundParsing
+      parameters:
+      - name: uuid
+        in: path
+        description: UUID to fetch events specific to received email
+        required: true
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Detailed information and event history for the specified received email.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Inbound_Parsing_getInboundEmailEventsByUuid_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetInboundEmailEventsByUuidRequestBadRequestError'
+        '404':
+          description: UUID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+  /inbound/attachments/{downloadToken}:
+    get:
+      operationId: getInboundEmailAttachment
+      summary: Retrieve inbound attachment with download token.
+      description: This endpoint will retrieve inbound attachment with download token.
+      tags:
+      - inboundParsing
+      parameters:
+      - name: downloadToken
+        in: path
+        description: Token to fetch a particular attachment
+        required: true
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Attachment information
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetInboundEmailAttachmentRequestBadRequestError'
+        '404':
+          description: Download token not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+components:
+  schemas:
+    GetInboundEmailEventsByUuidRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/InboundEventsUuidGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetInboundEmailEventsByUuidRequestBadRequestError
+    InboundEventsGetResponsesContentApplicationJsonSchemaEventsItems:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+          description: Date when email was received on SMTP relay
+        recipient:
+          type: string
+          format: email
+          description: Recipient’s email address
+        sender:
+          type: string
+          format: email
+          description: Sender’s email address
+        uuid:
+          type: string
+          format: uuid
+          description: UUID that can be used to fetch additional data
+      required:
+      - date
+      - recipient
+      - sender
+      - uuid
+      title: InboundEventsGetResponsesContentApplicationJsonSchemaEventsItems
+    InboundEventsUuidGetResponsesContentApplicationJsonSchemaAttachmentsItems:
+      type: object
+      properties:
+        contentId:
+          type: string
+          description: value of the Content-ID header of the attachment.
+        contentLength:
+          type: integer
+          description: size of the attachment in bytes
+        contentType:
+          type: string
+          description: value of the Content-Type header of the attachment
+        name:
+          type: string
+          description: filename specified in the Content-Disposition header of the attachment
+      title: InboundEventsUuidGetResponsesContentApplicationJsonSchemaAttachmentsItems
+    Inbound_Parsing_getInboundEmailEventsByUuid_Response_200:
+      type: object
+      properties:
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/InboundEventsUuidGetResponsesContentApplicationJsonSchemaAttachmentsItems'
+          description: List of attachments of the email. This will be present only after the processing is done.
+        deliveredAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date when email was delivered successfully to the client’s webhook
+        logs:
+          type: array
+          items:
+            $ref: '#/components/schemas/InboundEventsUuidGetResponsesContentApplicationJsonSchemaLogsItems'
+          description: List of events/logs that describe the lifecycle of the email on the Brevo platform
+        messageId:
+          type: string
+          description: Value of the Message-ID header. This will be present only after the processing is done.
+        receivedAt:
+          type: string
+          format: date-time
+          description: Date when email was received on SMTP relay
+        recipient:
+          type: string
+          format: email
+          description: Recipient’s email address
+        sender:
+          type: string
+          format: email
+          description: Sender’s email address
+        subject:
+          type: string
+          description: Value of the Subject header. This will be present only after the processing is done.
+      title: Inbound Parsing_getInboundEmailEventsByUuid_Response_200
+    GetInboundEmailEventsRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/InboundEventsGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetInboundEmailEventsRequestBadRequestError
+    GetInboundEmailAttachmentRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/InboundAttachmentsDownloadTokenGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetInboundEmailAttachmentRequestBadRequestError
+    InboundEventsUuidGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: InboundEventsUuidGetResponsesContentApplicationJsonSchemaCode
+    InboundAttachmentsDownloadTokenGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: InboundAttachmentsDownloadTokenGetResponsesContentApplicationJsonSchemaCode
+    InboundEventsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: InboundEventsGetResponsesContentApplicationJsonSchemaCode
+    Inbound_Parsing_getInboundEmailEvents_Response_200:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/InboundEventsGetResponsesContentApplicationJsonSchemaEventsItems'
+      title: Inbound Parsing_getInboundEmailEvents_Response_200
+    InboundEventsUuidGetResponsesContentApplicationJsonSchemaLogsItems:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+          description: Date of the event
+        type:
+          $ref: '#/components/schemas/InboundEventsUuidGetResponsesContentApplicationJsonSchemaLogsItemsType'
+          description: Type of the event
+      title: InboundEventsUuidGetResponsesContentApplicationJsonSchemaLogsItems
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
+    InboundEventsUuidGetResponsesContentApplicationJsonSchemaLogsItemsType:
+      type: string
+      enum:
+      - received
+      - processed
+      - webhookFailed
+      - webhookDelivered
+      description: Type of the event
+      title: InboundEventsUuidGetResponsesContentApplicationJsonSchemaLogsItemsType
+    InboundEventsGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: InboundEventsGetParametersSort
+  securitySchemes:
+    api-key:
+      type: apiKey
+      in: header
+      name: api-key
+      description: The API key should be passed in the request headers as `api-key` for authentication.

@@ -1,0 +1,1199 @@
+openapi: 3.2.0
+info:
+  title: Loyalty Program API
+  version: 1.0.0
+servers:
+- url: https://api.brevo.com/v3
+  description: https://api.brevo.com/v3
+tags:
+- name: program
+paths:
+  /loyalty/config/programs:
+    get:
+      operationId: getLPList
+      summary: Get loyalty program list
+      description: Returns list of loyalty programs
+      tags:
+      - program
+      parameters:
+      - name: limit
+        in: query
+        description: Number of documents per page
+        required: false
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        description: Index of the first document in the page
+        required: false
+        schema:
+          type: integer
+      - name: sort_field
+        in: query
+        description: Sort documents by field
+        required: false
+        schema:
+          $ref: '#/components/schemas/LoyaltyConfigProgramsGetParametersSortField'
+      - name: sort
+        in: query
+        description: Sort order
+        required: false
+        schema:
+          $ref: '#/components/schemas/LoyaltyConfigProgramsGetParametersSort'
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Loyalty Program page
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Program_getLPList_Response_200'
+        '400':
+          description: Invalid `sort_field` parameter value.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '401':
+          description: Request Authentication Failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: Loyalty program not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+    post:
+      operationId: createNewLP
+      summary: Create loyalty program
+      description: Creates loyalty program
+      tags:
+      - program
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully created loyalty program.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loyaltyProgram'
+        '401':
+          description: Request Authentication Failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '409':
+          description: Loyalty program name already exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: Payload for creating a new loyalty program.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                  description: Optional description of the loyalty program (max 256 chars).
+                documentId:
+                  type: string
+                  description: Optional unique document ID.
+                meta:
+                  type: object
+                  additionalProperties:
+                    description: Any type
+                  description: Optional metadata related to the loyalty program.
+                name:
+                  type: string
+                  description: Required name of the loyalty program (max 128 chars).
+              required:
+              - name
+  /loyalty/config/programs/{pid}:
+    get:
+      operationId: getLoyaltyProgramInfo
+      summary: Get loyalty program Info
+      description: Returns loyalty program
+      tags:
+      - program
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program ID. A unique identifier for the loyalty program.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved loyalty program.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loyaltyProgram'
+        '401':
+          description: Request Authentication Failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: Loyalty program not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+    put:
+      operationId: updateLoyaltyProgram
+      summary: Update loyalty program
+      description: Updates loyalty program
+      tags:
+      - program
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program ID. A unique identifier for the loyalty program.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully updated loyalty program.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loyaltyProgram'
+        '401':
+          description: Request Authentication Failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: Loyalty program not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '409':
+          description: Loyalty program name already exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: Update Loyalty Program Payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                  description: Loyalty Program description
+                meta:
+                  $ref: '#/components/schemas/LoyaltyConfigProgramsPidPutRequestBodyContentApplicationJsonSchemaMeta'
+                  description: Loyalty Program meta data
+                name:
+                  type: string
+                  description: Loyalty Program name
+              required:
+              - name
+    patch:
+      operationId: partiallyUpdateLoyaltyProgram
+      summary: Partially update loyalty program
+      description: Partially updates loyalty program
+      tags:
+      - program
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program ID. A unique identifier for the loyalty program.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully updated loyalty program.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loyaltyProgram'
+        '401':
+          description: Request Authentication Failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: Loyalty program not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '409':
+          description: Loyalty program name already exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: Loyalty Program Payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                  description: Loyalty Program description
+                meta:
+                  $ref: '#/components/schemas/LoyaltyConfigProgramsPidPatchRequestBodyContentApplicationJsonSchemaMeta'
+                  description: Loyalty Program meta data
+                name:
+                  type: string
+                  description: Loyalty Program name
+    delete:
+      operationId: deleteLoyaltyProgram
+      summary: Delete Loyalty Program
+      description: Deletes Loyalty Program
+      tags:
+      - program
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program ID. A unique identifier for the loyalty program.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Successfully deleted loyalty program.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          description: Request Authentication Failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: Loyalty program not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+  /loyalty/config/programs/{pid}/publish:
+    post:
+      operationId: publishLoyaltyProgram
+      summary: Publish loyalty program
+      description: Publishes loyalty program
+      tags:
+      - program
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program ID. A unique identifier for the loyalty program.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully published loyalty program.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Program_publishLoyaltyProgram_Response_200'
+        '401':
+          description: Request Authentication Failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: Loyalty program not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+  /loyalty/config/programs/{pid}/subscriptions:
+    post:
+      operationId: subscribeToLoyaltyProgram
+      summary: Create subscription
+      description: Subscribes to a loyalty program
+      tags:
+      - program
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program ID. A unique identifier for the loyalty program.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully created subscription.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Program_subscribeToLoyaltyProgram_Response_200'
+        '400':
+          description: Loyalty subscription ID is already assigned to a contact.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '401':
+          description: Request Authentication Failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: Invalid contact ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: Create Subscription Payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contactId:
+                  type: integer
+                  format: int64
+                  description: Required contact ID; must be greater than 0.
+                loyaltySubscriptionId:
+                  type: string
+                  description: Optional subscription ID (max length 64).
+                creationDate:
+                  type: string
+                  format: date-time
+                  description: Optional creation date in ISO 8601 format (YYYY-MM-DDThh:mm:ss.ffffff+HH:MM). Must be in the past.
+                meta:
+                  type: object
+                  additionalProperties:
+                    description: Any type
+                  description: Optional metadata associated with the subscription.
+              required:
+              - contactId
+  /loyalty/config/programs/{pid}/subscription-members:
+    post:
+      operationId: subscribeMemberToASubscription
+      summary: Create subscription member
+      description: Add member to a subscription
+      tags:
+      - program
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program ID. A unique identifier for the loyalty program.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully added subscription member.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Program_subscribeMemberToASubscription_Response_200'
+        '401':
+          description: Request Authentication Failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: Cannot validate loyalty program and organization ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '409':
+          description: Owner contact cannot be added as a member.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: Payload for adding a subscription member.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contactId:
+                  type: integer
+                  description: Required if LoyaltySubscriptionId is not provided, must be greater than 0
+                loyaltySubscriptionId:
+                  type: string
+                  description: Required if ContactId is not provided, max length 64
+                memberContactIds:
+                  type: array
+                  items:
+                    type: integer
+                  description: Required, each item must be greater than or equal to 1
+              required:
+              - memberContactIds
+    delete:
+      operationId: deleteContactMembers
+      summary: Delete subscription member
+      description: Deletes member from a subscription
+      tags:
+      - program
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program ID. A unique identifier for the loyalty program.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: memberContactIds
+        in: query
+        description: Comma-separated list of member contact IDs to delete from the subscription.
+        required: true
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Successfully deleted subscription member.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Missing `memberContactIds` parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '401':
+          description: Request Authentication Failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: Contact subscription not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+  /loyalty/config/programs/{pid}/contact/{cid}:
+    delete:
+      operationId: deleteContactSubscription
+      summary: Delete subscription
+      description: Delete subscription for a contact
+      tags:
+      - program
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program ID. A unique identifier for the loyalty program.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: cid
+        in: path
+        description: Contact ID.
+        required: true
+        schema:
+          type: integer
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Successfully deleted subscription.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid loyalty program or contact ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '401':
+          description: Request Authentication Failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: Subscription not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Cannot delete subscription.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+  /loyalty/config/programs/{pid}/account-info:
+    get:
+      operationId: getParameterSubscriptionInfo
+      summary: Get Subscription Data
+      description: Get Information of balances, tiers, rewards and subscription members for a subscription
+      tags:
+      - program
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program ID. A unique identifier for the loyalty program.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: contactId
+        in: query
+        description: The contact ID to filter by.
+        required: false
+        schema:
+          type: string
+      - name: params
+        in: query
+        description: A list of filter parameters for querying the subscription info.
+        required: false
+        schema:
+          type: string
+      - name: loyaltySubscriptionId
+        in: query
+        description: The loyalty subscription ID to filter by.
+        required: false
+        schema:
+          type: string
+      - name: includeInternal
+        in: query
+        description: Include balances tied to internal definitions.
+        required: false
+        schema:
+          type: boolean
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved subscription info.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Program_getParameterSubscriptionInfo_Response_200'
+        '400':
+          description: Either `contactId` or `loyaltySubscriptionId` is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '401':
+          description: Request Authentication Failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+components:
+  schemas:
+    Program_getParameterSubscriptionInfo_Response_200:
+      type: object
+      properties:
+        balance:
+          $ref: '#/components/schemas/LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaBalance'
+          description: Balance details for the subscription.
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaMembersItems'
+          description: List of members associated with the subscription.
+        reward:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaRewardItems'
+          description: List of rewards associated with the subscription.
+        tier:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaTierItems'
+          description: List of tier assignments for the subscription.
+      title: Program_getParameterSubscriptionInfo_Response_200
+    LoyaltyConfigProgramsPidPutRequestBodyContentApplicationJsonSchemaMeta:
+      type: object
+      properties: {}
+      description: Loyalty Program meta data
+      title: LoyaltyConfigProgramsPidPutRequestBodyContentApplicationJsonSchemaMeta
+    LoyaltyConfigProgramsPidPatchRequestBodyContentApplicationJsonSchemaMeta:
+      type: object
+      properties: {}
+      description: Loyalty Program meta data
+      title: LoyaltyConfigProgramsPidPatchRequestBodyContentApplicationJsonSchemaMeta
+    LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaTierItems:
+      type: object
+      properties:
+        contactId:
+          type: integer
+          description: Unique identifier of the contact.
+        createdAt:
+          type: string
+          description: Timestamp when the tier was assigned.
+        groupId:
+          type: string
+          description: Unique identifier of the group associated with the tier.
+        loyaltyProgramId:
+          type: string
+          description: Unique identifier of the loyalty program.
+        meta:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Additional metadata related to the tier.
+        tierId:
+          type: string
+          description: Unique identifier of the tier.
+        updatedAt:
+          type: string
+          description: Timestamp when the tier was last updated
+      title: LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaTierItems
+    loyaltyProgram:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Loyalty Program unique identifier.
+        name:
+          type: string
+          description: Loyalty Program name.
+        description:
+          type: string
+          description: Loyalty Program description.
+        meta:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Loyalty Program metadata.
+        state:
+          $ref: '#/components/schemas/LoyaltyProgramState'
+          description: Current state of the loyalty program.
+        subscriptionPoolId:
+          type: string
+          format: uuid
+          description: Loyalty Program subscription pool ID.
+        subscriptionGeneratorId:
+          type: string
+          format: uuid
+          description: Loyalty Program subscription generator ID.
+        pattern:
+          type: string
+          description: Subscription code pattern.
+        codeCount:
+          type: integer
+          format: int64
+          description: Number of available subscription codes.
+        documentId:
+          type: string
+          format: uuid
+          description: Associated document identifier.
+        birthdayAttribute:
+          type: string
+          description: Contact attribute name used for birthday tracking.
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the loyalty program was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the loyalty program was last modified.
+      title: loyaltyProgram
+    LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaRewardItems:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Reward code assigned to the contact.
+        contactId:
+          type: integer
+          description: Unique identifier of the contact.
+        createdAt:
+          type: string
+          description: Timestamp when the reward was created.
+        expirationDate:
+          type: string
+          description: Expiration date of the reward.
+        id:
+          type: string
+          description: Unique identifier of the reward.
+        loyaltyProgramId:
+          type: string
+          description: Unique identifier of the loyalty program.
+        meta:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Additional metadata related to the reward.
+        rewardId:
+          type: string
+          description: Unique identifier of the reward definition.
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the reward was last updated.
+        validFrom:
+          type: string
+          format: date-time
+          description: Date from which the voucher becomes valid.
+      title: LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaRewardItems
+    LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaMembersItems:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: Timestamp when the member was created.
+        memberContactId:
+          type: integer
+          description: Unique identifier of the member.
+        updatedAt:
+          type: string
+          description: Timestamp when the member was last updated.
+      title: LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaMembersItems
+    Program_publishLoyaltyProgram_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Program_publishLoyaltyProgram_Response_200
+    LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaBalance:
+      type: object
+      properties:
+        balances:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaBalanceBalancesItems'
+          description: List of balance details associated with the contact.
+        contactId:
+          type: integer
+          description: Unique identifier of the contact.
+        loyaltyProgramId:
+          type: string
+          description: Unique identifier of the loyalty program.
+      description: Balance details for the subscription.
+      title: LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaBalance
+    LoyaltyConfigProgramsGetParametersSortField:
+      type: string
+      enum:
+      - name
+      - created_at
+      - updated_at
+      title: LoyaltyConfigProgramsGetParametersSortField
+    LoyaltyConfigProgramsGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      title: LoyaltyConfigProgramsGetParametersSort
+    LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaBalanceBalancesItems:
+      type: object
+      properties:
+        balanceDefinitionId:
+          type: string
+          description: Unique identifier for the balance definition).
+        value:
+          type: number
+          format: double
+          description: The amount of the balance.
+      title: LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaBalanceBalancesItems
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
+    Program_subscribeToLoyaltyProgram_Response_200:
+      type: object
+      properties:
+        organizationId:
+          type: integer
+          format: int64
+          description: Unique identifier of the organization.
+        loyaltyProgramId:
+          type: string
+          format: uuid
+          description: Unique identifier of the loyalty program.
+        versionId:
+          type: integer
+          description: Version number of the subscription.
+        contactId:
+          type: integer
+          format: int64
+          description: Unique identifier of the contact.
+        loyaltySubscriptionId:
+          type: string
+          description: Unique identifier of the subscription.
+        meta:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Metadata associated with the subscription.
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the subscription was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the subscription was last updated.
+      title: Program_subscribeToLoyaltyProgram_Response_200
+    Program_subscribeMemberToASubscription_Response_200:
+      type: object
+      properties:
+        organizationId:
+          type: integer
+          format: int64
+          description: Unique identifier of the organization.
+        ownerContactId:
+          type: integer
+          format: int64
+          description: Unique identifier of the subscription owner.
+        memberContactIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: List of unique member contact IDs.
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the subscription member was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the subscription member was last updated.
+      title: Program_subscribeMemberToASubscription_Response_200
+    Program_getLPList_Response_200:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/loyaltyProgram'
+          description: Loyalty Program list
+      title: Program_getLPList_Response_200
+    LoyaltyProgramState:
+      type: string
+      enum:
+      - inactive
+      - active
+      - draft
+      description: Current state of the loyalty program.
+      title: LoyaltyProgramState
+  securitySchemes:
+    api-key:
+      type: apiKey
+      in: header
+      name: api-key
+      description: The API key should be passed in the request headers as `api-key` for authentication.

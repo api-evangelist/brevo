@@ -1,0 +1,523 @@
+openapi: 3.2.0
+info:
+  title: Accounts and Settings Process API
+  version: 1.0.0
+servers:
+- url: https://api.brevo.com/v3
+  description: https://api.brevo.com/v3
+tags:
+- name: process
+paths:
+  /processes:
+    get:
+      operationId: getProcesses
+      summary: Get background processes
+      description: 'Retrieves a list of background processes from your Brevo account with filtering and pagination.
+
+
+        **Use this to:**
+
+        - Monitor background process activity and status
+
+        - Track long-running operations and tasks
+
+        - Find process IDs for detailed status checking
+
+        - Review process history and performance
+
+        - Identify failed or stuck processes for troubleshooting
+
+
+        **Key information returned:**
+
+        - Process details (ID, name, status)
+
+        - Export download URLs for completed export processes
+
+        - Import details with CSV report URLs for completed import processes
+
+        - Total count of processes for pagination
+
+
+        **Important considerations:**
+
+        - Background processes handle long-running operations like imports and exports
+
+        - Process status indicates current state (queued, processing, completed)
+
+        - Export processes provide download URLs when completed
+
+        - Import processes provide CSV report URLs with details about problematic records
+
+        - Use pagination for accounts with many historical processes
+
+        - Sort options available for creation order (ascending or descending)
+
+        - Default limit is 10 results per page, maximum is 50
+
+        '
+      tags:
+      - process
+      parameters:
+      - name: limit
+        in: query
+        description: Number limitation for the result returned
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 10
+      - name: offset
+        in: query
+        description: Beginning point in the list to retrieve from.
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 0
+      - name: sort
+        in: query
+        description: 'Sort the results in the ascending/descending order of record creation.
+
+          Default order is **descending** if `sort` is not passed'
+        required: false
+        schema:
+          $ref: '#/components/schemas/ProcessesGetParametersSort'
+          default: desc
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Background processes retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Process_getProcesses_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProcessesRequestBadRequestError'
+  /processes/{processId}:
+    get:
+      operationId: getProcess
+      summary: Get process details
+      description: 'Retrieves detailed information about a specific background process.
+
+
+        **Use this to:**
+
+        - Get detailed status of a specific process
+
+        - Monitor process progress and completion
+
+        - Download results from completed export processes
+
+        - Check error details for failed processes
+
+        - Track process execution times
+
+
+        **Key information returned:**
+
+        - Complete process details (ID, name, status)
+
+        - Download URLs for completed export processes
+
+        - Import details with CSV report URLs for completed import processes
+
+
+        **Important considerations:**
+
+        - Process ID must exist in your account and not be deleted
+
+        - Completed export processes include download URLs
+
+        - Completed import processes include CSV report URLs with details about problematic records
+
+        - Different process types return different result structures
+
+        '
+      tags:
+      - process
+      parameters:
+      - name: processId
+        in: path
+        description: Id of the process
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Process information retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Process_getProcess_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProcessRequestBadRequestError'
+        '404':
+          description: Process ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+components:
+  schemas:
+    ProcessesGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ProcessesGetResponsesContentApplicationJsonSchemaCode
+    ProcessesProcessIdGetResponsesContentApplicationJsonSchemaInfoImport:
+      type: object
+      properties:
+        invalid_emails:
+          type:
+          - string
+          - 'null'
+          description: URL to CSV file containing invalid email addresses, or null if none
+        duplicate_contact_id:
+          type:
+          - string
+          - 'null'
+          description: URL to CSV file containing duplicate contact IDs, or null if none
+        duplicate_ext_id:
+          type:
+          - string
+          - 'null'
+          description: URL to CSV file containing duplicate external IDs, or null if none
+        duplicate_email_id:
+          type:
+          - string
+          - 'null'
+          description: URL to CSV file containing duplicate email IDs, or null if none
+        duplicate_phone_id:
+          type:
+          - string
+          - 'null'
+          description: URL to CSV file containing duplicate phone numbers, or null if none
+        duplicate_whatsapp_id:
+          type:
+          - string
+          - 'null'
+          description: URL to CSV file containing duplicate WhatsApp numbers, or null if none
+        duplicate_landline_number_id:
+          type:
+          - string
+          - 'null'
+          description: URL to CSV file containing duplicate landline numbers, or null if none
+      description: Import process details with URLs to CSV reports
+      title: ProcessesProcessIdGetResponsesContentApplicationJsonSchemaInfoImport
+    Process_getProcesses_Response_200:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: Total number of processes available on your account
+        processes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProcessesGetResponsesContentApplicationJsonSchemaProcessesItems'
+          description: List of background processes on your account
+      required:
+      - count
+      - processes
+      title: Process_getProcesses_Response_200
+    ProcessesGetResponsesContentApplicationJsonSchemaProcessesItemsName:
+      type: string
+      enum:
+      - IMPORTUSER
+      - SEARCH_EXPORT_USERS
+      - TRANS-CALC
+      - TRANS-GLOBAL-CALC
+      - CAMPAIGN_PROCESSING
+      - LIST_EXPORT
+      - CONTACT_EXPORT
+      description: Name/type of the process
+      title: ProcessesGetResponsesContentApplicationJsonSchemaProcessesItemsName
+    GetProcessesRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ProcessesGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetProcessesRequestBadRequestError
+    ProcessesGetResponsesContentApplicationJsonSchemaProcessesItems:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the process
+        name:
+          $ref: '#/components/schemas/ProcessesGetResponsesContentApplicationJsonSchemaProcessesItemsName'
+          description: Name/type of the process
+        status:
+          $ref: '#/components/schemas/ProcessesGetResponsesContentApplicationJsonSchemaProcessesItemsStatus'
+          description: Current status of the process
+        info:
+          $ref: '#/components/schemas/ProcessesGetResponsesContentApplicationJsonSchemaProcessesItemsInfo'
+          description: Additional process information, only returned for completed IMPORTUSER processes. Contains URLs to CSV files with details about problematic records.
+        export_url:
+          type: string
+          format: url
+          description: Download URL for completed export processes (returned for SEARCH_EXPORT_USERS, SEARCH_EXPORT_USERS_API, CAMPAIGN_USER_DETAILS, and EXPORT_WEBHOOK process types)
+      required:
+      - id
+      - name
+      - status
+      title: ProcessesGetResponsesContentApplicationJsonSchemaProcessesItems
+    ProcessesProcessIdGetResponsesContentApplicationJsonSchemaInfo:
+      type: object
+      properties:
+        import:
+          $ref: '#/components/schemas/ProcessesProcessIdGetResponsesContentApplicationJsonSchemaInfoImport'
+          description: Import process details with URLs to CSV reports
+      description: Additional process information, only returned for completed IMPORTUSER processes. Contains URLs to CSV files with details about problematic records.
+      title: ProcessesProcessIdGetResponsesContentApplicationJsonSchemaInfo
+    ProcessesProcessIdGetResponsesContentApplicationJsonSchemaStatus:
+      type: string
+      enum:
+      - queued
+      - in_process
+      - processing
+      - completed
+      - failed
+      - cancelled
+      description: Current status of the process
+      title: ProcessesProcessIdGetResponsesContentApplicationJsonSchemaStatus
+    Process_getProcess_Response_200:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the process
+        name:
+          $ref: '#/components/schemas/ProcessesProcessIdGetResponsesContentApplicationJsonSchemaName'
+          description: Name/type of the process
+        status:
+          $ref: '#/components/schemas/ProcessesProcessIdGetResponsesContentApplicationJsonSchemaStatus'
+          description: Current status of the process
+        info:
+          $ref: '#/components/schemas/ProcessesProcessIdGetResponsesContentApplicationJsonSchemaInfo'
+          description: Additional process information, only returned for completed IMPORTUSER processes. Contains URLs to CSV files with details about problematic records.
+        export_url:
+          type: string
+          format: url
+          description: Download URL for completed export processes (returned for SEARCH_EXPORT_USERS, SEARCH_EXPORT_USERS_API, CAMPAIGN_USER_DETAILS, and EXPORT_WEBHOOK process types)
+      required:
+      - id
+      - name
+      - status
+      title: Process_getProcess_Response_200
+    ProcessesGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: ProcessesGetParametersSort
+    GetProcessRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ProcessesProcessIdGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetProcessRequestBadRequestError
+    ProcessesGetResponsesContentApplicationJsonSchemaProcessesItemsInfoImport:
+      type: object
+      properties:
+        invalid_emails:
+          type:
+          - string
+          - 'null'
+          description: URL to CSV file containing invalid email addresses, or null if none
+        duplicate_contact_id:
+          type:
+          - string
+          - 'null'
+          description: URL to CSV file containing duplicate contact IDs, or null if none
+        duplicate_ext_id:
+          type:
+          - string
+          - 'null'
+          description: URL to CSV file containing duplicate external IDs, or null if none
+        duplicate_email_id:
+          type:
+          - string
+          - 'null'
+          description: URL to CSV file containing duplicate email IDs, or null if none
+        duplicate_phone_id:
+          type:
+          - string
+          - 'null'
+          description: URL to CSV file containing duplicate phone numbers, or null if none
+        duplicate_whatsapp_id:
+          type:
+          - string
+          - 'null'
+          description: URL to CSV file containing duplicate WhatsApp numbers, or null if none
+        duplicate_landline_number_id:
+          type:
+          - string
+          - 'null'
+          description: URL to CSV file containing duplicate landline numbers, or null if none
+      description: Import process details with URLs to CSV reports
+      title: ProcessesGetResponsesContentApplicationJsonSchemaProcessesItemsInfoImport
+    ProcessesGetResponsesContentApplicationJsonSchemaProcessesItemsStatus:
+      type: string
+      enum:
+      - queued
+      - in_process
+      - processing
+      - completed
+      - failed
+      - cancelled
+      description: Current status of the process
+      title: ProcessesGetResponsesContentApplicationJsonSchemaProcessesItemsStatus
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
+    ProcessesProcessIdGetResponsesContentApplicationJsonSchemaName:
+      type: string
+      enum:
+      - IMPORTUSER
+      - SEARCH_EXPORT_USERS
+      - TRANS-CALC
+      - TRANS-GLOBAL-CALC
+      - CAMPAIGN_PROCESSING
+      - LIST_EXPORT
+      - CONTACT_EXPORT
+      description: Name/type of the process
+      title: ProcessesProcessIdGetResponsesContentApplicationJsonSchemaName
+    ProcessesGetResponsesContentApplicationJsonSchemaProcessesItemsInfo:
+      type: object
+      properties:
+        import:
+          $ref: '#/components/schemas/ProcessesGetResponsesContentApplicationJsonSchemaProcessesItemsInfoImport'
+          description: Import process details with URLs to CSV reports
+      description: Additional process information, only returned for completed IMPORTUSER processes. Contains URLs to CSV files with details about problematic records.
+      title: ProcessesGetResponsesContentApplicationJsonSchemaProcessesItemsInfo
+    ProcessesProcessIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ProcessesProcessIdGetResponsesContentApplicationJsonSchemaCode
+  securitySchemes:
+    api-key:
+      type: apiKey
+      in: header
+      name: api-key
+      description: The API key should be passed in the request headers as `api-key` for authentication.

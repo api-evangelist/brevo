@@ -1,0 +1,2647 @@
+openapi: 3.2.0
+info:
+  title: Accounts and Settings Master Account API
+  version: 1.0.0
+servers:
+- url: https://api.brevo.com/v3
+  description: https://api.brevo.com/v3
+tags:
+- name: masterAccount
+paths:
+  /corporate/subAccount:
+    get:
+      operationId: getTheListOfAllTheSubAccountsOfTheMasterAccount
+      summary: Get the list of all the sub-accounts of the master account.
+      description: 'This endpoint will provide the list all the sub-accounts of the master
+
+        account.'
+      tags:
+      - masterAccount
+      parameters:
+      - name: offset
+        in: query
+        description: Index of the first sub-account in the page
+        required: true
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        description: Number of sub-accounts to be displayed on each page
+        required: true
+        schema:
+          type: integer
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Sub-accounts list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Master_account_getTheListOfAllTheSubAccountsOfTheMasterAccount_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTheListOfAllTheSubAccountsOfTheMasterAccountRequestBadRequestError'
+    post:
+      operationId: createANewSubAccountUnderAMasterAccount
+      summary: Create a new sub-account under a master account.
+      description: This endpoint will create a new sub-account under a master account
+      tags:
+      - masterAccount
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Created sub-account ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Master_account_createANewSubAccountUnderAMasterAccount_Response_201'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: Request body with sub-account organization name
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                companyName:
+                  type: string
+                  description: Set the name of the sub-account company
+                email:
+                  type: string
+                  description: Email address for the organization
+                groupIds:
+                  type: array
+                  items:
+                    type: string
+                  description: Set the group(s) for the sub-account
+                language:
+                  $ref: '#/components/schemas/CorporateSubAccountPostRequestBodyContentApplicationJsonSchemaLanguage'
+                  description: Set the language of the sub-account
+                timezone:
+                  type: string
+                  description: Set the timezone of the sub-account
+              required:
+              - companyName
+              - email
+  /corporate/subAccount/{id}:
+    get:
+      operationId: getSubAccountDetails
+      summary: Get sub-account details
+      description: This endpoint will provide the details for the specified sub-account company
+      tags:
+      - masterAccount
+      parameters:
+      - name: id
+        in: path
+        description: Id of the sub-account organization
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Sub-account organization details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Master_account_getSubAccountDetails_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSubAccountDetailsRequestBadRequestError'
+    delete:
+      operationId: deleteASubAccount
+      summary: Delete a sub-account
+      description: Permanently deletes a sub-account from the corporate master account. Once deleted, all data associated with the sub-account organization is removed and cannot be recovered, so ensure the sub-account is no longer needed before proceeding.
+      tags:
+      - masterAccount
+      parameters:
+      - name: id
+        in: path
+        description: Id of the sub-account organization to be deleted
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Returned when sub-account is deleted succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: sub-account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+  /corporate/subAccount/{id}/plan:
+    put:
+      operationId: updateSubAccountPlan
+      summary: Update sub-account plan
+      description: 'This endpoint will update the sub-account plan. On the Corporate solution
+
+        new version v2, you can set an unlimited number of credits in your
+
+        sub-organization. Please pass the value “-1" to set the consumable in
+
+        unlimited mode.'
+      tags:
+      - masterAccount
+      parameters:
+      - name: id
+        in: path
+        description: Id of the sub-account organization
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Sub account plan updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateSubAccountPlanRequestBadRequestError'
+        '403':
+          description: Current account is not a master account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: Values to update a sub-account plan
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                credits:
+                  $ref: '#/components/schemas/CorporateSubAccountIdPlanPutRequestBodyContentApplicationJsonSchemaCredits'
+                  description: Credit details to update
+                features:
+                  $ref: '#/components/schemas/CorporateSubAccountIdPlanPutRequestBodyContentApplicationJsonSchemaFeatures'
+                  description: Features details to update
+  /corporate/subAccounts/plan:
+    put:
+      operationId: updateSubAccountsPlan
+      summary: Update sub-accounts plan
+      description: 'This endpoint will update multiple sub-accounts plan. On the Corporate
+
+        solution new version v2, you can set an unlimited number of credits in your
+
+        sub-organization. Please pass the value “-1" to set the consumable in
+
+        unlimited mode.'
+      tags:
+      - masterAccount
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Request accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Master_account_updateSubAccountsPlan_Response_202'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateSubAccountsPlanRequestBadRequestError'
+        '403':
+          description: Current account is not a master account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: Values to update sub-accounts plan
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                credits:
+                  $ref: '#/components/schemas/CorporateSubAccountsPlanPutRequestBodyContentApplicationJsonSchemaCredits'
+                  description: Credit details to update
+                features:
+                  $ref: '#/components/schemas/CorporateSubAccountsPlanPutRequestBodyContentApplicationJsonSchemaFeatures'
+                  description: Features details to update
+                subAccountIds:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                  description: List of sub-account ids
+  /corporate/ssoToken:
+    post:
+      operationId: generateSsoTokenToAccessAdminAccount
+      summary: Generate SSO token to access admin account
+      description: 'This endpoint generates an SSO token to authenticate and access the admin
+
+        account using the endpoint
+
+        https://account-app.brevo.com/account/login/corporate/sso/[token], where
+
+        [token] will be replaced by the actual token.'
+      tags:
+      - masterAccount
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Session token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getSsoToken'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Current account is not an admin account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: User email of admin account
+              required:
+              - email
+  /corporate/subAccount/ssoToken:
+    post:
+      operationId: generateSsoTokenToAccessSubAccount
+      summary: Generate SSO token to access sub-account
+      description: 'This endpoint generates an sso token to authenticate and access a
+
+        sub-account of the master using the account endpoint
+
+        https://account-app.brevo.com/account/login/sub-account/sso/[token], where
+
+        [token] will be replaced by the actual token.'
+      tags:
+      - masterAccount
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Session token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getSsoToken'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Current account is not a master account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: User email of sub-account organization
+                id:
+                  type: integer
+                  format: int64
+                  description: Id of the sub-account organization
+                target:
+                  $ref: '#/components/schemas/CorporateSubAccountSsoTokenPostRequestBodyContentApplicationJsonSchemaTarget'
+                  description: '**Set target after login success** * **automation** - Redirect
+
+                    to Automation after login * **email_campaign** - Redirect to
+
+                    Email Campaign after login * **contacts** - Redirect to Contacts
+
+                    after login * **landing_pages** - Redirect to Landing Pages
+
+                    after login * **email_transactional** - Redirect to Email
+
+                    Transactional after login * **senders** - Redirect to Senders
+
+                    after login * **sms_campaign** - Redirect to Sms Campaign after
+
+                    login * **sms_transactional** - Redirect to Sms Transactional
+
+                    after login'
+                url:
+                  type: string
+                  description: 'Set the full target URL after login success. The user will land
+
+                    directly on this target URL after login'
+              required:
+              - id
+  /corporate/masterAccount:
+    get:
+      operationId: getTheDetailsOfRequestedMasterAccount
+      summary: Get the details of requested master account
+      description: This endpoint will provide the details of the master account.
+      tags:
+      - masterAccount
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Master account details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Master_account_getTheDetailsOfRequestedMasterAccount_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTheDetailsOfRequestedMasterAccountRequestBadRequestError'
+  /corporate/subAccount/key:
+    post:
+      operationId: createAnApiKeyForASubAccount
+      summary: Create an API key for a sub-account
+      description: This endpoint will generate an API v3 key for a sub-account
+      tags:
+      - masterAccount
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Master_account_createAnApiKeyForASubAccount_Response_201'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  format: int64
+                  description: Id of the sub-account organization
+                name:
+                  type: string
+                  description: Name of the API key
+              required:
+              - id
+              - name
+  /corporate/subAccount/{id}/applications/toggle:
+    put:
+      operationId: enableDisableSubAccountApplicationS
+      summary: Enable/disable sub-account application(s)
+      description: 'API endpoint for the Corporate owner to enable/disable applications on the
+
+        sub-account'
+      tags:
+      - masterAccount
+      parameters:
+      - name: id
+        in: path
+        description: Id of the sub-account organization (mandatory)
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Sub-account application(s) enabled/disabled
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnableDisableSubAccountApplicationSRequestBadRequestError'
+        '403':
+          description: Current account is not a master account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: List of applications to activate or deactivate on a sub-account
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                automation:
+                  type: boolean
+                  description: 'Set this field to enable or disable Automation on the
+
+                    sub-account'
+                conversations:
+                  type: boolean
+                  description: 'Set this field to enable or disable Conversations on the
+
+                    sub-account'
+                crm:
+                  type: boolean
+                  description: Set this field to enable or disable Sales CRM on the sub-account
+                email-campaigns:
+                  type: boolean
+                  description: 'Set this field to enable or disable Email Campaigns on the
+
+                    sub-account'
+                facebook-ads:
+                  type: boolean
+                  description: 'Set this field to enable or disable Facebook ads on the
+
+                    sub-account'
+                inbox:
+                  type: boolean
+                  description: 'Set this field to enable or disable Inbox on the sub-account /
+
+                    Not applicable on ENTv2'
+                landing-pages:
+                  type: boolean
+                  description: 'Set this field to enable or disable Landing pages on the
+
+                    sub-account'
+                meetings:
+                  type: boolean
+                  description: Set this field to enable or disable Meetings on the sub-account
+                sms-campaigns:
+                  type: boolean
+                  description: 'Set this field to enable or disable SMS Marketing on the
+
+                    sub-account'
+                transactional-emails:
+                  type: boolean
+                  description: 'Set this field to enable or disable Transactional Email on the
+
+                    sub-account'
+                transactional-sms:
+                  type: boolean
+                  description: 'Set this field to enable or disable Transactional SMS on the
+
+                    sub-account'
+                web-push:
+                  type: boolean
+                  description: Set this field to enable or disable Web Push on the sub-account
+                whatsapp:
+                  type: boolean
+                  description: 'Set this field to enable or disable Whatsapp campaigns on the
+
+                    sub-account'
+  /corporate/group:
+    post:
+      operationId: createANewGroupOfSubAccounts
+      summary: Create a new group of sub-accounts
+      description: This endpoint allows to create a group of sub-accounts
+      tags:
+      - masterAccount
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Group ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Master_account_createANewGroupOfSubAccounts_Response_201'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                groupName:
+                  type: string
+                  description: The name of the group of sub-accounts
+                subAccountIds:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                  description: Pass the list of sub-account Ids to be included in the group
+              required:
+              - groupName
+  /corporate/ip:
+    get:
+      operationId: listOfAllIPs
+      summary: List of all IPs
+      description: 'This endpoint allows you to retrieve the list of active IPs on your Admin
+
+        account'
+      tags:
+      - masterAccount
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of all IPs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CorporateIpGetResponsesContentApplicationJsonSchemaItems'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+  /corporate/subAccount/ip/associate:
+    post:
+      operationId: associateAnIpToSubAccounts
+      summary: Associate an IP to sub-accounts
+      description: This endpoint allows to associate an IP to sub-accounts
+      tags:
+      - masterAccount
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: IP has been associated with sub-accounts successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Master_account_associateAnIpToSubAccounts_Response_201'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                  description: 'Pass the list of sub-account Ids to be associated with the IP
+
+                    address'
+                ip:
+                  type: string
+                  description: IP address
+              required:
+              - ids
+              - ip
+  /corporate/subAccount/ip/dissociate:
+    put:
+      operationId: dissociateAnIpToSubAccounts
+      summary: Dissociate an IP to sub-accounts
+      description: This endpoint allows to dissociate an IP from sub-accounts
+      tags:
+      - masterAccount
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: IP has been dissociated from sub-accounts successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                  description: 'Pass the list of sub-account Ids to be dissociated from the IP
+
+                    address'
+                ip:
+                  type: string
+                  description: IP address
+              required:
+              - ids
+              - ip
+  /corporate/group/{id}:
+    get:
+      operationId: getAGroupDetails
+      summary: GET a group details
+      description: 'This endpoint allows you to retrieve a specific group’s information such as
+
+        the list of sub-organizations and the user associated with the group.'
+      tags:
+      - masterAccount
+      parameters:
+      - name: id
+        in: path
+        description: Id of the group of sub-organization
+        required: true
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Group details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Master_account_getAGroupDetails_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+    put:
+      operationId: updateAGroupOfSubAccounts
+      summary: Update a group of sub-accounts
+      description: This endpoint allows to update a group of sub-accounts
+      tags:
+      - masterAccount
+      parameters:
+      - name: id
+        in: path
+        description: Id of the group
+        required: true
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Group details updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: Group details to be updated.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                groupName:
+                  type: string
+                  description: The name of the group of sub-accounts
+                subAccountIds:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                  description: Pass the list of sub-account Ids to be included in the group
+    delete:
+      operationId: deleteAGroup
+      summary: Delete a group
+      description: 'This endpoint allows you to delete a group of sub-organizations. When a
+
+        group is deleted, the sub-organizations are no longer part of this group.
+
+        The users associated with the group are no longer associated with the group
+
+        once deleted.'
+      tags:
+      - masterAccount
+      parameters:
+      - name: id
+        in: path
+        description: Id of the group
+        required: true
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Group deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+  /corporate/group/unlink/{groupId}/subAccounts:
+    put:
+      operationId: deleteSubAccountFromGroup
+      summary: Delete sub-account from group
+      description: This endpoint allows you to remove a sub-organization from a group.
+      tags:
+      - masterAccount
+      parameters:
+      - name: groupId
+        in: path
+        description: Group id
+        required: true
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: SubAccounts removed from the group
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: List of sub-account ids
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                subAccountIds:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                  description: List of sub-account ids
+              required:
+              - subAccountIds
+  /corporate/user/invitation/send:
+    post:
+      operationId: inviteAdminUser
+      summary: Send invitation to an admin user
+      description: "`This endpoint allows you to invite a member to manage the Admin account\nFeatures and their respective permissions are as below: - `my_plan`:\n  - \"all\"\n- `api`:\n  - \"none\"\n- `user_management`:\n  - \"all\"\n- `app_management` | Not available in ENTv2:\n  - \"all\"\n- `sub_organization_groups`\n  - \"create\"\n  - \"edit_delete\"\n- `create_sub_organizations`\n  - \"all\"\n- `manage_sub_organizations`\n  - \"all\"\n- `analytics`\n  - \"download_data\"\n  - \"create_alerts\"\n  - \"my_looks\"\n  - \"explore_create\"\n- `security`\n  - \"all\"\n**Note**: - If `all_features_access: false` then only privileges are\nrequired otherwise if `true` then it's assumed that all permissions will be\nthere for the invited admin user."
+      tags:
+      - masterAccount
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Invitation ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Master_account_inviteAdminUser_Response_201'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InviteAdminUserRequestBadRequestError'
+      requestBody:
+        description: Payload to send an invitation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                all_features_access:
+                  type: boolean
+                  description: All access to the features
+                email:
+                  type: string
+                  format: email
+                  description: Email address for the organization
+                groupIds:
+                  type: array
+                  items:
+                    type: string
+                  description: Ids of Group
+                privileges:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/CorporateUserInvitationSendPostRequestBodyContentApplicationJsonSchemaPrivilegesItems'
+              required:
+              - all_features_access
+              - email
+              - privileges
+  /corporate/user/invitation/{action}/{email}:
+    put:
+      operationId: resendCancelAdminUserInvitation
+      summary: Resend / cancel admin user invitation
+      description: 'This endpoint will allow the user to:
+
+        - Resend an admin user invitation
+
+        - Cancel an admin user invitation
+
+        '
+      tags:
+      - masterAccount
+      parameters:
+      - name: action
+        in: path
+        description: Action to be performed (cancel / resend)
+        required: true
+        schema:
+          $ref: '#/components/schemas/CorporateUserInvitationActionEmailPutParametersAction'
+      - name: email
+        in: path
+        description: Email address of the recipient
+        required: true
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response of the action performed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Master_account_resendCancelAdminUserInvitation_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+  /corporate/user/revoke/{email}:
+    delete:
+      operationId: revokeAnAdminUser
+      summary: Revoke an admin user
+      description: 'This endpoint allows to revoke/remove an invited member of your Admin
+
+        account'
+      tags:
+      - masterAccount
+      parameters:
+      - name: email
+        in: path
+        description: Email of the invited user
+        required: true
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: User revoked
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+  /corporate/invited/users:
+    get:
+      operationId: getCorporateInvitedUsersList
+      summary: Get the list of all admin users
+      description: 'This endpoint allows you to list all Admin users of your Admin account. You
+
+        can filter users by type (active or pending) and paginate results using
+
+        offset and limit.'
+      tags:
+      - masterAccount
+      parameters:
+      - name: type
+        in: query
+        description: 'User type (active | pending). This is required if offset is provided for
+
+          limited result.'
+        required: false
+        schema:
+          type: string
+      - name: offset
+        in: query
+        description: 'Page number for the result set. This is optional, default value will be
+
+          the 1st page.'
+        required: false
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        description: 'Number of users to be displayed on each page. This is optional, the
+
+          default limit is 20, but max allowed limit is 100.'
+        required: false
+        schema:
+          type: integer
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: list of all admin users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Master_account_getCorporateInvitedUsersList_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+  /corporate/user/{email}/permissions:
+    get:
+      operationId: getCorporateUserPermission
+      summary: Check admin user permissions
+      description: This endpoint will provide the list of admin user permissions
+      tags:
+      - masterAccount
+      parameters:
+      - name: email
+        in: path
+        description: Email of the invited user.
+        required: true
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of user's permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Master_account_getCorporateUserPermission_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCorporateUserPermissionRequestBadRequestError'
+    put:
+      operationId: changeAdminUserPermissions
+      summary: Change admin user permissions
+      description: 'This endpoint will allow you to change the permissions of Admin users of
+
+        your Admin account'
+      tags:
+      - masterAccount
+      parameters:
+      - name: email
+        in: path
+        description: Email address of Admin user
+        required: true
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: User permissions has been modified
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: Values to update an admin user permissions
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                all_features_access:
+                  type: boolean
+                  description: All access to the features
+                privileges:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/CorporateUserEmailPermissionsPutRequestBodyContentApplicationJsonSchemaPrivilegesItems'
+              required:
+              - all_features_access
+              - privileges
+  /corporate/groups:
+    get:
+      operationId: getSubAccountGroups
+      summary: Get the list of groups
+      description: This endpoint allows you to list all groups created on your Admin account.
+      tags:
+      - masterAccount
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: list of all the sub-account groups
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CorporateGroupsGetResponsesContentApplicationJsonSchemaItems'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+components:
+  schemas:
+    CorporateUserEmailPermissionsGetResponsesContentApplicationJsonSchemaGroupsItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: group identifier
+        name:
+          type: string
+          description: Group name
+      description: Groups details
+      title: CorporateUserEmailPermissionsGetResponsesContentApplicationJsonSchemaGroupsItems
+    CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCredits:
+      type: object
+      properties:
+        emails:
+          $ref: '#/components/schemas/CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsEmails'
+          description: Email credits remaining on the sub-account
+        externalFeeds:
+          $ref: '#/components/schemas/CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsExternalFeeds'
+          description: externalFeeds credits remaining on the sub-account
+        sms:
+          $ref: '#/components/schemas/CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsSms'
+          description: SMS credits remaining on the sub-account
+        whatsapp:
+          $ref: '#/components/schemas/CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsWhatsapp'
+          description: Whatsapp credits remaining on the sub-account
+        wpSubscribers:
+          $ref: '#/components/schemas/CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsWpSubscribers'
+          description: Push credits remaining on the sub-account
+      description: Credits quota and remaining credits on the sub-account
+      title: CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCredits
+    CorporateMasterAccountGetResponsesContentApplicationJsonSchemaBillingInfo:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/CorporateMasterAccountGetResponsesContentApplicationJsonSchemaBillingInfoAddress'
+          description: Billing address of master account
+        companyName:
+          type: string
+          description: Company name of master account
+        email:
+          type: string
+          description: Billing email id of master account
+        name:
+          $ref: '#/components/schemas/CorporateMasterAccountGetResponsesContentApplicationJsonSchemaBillingInfoName'
+          description: Billing name of master account holder
+      description: Billing details of the master account organization
+      title: CorporateMasterAccountGetResponsesContentApplicationJsonSchemaBillingInfo
+    CorporateUserInvitationSendPostRequestBodyContentApplicationJsonSchemaPrivilegesItemsPermissionsItems:
+      type: string
+      enum:
+      - all
+      - none
+      - create
+      - edit_delete
+      - download_data
+      - create_alerts
+      title: CorporateUserInvitationSendPostRequestBodyContentApplicationJsonSchemaPrivilegesItemsPermissionsItems
+    Master_account_updateSubAccountsPlan_Response_202:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Master account_updateSubAccountsPlan_Response_202
+    UpdateSubAccountPlanRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CorporateSubAccountIdPlanPutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UpdateSubAccountPlanRequestBadRequestError
+    CorporateMasterAccountGetResponsesContentApplicationJsonSchemaBillingInfoName:
+      type: object
+      properties:
+        familyName:
+          type: string
+          description: Last name for billing
+        givenName:
+          type: string
+          description: First name for billing
+      description: Billing name of master account holder
+      title: CorporateMasterAccountGetResponsesContentApplicationJsonSchemaBillingInfoName
+    CorporateGroupsGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        groupName:
+          type: string
+          description: The name of the group of sub-accounts
+        id:
+          type: string
+          description: Unique id of the group
+      title: CorporateGroupsGetResponsesContentApplicationJsonSchemaItems
+    Master_account_getCorporateInvitedUsersList_Response_200:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/CorporateInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItems'
+          description: Get invited users list
+      title: Master account_getCorporateInvitedUsersList_Response_200
+    CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaCode
+    CorporateUserInvitationSendPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CorporateUserInvitationSendPostResponsesContentApplicationJsonSchemaCode
+    CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeaturesSalesUsers:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          format: int64
+          description: Quantity of sales users provided
+        remaining:
+          type: integer
+          format: int64
+          description: Available sales users for use
+      description: 'Sales and service users to use phone, sales and
+
+        conversations'
+      title: CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeaturesSalesUsers
+    CorporateMasterAccountGetResponsesContentApplicationJsonSchemaPlanInfo:
+      type: object
+      properties:
+        currencyCode:
+          type: string
+          description: Plan currency
+        features:
+          type: array
+          items:
+            $ref: '#/components/schemas/CorporateMasterAccountGetResponsesContentApplicationJsonSchemaPlanInfoFeaturesItems'
+          description: List of provided features in the plan
+        nextBillingAt:
+          type: integer
+          format: int64
+          description: Timestamp of next billing date
+        planPeriod:
+          $ref: '#/components/schemas/CorporateMasterAccountGetResponsesContentApplicationJsonSchemaPlanInfoPlanPeriod'
+          description: Plan period type
+        price:
+          type: number
+          format: double
+          description: Plan amount
+        subAccounts:
+          type: integer
+          description: Number of sub-accounts
+      description: Plan details
+      title: CorporateMasterAccountGetResponsesContentApplicationJsonSchemaPlanInfo
+    CorporateUserInvitationSendPostRequestBodyContentApplicationJsonSchemaPrivilegesItemsFeature:
+      type: string
+      enum:
+      - my_plan
+      - api
+      - user_management
+      - app_management
+      - sub_organization_groups
+      - create_sub_organizations
+      - manage_sub_organizations
+      - analytics
+      - security
+      description: Feature name
+      title: CorporateUserInvitationSendPostRequestBodyContentApplicationJsonSchemaPrivilegesItemsFeature
+    CorporateInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItemsFeatureAccess:
+      type: object
+      properties:
+        analytics:
+          type: array
+          items:
+            type: string
+          description: Analytics dashboard accessibility
+        api_keys:
+          type: array
+          items:
+            type: string
+          description: Api keys accessiblity.
+        apps_management:
+          type: array
+          items:
+            type: string
+          description: 'Apps management accessiblity | Not available in
+
+            ENTv2'
+        create_sub_organizations:
+          type: array
+          items:
+            type: string
+          description: 'Authorization to create sub-organization in the
+
+            admin account. If the user creating the
+
+            sub-organization, belongs to a group, the user must
+
+            choose a group at the sub-organization creation.'
+        manage_sub_organizations:
+          type: array
+          items:
+            type: string
+          description: 'Authorization to manage and access sub-organizations
+
+            in the admin account.'
+        my_plan:
+          type: array
+          items:
+            type: string
+          description: My plan accessiblity.
+        sub_organization_groups:
+          type: array
+          items:
+            type: string
+          description: 'Group creation, modification or deletion
+
+            accessibility'
+        user_management:
+          type: array
+          items:
+            type: string
+          description: User management accessiblity.
+      description: 'Feature accessiblity given to the user. (Required only
+
+        if status is active)'
+      title: CorporateInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItemsFeatureAccess
+    Master_account_getTheListOfAllTheSubAccountsOfTheMasterAccount_Response_200:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Total number of subaccounts
+        subAccounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CorporateSubAccountGetResponsesContentApplicationJsonSchemaSubAccountsItems'
+      title: Master account_getTheListOfAllTheSubAccountsOfTheMasterAccount_Response_200
+    CorporateMasterAccountGetResponsesContentApplicationJsonSchemaPlanInfoFeaturesItems:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the feature
+        quantity:
+          type: integer
+          format: int64
+          description: Quantity provided in the plan
+        quantityWithOverages:
+          type: integer
+          format: int64
+          description: 'Quantity with overages provided in the plan (only
+
+            applicable on ENTv2)'
+        remaining:
+          type: integer
+          format: int64
+          description: Quantity remaining in the plan
+        unitValue:
+          type: string
+          description: Unit value of the feature
+        used:
+          type: integer
+          format: int64
+          description: Quantity consumed by master
+        usedOverages:
+          type: integer
+          format: int64
+          description: 'Quantity consumed by sub-organizations over the
+
+            admin plan limit (only applicable on ENTv2)'
+      title: CorporateMasterAccountGetResponsesContentApplicationJsonSchemaPlanInfoFeaturesItems
+    CorporateSubAccountIdPlanPutRequestBodyContentApplicationJsonSchemaFeatures:
+      type: object
+      properties:
+        inbox:
+          type: integer
+          format: int64
+          description: Number of inboxes / Not required on ENTv2
+        landingPage:
+          type: integer
+          format: int64
+          description: Number of landing pages
+        salesUsers:
+          type: integer
+          format: int64
+          description: Number of sales and service users | only available in ENT-V2
+        users:
+          type: integer
+          format: int64
+          description: Number of multi-users
+      description: Features details to update
+      title: CorporateSubAccountIdPlanPutRequestBodyContentApplicationJsonSchemaFeatures
+    CorporateUserInvitationSendPostRequestBodyContentApplicationJsonSchemaPrivilegesItems:
+      type: object
+      properties:
+        feature:
+          $ref: '#/components/schemas/CorporateUserInvitationSendPostRequestBodyContentApplicationJsonSchemaPrivilegesItemsFeature'
+          description: Feature name
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/CorporateUserInvitationSendPostRequestBodyContentApplicationJsonSchemaPrivilegesItemsPermissionsItems'
+          description: Permissions for a given feature
+      description: Privileges given to the user
+      title: CorporateUserInvitationSendPostRequestBodyContentApplicationJsonSchemaPrivilegesItems
+    CorporateInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItems:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email address of the user.
+        feature_access:
+          $ref: '#/components/schemas/CorporateInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItemsFeatureAccess'
+          description: 'Feature accessiblity given to the user. (Required only
+
+            if status is active)'
+        groups:
+          $ref: '#/components/schemas/CorporateInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItemsGroups'
+          description: Admin user groups list
+        is_owner:
+          type: string
+          description: Flag for indicating is user owner of the organization.
+        status:
+          type: string
+          description: Status of the invited user.
+      required:
+      - email
+      - feature_access
+      - groups
+      - is_owner
+      - status
+      title: CorporateInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItems
+    CorporateSubAccountGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CorporateSubAccountGetResponsesContentApplicationJsonSchemaCode
+    CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeaturesLandingPage:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          format: int64
+          description: Quantity of landing pages provided
+        remaining:
+          type: integer
+          format: int64
+          description: Available landing pages for use
+      description: Landing page details / Not applicable on ENTv2
+      title: CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeaturesLandingPage
+    CorporateUserEmailPermissionsPutRequestBodyContentApplicationJsonSchemaPrivilegesItems:
+      type: object
+      properties:
+        feature:
+          $ref: '#/components/schemas/CorporateUserEmailPermissionsPutRequestBodyContentApplicationJsonSchemaPrivilegesItemsFeature'
+          description: feature name
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/CorporateUserEmailPermissionsPutRequestBodyContentApplicationJsonSchemaPrivilegesItemsPermissionsItems'
+          description: Permission for the feature
+      description: Permission on features
+      title: CorporateUserEmailPermissionsPutRequestBodyContentApplicationJsonSchemaPrivilegesItems
+    GetCorporateUserPermissionRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CorporateUserEmailPermissionsGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetCorporateUserPermissionRequestBadRequestError
+    CorporateInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItemsGroups:
+      type: object
+      properties:
+        id:
+          type: string
+          description: group id
+        name:
+          type: string
+          description: group name
+      description: Admin user groups list
+      title: CorporateInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItemsGroups
+    Master_account_inviteAdminUser_Response_201:
+      type: object
+      properties:
+        id:
+          type: string
+      title: Master account_inviteAdminUser_Response_201
+    Master_account_associateAnIpToSubAccounts_Response_201:
+      type: object
+      properties: {}
+      title: Master account_associateAnIpToSubAccounts_Response_201
+    CorporateMasterAccountGetResponsesContentApplicationJsonSchemaPlanInfoPlanPeriod:
+      type: string
+      enum:
+      - month
+      - year
+      description: Plan period type
+      title: CorporateMasterAccountGetResponsesContentApplicationJsonSchemaPlanInfoPlanPeriod
+    CorporateSubAccountSsoTokenPostRequestBodyContentApplicationJsonSchemaTarget:
+      type: string
+      enum:
+      - automation
+      - email_campaign
+      - contacts
+      - landing_pages
+      - email_transactional
+      - senders
+      - sms_campaign
+      - sms_transactional
+      description: '**Set target after login success** * **automation** - Redirect
+
+        to Automation after login * **email_campaign** - Redirect to
+
+        Email Campaign after login * **contacts** - Redirect to Contacts
+
+        after login * **landing_pages** - Redirect to Landing Pages
+
+        after login * **email_transactional** - Redirect to Email
+
+        Transactional after login * **senders** - Redirect to Senders
+
+        after login * **sms_campaign** - Redirect to Sms Campaign after
+
+        login * **sms_transactional** - Redirect to Sms Transactional
+
+        after login'
+      title: CorporateSubAccountSsoTokenPostRequestBodyContentApplicationJsonSchemaTarget
+    Master_account_getAGroupDetails_Response_200:
+      type: object
+      properties:
+        group:
+          $ref: '#/components/schemas/CorporateGroupIdGetResponsesContentApplicationJsonSchemaGroup'
+        sub-accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CorporateGroupIdGetResponsesContentApplicationJsonSchemaSubAccountsItems'
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/CorporateGroupIdGetResponsesContentApplicationJsonSchemaUsersItems'
+      title: Master account_getAGroupDetails_Response_200
+    CorporateGroupIdGetResponsesContentApplicationJsonSchemaGroup:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: Group creation date
+        groupName:
+          type: string
+          description: Name of the group
+        id:
+          type: string
+          description: Group id
+      title: CorporateGroupIdGetResponsesContentApplicationJsonSchemaGroup
+    EnableDisableSubAccountApplicationSRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CorporateSubAccountIdApplicationsTogglePutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: EnableDisableSubAccountApplicationSRequestBadRequestError
+    CorporateUserEmailPermissionsGetResponsesContentApplicationJsonSchemaFeatureAccess:
+      type: object
+      properties:
+        analytics:
+          type: array
+          items:
+            type: string
+          description: Permission on analytics
+        api_keys:
+          type: array
+          items:
+            type: string
+          description: Permission on api keys
+        apps_management:
+          type: array
+          items:
+            type: string
+          description: Permission on apps management
+        create_sub_organizations:
+          type: array
+          items:
+            type: string
+          description: Permission on create sub-accounts
+        manage_sub_organizations:
+          type: array
+          items:
+            type: string
+          description: Permission on manage sub-accounts
+        my_plan:
+          type: array
+          items:
+            type: string
+          description: Permission on my plan
+        sub_organization_groups:
+          type: array
+          items:
+            type: string
+          description: Permission on groups
+        user_management:
+          type: array
+          items:
+            type: string
+          description: Permission on user management
+      description: Granular feature permissions given to the user.
+      title: CorporateUserEmailPermissionsGetResponsesContentApplicationJsonSchemaFeatureAccess
+    Master_account_getSubAccountDetails_Response_200:
+      type: object
+      properties:
+        companyName:
+          type: string
+          description: Sub-account company name
+        email:
+          type: string
+          description: Email id of the sub-account organization
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaGroupsItems'
+          description: List of groups associated with the sub-account
+        name:
+          type: string
+          description: Name of the sub-account user
+        planInfo:
+          $ref: '#/components/schemas/CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfo'
+          description: Sub-account plan details
+      title: Master account_getSubAccountDetails_Response_200
+    CorporateSubAccountIdPlanPutResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CorporateSubAccountIdPlanPutResponsesContentApplicationJsonSchemaCode
+    Master_account_resendCancelAdminUserInvitation_Response_200:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Action success message
+      title: Master account_resendCancelAdminUserInvitation_Response_200
+    CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsExternalFeeds:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          format: int64
+          description: 'Quantity of externalFeeds messaging limits
+
+            provided'
+        remaining:
+          type: integer
+          format: int64
+          description: Available externalFeeds messaging limits for use
+      description: externalFeeds credits remaining on the sub-account
+      title: CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsExternalFeeds
+    CorporateSubAccountGetResponsesContentApplicationJsonSchemaSubAccountsItems:
+      type: object
+      properties:
+        active:
+          type: boolean
+          description: Whether the sub-account is active or not
+        companyName:
+          type: string
+          description: Name of the sub-account company
+        createdAt:
+          type: integer
+          format: int64
+          description: Timestamp when the sub-account was created
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/CorporateSubAccountGetResponsesContentApplicationJsonSchemaSubAccountsItemsGroupsItems'
+          description: Group details
+        id:
+          type: integer
+          format: int64
+          description: id of the sub-account
+      required:
+      - active
+      - companyName
+      - createdAt
+      - groups
+      - id
+      title: CorporateSubAccountGetResponsesContentApplicationJsonSchemaSubAccountsItems
+    CorporateSubAccountsPlanPutRequestBodyContentApplicationJsonSchemaCredits:
+      type: object
+      properties:
+        email:
+          type: integer
+          format: int64
+          description: 'Number of email credits | Pass the value -1 for unlimited
+
+            emails in ENTv2 only'
+        externalFeeds:
+          type: integer
+          format: int64
+          description: 'Number of externalFeeds credits, possible values are 0 or 1
+
+            |available in ENTv2 only'
+        sms:
+          type: string
+          title: float
+          description: 'Number of SMS credits | Pass the value -1 for unlimited SMS
+
+            in ENTv2 only'
+        whatsapp:
+          type: string
+          title: float
+          description: 'Number of whatsapp credits | Pass the value -1 for unlimited
+
+            whatsapp in ENTv2 only'
+        wpSubscribers:
+          type: integer
+          format: int64
+          description: 'Number of Push credits, possible value is 0 and -1 |
+
+            available in ENT-v2 only'
+      description: Credit details to update
+      title: CorporateSubAccountsPlanPutRequestBodyContentApplicationJsonSchemaCredits
+    CorporateGroupIdGetResponsesContentApplicationJsonSchemaUsersItems:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email address of the user
+        firstName:
+          type: string
+          description: First name of the user
+        lastName:
+          type: string
+          description: Last name of the user
+      title: CorporateGroupIdGetResponsesContentApplicationJsonSchemaUsersItems
+    CorporateMasterAccountGetResponsesContentApplicationJsonSchemaBillingInfoAddress:
+      type: object
+      properties:
+        countryCode:
+          type: string
+          description: Country code
+        locality:
+          type: string
+          description: Locality
+        postalCode:
+          type: string
+          description: Postal code
+        stateCode:
+          type: string
+          description: State code
+        streetAddress:
+          type: string
+          description: Street address
+      description: Billing address of master account
+      title: CorporateMasterAccountGetResponsesContentApplicationJsonSchemaBillingInfoAddress
+    CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsWpSubscribers:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          format: int64
+          description: Quantity of Push sending limits provided
+        remaining:
+          type: integer
+          format: int64
+          description: Available Push sending limits for use
+      description: Push credits remaining on the sub-account
+      title: CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsWpSubscribers
+    UpdateSubAccountsPlanRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CorporateSubAccountsPlanPutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UpdateSubAccountsPlanRequestBadRequestError
+    CorporateUserEmailPermissionsPutRequestBodyContentApplicationJsonSchemaPrivilegesItemsPermissionsItems:
+      type: string
+      enum:
+      - all
+      - none
+      - create
+      - edit_delete
+      - create_alerts
+      - download_data
+      - my_looks
+      - explore_create
+      title: CorporateUserEmailPermissionsPutRequestBodyContentApplicationJsonSchemaPrivilegesItemsPermissionsItems
+    Master_account_createANewGroupOfSubAccounts_Response_201:
+      type: object
+      properties:
+        id:
+          type: string
+      title: Master account_createANewGroupOfSubAccounts_Response_201
+    CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeaturesInbox:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          format: int64
+          description: Quantity of inbox provided
+        remaining:
+          type: integer
+          format: int64
+          description: Available inboxes for use
+      description: Inbox details / Not applicable on ENTv2
+      title: CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeaturesInbox
+    CorporateMasterAccountGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CorporateMasterAccountGetResponsesContentApplicationJsonSchemaCode
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
+    CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsSms:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          format: int64
+          description: Quantity of SMS messaging limits provided
+        remaining:
+          type: integer
+          format: int64
+          description: Available SMS messaging limits for use
+      description: SMS credits remaining on the sub-account
+      title: CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsSms
+    InviteAdminUserRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CorporateUserInvitationSendPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: InviteAdminUserRequestBadRequestError
+    CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsEmails:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          format: int64
+          description: Quantity of email messaging limits provided
+        remaining:
+          type: integer
+          format: int64
+          description: Available email messaging limits for use
+      description: Email credits remaining on the sub-account
+      title: CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsEmails
+    Master_account_getTheDetailsOfRequestedMasterAccount_Response_200:
+      type: object
+      properties:
+        billingInfo:
+          $ref: '#/components/schemas/CorporateMasterAccountGetResponsesContentApplicationJsonSchemaBillingInfo'
+          description: Billing details of the master account organization
+        companyName:
+          type: string
+          description: Company name of master account organization
+        currencyCode:
+          type: string
+          description: Currency code of the master account organization
+        email:
+          type: string
+          description: Email id of master account
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the master account organization
+        planInfo:
+          $ref: '#/components/schemas/CorporateMasterAccountGetResponsesContentApplicationJsonSchemaPlanInfo'
+          description: Plan details
+        timezone:
+          type: string
+          description: Timezone of the master account organization
+      title: Master account_getTheDetailsOfRequestedMasterAccount_Response_200
+    CorporateSubAccountsPlanPutResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CorporateSubAccountsPlanPutResponsesContentApplicationJsonSchemaCode
+    CorporateSubAccountIdApplicationsTogglePutResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CorporateSubAccountIdApplicationsTogglePutResponsesContentApplicationJsonSchemaCode
+    CorporateSubAccountPostRequestBodyContentApplicationJsonSchemaLanguage:
+      type: string
+      enum:
+      - en
+      - fr
+      - it
+      - es
+      - pt
+      - de
+      description: Set the language of the sub-account
+      title: CorporateSubAccountPostRequestBodyContentApplicationJsonSchemaLanguage
+    Master_account_getCorporateUserPermission_Response_200:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email address of the user.
+        feature_access:
+          $ref: '#/components/schemas/CorporateUserEmailPermissionsGetResponsesContentApplicationJsonSchemaFeatureAccess'
+          description: Granular feature permissions given to the user.
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/CorporateUserEmailPermissionsGetResponsesContentApplicationJsonSchemaGroupsItems'
+        status:
+          type: string
+          description: Status of the invited user.
+      required:
+      - email
+      - feature_access
+      - groups
+      - status
+      description: Check admin user permissions
+      title: Master account_getCorporateUserPermission_Response_200
+    CorporateUserEmailPermissionsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CorporateUserEmailPermissionsGetResponsesContentApplicationJsonSchemaCode
+    CorporateSubAccountsPlanPutRequestBodyContentApplicationJsonSchemaFeatures:
+      type: object
+      properties:
+        landingPage:
+          type: integer
+          format: int64
+          description: Number of landing pages
+        salesUsers:
+          type: integer
+          format: int64
+          description: Number of sales and service users | only available in ENT-V2
+        users:
+          type: integer
+          format: int64
+          description: Number of multi-users
+      description: Features details to update
+      title: CorporateSubAccountsPlanPutRequestBodyContentApplicationJsonSchemaFeatures
+    CorporateGroupIdGetResponsesContentApplicationJsonSchemaSubAccountsItems:
+      type: object
+      properties:
+        companyName:
+          type: string
+          description: Name of the sub-account organzation
+        createdAt:
+          type: string
+          description: Creation date of the sub-account organzation
+        id:
+          type: integer
+          format: int64
+          description: Id of the sub-account organzation
+      title: CorporateGroupIdGetResponsesContentApplicationJsonSchemaSubAccountsItems
+    CorporateUserInvitationActionEmailPutParametersAction:
+      type: string
+      enum:
+      - resend
+      - cancel
+      title: CorporateUserInvitationActionEmailPutParametersAction
+    Master_account_createANewSubAccountUnderAMasterAccount_Response_201:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID of the sub-account created
+      required:
+      - id
+      title: Master account_createANewSubAccountUnderAMasterAccount_Response_201
+    CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeatures:
+      type: object
+      properties:
+        inbox:
+          $ref: '#/components/schemas/CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeaturesInbox'
+          description: Inbox details / Not applicable on ENTv2
+        landingPage:
+          $ref: '#/components/schemas/CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeaturesLandingPage'
+          description: Landing page details / Not applicable on ENTv2
+        salesUsers:
+          $ref: '#/components/schemas/CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeaturesSalesUsers'
+          description: 'Sales and service users to use phone, sales and
+
+            conversations'
+        users:
+          $ref: '#/components/schemas/CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeaturesUsers'
+          description: Marketing users to manage the marketing channels
+      description: Features available on the sub-account
+      title: CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeatures
+    CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeaturesUsers:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          format: int64
+          description: Quantity of marketing users provided
+        remaining:
+          type: integer
+          format: int64
+          description: Available marketing users for use
+      description: Marketing users to manage the marketing channels
+      title: CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeaturesUsers
+    GetSubAccountDetailsRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetSubAccountDetailsRequestBadRequestError
+    Master_account_createAnApiKeyForASubAccount_Response_201:
+      type: object
+      properties:
+        key:
+          type: string
+          description: API key
+        status:
+          type: string
+          description: Status of the API operation.
+      required:
+      - key
+      - status
+      title: Master account_createAnApiKeyForASubAccount_Response_201
+    CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfo:
+      type: object
+      properties:
+        credits:
+          $ref: '#/components/schemas/CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCredits'
+          description: Credits quota and remaining credits on the sub-account
+        features:
+          $ref: '#/components/schemas/CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeatures'
+          description: Features available on the sub-account
+        planType:
+          type: string
+          description: type of the plan
+      description: Sub-account plan details
+      title: CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfo
+    CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaGroupsItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Group id
+        name:
+          type: string
+          description: Name of the group
+      title: CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaGroupsItems
+    CorporateIpGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        domain:
+          type: string
+        ip:
+          type: string
+        transactional:
+          type: boolean
+      title: CorporateIpGetResponsesContentApplicationJsonSchemaItems
+    CorporateUserEmailPermissionsPutRequestBodyContentApplicationJsonSchemaPrivilegesItemsFeature:
+      type: string
+      enum:
+      - user_management
+      - api
+      - my_plan
+      - apps_management
+      - analytics
+      - sub_organization_groups
+      - create_sub_organizations
+      - manage_sub_organizations
+      - security
+      description: feature name
+      title: CorporateUserEmailPermissionsPutRequestBodyContentApplicationJsonSchemaPrivilegesItemsFeature
+    GetTheListOfAllTheSubAccountsOfTheMasterAccountRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CorporateSubAccountGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetTheListOfAllTheSubAccountsOfTheMasterAccountRequestBadRequestError
+    CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsWhatsapp:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          format: int64
+          description: Quantity of whatsapp messaging limits provided
+        remaining:
+          type: integer
+          format: int64
+          description: Available whatsapp messaging limits for use
+      description: Whatsapp credits remaining on the sub-account
+      title: CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsWhatsapp
+    CorporateSubAccountGetResponsesContentApplicationJsonSchemaSubAccountsItemsGroupsItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Group identifier
+        name:
+          type: string
+          description: Name of the group
+      title: CorporateSubAccountGetResponsesContentApplicationJsonSchemaSubAccountsItemsGroupsItems
+    GetTheDetailsOfRequestedMasterAccountRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CorporateMasterAccountGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetTheDetailsOfRequestedMasterAccountRequestBadRequestError
+    CorporateSubAccountIdPlanPutRequestBodyContentApplicationJsonSchemaCredits:
+      type: object
+      properties:
+        email:
+          type: integer
+          format: int64
+          description: 'Number of email credits | Pass the value -1 for unlimited
+
+            emails in ENTv2 only'
+        externalFeeds:
+          type: integer
+          format: int64
+          description: 'Number of externalFeeds credits, possible values are 0 or 1
+
+            |available in ENTv2 only'
+        sms:
+          type: string
+          title: float
+          description: 'Number of SMS credits | Pass the value -1 for unlimited SMS
+
+            in ENTv2 only'
+        whatsapp:
+          type: string
+          title: float
+          description: 'Number of whatsapp credits | Pass the value -1 for unlimited
+
+            whatsapp in ENTv2 only'
+        wpSubscribers:
+          type: integer
+          format: int64
+          description: 'Number of Push credits, possible value is 0 and -1 |
+
+            available in ENT-v2 only'
+      description: Credit details to update
+      title: CorporateSubAccountIdPlanPutRequestBodyContentApplicationJsonSchemaCredits
+    getSsoToken:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Session token, it will remain valid for 15 days.
+      required:
+      - token
+      title: getSsoToken
+  securitySchemes:
+    api-key:
+      type: apiKey
+      in: header
+      name: api-key
+      description: The API key should be passed in the request headers as `api-key` for authentication.

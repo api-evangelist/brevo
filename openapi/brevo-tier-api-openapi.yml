@@ -1,0 +1,1245 @@
+openapi: 3.2.0
+info:
+  title: Loyalty Tier API
+  version: 1.0.0
+servers:
+- url: https://api.brevo.com/v3
+  description: https://api.brevo.com/v3
+tags:
+- name: tier
+paths:
+  /loyalty/tier/programs/{pid}/tier-groups:
+    post:
+      operationId: createTierGroup
+      summary: Create a tier group
+      description: Creates a new tier group in a loyalty program. *(The changes will take effect with the next publication of the loyalty program)*
+      tags:
+      - tier
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Tier group successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tierGroup'
+        '400':
+          description: Request is malformed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '401':
+          description: Request Authentication Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: Tier group creation payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                downgradeStrategy:
+                  $ref: '#/components/schemas/LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeStrategy'
+                  default: real_time
+                  description: Select real_time to downgrade tier on real time balance updates. Select membership_anniversary to downgrade tier on subscription anniversary. Select tier_anniversary to downgrade tier on tier anniversary.
+                name:
+                  type: string
+                  description: Name of the tier group
+                meta:
+                  $ref: '#/components/schemas/LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaMeta'
+                  description: Additional metadata for the tier group.
+                tierOrder:
+                  type: array
+                  items:
+                    type: string
+                  description: Order of the tiers in the group in ascending order
+                upgradeStrategy:
+                  $ref: '#/components/schemas/LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeStrategy'
+                  default: real_time
+                  description: Select real_time to upgrade tier on real time balance updates. Select membership_anniversary to upgrade tier on subscription anniversary. Select tier_anniversary to upgrade tier on tier anniversary.
+                upgradeSchedule:
+                  $ref: '#/components/schemas/LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeSchedule'
+                  description: Schedule configuration for tier upgrades. Required when upgradeStrategy is set to a schedule-based strategy.
+                downgradeSchedule:
+                  $ref: '#/components/schemas/LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeSchedule'
+                  description: Schedule configuration for tier downgrades. Required when downgradeStrategy is set to a schedule-based strategy.
+              required:
+              - name
+    get:
+      operationId: getListOfTierGroups
+      summary: List tier groups
+      description: Returns the list of tier groups defined within the loyalty program.
+      tags:
+      - tier
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: version
+        in: query
+        description: Select 'active' to retrieve list of all tier groups which are live for clients. Select draft to retrieve list of all non deleted tier groups.
+        required: false
+        schema:
+          $ref: '#/components/schemas/LoyaltyTierProgramsPidTierGroupsGetParametersVersion'
+          default: draft
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Tier group list successfully retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tier_getListOfTierGroups_Response_200'
+        '401':
+          description: Request authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+  /loyalty/tier/programs/{pid}/tier-groups/{gid}:
+    put:
+      operationId: updateTierGroup
+      summary: Update tier group
+      description: Updates a tier group from a loyalty program. *(The changes will take effect with the next publication of the loyalty program)*
+      tags:
+      - tier
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: gid
+        in: path
+        description: Tier group ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Tier group successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tierGroup'
+        '401':
+          description: Request authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: Tier group update payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                downgradeStrategy:
+                  $ref: '#/components/schemas/LoyaltyTierProgramsPidTierGroupsGidPutRequestBodyContentApplicationJsonSchemaDowngradeStrategy'
+                  description: Select real_time to downgrade tier on real time balance updates. Select membership_anniversary to downgrade tier on subscription anniversary. Select tier_anniversary to downgrade tier on tier anniversary.
+                name:
+                  type: string
+                  description: Name of the tier group
+                meta:
+                  $ref: '#/components/schemas/LoyaltyTierProgramsPidTierGroupsGidPutRequestBodyContentApplicationJsonSchemaMeta'
+                  description: Additional metadata for the tier group.
+                tierOrder:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+                  description: Order of the tiers in the group in ascending order
+                upgradeStrategy:
+                  $ref: '#/components/schemas/LoyaltyTierProgramsPidTierGroupsGidPutRequestBodyContentApplicationJsonSchemaUpgradeStrategy'
+                  description: Select real_time to upgrade tier on real time balance updates. Select membership_anniversary to upgrade tier on subscription anniversary. Select tier_anniversary to upgrade tier on tier anniversary.
+              required:
+              - downgradeStrategy
+              - name
+              - tierOrder
+              - upgradeStrategy
+    delete:
+      operationId: deleteTierGroup
+      summary: Delete tier group
+      description: Deletes a tier group from a loyalty program. *(The changes will take effect with the next publication of the loyalty program)*
+      tags:
+      - tier
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: gid
+        in: path
+        description: Tier group ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Tier group successfully deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          description: Request Authentication Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+    get:
+      operationId: getTierGroup
+      summary: Get tier group
+      description: Returns tier group information.
+      tags:
+      - tier
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: gid
+        in: path
+        description: Tier group ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: version
+        in: query
+        description: Select active to retrieve active version of tier group. Select draft to retrieve latest changes in tier group.
+        required: false
+        schema:
+          $ref: '#/components/schemas/LoyaltyTierProgramsPidTierGroupsGidGetParametersVersion'
+          default: draft
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Tier group information successfully retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tierGroup'
+        '401':
+          description: Request Authentication Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+  /loyalty/tier/programs/{pid}/tiers:
+    get:
+      operationId: getLoyaltyProgramTier
+      summary: List tiers
+      description: Returns the list of tiers defined within the loyalty program.
+      tags:
+      - tier
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: version
+        in: query
+        description: Select 'active' to retrieve list of all tiers which are live for clients. Select draft to retrieve list of all non deleted tiers.
+        required: false
+        schema:
+          $ref: '#/components/schemas/LoyaltyTierProgramsPidTiersGetParametersVersion'
+          default: draft
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Tier list successfully retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tier_getLoyaltyProgramTier_Response_200'
+        '401':
+          description: Request Authentication Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+  /loyalty/tier/programs/{pid}/tier-groups/{gid}/tiers:
+    post:
+      operationId: createTierForTierGroup
+      summary: Create a tier
+      description: Creates a new tier in a loyalty program tier group. *(The changes will take effect with the next publication of the loyalty program)*
+      tags:
+      - tier
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: gid
+        in: path
+        description: Tier group ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Tier successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tier'
+        '401':
+          description: Request Authentication Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accessConditions:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/LoyaltyTierProgramsPidTierGroupsGidTiersPostRequestBodyContentApplicationJsonSchemaAccessConditionsItems'
+                imageRef:
+                  type: string
+                  description: Image of the tier
+                name:
+                  type: string
+                  description: Name of the tier to be created
+                tierRewards:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/LoyaltyTierProgramsPidTierGroupsGidTiersPostRequestBodyContentApplicationJsonSchemaTierRewardsItems'
+              required:
+              - accessConditions
+              - name
+  /loyalty/tier/programs/{pid}/tiers/{tid}:
+    delete:
+      operationId: deleteTier
+      summary: Delete tier
+      description: Deletes a tier from a loyalty program tier group. *(The changes will take effect with the next publication of the loyalty program)*
+      tags:
+      - tier
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: tid
+        in: path
+        description: Tier ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Tier successfully deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          description: Request Authentication Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+    put:
+      operationId: updateTier
+      summary: Update tier
+      description: Modifies an existing tier for the specified tier group *(The changes will take effect with the next publication of the loyalty program)*
+      tags:
+      - tier
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: tid
+        in: path
+        description: Tier ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Tier successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tier'
+        '401':
+          description: Request Authentication Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accessConditions:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/LoyaltyTierProgramsPidTiersTidPutRequestBodyContentApplicationJsonSchemaAccessConditionsItems'
+                imageRef:
+                  type: string
+                  description: Image of the tier
+                name:
+                  type: string
+                  description: Name of the tier to be created
+                tierRewards:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/LoyaltyTierProgramsPidTiersTidPutRequestBodyContentApplicationJsonSchemaTierRewardsItems'
+              required:
+              - accessConditions
+              - name
+              - tierRewards
+  /loyalty/tier/programs/{pid}/contacts/{cid}/tiers/{tid}:
+    post:
+      operationId: addSubscriptionToTier
+      summary: Assign a tier
+      description: Manually assigns a tier to a specific membership.
+      tags:
+      - tier
+      parameters:
+      - name: pid
+        in: path
+        description: Loyalty Program ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: cid
+        in: path
+        description: Contact ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: tid
+        in: path
+        description: Tier ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Tier successfully assigned to membership
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tier_addSubscriptionToTier_Response_200'
+        '401':
+          description: Request Authentication Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Cannot Authenticate Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '422':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '424':
+          description: Failed Dependency
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '500':
+          description: Internal error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+components:
+  schemas:
+    LoyaltyTierProgramsPidTierGroupsGetParametersVersion:
+      type: string
+      enum:
+      - active
+      - draft
+      default: draft
+      title: LoyaltyTierProgramsPidTierGroupsGetParametersVersion
+    TierAccessConditionsItems:
+      type: object
+      properties:
+        balanceDefinitionId:
+          type: string
+          format: uuid
+          description: Balance definition identifier
+        createdAt:
+          type: string
+          format: date-time
+        minimumValue:
+          type: integer
+          description: Minimum value required to access this tier
+        updatedAt:
+          type: string
+          format: date-time
+      title: TierAccessConditionsItems
+    LoyaltyTierProgramsPidTierGroupsGidPutRequestBodyContentApplicationJsonSchemaUpgradeStrategy:
+      type: string
+      enum:
+      - real_time
+      - membership_anniversary
+      - tier_anniversary
+      default: real_time
+      description: Select real_time to upgrade tier on real time balance updates. Select membership_anniversary to upgrade tier on subscription anniversary. Select tier_anniversary to upgrade tier on tier anniversary.
+      title: LoyaltyTierProgramsPidTierGroupsGidPutRequestBodyContentApplicationJsonSchemaUpgradeStrategy
+    LoyaltyTierProgramsPidTiersGetParametersVersion:
+      type: string
+      enum:
+      - active
+      - draft
+      default: draft
+      title: LoyaltyTierProgramsPidTiersGetParametersVersion
+    LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeScheduleDurationUnit:
+      type: string
+      enum:
+      - day
+      - week
+      - month
+      - year
+      description: Duration unit for the schedule.
+      title: LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeScheduleDurationUnit
+    LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeStrategy:
+      type: string
+      enum:
+      - real_time
+      - membership_anniversary
+      - tier_anniversary
+      default: real_time
+      description: Select real_time to upgrade tier on real time balance updates. Select membership_anniversary to upgrade tier on subscription anniversary. Select tier_anniversary to upgrade tier on tier anniversary.
+      title: LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeStrategy
+    TierGroupDowngradeStrategy:
+      type: string
+      enum:
+      - real_time
+      - membership_anniversary
+      - tier_anniversary
+      default: real_time
+      description: Select real_time to downgrade tier on real time balance updates. Select membership_anniversary to downgrade tier on subscription anniversary. Select tier_anniversary to downgrade tier on tier anniversary.
+      title: TierGroupDowngradeStrategy
+    TierGroupUpgradeScheduleDurationModifier:
+      type: string
+      enum:
+      - start_of_period
+      - end_of_period
+      description: Modifier for the duration.
+      title: TierGroupUpgradeScheduleDurationModifier
+    TierTierRewardsItems:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        rewardId:
+          type: string
+          format: uuid
+          description: Reward to be attributed on tier assignment
+        updatedAt:
+          type: string
+          format: date-time
+      title: TierTierRewardsItems
+    LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeScheduleDurationModifier:
+      type: string
+      enum:
+      - start_of_period
+      - end_of_period
+      description: Modifier for the duration.
+      title: LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeScheduleDurationModifier
+    Tier_getLoyaltyProgramTier_Response_200:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/tier'
+      title: Tier_getLoyaltyProgramTier_Response_200
+    LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeSchedule:
+      type: object
+      properties:
+        durationValue:
+          type: integer
+          description: Duration value for the schedule.
+        durationUnit:
+          $ref: '#/components/schemas/LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeScheduleDurationUnit'
+          description: Duration unit for the schedule.
+        durationModifier:
+          $ref: '#/components/schemas/LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeScheduleDurationModifier'
+          description: Modifier for the duration.
+        scheduledDate:
+          type: string
+          description: Scheduled date in DD/MM format.
+      description: Schedule configuration for tier downgrades. Required when downgradeStrategy is set to a schedule-based strategy.
+      title: LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeSchedule
+    LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeScheduleDurationModifier:
+      type: string
+      enum:
+      - start_of_period
+      - end_of_period
+      description: Modifier for the duration.
+      title: LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeScheduleDurationModifier
+    TierGroupDowngradeScheduleDurationModifier:
+      type: string
+      enum:
+      - start_of_period
+      - end_of_period
+      description: Modifier for the duration.
+      title: TierGroupDowngradeScheduleDurationModifier
+    tierGroup:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the tier group was created
+        downgradeStrategy:
+          $ref: '#/components/schemas/TierGroupDowngradeStrategy'
+          default: real_time
+          description: Select real_time to downgrade tier on real time balance updates. Select membership_anniversary to downgrade tier on subscription anniversary. Select tier_anniversary to downgrade tier on tier anniversary.
+        id:
+          type: string
+          format: uuid
+          description: Tier group unique identifier
+        loyaltyProgramId:
+          type: string
+          format: uuid
+          description: Associated loyalty program Id
+        name:
+          type: string
+          description: Tier group name
+        tierOrder:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Order of the tiers in the group in ascending order
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the tier group was last updated
+        upgradeStrategy:
+          $ref: '#/components/schemas/TierGroupUpgradeStrategy'
+          default: real_time
+          description: Select real_time to upgrade tier on real time balance updates. Select membership_anniversary to upgrade tier on subscription anniversary. Select tier_anniversary to upgrade tier on tier anniversary.
+        upgradeSchedule:
+          $ref: '#/components/schemas/TierGroupUpgradeSchedule'
+          description: Schedule configuration for tier upgrades.
+        downgradeSchedule:
+          $ref: '#/components/schemas/TierGroupDowngradeSchedule'
+          description: Schedule configuration for tier downgrades.
+      title: tierGroup
+    TierGroupUpgradeStrategy:
+      type: string
+      enum:
+      - real_time
+      - membership_anniversary
+      - tier_anniversary
+      default: real_time
+      description: Select real_time to upgrade tier on real time balance updates. Select membership_anniversary to upgrade tier on subscription anniversary. Select tier_anniversary to upgrade tier on tier anniversary.
+      title: TierGroupUpgradeStrategy
+    LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeStrategy:
+      type: string
+      enum:
+      - real_time
+      - membership_anniversary
+      - tier_anniversary
+      default: real_time
+      description: Select real_time to downgrade tier on real time balance updates. Select membership_anniversary to downgrade tier on subscription anniversary. Select tier_anniversary to downgrade tier on tier anniversary.
+      title: LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeStrategy
+    TierGroupUpgradeScheduleDurationUnit:
+      type: string
+      enum:
+      - day
+      - week
+      - month
+      - year
+      description: Duration unit for the schedule.
+      title: TierGroupUpgradeScheduleDurationUnit
+    LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaMeta:
+      type: object
+      properties:
+        isInternal:
+          type: boolean
+          description: Indicates whether the tier group is internal.
+      description: Additional metadata for the tier group.
+      title: LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaMeta
+    TierGroupUpgradeSchedule:
+      type: object
+      properties:
+        strategy:
+          type: string
+          description: Schedule strategy type.
+        durationValue:
+          type: integer
+          description: Duration value for the schedule.
+        durationUnit:
+          $ref: '#/components/schemas/TierGroupUpgradeScheduleDurationUnit'
+          description: Duration unit for the schedule.
+        durationModifier:
+          $ref: '#/components/schemas/TierGroupUpgradeScheduleDurationModifier'
+          description: Modifier for the duration.
+        scheduledDate:
+          type: string
+          description: Scheduled date in DD/MM format.
+      description: Schedule configuration for tier upgrades.
+      title: TierGroupUpgradeSchedule
+    tier:
+      type: object
+      properties:
+        accessConditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TierAccessConditionsItems'
+          description: Conditions required to access this tier
+        createdAt:
+          type: string
+          format: date-time
+        groupId:
+          type: string
+          format: uuid
+          description: Associated group Id
+        imageRef:
+          type: string
+          description: Tier image reference
+        loyaltyProgramId:
+          type: string
+          format: uuid
+          description: Associated loyalty program Id
+        name:
+          type: string
+          description: Tier name
+        tierId:
+          type: string
+          format: uuid
+          description: Tier id
+        tierRewards:
+          type: array
+          items:
+            $ref: '#/components/schemas/TierTierRewardsItems'
+          description: Rewards associated with this tier
+        updatedAt:
+          type: string
+          format: date-time
+      title: tier
+    Tier_getListOfTierGroups_Response_200:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/tierGroup'
+      title: Tier_getListOfTierGroups_Response_200
+    TierGroupDowngradeSchedule:
+      type: object
+      properties:
+        strategy:
+          type: string
+          description: Schedule strategy type.
+        durationValue:
+          type: integer
+          description: Duration value for the schedule.
+        durationUnit:
+          $ref: '#/components/schemas/TierGroupDowngradeScheduleDurationUnit'
+          description: Duration unit for the schedule.
+        durationModifier:
+          $ref: '#/components/schemas/TierGroupDowngradeScheduleDurationModifier'
+          description: Modifier for the duration.
+        scheduledDate:
+          type: string
+          description: Scheduled date in DD/MM format.
+      description: Schedule configuration for tier downgrades.
+      title: TierGroupDowngradeSchedule
+    Tier_addSubscriptionToTier_Response_200:
+      type: object
+      properties:
+        contactId:
+          type: integer
+          description: Contact to which the tier is assigned
+        createdAt:
+          type: string
+          format: date-time
+        groupId:
+          type: string
+          format: uuid
+          description: Group Id to which the tier is associated
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the assigned tier
+        loyaltyProgramId:
+          type: string
+          format: uuid
+          description: Associated loyalty program Id
+        meta:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: object
+        updatedAt:
+          type: string
+          format: date-time
+      title: Tier_addSubscriptionToTier_Response_200
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
+    LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeScheduleDurationUnit:
+      type: string
+      enum:
+      - day
+      - week
+      - month
+      - year
+      description: Duration unit for the schedule.
+      title: LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeScheduleDurationUnit
+    LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeSchedule:
+      type: object
+      properties:
+        durationValue:
+          type: integer
+          description: Duration value for the schedule.
+        durationUnit:
+          $ref: '#/components/schemas/LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeScheduleDurationUnit'
+          description: Duration unit for the schedule.
+        durationModifier:
+          $ref: '#/components/schemas/LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeScheduleDurationModifier'
+          description: Modifier for the duration.
+        scheduledDate:
+          type: string
+          description: Scheduled date in DD/MM format.
+      description: Schedule configuration for tier upgrades. Required when upgradeStrategy is set to a schedule-based strategy.
+      title: LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeSchedule
+    LoyaltyTierProgramsPidTierGroupsGidTiersPostRequestBodyContentApplicationJsonSchemaTierRewardsItems:
+      type: object
+      properties:
+        rewardId:
+          type: string
+          format: uuid
+          description: Reward unique identifier
+      title: LoyaltyTierProgramsPidTierGroupsGidTiersPostRequestBodyContentApplicationJsonSchemaTierRewardsItems
+    LoyaltyTierProgramsPidTierGroupsGidTiersPostRequestBodyContentApplicationJsonSchemaAccessConditionsItems:
+      type: object
+      properties:
+        balanceDefinitionId:
+          type: string
+          format: uuid
+          description: Balance definition identifier for accessing the tier
+        minimumValue:
+          type: integer
+          description: Minimum value required to access the tier
+      title: LoyaltyTierProgramsPidTierGroupsGidTiersPostRequestBodyContentApplicationJsonSchemaAccessConditionsItems
+    LoyaltyTierProgramsPidTierGroupsGidPutRequestBodyContentApplicationJsonSchemaMeta:
+      type: object
+      properties:
+        isInternal:
+          type: boolean
+          description: Indicates whether the tier group is internal.
+      description: Additional metadata for the tier group.
+      title: LoyaltyTierProgramsPidTierGroupsGidPutRequestBodyContentApplicationJsonSchemaMeta
+    TierGroupDowngradeScheduleDurationUnit:
+      type: string
+      enum:
+      - day
+      - week
+      - month
+      - year
+      description: Duration unit for the schedule.
+      title: TierGroupDowngradeScheduleDurationUnit
+    LoyaltyTierProgramsPidTiersTidPutRequestBodyContentApplicationJsonSchemaAccessConditionsItems:
+      type: object
+      properties:
+        balanceDefinitionId:
+          type: string
+          format: uuid
+          description: Balance definition identifier for accessing the tier
+        minimumValue:
+          type: integer
+          description: Minimum value required to access the tier
+      title: LoyaltyTierProgramsPidTiersTidPutRequestBodyContentApplicationJsonSchemaAccessConditionsItems
+    LoyaltyTierProgramsPidTierGroupsGidGetParametersVersion:
+      type: string
+      enum:
+      - active
+      - draft
+      default: draft
+      title: LoyaltyTierProgramsPidTierGroupsGidGetParametersVersion
+    LoyaltyTierProgramsPidTierGroupsGidPutRequestBodyContentApplicationJsonSchemaDowngradeStrategy:
+      type: string
+      enum:
+      - real_time
+      - membership_anniversary
+      - tier_anniversary
+      default: real_time
+      description: Select real_time to downgrade tier on real time balance updates. Select membership_anniversary to downgrade tier on subscription anniversary. Select tier_anniversary to downgrade tier on tier anniversary.
+      title: LoyaltyTierProgramsPidTierGroupsGidPutRequestBodyContentApplicationJsonSchemaDowngradeStrategy
+    LoyaltyTierProgramsPidTiersTidPutRequestBodyContentApplicationJsonSchemaTierRewardsItems:
+      type: object
+      properties:
+        rewardId:
+          type: string
+          format: uuid
+          description: Reward unique identifier
+      title: LoyaltyTierProgramsPidTiersTidPutRequestBodyContentApplicationJsonSchemaTierRewardsItems
+  securitySchemes:
+    api-key:
+      type: apiKey
+      in: header
+      name: api-key
+      description: The API key should be passed in the request headers as `api-key` for authentication.

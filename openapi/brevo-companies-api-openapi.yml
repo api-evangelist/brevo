@@ -1,0 +1,1023 @@
+openapi: 3.2.0
+info:
+  title: Sales CRM Companies API
+  version: 1.0.0
+servers:
+- url: https://api.brevo.com/v3
+  description: https://api.brevo.com/v3
+tags:
+- name: companies
+paths:
+  /companies:
+    get:
+      operationId: getAllCompanies
+      summary: Get all Companies
+      description: Retrieve a paginated list of companies with optional filtering, sorting, and search capabilities. Results are sorted by creation date in descending order by default, and can be filtered by attributes, linked contacts, linked deals, or modification/creation timestamps.
+      tags:
+      - companies
+      parameters:
+      - name: filters[attributes.name]
+        in: query
+        description: Filter by attributes. If you have a filter for the owner on your side please send it as filters[attributes.owner] and utilize the account email for the filtering.
+        required: false
+        schema:
+          type: string
+      - name: linkedContactsIds
+        in: query
+        description: Filter by linked contacts ids
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - name: linkedDealsIds
+        in: query
+        description: Filter by linked Deals ids
+        required: false
+        schema:
+          type: string
+          format: objectID
+      - name: modifiedSince
+        in: query
+        description: Filter (urlencoded) the companies modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result.
+        required: false
+        schema:
+          type: string
+      - name: createdSince
+        in: query
+        description: Filter (urlencoded) the companies created after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result.
+        required: false
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Index of the first document of the page
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - name: limit
+        in: query
+        description: Number of documents per page
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - name: sort
+        in: query
+        description: Sort the results in the ascending/descending order. Default order is **descending** by creation if `sort` is not passed
+        required: false
+        schema:
+          $ref: '#/components/schemas/CompaniesGetParametersSort'
+      - name: sortBy
+        in: query
+        description: The field used to sort field names.
+        required: false
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns companies list with filters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Companies_getAllCompanies_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllCompaniesRequestBadRequestError'
+    post:
+      operationId: createACompany
+      summary: Create a company
+      description: Create a new CRM company with the specified name, attributes, and optional associations to contacts and deals. The company name is required, and you can optionally provide a country code when a phone number attribute is included.
+      tags:
+      - companies
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Created new Company
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Companies_createACompany_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateACompanyRequestBadRequestError'
+      requestBody:
+        description: Company create data.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                attributes:
+                  $ref: '#/components/schemas/CompaniesPostRequestBodyContentApplicationJsonSchemaAttributes'
+                  description: Attributes for company creation
+                countryCode:
+                  type: integer
+                  format: int64
+                  description: Country code if phone_number is passed in attributes.
+                linkedContactsIds:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                  description: Contact ids to be linked with company
+                linkedDealsIds:
+                  type: array
+                  items:
+                    type: string
+                    format: objectID
+                  description: Deal ids to be linked with company
+                name:
+                  type: string
+                  description: Name of company
+              required:
+              - name
+  /companies/{id}:
+    get:
+      operationId: getACompany
+      summary: Get a company
+      description: Retrieve the full details of a single company by its identifier, including its attributes, linked contacts, and linked deals. Returns a 404 error if the company does not exist, or a 403 error if the user lacks permission to view the company.
+      tags:
+      - companies
+      parameters:
+      - name: id
+        in: path
+        description: Get Company Details
+        required: true
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns the Company
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetACompanyRequestBadRequestError'
+        '404':
+          description: Returned when item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+    delete:
+      operationId: deleteACompany
+      summary: Delete a company
+      description: Permanently delete a company by its identifier. The requesting user must be the company owner or have manage permission on companies; otherwise, a 403 Forbidden error is returned.
+      tags:
+      - companies
+      parameters:
+      - name: id
+        in: path
+        description: Company ID to delete
+        required: true
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: When company deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteACompanyRequestBadRequestError'
+        '404':
+          description: Returned when item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+    patch:
+      operationId: updateACompany
+      summary: Update a company
+      description: Update an existing company''s attributes, name, linked contacts, or linked deals. Note that passing `linkedContactsIds` or `linkedDealsIds` replaces the entire list of associations, so omitted IDs will be removed. The company name cannot be set to an empty string.
+      tags:
+      - companies
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Company updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateACompanyRequestBadRequestError'
+        '404':
+          description: Returned when company id is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: Updated company details.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                attributes:
+                  $ref: '#/components/schemas/CompaniesIdPatchRequestBodyContentApplicationJsonSchemaAttributes'
+                  description: Attributes for company update
+                countryCode:
+                  type: integer
+                  format: int64
+                  description: Country code if phone_number is passed in attributes.
+                linkedContactsIds:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                  description: Warning - Using PATCH on linkedContactIds replaces the list of linked contacts. Omitted IDs will be removed.
+                linkedDealsIds:
+                  type: array
+                  items:
+                    type: string
+                    format: objectID
+                  description: Warning - Using PATCH on linkedDealsIds replaces the list of linked deals. Omitted IDs will be removed.
+                name:
+                  type: string
+                  description: Name of company
+  /crm/attributes:
+    post:
+      operationId: createACompanyDealAttribute
+      summary: Create a company/deal attribute
+      description: Create a new custom attribute for companies or deals. The attribute label must be unique within the object type, cannot exceed 50 characters, and cannot use reserved names. For `single-select` or `multi-choice` attribute types, you must also provide the `optionsLabels` array.
+      tags:
+      - companies
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Created new attribute
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Companies_createACompanyDealAttribute_Response_200'
+        '400':
+          description: Returned when invalid data is posted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: Attribute creation data for a company/deal.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                attributeType:
+                  $ref: '#/components/schemas/CrmAttributesPostRequestBodyContentApplicationJsonSchemaAttributeType'
+                  description: The type of attribute (must be one of the defined enums)
+                description:
+                  type: string
+                  description: A description of the attribute
+                label:
+                  type: string
+                  description: The label for the attribute (max 50 characters, cannot be empty)
+                objectType:
+                  $ref: '#/components/schemas/CrmAttributesPostRequestBodyContentApplicationJsonSchemaObjectType'
+                  description: The type of object the attribute belongs to. Must be either `companies` or `deals`.
+                optionsLabels:
+                  type: array
+                  items:
+                    type: string
+                  description: Options for multi-choice or single-select attributes
+              required:
+              - attributeType
+              - label
+              - objectType
+  /crm/attributes/companies:
+    get:
+      operationId: getCompanyAttributes
+      summary: Get company attributes
+      description: Retrieve the list of all attributes defined for companies, including both system-default and custom attributes. Each attribute includes its label, internal name, type, required status, and available options for select-type attributes.
+      tags:
+      - companies
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns list of company attributes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CrmAttributesCompaniesGetResponsesContentApplicationJsonSchemaItems'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCompanyAttributesRequestBadRequestError'
+  /companies/link-unlink/{id}:
+    patch:
+      operationId: linkAndUnlinkCompanyWithContactAndDeal
+      summary: Link and Unlink company with contact and deal
+      description: Link or unlink contacts and deals with a specific company in a single request. You can simultaneously link new contacts/deals and unlink existing ones by providing the respective ID arrays in the request body.
+      tags:
+      - companies
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Successfully linked/unlinked contacts and deals with the company.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinkAndUnlinkCompanyWithContactAndDealRequestBadRequestError'
+      requestBody:
+        description: Linked / Unlinked contacts and deals ids.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                linkContactIds:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                  description: Contact ids for contacts to be linked with company
+                linkDealsIds:
+                  type: array
+                  items:
+                    type: string
+                  description: Deal ids for deals to be linked with company
+                unlinkContactIds:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                  description: Contact ids for contacts to be unlinked from company
+                unlinkDealsIds:
+                  type: array
+                  items:
+                    type: string
+                  description: Deal ids for deals to be unlinked from company
+  /companies/import:
+    post:
+      operationId: importCompaniesCreationAndUpdation
+      summary: Import companies(creation and updation)
+      description: Import companies from a CSV file with mapping options.
+      tags:
+      - companies
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully imported companies
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Companies_importCompaniesCreationAndUpdation_Response_200'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportCompaniesCreationAndUpdationRequestBadRequestError'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: 'The CSV file to upload.The file should have the first row as the mapping attribute. Some default attribute names are (a) company_id [brevo mongoID to update companies] (b) associated_contact (c) associated_deal (f) any other attribute with internal name
+
+                    '
+                mapping:
+                  $ref: '#/components/schemas/CompaniesImportPostRequestBodyContentMultipartFormDataSchemaMapping'
+                  description: "The mapping options in JSON format. Here is an example of the JSON structure: ```json {\n  \"link_entities\": true, // Determines whether to link related entities during the import process\n  \"unlink_entities\": false, // Determines whether to unlink related entities during the import process\n  \"update_existing_records\": true, // Determines whether to update based on company ID or treat every row as create\n  \"unset_empty_attributes\": false // Determines whether to unset a specific attribute during update if the values input is blank\n} ```\n"
+components:
+  schemas:
+    CompaniesImportPostRequestBodyContentMultipartFormDataSchemaMapping:
+      type: object
+      properties: {}
+      description: "The mapping options in JSON format. Here is an example of the JSON structure: ```json {\n  \"link_entities\": true, // Determines whether to link related entities during the import process\n  \"unlink_entities\": false, // Determines whether to unlink related entities during the import process\n  \"update_existing_records\": true, // Determines whether to update based on company ID or treat every row as create\n  \"unset_empty_attributes\": false // Determines whether to unset a specific attribute during update if the values input is blank\n} ```\n"
+      title: CompaniesImportPostRequestBodyContentMultipartFormDataSchemaMapping
+    Companies_getAllCompanies_Response_200:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Company'
+          description: List of companies
+      description: List of companies
+      title: Companies_getAllCompanies_Response_200
+    CompaniesLinkUnlinkIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CompaniesLinkUnlinkIdPatchResponsesContentApplicationJsonSchemaCode
+    CrmAttributesPostRequestBodyContentApplicationJsonSchemaObjectType:
+      type: string
+      enum:
+      - companies
+      - deals
+      description: The type of object the attribute belongs to. Must be either `companies` or `deals`.
+      title: CrmAttributesPostRequestBodyContentApplicationJsonSchemaObjectType
+    CompaniesIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CompaniesIdGetResponsesContentApplicationJsonSchemaCode
+    CrmAttributesCompaniesGetResponsesContentApplicationJsonSchemaItemsAttributeOptionsItems:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+      title: CrmAttributesCompaniesGetResponsesContentApplicationJsonSchemaItemsAttributeOptionsItems
+    CompaniesPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CompaniesPostResponsesContentApplicationJsonSchemaCode
+    CompaniesPostRequestBodyContentApplicationJsonSchemaAttributes:
+      type: object
+      properties: {}
+      description: Attributes for company creation
+      title: CompaniesPostRequestBodyContentApplicationJsonSchemaAttributes
+    UpdateACompanyRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CompaniesIdPatchResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UpdateACompanyRequestBadRequestError
+    Companies_importCompaniesCreationAndUpdation_Response_200:
+      type: object
+      properties:
+        processId:
+          type: integer
+          description: The ID of the import process
+      title: Companies_importCompaniesCreationAndUpdation_Response_200
+    GetAllCompaniesRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CompaniesGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetAllCompaniesRequestBadRequestError
+    DeleteACompanyRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CompaniesIdDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteACompanyRequestBadRequestError
+    CrmAttributesCompaniesGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        internalName:
+          type: string
+          description: Internal name of the attribute
+        attributeTypeName:
+          type: string
+          description: Type of the attribute
+        label:
+          type: string
+          description: Display label of the attribute
+        attributeOptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/CrmAttributesCompaniesGetResponsesContentApplicationJsonSchemaItemsAttributeOptionsItems'
+          description: Options for single-select or multi-choice attributes
+        isRequired:
+          type: boolean
+          description: Whether this attribute is required
+        isValueReadonly:
+          type: boolean
+          description: Whether this attribute value is read-only
+      description: Company attribute details
+      title: CrmAttributesCompaniesGetResponsesContentApplicationJsonSchemaItems
+    Company:
+      type: object
+      properties:
+        attributes:
+          $ref: '#/components/schemas/CompanyAttributes'
+          description: Company attributes with values
+        id:
+          type: string
+          description: Unique company id
+        linkedContactsIds:
+          type: array
+          items:
+            type: integer
+          description: Contact ids for contacts linked to this company
+        linkedDealsIds:
+          type: array
+          items:
+            type: string
+          description: Deal ids for deals linked to this company
+      description: Company Details
+      title: Company
+    CompaniesIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CompaniesIdDeleteResponsesContentApplicationJsonSchemaCode
+    CompanyAttributes:
+      type: object
+      properties: {}
+      description: Company attributes with values
+      title: CompanyAttributes
+    CrmAttributesPostRequestBodyContentApplicationJsonSchemaAttributeType:
+      type: string
+      enum:
+      - text
+      - user
+      - number
+      - single-select
+      - date
+      - boolean
+      - multi-choice
+      description: The type of attribute (must be one of the defined enums)
+      title: CrmAttributesPostRequestBodyContentApplicationJsonSchemaAttributeType
+    CreateACompanyRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CompaniesPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreateACompanyRequestBadRequestError
+    CompaniesIdPatchRequestBodyContentApplicationJsonSchemaAttributes:
+      type: object
+      properties: {}
+      description: Attributes for company update
+      title: CompaniesIdPatchRequestBodyContentApplicationJsonSchemaAttributes
+    CompaniesIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CompaniesIdPatchResponsesContentApplicationJsonSchemaCode
+    LinkAndUnlinkCompanyWithContactAndDealRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CompaniesLinkUnlinkIdPatchResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: LinkAndUnlinkCompanyWithContactAndDealRequestBadRequestError
+    GetCompanyAttributesRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CrmAttributesCompaniesGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetCompanyAttributesRequestBadRequestError
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
+    Companies_createACompany_Response_200:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique company id
+      required:
+      - id
+      description: Created company id
+      title: Companies_createACompany_Response_200
+    CrmAttributesCompaniesGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CrmAttributesCompaniesGetResponsesContentApplicationJsonSchemaCode
+    Companies_createACompanyDealAttribute_Response_200:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique ID of the created attribute
+      required:
+      - id
+      title: Companies_createACompanyDealAttribute_Response_200
+    CompaniesGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      title: CompaniesGetParametersSort
+    ImportCompaniesCreationAndUpdationRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+      title: ImportCompaniesCreationAndUpdationRequestBadRequestError
+    CompaniesGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CompaniesGetResponsesContentApplicationJsonSchemaCode
+    GetACompanyRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CompaniesIdGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetACompanyRequestBadRequestError
+  securitySchemes:
+    api-key:
+      type: apiKey
+      in: header
+      name: api-key
+      description: The API key should be passed in the request headers as `api-key` for authentication.
