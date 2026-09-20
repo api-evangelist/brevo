@@ -83,7 +83,8 @@ edges:
   reason: Contact record CRUD, custom attributes, lists, folders, import/export and segments — the customer/contact
     master data layer of the platform.
 - tag: emailCampaigns
-  spec_file: brevo-emailcampaigns-api-openapi.yml
+  spec_file: brevo-email-campaigns-api-openapi.yml
+  reanchored_from: brevo-emailcampaigns-api-openapi.yml
   capability_id: BC-400.60
   capability_id_l1: BC-400
   capability_name: Digital Marketing Management
@@ -94,7 +95,8 @@ edges:
     execution. Some ambiguity between Digital Marketing Management and Demand Generation, so confidence
     is 0.8.
 - tag: whatsAppCampaigns
-  spec_file: brevo-whatsappcampaigns-api-openapi.yml
+  spec_file: brevo-whatsapp-campaigns-api-openapi.yml
+  reanchored_from: brevo-whatsappcampaigns-api-openapi.yml
   capability_id: BC-400.60
   capability_id_l1: BC-400
   capability_name: Digital Marketing Management
@@ -135,7 +137,8 @@ edges:
   reason: Organises customer contact records into lists used as campaign audiences. Clearly CRM-side contact
     data, but ambiguous between customer data management and segmentation, so L1 only.
 - tag: smsCampaigns
-  spec_file: brevo-smscampaigns-api-openapi.yml
+  spec_file: brevo-sms-campaigns-api-openapi.yml
+  reanchored_from: brevo-smscampaigns-api-openapi.yml
   capability_id: BC-400.60
   capability_id_l1: BC-400
   capability_name: Digital Marketing Management
@@ -178,7 +181,8 @@ edges:
     customer contact handling. Contact Centre Operations (BC-430.30) is a nearby alternative given the
     agent-status endpoint.
 - tag: masterAccount
-  spec_file: brevo-masteraccount-api-openapi.yml
+  spec_file: brevo-master-account-api-openapi.yml
+  reanchored_from: brevo-masteraccount-api-openapi.yml
   capability_id: BC-4230.10
   capability_id_l1: BC-4230
   capability_name: Tenant Provisioning & Lifecycle
