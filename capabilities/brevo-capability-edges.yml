@@ -11,7 +11,7 @@ capability_model:
   attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
     CC BY 4.0
   notice: NOTICE
-edge_count: 17
+edge_count: 21
 edges:
 - tag: program
   spec_file: brevo-program-api-openapi.yml
@@ -116,6 +116,18 @@ edges:
   reason: Administration of organisation user invitations, revocation and per-feature permissions/privileges
     — identity and access administration. Note this is account admin for the vendor's platform, so it
     is an IT/security capability, not HR.
+- tag: webhooks
+  spec_file: brevo-webhooks-api-openapi.yml
+  capability_id: BC-4270.80
+  capability_id_l1: BC-4270
+  capability_name: Webhook & Event Subscription Management
+  confidence: 0.78
+  evidence: POST /webhooks  createWebhook  Create a webhook; POST /webhooks/export  exportWebhooksHistory  Export
+    webhook history
+  reason: Full CRUD over outbound webhook subscriptions with event lists, auth config, channel/type and
+    delivery-history export — this is precisely the webhook & event subscription lifecycle capability
+    the frame names, rather than generic plumbing to be discarded.
+  recovered_from: sweep-20260829T005356Z-edges.json
 - tag: Contact Attributes
   spec_file: brevo-contact-attributes-api-openapi.yml
   capability_id: BC-420.10
@@ -136,6 +148,17 @@ edges:
     contacts to a list
   reason: Organises customer contact records into lists used as campaign audiences. Clearly CRM-side contact
     data, but ambiguous between customer data management and segmentation, so L1 only.
+- tag: coupons
+  spec_file: brevo-coupons-api-openapi.yml
+  capability_id: BC-440.30
+  capability_id_l1: BC-440
+  capability_name: Discount & Promotion Management
+  confidence: 0.75
+  evidence: POST /couponCollections createCouponCollection 'Create а coupon collection'; POST /coupons
+    'Create coupons for a coupon collection'
+  reason: Creation and management of coupon collections is promotional discount management for the ecommerce/loyalty
+    layer.
+  recovered_from: sweep-20260829T005356Z-edges.json
 - tag: smsCampaigns
   spec_file: brevo-sms-campaigns-api-openapi.yml
   reanchored_from: brevo-smscampaigns-api-openapi.yml
@@ -148,6 +171,28 @@ edges:
   reason: Creation, scheduling, sending and reporting of outbound SMS marketing campaigns to recipient
     lists — marketing campaign execution via a digital channel. Some ambiguity between Digital Marketing
     and Demand Generation sub-capabilities.
+- tag: Messages
+  spec_file: brevo-messages-api-openapi.yml
+  capability_id: BC-430.10
+  capability_id_l1: BC-430
+  capability_name: Customer Inquiry Management
+  confidence: 0.72
+  evidence: POST /conversations/messages  sendMessageAsAgent  Send a message as an agent
+  reason: Operations manage messages within live-chat conversations sent by an agent, i.e. inbound/outbound
+    handling of customer contacts in Brevo's chat product. That is customer inquiry handling rather than
+    campaign marketing; the 'Contacts' title is spurious per tag-splitting.
+  recovered_from: sweep-20260829T005356Z-edges.json
+- tag: Email Templates
+  spec_file: brevo-email-templates-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.7
+  evidence: POST /smtp/templates  createSmtpTemplate  Create an email template
+  reason: Authoring and maintenance of reusable email templates used for marketing and transactional sends
+    — marketing content/asset management within digital marketing; could also map to content marketing,
+    hence 0.7.
+  recovered_from: sweep-20260829T005356Z-edges.json
 - tag: WhatsApp Campaigns
   spec_file: brevo-whatsapp-campaigns-api-openapi.yml
   capability_id: BC-400
