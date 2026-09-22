@@ -1,31 +1,29 @@
-# Kin Score artifact — brevo — 2026-08-20T191845
+# Kin Score artifact — brevo — 2026-09-20T205903
 # The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
 ---
 kin_score:
   slug: brevo
-  schema_version: 0.12.0
-  scored_at: '2026-08-20'
-  run_ts: 2026-08-20T191845
-  composite: 87.6
+  schema_version: 0.22.0
+  scored_at: '2026-09-20'
+  run_ts: 2026-09-20T205903
+  composite: 87.3
   band: exemplar
   facets:
-    discoverability: 92.6
-    contract_quality: 78.2
-    governance: 45.5
+    discoverability: 81.5
+    contract_quality: 74.7
+    contract_governance: 33.3
     operational_transparency: 92.1
-    developer_ergonomics: 80.4
-    commercial_clarity: 93.4
-    contract_governance: 45.5
+    developer_ergonomics: 82.7
     access_clarity: 93.4
   agent_readiness:
-    score: 54.7
+    score: 58.4
     band: agent-native
     dimensions:
       spec_presence: true
       agentic_access: derived
       reversibility_documented: documented
-      mcp_server: documented
-      auth_clarity: true
+      mcp_server: verified
+      auth_clarity: served
       idempotency: documented
       error_semantics: verified
       openapi_examples: partial
@@ -36,6 +34,10 @@ kin_score:
       consent_identity: false
       agent_card: false
       dry_run_mode: false
+      delegated_identity: served
+      protected_resource_metadata: verified
+      dynamic_client_registration: false
+      agentic_commerce: false
   regulatory:
     applies: true
     regime: Telecommunications
@@ -48,7 +50,7 @@ kin_score:
     agentic_access: derived
     conformance: derived
     contracts:
-      total: 36
+      total: 44
       derived: 0
       coverage: 0.0
-      callable: 80.6
+      callable: 100.0
