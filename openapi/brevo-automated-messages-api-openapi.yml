@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Brevo Contacts Agent Status Automated Messages API
-  description: The Brevo Contacts API provides programmatic access to contact management features including creating, updating, and deleting contacts. Developers can organize contacts into lists, apply attributes and tags, import contacts in bulk, and build audience segments for targeted campaigns. The API also supports managing folders, contact attributes, and custom fields to structure contact data according to business needs.
+  title: Brevo Conversations Automated Messages API
+  description: The Brevo Conversations API provides programmatic access to live chat and messaging features for customer support and engagement. It enables developers to manage chat conversations, send and receive messages, and integrate Brevo's chat widget into websites and applications. The API supports real-time communication with site visitors and can be used to build custom chat interfaces, automate responses, and route conversations to appropriate team members.
   version: '3.0'
   contact:
     name: Brevo Support
@@ -155,6 +155,41 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code identifying the type of error.
+        message:
+          type: string
+          description: Human-readable description of the error.
+    UpdateAutomatedMessage:
+      type: object
+      required:
+      - text
+      properties:
+        text:
+          type: string
+          description: Updated text content of the automated message.
+    CreateAutomatedMessage:
+      type: object
+      required:
+      - visitorId
+      - text
+      properties:
+        visitorId:
+          type: string
+          description: Unique identifier of the visitor to send the automated message to.
+        text:
+          type: string
+          description: Text content of the automated message.
+        agentId:
+          type: string
+          description: Unique identifier of the agent to attribute the message to.
+        groupId:
+          type: string
+          description: Group identifier for routing the conversation.
     AutomatedMessageResponse:
       type: object
       properties:
@@ -174,41 +209,6 @@ components:
           type: string
           format: date-time
           description: UTC date-time when the message was created.
-    CreateAutomatedMessage:
-      type: object
-      required:
-      - visitorId
-      - text
-      properties:
-        visitorId:
-          type: string
-          description: Unique identifier of the visitor to send the automated message to.
-        text:
-          type: string
-          description: Text content of the automated message.
-        agentId:
-          type: string
-          description: Unique identifier of the agent to attribute the message to.
-        groupId:
-          type: string
-          description: Group identifier for routing the conversation.
-    ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code identifying the type of error.
-        message:
-          type: string
-          description: Human-readable description of the error.
-    UpdateAutomatedMessage:
-      type: object
-      required:
-      - text
-      properties:
-        text:
-          type: string
-          description: Updated text content of the automated message.
   securitySchemes:
     apiKeyAuth:
       type: apiKey
@@ -216,5 +216,5 @@ components:
       name: api-key
       description: Brevo API key passed in the api-key request header for authentication.
 externalDocs:
-  description: Brevo Contacts Documentation
-  url: https://developers.brevo.com/docs/how-it-works
+  description: Brevo Conversations Documentation
+  url: https://developers.brevo.com/docs/getting-started-with-conversations-api

@@ -1,337 +1,1052 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Brevo Contacts Agent Status Webhooks API
-  description: The Brevo Contacts API provides programmatic access to contact management features including creating, updating, and deleting contacts. Developers can organize contacts into lists, apply attributes and tags, import contacts in bulk, and build audience segments for targeted campaigns. The API also supports managing folders, contact attributes, and custom fields to structure contact data according to business needs.
-  version: '3.0'
-  contact:
-    name: Brevo Support
-    url: https://help.brevo.com
-  termsOfService: https://www.brevo.com/legal/termsofuse/
+  title: Accounts and Settings Webhooks API
+  version: 1.0.0
 servers:
 - url: https://api.brevo.com/v3
-  description: Brevo Production API Server
-security:
-- apiKeyAuth: []
+  description: https://api.brevo.com/v3
 tags:
 - name: Webhooks
-  description: Create, manage, and configure webhook subscriptions for receiving real-time event notifications.
 paths:
   /webhooks:
     get:
-      operationId: listWebhooks
+      operationId: getWebhooks
       summary: Get all webhooks
-      description: Retrieves all webhook subscriptions configured in the account. Supports filtering by webhook type to view transactional, marketing, or inbound webhook configurations.
+      description: 'Retrieves all webhooks from your Brevo account with filtering and sorting options.
+
+
+        Use this to:
+
+        - Monitor webhook configurations and event handling
+
+        - List webhooks by type (transactional, marketing, inbound)
+
+        - Review webhook endpoints and authentication
+
+        - Track webhook creation and modification history
+
+        - Audit webhook event subscriptions
+
+
+        Key information returned:
+
+        - Complete webhook details and configuration
+
+        - Event types and channel subscriptions
+
+        - Authentication and security settings
+
+        - Webhook URLs and custom headers
+
+        - Creation and modification timestamps'
       tags:
       - Webhooks
       parameters:
       - name: type
         in: query
-        description: Filter webhooks by type. Returns all types if not specified.
+        description: Filter on webhook type
+        required: false
         schema:
-          type: string
-          enum:
-          - transactional
-          - marketing
-          - inbound
+          $ref: '#/components/schemas/WebhooksGetParametersType'
+          default: transactional
       - name: sort
         in: query
-        description: Sort direction for the results.
+        description: Sort the results in the ascending/descending order of webhook creation
+        required: false
+        schema:
+          $ref: '#/components/schemas/WebhooksGetParametersSort'
+          default: desc
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
         schema:
           type: string
-          enum:
-          - asc
-          - desc
       responses:
         '200':
-          description: Webhooks retrieved successfully
+          description: Webhooks informations
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WebhookList'
+                $ref: '#/components/schemas/Webhooks_getWebhooks_Response_200'
         '400':
-          description: Bad request
+          description: bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/GetWebhooksRequestBadRequestError'
     post:
       operationId: createWebhook
       summary: Create a webhook
-      description: Creates a new webhook subscription to receive real-time event notifications at the specified URL. The webhook can be configured for transactional, marketing, or inbound event types.
+      description: 'Creates a new webhook to receive real-time notifications for specified events.
+
+
+        Use this to:
+
+        - Set up event notifications for transactional or marketing emails
+
+        - Configure webhook endpoints for campaign tracking
+
+        - Enable real-time monitoring of email delivery status
+
+        - Subscribe to contact list changes and updates
+
+        - Implement custom event handling and automation
+
+
+        Key information returned:
+
+        - Created webhook ID and configuration
+
+        - Success confirmation and setup details'
       tags:
       - Webhooks
-      requestBody:
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
         required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhooks_createWebhook_Response_201'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateWebhookRequestBadRequestError'
+      requestBody:
+        description: Values to create a webhook
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateWebhook'
+              type: object
+              properties:
+                auth:
+                  $ref: '#/components/schemas/WebhooksPostRequestBodyContentApplicationJsonSchemaAuth'
+                  description: Add authentication on webhook url
+                batched:
+                  type: boolean
+                  description: To send batched webhooks
+                channel:
+                  $ref: '#/components/schemas/WebhooksPostRequestBodyContentApplicationJsonSchemaChannel'
+                  default: email
+                  description: Channel of the webhook
+                description:
+                  type: string
+                  description: Description of the webhook
+                domain:
+                  type: string
+                  description: 'Inbound domain of webhook, required in case of event type
+
+                    `inbound`'
+                events:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/WebhooksPostRequestBodyContentApplicationJsonSchemaEventsItems'
+                  description: 'Events triggering the webhook. Required for transactional and
+
+                    marketing types, optional for inbound type (defaults to
+
+                    `inboundEmailProcessed`). Possible values for **Transactional**
+
+                    type webhook: `sent` OR `request`, `delivered`, `hardBounce`,
+
+                    `softBounce`, `blocked`, `spam`, `invalid`, `deferred`, `click`,
+
+                    `opened`, `uniqueOpened` and `unsubscribed`. Possible values for
+
+                    **Marketing** type webhook: `spam`, `opened`, `click`,
+
+                    `hardBounce`, `softBounce`, `unsubscribed`, `listAddition`,
+
+                    `delivered`, `contactUpdated` & `contactDeleted`. Possible values
+
+                    for **Inbound** type webhook: `inboundEmailProcessed`.'
+                headers:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/WebhooksPostRequestBodyContentApplicationJsonSchemaHeadersItems'
+                  description: Custom headers to be send with webhooks
+                type:
+                  $ref: '#/components/schemas/WebhooksPostRequestBodyContentApplicationJsonSchemaType'
+                  default: transactional
+                  description: Type of the webhook
+                url:
+                  type: string
+                  format: url
+                  description: URL of the webhook
+              required:
+              - url
+  /webhooks/{webhookId}:
+    get:
+      operationId: getWebhook
+      summary: Get a webhook details
+      description: 'Retrieves detailed information about a specific webhook configuration.
+
+
+        Use this to:
+
+        - Get complete webhook configuration and settings
+
+        - Check webhook event subscriptions and triggers
+
+        - Review authentication and security settings
+
+        - Verify webhook URL and custom headers
+
+        - Access webhook creation and modification history
+
+
+        Key information returned:
+
+        - Complete webhook details and configuration
+
+        - Event types and channel subscriptions
+
+        - Authentication credentials and methods
+
+        - Custom headers and request settings
+
+        - Webhook status and activity information'
+      tags:
+      - Webhooks
+      parameters:
+      - name: webhookId
+        in: path
+        description: Id of the webhook
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
       responses:
-        '201':
-          description: Webhook created successfully
+        '200':
+          description: Webhook informations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getWebhook'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetWebhookRequestBadRequestError'
+        '404':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetWebhookRequestNotFoundError'
+    put:
+      operationId: updateWebhook
+      summary: Update a webhook
+      description: 'Updates an existing webhook configuration and event subscriptions.
+
+
+        Use this to:
+
+        - Modify webhook event subscriptions and triggers
+
+        - Update webhook URL and endpoint configuration
+
+        - Change authentication settings and credentials
+
+        - Adjust custom headers and request parameters
+
+        - Enable or disable specific webhook events
+
+
+        Key information returned:
+
+        - Success confirmation of webhook updates'
+      tags:
+      - Webhooks
+      parameters:
+      - name: webhookId
+        in: path
+        description: Id of the webhook
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Webhook updated
           content:
             application/json:
               schema:
                 type: object
-                properties:
-                  id:
-                    type: integer
-                    format: int64
-                    description: Unique identifier of the newly created webhook.
+                properties: {}
         '400':
-          description: Bad request
+          description: bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /webhooks/{webhookId}:
-    get:
-      operationId: getWebhook
-      summary: Get a webhook
-      description: Retrieves the details of a specific webhook subscription including its URL, event types, and configuration.
-      tags:
-      - Webhooks
-      parameters:
-      - $ref: '#/components/parameters/webhookIdParam'
-      responses:
-        '200':
-          description: Webhook retrieved successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Webhook'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/UpdateWebhookRequestBadRequestError'
         '404':
-          description: Webhook not found
+          description: bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-    put:
-      operationId: updateWebhook
-      summary: Update a webhook
-      description: Updates an existing webhook subscription with new URL, event types, or configuration options.
-      tags:
-      - Webhooks
-      parameters:
-      - $ref: '#/components/parameters/webhookIdParam'
+                $ref: '#/components/schemas/UpdateWebhookRequestNotFoundError'
       requestBody:
-        required: true
+        description: Values to update a webhook
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateWebhook'
-      responses:
-        '204':
-          description: Webhook updated successfully
-        '400':
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: Webhook not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+              type: object
+              properties:
+                auth:
+                  $ref: '#/components/schemas/WebhooksWebhookIdPutRequestBodyContentApplicationJsonSchemaAuth'
+                  description: Add authentication on webhook url
+                batched:
+                  type: boolean
+                  description: To send batched webhooks
+                description:
+                  type: string
+                  description: Description of the webhook
+                domain:
+                  type: string
+                  description: Inbound domain of webhook, used in case of event type `inbound`
+                events:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/WebhooksWebhookIdPutRequestBodyContentApplicationJsonSchemaEventsItems'
+                  description: '- Events triggering the webhook. Possible values for
+
+                    **Transactional** type webhook: #### `sent` OR `request`,
+
+                    `delivered`, `hardBounce`, `softBounce`, `blocked`, `spam`,
+
+                    `invalid`, `deferred`, `click`, `opened`, `uniqueOpened` and
+
+                    `unsubscribed` - Possible values for **Marketing** type webhook:
+
+                    #### `spam`, `opened`, `click`, `hardBounce`, `softBounce`,
+
+                    `unsubscribed`, `listAddition` & `delivered` - Possible values
+
+                    for **Inbound** type webhook: #### `inboundEmailProcessed`
+
+                    #### `reply`'
+                headers:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/WebhooksWebhookIdPutRequestBodyContentApplicationJsonSchemaHeadersItems'
+                  description: Custom headers to be send with webhooks
+                url:
+                  type: string
+                  format: url
+                  description: URL of the webhook
     delete:
       operationId: deleteWebhook
       summary: Delete a webhook
-      description: Permanently deletes a webhook subscription. Events will no longer be sent to the configured URL.
+      description: 'Permanently deletes a webhook and stops all event notifications.
+
+
+        Use this to:
+
+        - Remove unused or obsolete webhook configurations
+
+        - Clean up webhook endpoints and subscriptions
+
+        - Stop event notifications to specific URLs
+
+        - Maintain organized webhook management
+
+
+        Key information returned:
+
+        - Success confirmation of webhook deletion'
       tags:
       - Webhooks
       parameters:
-      - $ref: '#/components/parameters/webhookIdParam'
+      - name: webhookId
+        in: path
+        description: Id of the webhook
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
       responses:
         '204':
-          description: Webhook deleted successfully
-        '401':
-          description: Unauthorized
+          description: Webhook deleted
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteWebhookRequestBadRequestError'
         '404':
-          description: Webhook not found
+          description: bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/DeleteWebhookRequestNotFoundError'
+  /webhooks/export:
+    post:
+      operationId: exportWebhooksHistory
+      summary: Export webhook history
+      description: 'This is an enterprise feature. Contact us to activate it for your account.
+
+
+        Submits a request to export webhook event history as a CSV file. The download link is sent to the `notifyURL` you provide in the request body.
+
+
+        Use this endpoint to:
+
+        - Export webhook event history filtered by date range, event type, or email address
+
+        - Generate reports for compliance, auditing, or performance analysis
+
+        - Track delivery patterns and webhook reliability over time'
+      tags:
+      - Webhooks
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '202':
+          description: process id created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhooks_exportWebhooksHistory_Response_202'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportWebhooksHistoryRequestBadRequestError'
+      requestBody:
+        description: Values to submit for webhooks history
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Webhooks_exportWebhooksHistory_Request'
 components:
-  parameters:
-    webhookIdParam:
-      name: webhookId
-      in: path
-      required: true
-      description: Unique identifier of the webhook subscription.
-      schema:
-        type: integer
-        format: int64
   schemas:
-    Webhook:
+    getWebhook:
+      type: object
+      properties:
+        auth:
+          $ref: '#/components/schemas/GetWebhookAuth'
+          description: Authentication header to be send with the webhook requests
+        batched:
+          type: boolean
+          description: 'Batching configuration of the webhook, we send batched webhooks if its
+
+            true'
+        createdAt:
+          type: string
+          description: Creation UTC date-time of the webhook (YYYY-MM-DDTHH:mm:ss.SSSZ)
+        description:
+          type: string
+          description: Description of the webhook
+        events:
+          type: array
+          items:
+            type: string
+        headers:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetWebhookHeadersItems'
+        id:
+          type: integer
+          format: int64
+          description: ID of the webhook
+        modifiedAt:
+          type: string
+          description: Last modification UTC date-time of the webhook (YYYY-MM-DDTHH:mm:ss.SSSZ)
+        type:
+          $ref: '#/components/schemas/GetWebhookType'
+          description: Type of webhook (marketing, transactional, or inbound)
+        domain:
+          type: string
+          description: Inbound domain of the webhook, only returned for inbound type webhooks
+        url:
+          type: string
+          format: url
+          description: URL of the webhook
+      required:
+      - createdAt
+      - description
+      - events
+      - id
+      - modifiedAt
+      - type
+      - url
+      title: getWebhook
+    WebhooksPostRequestBodyContentApplicationJsonSchemaEventsItems:
+      type: string
+      enum:
+      - sent
+      - hardBounce
+      - softBounce
+      - blocked
+      - spam
+      - delivered
+      - request
+      - click
+      - invalid
+      - deferred
+      - opened
+      - uniqueOpened
+      - unsubscribed
+      - listAddition
+      - contactUpdated
+      - contactDeleted
+      - inboundEmailProcessed
+      - reply
+      title: WebhooksPostRequestBodyContentApplicationJsonSchemaEventsItems
+    GetWebhookRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/WebhooksWebhookIdGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetWebhookRequestNotFoundError
+    GetWebhookAuth:
+      type: object
+      properties: {}
+      description: Authentication header to be send with the webhook requests
+      title: GetWebhookAuth
+    WebhooksGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: WebhooksGetParametersSort
+    WebhooksPostRequestBodyContentApplicationJsonSchemaHeadersItems:
+      type: object
+      properties:
+        key:
+          type: string
+          description: Header key name
+        value:
+          type: string
+          description: Header value
+      title: WebhooksPostRequestBodyContentApplicationJsonSchemaHeadersItems
+    UpdateWebhookRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/WebhooksWebhookIdPutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UpdateWebhookRequestNotFoundError
+    Webhooks_createWebhook_Response_201:
       type: object
       properties:
         id:
           type: integer
           format: int64
-          description: Unique identifier of the webhook.
-        url:
+          description: ID of the object created
+      required:
+      - id
+      title: Webhooks_createWebhook_Response_201
+    WebhooksPostRequestBodyContentApplicationJsonSchemaType:
+      type: string
+      enum:
+      - transactional
+      - marketing
+      - inbound
+      default: transactional
+      description: Type of the webhook
+      title: WebhooksPostRequestBodyContentApplicationJsonSchemaType
+    CreateWebhookRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/WebhooksPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
           type: string
-          format: uri
-          description: URL where event notifications are delivered.
-        description:
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreateWebhookRequestBadRequestError
+    WebhooksPostRequestBodyContentApplicationJsonSchemaAuth:
+      type: object
+      properties:
+        token:
           type: string
-          description: Human-readable description of the webhook purpose.
+          description: Webhook authentication token
         type:
           type: string
-          description: Type of webhook determining which event categories apply.
-          enum:
-          - transactional
-          - marketing
-          - inbound
-        events:
-          type: array
-          description: List of event types the webhook is subscribed to.
-          items:
-            type: string
-        isActive:
-          type: boolean
-          description: Whether the webhook is currently active and receiving events.
-        createdAt:
-          type: string
-          format: date-time
-          description: UTC date-time when the webhook was created.
-        modifiedAt:
-          type: string
-          format: date-time
-          description: UTC date-time when the webhook was last modified.
-    WebhookList:
+          description: Type of authentication
+      description: Add authentication on webhook url
+      title: WebhooksPostRequestBodyContentApplicationJsonSchemaAuth
+    WebhooksWebhookIdPutResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: WebhooksWebhookIdPutResponsesContentApplicationJsonSchemaCode
+    WebhooksGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: WebhooksGetResponsesContentApplicationJsonSchemaCode
+    Webhooks_getWebhooks_Response_200:
       type: object
       properties:
         webhooks:
           type: array
-          description: List of webhook subscriptions.
           items:
-            $ref: '#/components/schemas/Webhook'
-    UpdateWebhook:
-      type: object
-      properties:
-        url:
-          type: string
-          format: uri
-          description: Updated URL to receive webhook notifications.
-        description:
-          type: string
-          description: Updated description.
-        events:
-          type: array
-          description: Updated list of event types to subscribe to.
-          items:
-            type: string
-            enum:
-            - sent
-            - request
-            - delivered
-            - hardBounce
-            - softBounce
-            - blocked
-            - spam
-            - invalid
-            - deferred
-            - click
-            - opened
-            - uniqueOpened
-            - unsubscribed
-            - listAddition
-            - inboundEmailProcessed
-        domain:
-          type: string
-          description: Updated domain filter.
-    ErrorResponse:
+            $ref: '#/components/schemas/getWebhook'
+      required:
+      - webhooks
+      title: Webhooks_getWebhooks_Response_200
+    DeleteWebhookRequestNotFoundError:
       type: object
       properties:
         code:
-          type: string
-          description: Error code identifying the type of error.
+          $ref: '#/components/schemas/WebhooksWebhookIdDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
         message:
           type: string
-          description: Human-readable description of the error.
-    CreateWebhook:
-      type: object
+          description: Readable message associated to the failure
       required:
-      - url
-      - events
-      - type
+      - code
+      - message
+      title: DeleteWebhookRequestNotFoundError
+    GetWebhookType:
+      type: string
+      enum:
+      - marketing
+      - transactional
+      - inbound
+      description: Type of webhook (marketing, transactional, or inbound)
+      title: GetWebhookType
+    WebhooksWebhookIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: WebhooksWebhookIdGetResponsesContentApplicationJsonSchemaCode
+    ExportWebhooksHistoryRequestBadRequestError:
+      type: object
       properties:
-        url:
+        code:
+          $ref: '#/components/schemas/WebhooksExportPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
           type: string
-          format: uri
-          description: URL to receive webhook event notifications. Must be a valid HTTPS endpoint.
-        description:
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: ExportWebhooksHistoryRequestBadRequestError
+    Webhooks_exportWebhooksHistory_Request:
+      oneOf:
+      - description: Reference to WebhooksExportWebhooksHistoryRequest0
+      title: Webhooks_exportWebhooksHistory_Request
+    WebhooksGetParametersType:
+      type: string
+      enum:
+      - marketing
+      - transactional
+      - inbound
+      default: transactional
+      title: WebhooksGetParametersType
+    WebhooksWebhookIdPutRequestBodyContentApplicationJsonSchemaAuth:
+      type: object
+      properties:
+        token:
           type: string
-          description: Human-readable description of the webhook purpose.
+          description: Webhook authentication token
         type:
           type: string
-          description: Type of webhook. Determines available event types.
-          enum:
-          - transactional
-          - marketing
-          - inbound
-        events:
-          type: array
-          description: Event types to subscribe to. For transactional type, possible values include sent, delivered, hardBounce, softBounce, blocked, spam, invalid, deferred, click, opened, uniqueOpened, and unsubscribed. For marketing type, possible values include unsubscribed, listAddition, and delivered. For inbound type, the value is inboundEmailProcessed.
-          items:
-            type: string
-            enum:
-            - sent
-            - request
-            - delivered
-            - hardBounce
-            - softBounce
-            - blocked
-            - spam
-            - invalid
-            - deferred
-            - click
-            - opened
-            - uniqueOpened
-            - unsubscribed
-            - listAddition
-            - inboundEmailProcessed
-        domain:
+          description: Type of authentication
+      description: Add authentication on webhook url
+      title: WebhooksWebhookIdPutRequestBodyContentApplicationJsonSchemaAuth
+    GetWebhookHeadersItems:
+      type: object
+      properties: {}
+      description: Headers send with the requests to the webhook
+      title: GetWebhookHeadersItems
+    WebhooksPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: WebhooksPostResponsesContentApplicationJsonSchemaCode
+    DeleteWebhookRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/WebhooksWebhookIdDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
           type: string
-          description: Optional domain filter to receive events only for emails sent from this domain.
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteWebhookRequestBadRequestError
+    Webhooks_exportWebhooksHistory_Response_202:
+      type: object
+      properties:
+        processId:
+          type: integer
+          format: int64
+          description: Id of the process created
+      required:
+      - processId
+      title: Webhooks_exportWebhooksHistory_Response_202
+    UpdateWebhookRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/WebhooksWebhookIdPutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UpdateWebhookRequestBadRequestError
+    GetWebhookRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/WebhooksWebhookIdGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetWebhookRequestBadRequestError
+    WebhooksPostRequestBodyContentApplicationJsonSchemaChannel:
+      type: string
+      enum:
+      - email
+      - sms
+      default: email
+      description: Channel of the webhook
+      title: WebhooksPostRequestBodyContentApplicationJsonSchemaChannel
+    GetWebhooksRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/WebhooksGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetWebhooksRequestBadRequestError
+    WebhooksWebhookIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: WebhooksWebhookIdDeleteResponsesContentApplicationJsonSchemaCode
+    WebhooksWebhookIdPutRequestBodyContentApplicationJsonSchemaHeadersItems:
+      type: object
+      properties:
+        key:
+          type: string
+          description: Header key name
+        value:
+          type: string
+          description: Header value
+      title: WebhooksWebhookIdPutRequestBodyContentApplicationJsonSchemaHeadersItems
+    WebhooksWebhookIdPutRequestBodyContentApplicationJsonSchemaEventsItems:
+      type: string
+      enum:
+      - sent
+      - hardBounce
+      - softBounce
+      - blocked
+      - spam
+      - delivered
+      - request
+      - click
+      - invalid
+      - deferred
+      - opened
+      - uniqueOpened
+      - unsubscribed
+      - listAddition
+      - contactUpdated
+      - contactDeleted
+      - inboundEmailProcessed
+      - reply
+      title: WebhooksWebhookIdPutRequestBodyContentApplicationJsonSchemaEventsItems
+    WebhooksExportPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: WebhooksExportPostResponsesContentApplicationJsonSchemaCode
   securitySchemes:
-    apiKeyAuth:
+    api-key:
       type: apiKey
       in: header
       name: api-key
-      description: Brevo API key passed in the api-key request header for authentication.
-externalDocs:
-  description: Brevo Contacts Documentation
-  url: https://developers.brevo.com/docs/how-it-works
+      description: The API key should be passed in the request headers as `api-key` for authentication.

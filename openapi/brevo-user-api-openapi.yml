@@ -6,7 +6,7 @@ servers:
 - url: https://api.brevo.com/v3
   description: https://api.brevo.com/v3
 tags:
-- name: user
+- name: User
 paths:
   /organization/invited/users:
     get:
@@ -14,7 +14,7 @@ paths:
       summary: Get the list of all your users
       description: Retrieves the list of all users associated with your organization, including both active and pending invited users. Each user entry includes their email address, owner status, current invitation status, and feature access levels for marketing, CRM, and conversations.
       tags:
-      - user
+      - User
       parameters:
       - name: api-key
         in: header
@@ -41,7 +41,7 @@ paths:
       summary: Check user permission
       description: Retrieves the granular feature-level permissions assigned to a specific user in the organization, identified by their email address. The response includes the user''s current status (active or pending) and a detailed list of privileges specifying which features and permission levels are granted.
       tags:
-      - user
+      - User
       parameters:
       - name: email
         in: path
@@ -74,7 +74,7 @@ paths:
       summary: Revoke user permission
       description: Revokes all permissions for an invited user in the organization, effectively removing their access to the platform. If the user''s plan change generated credit notes, they are returned in the response for billing reconciliation.
       tags:
-      - user
+      - User
       parameters:
       - name: email
         in: path
@@ -107,7 +107,7 @@ paths:
       summary: Resend / Cancel invitation
       description: Resends or cancels a pending invitation for a user in the organization, depending on the action path parameter. Use `resend` to send a new invitation email to the user, or `cancel` to revoke the pending invitation entirely and remove the user''s pending access.
       tags:
-      - user
+      - User
       parameters:
       - name: action
         in: path
@@ -144,9 +144,143 @@ paths:
     post:
       operationId: inviteuser
       summary: Send invitation to user
-      description: "`Feature` - A Feature represents a specific functionality like Email\ncampaign, Deals, Calls, Automations, etc. on Brevo. While inviting a user,\ndetermine which feature you want to manage access to. You must specify the\nfeature accurately to avoid errors. `Permission` - A Permission defines the\nlevel of access or control a user has over a specific feature. While\ninviting user, decide on the permission level required for the selected\nfeature. Make sure the chosen permission is related to the selected feature.\nFeatures and their respective permissions are as below: - `email_campaigns`:\n  - \"create_edit_delete\"\n  - \"send_schedule_suspend\"\n- `sms_campaigns`:\n  - \"create_edit_delete\"\n  - \"send_schedule_suspend\"\n- `contacts`:\n  - \"view\"\n  - \"create_edit_delete\"\n  - \"import\"\n  - \"export\"\n  - \"list_and_attributes\"\n  - \"forms\"\n- `templates`:\n  - \"create_edit_delete\"\n  - \"activate_deactivate\"\n- `workflows`:\n  - \"create_edit_delete\"\n  - \"activate_deactivate_pause\"\n  - \"settings\"\n- `landing_pages`:\n  - \"all\"\n- `transactional_emails`:\n  - \"settings\"\n  - \"logs\"\n- `smtp_api`:\n  - \"smtp\"\n  - \"api_keys\"\n  - \"authorized_ips\"\n- `user_management`:\n  - \"all\"\n- `sales_platform`:\n  - \"create_edit_deals\"\n  - \"delete_deals\"\n  - \"manage_others_deals_tasks\"\n  - \"reports\"\n  - \"settings\"\n- `phone`:\n  - \"all\"\n- `conversations`:\n  - \"access\"\n  - \"assign\"\n  - \"configure\"\n- `senders_domains_dedicated_ips`:\n  - \"senders_management\"\n  - \"domains_management\"\n  - \"dedicated_ips_management\"\n- `push_notifications`:\n  - \"view\"\n  - \"create_edit_delete\"\n  - \"send\"\n  - \"settings\"\n- `companies`:\n  - \"manage_owned_companies\"\n  - \"manage_other_companies\"\n  - \"settings\"\n**Note**: - If `all_features_access: false` then only privileges are\nrequired otherwise if `true` then it's assumed that all permissions will be\nthere for the invited user. - The availability of feature and its permission\ndepends on your current plan. Please select the features and permissions\naccordingly."
+      description: '`Feature` - A Feature represents a specific functionality like Email
+
+        campaign, Deals, Calls, Automations, etc. on Brevo. While inviting a user,
+
+        determine which feature you want to manage access to. You must specify the
+
+        feature accurately to avoid errors. `Permission` - A Permission defines the
+
+        level of access or control a user has over a specific feature. While
+
+        inviting user, decide on the permission level required for the selected
+
+        feature. Make sure the chosen permission is related to the selected feature.
+
+        Features and their respective permissions are as below: - `email_campaigns`:
+
+        - "create_edit_delete"
+
+        - "send_schedule_suspend"
+
+        - `sms_campaigns`:
+
+        - "create_edit_delete"
+
+        - "send_schedule_suspend"
+
+        - `contacts`:
+
+        - "view"
+
+        - "create_edit_delete"
+
+        - "import"
+
+        - "export"
+
+        - "list_and_attributes"
+
+        - "forms"
+
+        - `templates`:
+
+        - "create_edit_delete"
+
+        - "activate_deactivate"
+
+        - `workflows`:
+
+        - "create_edit_delete"
+
+        - "activate_deactivate_pause"
+
+        - "settings"
+
+        - `landing_pages`:
+
+        - "all"
+
+        - `transactional_emails`:
+
+        - "settings"
+
+        - "logs"
+
+        - `smtp_api`:
+
+        - "smtp"
+
+        - "api_keys"
+
+        - "authorized_ips"
+
+        - `user_management`:
+
+        - "all"
+
+        - `sales_platform`:
+
+        - "create_edit_deals"
+
+        - "delete_deals"
+
+        - "manage_others_deals_tasks"
+
+        - "reports"
+
+        - "settings"
+
+        - `phone`:
+
+        - "all"
+
+        - `conversations`:
+
+        - "access"
+
+        - "assign"
+
+        - "configure"
+
+        - `senders_domains_dedicated_ips`:
+
+        - "senders_management"
+
+        - "domains_management"
+
+        - "dedicated_ips_management"
+
+        - `push_notifications`:
+
+        - "view"
+
+        - "create_edit_delete"
+
+        - "send"
+
+        - "settings"
+
+        - `companies`:
+
+        - "manage_owned_companies"
+
+        - "manage_other_companies"
+
+        - "settings"
+
+        **Note**: - If `all_features_access: false` then only privileges are
+
+        required otherwise if `true` then it''s assumed that all permissions will be
+
+        there for the invited user. - The availability of feature and its permission
+
+        depends on your current plan. Please select the features and permissions
+
+        accordingly.'
       tags:
-      - user
+      - User
       parameters:
       - name: api-key
         in: header
@@ -177,9 +311,141 @@ paths:
     post:
       operationId: EditUserPermission
       summary: Update permission for a user
-      description: "`Feature` - A Feature represents a specific functionality like Email\ncampaign, Deals, Calls, Automations, etc. on Brevo. While inviting a user,\ndetermine which feature you want to manage access to. You must specify the\nfeature accurately to avoid errors. `Permission` - A Permission defines the\nlevel of access or control a user has over a specific feature. While\ninviting user, decide on the permission level required for the selected\nfeature. Make sure the chosen permission is related to the selected feature.\nFeatures and their respective permissions are as below: - `email_campaigns`:\n  - \"create_edit_delete\"\n  - \"send_schedule_suspend\"\n- `sms_campaigns`:\n  - \"create_edit_delete\"\n  - \"send_schedule_suspend\"\n- `contacts`:\n  - \"view\"\n  - \"create_edit_delete\"\n  - \"import\"\n  - \"export\"\n  - \"list_and_attributes\"\n  - \"forms\"\n- `templates`:\n  - \"create_edit_delete\"\n  - \"activate_deactivate\"\n- `workflows`:\n  - \"create_edit_delete\"\n  - \"activate_deactivate_pause\"\n  - \"settings\"\n- `landing_pages`:\n  - \"all\"\n- `transactional_emails`:\n  - \"settings\"\n  - \"logs\"\n- `smtp_api`:\n  - \"smtp\"\n  - \"api_keys\"\n  - \"authorized_ips\"\n- `user_management`:\n  - \"all\"\n- `sales_platform`:\n  - \"create_edit_deals\"\n  - \"delete_deals\"\n  - \"manage_others_deals_tasks\"\n  - \"reports\"\n  - \"settings\"\n- `phone`:\n  - \"all\"\n- `conversations`:\n  - \"access\"\n  - \"assign\"\n  - \"configure\"\n- `senders_domains_dedicated_ips`:\n  - \"senders_management\"\n  - \"domains_management\"\n  - \"dedicated_ips_management\"\n- `push_notifications`:\n  - \"view\"\n  - \"create_edit_delete\"\n  - \"send\"\n  - \"settings\"\n- `companies`:\n  - \"manage_owned_companies\"\n  - \"manage_other_companies\"\n  - \"settings\"\n**Note**: - The privileges array remains the same as in the send invitation;\nthe user simply needs to provide the permissions that need to be updated. -\nThe availability of feature and its permission depends on your current plan.\nPlease select the features and permissions accordingly."
+      description: '`Feature` - A Feature represents a specific functionality like Email
+
+        campaign, Deals, Calls, Automations, etc. on Brevo. While inviting a user,
+
+        determine which feature you want to manage access to. You must specify the
+
+        feature accurately to avoid errors. `Permission` - A Permission defines the
+
+        level of access or control a user has over a specific feature. While
+
+        inviting user, decide on the permission level required for the selected
+
+        feature. Make sure the chosen permission is related to the selected feature.
+
+        Features and their respective permissions are as below: - `email_campaigns`:
+
+        - "create_edit_delete"
+
+        - "send_schedule_suspend"
+
+        - `sms_campaigns`:
+
+        - "create_edit_delete"
+
+        - "send_schedule_suspend"
+
+        - `contacts`:
+
+        - "view"
+
+        - "create_edit_delete"
+
+        - "import"
+
+        - "export"
+
+        - "list_and_attributes"
+
+        - "forms"
+
+        - `templates`:
+
+        - "create_edit_delete"
+
+        - "activate_deactivate"
+
+        - `workflows`:
+
+        - "create_edit_delete"
+
+        - "activate_deactivate_pause"
+
+        - "settings"
+
+        - `landing_pages`:
+
+        - "all"
+
+        - `transactional_emails`:
+
+        - "settings"
+
+        - "logs"
+
+        - `smtp_api`:
+
+        - "smtp"
+
+        - "api_keys"
+
+        - "authorized_ips"
+
+        - `user_management`:
+
+        - "all"
+
+        - `sales_platform`:
+
+        - "create_edit_deals"
+
+        - "delete_deals"
+
+        - "manage_others_deals_tasks"
+
+        - "reports"
+
+        - "settings"
+
+        - `phone`:
+
+        - "all"
+
+        - `conversations`:
+
+        - "access"
+
+        - "assign"
+
+        - "configure"
+
+        - `senders_domains_dedicated_ips`:
+
+        - "senders_management"
+
+        - "domains_management"
+
+        - "dedicated_ips_management"
+
+        - `push_notifications`:
+
+        - "view"
+
+        - "create_edit_delete"
+
+        - "send"
+
+        - "settings"
+
+        - `companies`:
+
+        - "manage_owned_companies"
+
+        - "manage_other_companies"
+
+        - "settings"
+
+        **Note**: - The privileges array remains the same as in the send invitation;
+
+        the user simply needs to provide the permissions that need to be updated. -
+
+        The availability of feature and its permission depends on your current plan.
+
+        Please select the features and permissions accordingly.'
       tags:
-      - user
+      - User
       parameters:
       - name: api-key
         in: header
@@ -208,61 +474,6 @@ paths:
               $ref: '#/components/schemas/inviteuser'
 components:
   schemas:
-    OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItemsFeatureAccess:
-      type: object
-      properties:
-        conversations:
-          type: string
-          description: Conversations features accessiblity.
-        crm:
-          type: string
-          description: CRM features accessiblity.
-        marketing:
-          type: string
-          description: Marketing features accessiblity.
-      description: Feature accessiblity given to the user.
-      title: OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItemsFeatureAccess
-    OrganizationUserUpdatePermissionsPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: OrganizationUserUpdatePermissionsPostResponsesContentApplicationJsonSchemaCode
     User_EditUserPermission_Response_200:
       type: object
       properties:
@@ -280,213 +491,6 @@ components:
       required:
       - status
       title: User_EditUserPermission_Response_200
-    InviteuserRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/OrganizationUserInvitationSendPostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: InviteuserRequestBadRequestError
-    OrganizationUserInvitationSendPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: OrganizationUserInvitationSendPostResponsesContentApplicationJsonSchemaCode
-    OrganizationUserInvitationRevokeEmailPutResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: OrganizationUserInvitationRevokeEmailPutResponsesContentApplicationJsonSchemaCode
-    OrganizationUserEmailPermissionsGetResponsesContentApplicationJsonSchemaPrivilegesItems:
-      type: object
-      properties:
-        feature:
-          type: string
-        permissions:
-          type: array
-          items:
-            type: string
-      required:
-      - feature
-      - permissions
-      title: OrganizationUserEmailPermissionsGetResponsesContentApplicationJsonSchemaPrivilegesItems
-    EditUserPermissionRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/OrganizationUserUpdatePermissionsPostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: EditUserPermissionRequestBadRequestError
-    OrganizationUserInvitationActionEmailPutParametersAction:
-      type: string
-      enum:
-      - resend
-      - cancel
-      title: OrganizationUserInvitationActionEmailPutParametersAction
-    GetUserPermissionRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/OrganizationUserEmailPermissionsGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetUserPermissionRequestBadRequestError
-    InviteuserPrivilegesItems:
-      type: object
-      properties:
-        feature:
-          $ref: '#/components/schemas/InviteuserPrivilegesItemsFeature'
-          description: Feature name
-        permissions:
-          type: array
-          items:
-            $ref: '#/components/schemas/InviteuserPrivilegesItemsPermissionsItems'
-          description: Permissions for a given feature
-      description: Privileges given to the user
-      title: InviteuserPrivilegesItems
-    GetInvitedUsersListRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetInvitedUsersListRequestBadRequestError
-    OrganizationUserInvitationActionEmailPutResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: OrganizationUserInvitationActionEmailPutResponsesContentApplicationJsonSchemaCode
     OrganizationUserEmailPermissionsGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -528,6 +532,192 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: OrganizationUserEmailPermissionsGetResponsesContentApplicationJsonSchemaCode
+    OrganizationUserInvitationSendPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: OrganizationUserInvitationSendPostResponsesContentApplicationJsonSchemaCode
+    User_inviteuser_Response_200:
+      type: object
+      properties:
+        invoice_id:
+          type: string
+          description: Invoice id
+        status:
+          type: string
+          description: Status of the API operation.
+      required:
+      - status
+      title: User_inviteuser_Response_200
+    PutRevokeUserPermissionRequestForbiddenError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/OrganizationUserInvitationRevokeEmailPutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: PutRevokeUserPermissionRequestForbiddenError
+    OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItemsFeatureAccess:
+      type: object
+      properties:
+        conversations:
+          type: string
+          description: Conversations features accessiblity.
+        crm:
+          type: string
+          description: CRM features accessiblity.
+        marketing:
+          type: string
+          description: Marketing features accessiblity.
+      description: Feature accessiblity given to the user.
+      title: OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItemsFeatureAccess
+    User_putRevokeUserPermission_Response_200:
+      type: object
+      properties:
+        credit_notes:
+          type: array
+          items:
+            type: string
+          description: Credit note
+        status:
+          type: string
+          description: Status of the API operation.
+      required:
+      - status
+      title: User_putRevokeUserPermission_Response_200
+    OrganizationUserEmailPermissionsGetResponsesContentApplicationJsonSchemaPrivilegesItems:
+      type: object
+      properties:
+        feature:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+      required:
+      - feature
+      - permissions
+      title: OrganizationUserEmailPermissionsGetResponsesContentApplicationJsonSchemaPrivilegesItems
+    OrganizationUserInvitationActionEmailPutParametersAction:
+      type: string
+      enum:
+      - resend
+      - cancel
+      title: OrganizationUserInvitationActionEmailPutParametersAction
+    InviteuserPrivilegesItems:
+      type: object
+      properties:
+        feature:
+          $ref: '#/components/schemas/InviteuserPrivilegesItemsFeature'
+          description: Feature name
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/InviteuserPrivilegesItemsPermissionsItems'
+          description: Permissions for a given feature
+      description: Privileges given to the user
+      title: InviteuserPrivilegesItems
+    GetUserPermissionRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/OrganizationUserEmailPermissionsGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetUserPermissionRequestBadRequestError
+    InviteuserRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/OrganizationUserInvitationSendPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: InviteuserRequestBadRequestError
+    InviteuserPrivilegesItemsPermissionsItems:
+      type: string
+      enum:
+      - create_edit_delete
+      - send_schedule_suspend
+      - view
+      - import
+      - export
+      - list_and_attributes
+      - forms
+      - activate_deactivate
+      - activate_deactivate_pause
+      - settings
+      - schedule_pause
+      - all
+      - logs
+      - access
+      - assign
+      - configure
+      - create_edit_deals
+      - delete_deals
+      - manage_others_deals_tasks
+      - manage_owned_companies
+      - manage_others_companies
+      - reports
+      - senders_management
+      - domains_management
+      - dedicated_ips_management
+      - send
+      - smtp
+      - api_keys
+      - authorized_ips
+      - none
+      title: InviteuserPrivilegesItemsPermissionsItems
     OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -569,35 +759,108 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaCode
-    User_getInvitedUsersList_Response_200:
-      type: object
-      properties:
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItems'
-          description: Get invited users list
-      title: User_getInvitedUsersList_Response_200
-    User_getUserPermission_Response_200:
-      type: object
-      properties:
-        email:
-          type: string
-          description: Email address of the user.
-        privileges:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationUserEmailPermissionsGetResponsesContentApplicationJsonSchemaPrivilegesItems'
-          description: Granular feature permissions given to the user.
-        status:
-          type: string
-          description: Status of the invited user.
-      required:
-      - email
-      - privileges
-      - status
-      description: Check user permission
-      title: User_getUserPermission_Response_200
+    OrganizationUserInvitationRevokeEmailPutResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: OrganizationUserInvitationRevokeEmailPutResponsesContentApplicationJsonSchemaCode
+    InviteuserPrivilegesItemsFeature:
+      type: string
+      enum:
+      - email_campaigns
+      - sms_campaigns
+      - contacts
+      - templates
+      - workflows
+      - landing_pages
+      - transactional_emails
+      - smtp_api
+      - user_management
+      - sales_platform
+      - phone
+      - conversations
+      - senders_domains_dedicated_ips
+      - push_notifications
+      - companies
+      description: Feature name
+      title: InviteuserPrivilegesItemsFeature
+    OrganizationUserInvitationActionEmailPutResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: OrganizationUserInvitationActionEmailPutResponsesContentApplicationJsonSchemaCode
     inviteuser:
       type: object
       properties:
@@ -631,6 +894,89 @@ components:
       required:
       - status
       title: User_putresendcancelinvitation_Response_200
+    User_getUserPermission_Response_200:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email address of the user.
+        privileges:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationUserEmailPermissionsGetResponsesContentApplicationJsonSchemaPrivilegesItems'
+          description: Granular feature permissions given to the user.
+        status:
+          type: string
+          description: Status of the invited user.
+      required:
+      - email
+      - privileges
+      - status
+      description: Check user permission
+      title: User_getUserPermission_Response_200
+    OrganizationUserUpdatePermissionsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: OrganizationUserUpdatePermissionsPostResponsesContentApplicationJsonSchemaCode
+    EditUserPermissionRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/OrganizationUserUpdatePermissionsPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: EditUserPermissionRequestBadRequestError
+    User_getInvitedUsersList_Response_200:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItems'
+          description: Get invited users list
+      title: User_getInvitedUsersList_Response_200
     PutresendcancelinvitationRequestForbiddenError:
       type: object
       properties:
@@ -644,77 +990,11 @@ components:
       - code
       - message
       title: PutresendcancelinvitationRequestForbiddenError
-    InviteuserPrivilegesItemsPermissionsItems:
-      type: string
-      enum:
-      - create_edit_delete
-      - send_schedule_suspend
-      - view
-      - import
-      - export
-      - list_and_attributes
-      - forms
-      - activate_deactivate
-      - activate_deactivate_pause
-      - settings
-      - schedule_pause
-      - all
-      - logs
-      - access
-      - assign
-      - configure
-      - create_edit_deals
-      - delete_deals
-      - manage_others_deals_tasks
-      - manage_owned_companies
-      - manage_others_companies
-      - reports
-      - senders_management
-      - domains_management
-      - dedicated_ips_management
-      - send
-      - smtp
-      - api_keys
-      - authorized_ips
-      - none
-      title: InviteuserPrivilegesItemsPermissionsItems
-    User_inviteuser_Response_200:
-      type: object
-      properties:
-        invoice_id:
-          type: string
-          description: Invoice id
-        status:
-          type: string
-          description: Status of the API operation.
-      required:
-      - status
-      title: User_inviteuser_Response_200
-    InviteuserPrivilegesItemsFeature:
-      type: string
-      enum:
-      - email_campaigns
-      - sms_campaigns
-      - contacts
-      - templates
-      - workflows
-      - landing_pages
-      - transactional_emails
-      - smtp_api
-      - user_management
-      - sales_platform
-      - phone
-      - conversations
-      - senders_domains_dedicated_ips
-      - push_notifications
-      - companies
-      description: Feature name
-      title: InviteuserPrivilegesItemsFeature
-    PutRevokeUserPermissionRequestForbiddenError:
+    GetInvitedUsersListRequestBadRequestError:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/OrganizationUserInvitationRevokeEmailPutResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
@@ -722,7 +1002,7 @@ components:
       required:
       - code
       - message
-      title: PutRevokeUserPermissionRequestForbiddenError
+      title: GetInvitedUsersListRequestBadRequestError
     OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItems:
       type: object
       properties:
@@ -744,20 +1024,6 @@ components:
       - is_owner
       - status
       title: OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItems
-    User_putRevokeUserPermission_Response_200:
-      type: object
-      properties:
-        credit_notes:
-          type: array
-          items:
-            type: string
-          description: Credit note
-        status:
-          type: string
-          description: Status of the API operation.
-      required:
-      - status
-      title: User_putRevokeUserPermission_Response_200
   securitySchemes:
     api-key:
       type: apiKey

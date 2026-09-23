@@ -6,7 +6,7 @@ servers:
 - url: https://api.brevo.com/v3
   description: https://api.brevo.com/v3
 tags:
-- name: consentGroups
+- name: Consent Groups
 paths:
   /contacts/consent-groups:
     get:
@@ -15,9 +15,9 @@ paths:
       description: 'Returns a paginated list of consent groups for the account.
 
 
-        <Note>This endpoint is only available when the Consent Groups feature is enabled for your account. Returns `403` if the feature is not activated.</Note>'
+        This endpoint is only available when the Consent Groups feature is enabled for your account. Returns `403` if the feature is not activated.'
       tags:
-      - consentGroups
+      - Consent Groups
       parameters:
       - name: limit
         in: query
@@ -91,9 +91,9 @@ paths:
       description: 'Creates a new consent group for the account.
 
 
-        <Note>This endpoint is only available when the Consent Groups feature is enabled for your account.</Note>'
+        This endpoint is only available when the Consent Groups feature is enabled for your account.'
       tags:
-      - consentGroups
+      - Consent Groups
       parameters:
       - name: api-key
         in: header
@@ -138,9 +138,9 @@ paths:
       description: 'Returns a single consent group by ID for the account.
 
 
-        <Note>This endpoint is only available when the Consent Groups feature is enabled for your account.</Note>'
+        This endpoint is only available when the Consent Groups feature is enabled for your account.'
       tags:
-      - consentGroups
+      - Consent Groups
       parameters:
       - name: id
         in: path
@@ -186,9 +186,9 @@ paths:
       description: 'Updates name, description, or signupMode of a consent group. At least one field must be provided.
 
 
-        <Note>This endpoint is only available when the Consent Groups feature is enabled for your account.</Note>'
+        This endpoint is only available when the Consent Groups feature is enabled for your account.'
       tags:
-      - consentGroups
+      - Consent Groups
       parameters:
       - name: id
         in: path
@@ -245,9 +245,9 @@ paths:
       description: 'Deletes a consent group by ID and removes it from all associated contacts.
 
 
-        <Note>This endpoint is only available when the Consent Groups feature is enabled for your account.</Note>'
+        This endpoint is only available when the Consent Groups feature is enabled for your account.'
       tags:
-      - consentGroups
+      - Consent Groups
       parameters:
       - name: id
         in: path
@@ -290,39 +290,6 @@ paths:
                 $ref: '#/components/schemas/errorModel'
 components:
   schemas:
-    ContactsConsentGroupsGetParametersSignupMode:
-      type: string
-      enum:
-      - manual
-      - automatic
-      title: ContactsConsentGroupsGetParametersSignupMode
-    ConsentGroupsListResponse:
-      type: object
-      properties:
-        consentGroups:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConsentGroup'
-          description: List of consent groups matching the filter
-        total:
-          type: integer
-          format: int64
-          description: Total number of consent groups matching the filter
-        limit:
-          type: integer
-          format: int64
-          description: Maximum number of results returned
-        offset:
-          type: integer
-          format: int64
-          description: Number of results skipped
-      required:
-      - consentGroups
-      - total
-      - limit
-      - offset
-      description: Paginated list of consent groups.
-      title: ConsentGroupsListResponse
     ConsentGroup:
       type: object
       properties:
@@ -364,6 +331,65 @@ components:
       - updatedAt
       description: A consent group representing a category of contact opt-in/opt-out preferences.
       title: ConsentGroup
+    CreateConsentGroupRequestSignupMode:
+      type: string
+      enum:
+      - manual
+      - automatic
+      description: Controls how contacts are added to the group. `manual` — contacts are added explicitly via the API. `automatic` — contacts are added automatically at signup.
+      title: CreateConsentGroupRequestSignupMode
+    ContactsConsentGroupsGetParametersSignupMode:
+      type: string
+      enum:
+      - manual
+      - automatic
+      title: ContactsConsentGroupsGetParametersSignupMode
+    UpdateConsentGroupRequestSignupMode:
+      type: string
+      enum:
+      - manual
+      - automatic
+      description: New signup mode
+      title: UpdateConsentGroupRequestSignupMode
+    ConsentGroupsListResponse:
+      type: object
+      properties:
+        consentGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConsentGroup'
+          description: List of consent groups matching the filter
+        total:
+          type: integer
+          format: int64
+          description: Total number of consent groups matching the filter
+        limit:
+          type: integer
+          format: int64
+          description: Maximum number of results returned
+        offset:
+          type: integer
+          format: int64
+          description: Number of results skipped
+      required:
+      - consentGroups
+      - total
+      - limit
+      - offset
+      description: Paginated list of consent groups.
+      title: ConsentGroupsListResponse
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
     UpdateConsentGroupRequest:
       type: object
       properties:
@@ -378,39 +404,6 @@ components:
           description: New signup mode
       description: Request body for updating a consent group. At least one field must be provided.
       title: UpdateConsentGroupRequest
-    UpdateConsentGroupRequestSignupMode:
-      type: string
-      enum:
-      - manual
-      - automatic
-      description: New signup mode
-      title: UpdateConsentGroupRequestSignupMode
-    errorModel:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - message
-      title: errorModel
-    ConsentGroupSignupMode:
-      type: string
-      enum:
-      - manual
-      - automatic
-      description: Controls how contacts are added to the group. `manual` — contacts are added explicitly via the API. `automatic` — contacts are added automatically at signup.
-      title: ConsentGroupSignupMode
-    CreateConsentGroupRequestSignupMode:
-      type: string
-      enum:
-      - manual
-      - automatic
-      description: Controls how contacts are added to the group. `manual` — contacts are added explicitly via the API. `automatic` — contacts are added automatically at signup.
-      title: CreateConsentGroupRequestSignupMode
     CreateConsentGroupRequest:
       type: object
       properties:
@@ -434,6 +427,13 @@ components:
       - signupMode
       description: Request body for creating a consent group.
       title: CreateConsentGroupRequest
+    ConsentGroupSignupMode:
+      type: string
+      enum:
+      - manual
+      - automatic
+      description: Controls how contacts are added to the group. `manual` — contacts are added explicitly via the API. `automatic` — contacts are added automatically at signup.
+      title: ConsentGroupSignupMode
   securitySchemes:
     api-key:
       type: apiKey

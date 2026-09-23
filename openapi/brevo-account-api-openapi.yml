@@ -6,7 +6,7 @@ servers:
 - url: https://api.brevo.com/v3
   description: https://api.brevo.com/v3
 tags:
-- name: account
+- name: Account
 paths:
   /account:
     get:
@@ -55,11 +55,9 @@ paths:
 
         - Relay configuration crucial for transactional email setup and deliverability
 
-        - Enterprise status determines access to advanced features and sub-account management
-
-        '
+        - Enterprise status determines access to advanced features and sub-account management'
       tags:
-      - account
+      - Account
       parameters:
       - name: api-key
         in: header
@@ -115,7 +113,7 @@ paths:
 
         Note: Requires Enterprise plan for access to organization activity logs.'
       tags:
-      - account
+      - Account
       parameters:
       - name: startDate
         in: query
@@ -182,63 +180,81 @@ paths:
                 $ref: '#/components/schemas/GetAccountActivityRequestBadRequestError'
 components:
   schemas:
-    AccountGetResponsesContentApplicationJsonSchemaAddress:
+    AccountGetResponsesContentApplicationJsonSchemaRelayData:
       type: object
       properties:
-        city:
+        port:
+          type: integer
+          description: Port used for SMTP Relay
+        relay:
           type: string
-          description: City information
-        country:
+          description: URL of the SMTP Relay
+        userName:
           type: string
-          description: Country information
-        street:
-          type: string
-          description: Street information
-        zipCode:
-          type: string
-          description: Zip Code information
+          format: email
+          description: Email to use as login on transactional platform
       required:
-      - city
-      - country
-      - street
-      - zipCode
-      description: Address informations
-      title: AccountGetResponsesContentApplicationJsonSchemaAddress
-    AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItems:
+      - port
+      - relay
+      - userName
+      description: Data regarding the transactional email account
+      title: AccountGetResponsesContentApplicationJsonSchemaRelayData
+    AccountGetResponsesContentApplicationJsonSchemaPlanItems:
       type: object
       properties:
-        planCategory:
-          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsPlanCategory'
-          description: Category of the plan
-        planType:
-          type: string
-          description: Type of plan within the category
-        name:
-          type: string
-          description: Name of the plan
-        status:
-          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsStatus'
-          description: Current status of the plan
-        startDate:
-          type: string
-          description: Plan start date (Unix timestamp)
-        endDate:
-          type: string
-          description: Plan end date (Unix timestamp)
-        users:
-          oneOf:
-          - $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsUsers'
-          - type: 'null'
-          description: User seat information for the plan
         credits:
           type: string
-          description: Credits allocated for this plan category (optional, may not be present for all plan categories)
+          title: float
+          description: Remaining credits of the user
+        creditsType:
+          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaPlanItemsCreditsType'
+          description: 'This is the type of the credit, "Send Limit" is one
+
+            of the possible types of credit of a user. "Send
+
+            Limit" implies the total number of emails you can
+
+            send to the subscribers in your account.'
+        endDate:
+          type: string
+          description: 'Date of the period from which the plan will end
+
+            (Unix timestamp format)'
+        startDate:
+          type: string
+          description: 'Date of the period from which the plan will start
+
+            (Unix timestamp format)'
+        type:
+          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaPlanItemsType'
+          description: Displays the plan type of the user
       required:
-      - planCategory
-      - planType
-      - name
-      - status
-      title: AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItems
+      - credits
+      - creditsType
+      - type
+      title: AccountGetResponsesContentApplicationJsonSchemaPlanItems
+    AccountGetResponsesContentApplicationJsonSchemaPlanItemsType:
+      type: string
+      enum:
+      - payAsYouGo
+      - free
+      - subscription
+      - sms
+      description: Displays the plan type of the user
+      title: AccountGetResponsesContentApplicationJsonSchemaPlanItemsType
+    GetAccountRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetAccountRequestBadRequestError
     Account_getAccount_Response_200:
       type: object
       properties:
@@ -293,112 +309,6 @@ components:
       - plan
       - relay
       title: Account_getAccount_Response_200
-    AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsStatus:
-      type: string
-      enum:
-      - active
-      - inactive
-      description: Current status of the plan
-      title: AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsStatus
-    AccountGetResponsesContentApplicationJsonSchemaRelay:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaRelayData'
-          description: Data regarding the transactional email account
-        enabled:
-          type: boolean
-          description: 'Status of your transactional email Account
-
-            (true=Enabled, false=Disabled)'
-      required:
-      - data
-      - enabled
-      description: Information about your transactional email account
-      title: AccountGetResponsesContentApplicationJsonSchemaRelay
-    GetAccountRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetAccountRequestBadRequestError
-    AccountGetResponsesContentApplicationJsonSchemaPlanItems:
-      type: object
-      properties:
-        credits:
-          type: string
-          title: float
-          description: Remaining credits of the user
-        creditsType:
-          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaPlanItemsCreditsType'
-          description: 'This is the type of the credit, "Send Limit" is one
-
-            of the possible types of credit of a user. "Send
-
-            Limit" implies the total number of emails you can
-
-            send to the subscribers in your account.'
-        endDate:
-          type: string
-          description: 'Date of the period from which the plan will end
-
-            (Unix timestamp format)'
-        startDate:
-          type: string
-          description: 'Date of the period from which the plan will start
-
-            (Unix timestamp format)'
-        type:
-          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaPlanItemsType'
-          description: Displays the plan type of the user
-      required:
-      - credits
-      - creditsType
-      - type
-      title: AccountGetResponsesContentApplicationJsonSchemaPlanItems
-    AccountGetResponsesContentApplicationJsonSchemaPlanItemsType:
-      type: string
-      enum:
-      - payAsYouGo
-      - free
-      - subscription
-      - sms
-      description: Displays the plan type of the user
-      title: AccountGetResponsesContentApplicationJsonSchemaPlanItemsType
-    GetAccountActivityRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/OrganizationActivitiesGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetAccountActivityRequestBadRequestError
-    AccountGetResponsesContentApplicationJsonSchemaMarketingAutomation:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: 'Status of Marketing Automation Plateform activation
-
-            for your account (true=enabled, false=disabled)'
-        key:
-          type: string
-          description: Marketing Automation Tracker ID
-      required:
-      - enabled
-      title: AccountGetResponsesContentApplicationJsonSchemaMarketingAutomation
     AccountGetResponsesContentApplicationJsonSchemaPlanItemsCreditsType:
       type: string
       enum:
@@ -419,25 +329,108 @@ components:
       - CRM
       description: Category of the plan
       title: AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsPlanCategory
-    AccountGetResponsesContentApplicationJsonSchemaRelayData:
+    AccountGetResponsesContentApplicationJsonSchemaRelay:
       type: object
       properties:
-        port:
-          type: integer
-          description: Port used for SMTP Relay
-        relay:
-          type: string
-          description: URL of the SMTP Relay
-        userName:
-          type: string
-          format: email
-          description: Email to use as login on transactional platform
+        data:
+          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaRelayData'
+          description: Data regarding the transactional email account
+        enabled:
+          type: boolean
+          description: 'Status of your transactional email Account
+
+            (true=Enabled, false=Disabled)'
       required:
-      - port
-      - relay
-      - userName
-      description: Data regarding the transactional email account
-      title: AccountGetResponsesContentApplicationJsonSchemaRelayData
+      - data
+      - enabled
+      description: Information about your transactional email account
+      title: AccountGetResponsesContentApplicationJsonSchemaRelay
+    AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItems:
+      type: object
+      properties:
+        planCategory:
+          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsPlanCategory'
+          description: Category of the plan
+        planType:
+          type: string
+          description: Type of plan within the category
+        name:
+          type: string
+          description: Name of the plan
+        status:
+          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsStatus'
+          description: Current status of the plan
+        startDate:
+          type: string
+          description: Plan start date (Unix timestamp)
+        endDate:
+          type: string
+          description: Plan end date (Unix timestamp)
+        users:
+          oneOf:
+          - $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsUsers'
+          - type: 'null'
+          description: User seat information for the plan
+        credits:
+          type: string
+          description: Credits allocated for this plan category (optional, may not be present for all plan categories)
+      required:
+      - planCategory
+      - planType
+      - name
+      - status
+      title: AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItems
+    AccountGetResponsesContentApplicationJsonSchemaAddress:
+      type: object
+      properties:
+        city:
+          type: string
+          description: City information
+        country:
+          type: string
+          description: Country information
+        street:
+          type: string
+          description: Street information
+        zipCode:
+          type: string
+          description: Zip Code information
+      required:
+      - city
+      - country
+      - street
+      - zipCode
+      description: Address informations
+      title: AccountGetResponsesContentApplicationJsonSchemaAddress
+    OrganizationActivitiesGetResponsesContentApplicationJsonSchemaLogsItems:
+      type: object
+      properties:
+        action:
+          type: string
+          description: Type of activity in the account.
+        date:
+          type: string
+          description: Time of the activity.
+        user_agent:
+          type: string
+          description: Browser details of the user who performed the activity.
+        user_email:
+          type: string
+          description: 'Email address of the user who performed activity in the
+
+            account.'
+        user_ip:
+          type: string
+          description: 'IP address of the user who performed activity in the
+
+            account.'
+      required:
+      - action
+      - date
+      - user_agent
+      - user_email
+      - user_ip
+      title: OrganizationActivitiesGetResponsesContentApplicationJsonSchemaLogsItems
     OrganizationActivitiesGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -479,44 +472,26 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: OrganizationActivitiesGetResponsesContentApplicationJsonSchemaCode
-    OrganizationActivitiesGetResponsesContentApplicationJsonSchemaLogsItems:
+    AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsStatus:
+      type: string
+      enum:
+      - active
+      - inactive
+      description: Current status of the plan
+      title: AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsStatus
+    GetAccountActivityRequestBadRequestError:
       type: object
       properties:
-        action:
+        code:
+          $ref: '#/components/schemas/OrganizationActivitiesGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
           type: string
-          description: Type of activity in the account.
-        date:
-          type: string
-          description: Time of the activity.
-        user_agent:
-          type: string
-          description: Browser details of the user who performed the activity.
-        user_email:
-          type: string
-          description: 'Email address of the user who performed activity in the
-
-            account.'
-        user_ip:
-          type: string
-          description: 'IP address of the user who performed activity in the
-
-            account.'
+          description: Readable message associated to the failure
       required:
-      - action
-      - date
-      - user_agent
-      - user_email
-      - user_ip
-      title: OrganizationActivitiesGetResponsesContentApplicationJsonSchemaLogsItems
-    Account_getAccountActivity_Response_200:
-      type: object
-      properties:
-        logs:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationActivitiesGetResponsesContentApplicationJsonSchemaLogsItems'
-          description: Get user activity logs
-      title: Account_getAccountActivity_Response_200
+      - code
+      - message
+      title: GetAccountActivityRequestBadRequestError
     AccountGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -572,6 +547,29 @@ components:
       - usedSeats
       description: User seat information for the plan
       title: AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsUsers
+    Account_getAccountActivity_Response_200:
+      type: object
+      properties:
+        logs:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationActivitiesGetResponsesContentApplicationJsonSchemaLogsItems'
+          description: Get user activity logs
+      title: Account_getAccountActivity_Response_200
+    AccountGetResponsesContentApplicationJsonSchemaMarketingAutomation:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: 'Status of Marketing Automation Plateform activation
+
+            for your account (true=enabled, false=disabled)'
+        key:
+          type: string
+          description: Marketing Automation Tracker ID
+      required:
+      - enabled
+      title: AccountGetResponsesContentApplicationJsonSchemaMarketingAutomation
   securitySchemes:
     api-key:
       type: apiKey

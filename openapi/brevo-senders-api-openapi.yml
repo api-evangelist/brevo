@@ -1,85 +1,1106 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Brevo Contacts Agent Status Senders API
-  description: The Brevo Contacts API provides programmatic access to contact management features including creating, updating, and deleting contacts. Developers can organize contacts into lists, apply attributes and tags, import contacts in bulk, and build audience segments for targeted campaigns. The API also supports managing folders, contact attributes, and custom fields to structure contact data according to business needs.
-  version: '3.0'
-  contact:
-    name: Brevo Support
-    url: https://help.brevo.com
-  termsOfService: https://www.brevo.com/legal/termsofuse/
+  title: Brevo Senders API
+  version: '1.0'
+  description: 'Operations tagged senders across 2 of this provider''s published API definitions: brevo-accounts-and-settings-openapi.yml, brevo-transactional-email-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.brevo.com/v3
-  description: Brevo Production API Server
-security:
-- apiKeyAuth: []
+  description: https://api.brevo.com/v3
 tags:
 - name: Senders
-  description: Manage sender identities used for transactional email sending.
 paths:
   /senders:
     get:
       operationId: getSenders
       summary: Get email senders
-      description: Retrieves the list of all sender identities configured in the account for use with transactional and marketing emails.
+      description: 'Retrieves a list of all email senders from your Brevo account with optional filtering.
+
+
+        **Use this to:**
+
+        - Get all available senders for email campaign setup
+
+        - Find sender details including ID, name, and email address
+
+        - Filter senders by IP address for dedicated IP users
+
+        - Filter senders by domain for domain-specific configurations
+
+        - Monitor sender configuration and status
+
+
+        **Key information returned:**
+
+        - Sender details (ID, name, email address)
+
+        - Sender status and verification information
+
+        - Associated IP addresses and domains (for dedicated IP accounts)
+
+        - Sender configuration settings
+
+
+        **Important considerations:**
+
+        - Standard accounts show empty IP arrays, dedicated IP accounts show IP assignments
+
+        - Filtering by IP only available for accounts with dedicated IPs
+
+        - Domain filtering helps organize senders by business units or brands
+
+        - Sender status indicates if sender is active and ready for campaign use
+
+        - Email verification required before sender can be used in campaigns'
       tags:
       - Senders
       parameters:
       - name: ip
         in: query
-        description: Filter senders by dedicated IP address.
+        description: 'Filter your senders for a specific ip. **Available for dedicated IP usage only**
+
+          '
+        required: false
         schema:
           type: string
       - name: domain
         in: query
-        description: Filter senders by domain name.
+        description: Filter your senders for a specific domain
+        required: false
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
         schema:
           type: string
       responses:
         '200':
-          description: Senders retrieved successfully
+          description: List of senders retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SenderList'
-        '401':
-          description: Unauthorized
+                $ref: '#/components/schemas/Senders_getSenders_Response_200'
+        '400':
+          description: bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/GetSendersRequestBadRequestError'
     post:
       operationId: createSender
-      summary: Create a new sender
-      description: Creates a new sender identity that can be used for sending transactional and marketing emails. The sender must be verified before use.
+      summary: Create email sender
+      description: 'Creates a new email sender in your Brevo account.
+
+
+        **Use this to:**
+
+        - Add new senders for email campaigns
+
+        - Configure sender identity (name and email)
+
+        - Associate dedicated IPs with the sender (for dedicated IP accounts)
+
+        - Set up domain-based sender configurations
+
+
+        **Key information returned:**
+
+        - Created sender ID
+
+        - DKIM and SPF configuration status
+
+        - Success confirmation
+
+
+        **Important considerations:**
+
+        - Verification email sent to specified sender address
+
+        - DKIM and SPF configuration affects deliverability
+
+        - Dedicated IP accounts require IP association during creation
+
+        - IP weights must sum to 100 when specified
+
+        - Sender must be verified before use in campaigns'
       tags:
       - Senders
-      requestBody:
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
         required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateSender'
+        schema:
+          type: string
       responses:
         '201':
           description: Sender created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateSenderResponse'
+                $ref: '#/components/schemas/Senders_createSender_Response_201'
         '400':
-          description: Bad request
+          description: bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '401':
-          description: Unauthorized
+                $ref: '#/components/schemas/CreateSenderRequestBadRequestError'
+      requestBody:
+        description: sender's configuration
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: 'From email to use for the sender. A verification email will be
+
+                    sent to this address.'
+                ips:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/SendersPostRequestBodyContentApplicationJsonSchemaIpsItems'
+                  description: '**Mandatory in case of dedicated IP**. IPs to associate to the
+
+                    sender. Not required for standard accounts.'
+                name:
+                  type: string
+                  description: From Name to use for the sender
+              required:
+              - email
+              - name
+    servers:
+    - url: https://api.brevo.com/v3
+      description: https://api.brevo.com/v3
+  /senders/{senderId}:
+    put:
+      operationId: updateSender
+      summary: Update a sender
+      description: 'Updates an existing email sender''s configuration.
+
+
+        Use this to:
+
+        - Modify sender display name or email address
+
+        - Update dedicated IP associations
+
+        - Change sender configuration settings
+
+        - Correct sender information
+
+
+        Key information returned:
+
+        - Success confirmation
+
+        - Updated sender details'
+      tags:
+      - Senders
+      parameters:
+      - name: senderId
+        in: path
+        description: Id of the sender
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Sender updated successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateSenderRequestBadRequestError'
+        '404':
+          description: Sender ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: sender's configuration to update
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: From Email to update the sender
+                ips:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/SendersSenderIdPutRequestBodyContentApplicationJsonSchemaIpsItems'
+                  description: '**Only in case of dedicated IP**. IPs to associate to the
+
+                    sender. If passed, will replace all the existing IPs. Not required for standard accounts.'
+                name:
+                  type: string
+                  description: From Name to update the sender
+    delete:
+      operationId: deleteSender
+      summary: Delete a sender
+      description: 'Deletes an email sender from your Brevo account.
+
+
+        Use this to:
+
+        - Remove senders that are no longer needed
+
+        - Clean up sender configurations
+
+        - Remove duplicate or test senders
+
+
+        Key information returned:
+
+        - Success confirmation message'
+      tags:
+      - Senders
+      parameters:
+      - name: senderId
+        in: path
+        description: Id of the sender
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Sender deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteSenderRequestBadRequestError'
+        '404':
+          description: Sender ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+    servers:
+    - url: https://api.brevo.com/v3
+      description: https://api.brevo.com/v3
+  /senders/{senderId}/validate:
+    put:
+      operationId: validateSenderByOTP
+      summary: Validate a sender using OTP
+      description: 'Validates a sender using the OTP (One-Time Password) received via email.
+
+
+        Use this to:
+
+        - Complete sender verification process
+
+        - Activate a newly created sender
+
+        - Verify ownership of the sender email address
+
+        - Enable the sender for use in email campaigns
+
+
+        Key information returned:
+
+        - Success confirmation of sender verification
+
+        - Sender activation status'
+      tags:
+      - Senders
+      parameters:
+      - name: senderId
+        in: path
+        description: Id of the sender
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Sender verified successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateSenderByOTPRequestBadRequestError'
+        '404':
+          description: Sender ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: OTP verification code
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                otp:
+                  type: integer
+                  description: 6 digit OTP received on email
+              required:
+              - otp
+    servers:
+    - url: https://api.brevo.com/v3
+      description: https://api.brevo.com/v3
+  /senders/ips:
+    get:
+      operationId: getIps
+      summary: Get all the dedicated IPs for your account
+      description: 'Retrieves all dedicated IPs associated with your Brevo account.
+
+
+        Use this to:
+
+        - List all your dedicated IPs
+
+        - Check the status of your dedicated IPs (active/inactive)
+
+        - Find IP addresses and associated domains for configuration purposes
+
+        - Monitor your IP reputation and deliverability
+
+        - Verify available IPs for sender configuration
+
+
+        Key information returned:
+
+        - IP ID and address
+
+        - Associated domain
+
+        - Active status
+
+        - IP configuration details'
+      tags:
+      - Senders
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of dedicated IPs retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Senders_getIps_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetIpsRequestBadRequestError'
+    servers:
+    - url: https://api.brevo.com/v3
+      description: https://api.brevo.com/v3
+  /senders/{senderId}/ips:
+    get:
+      operationId: getIpsFromSender
+      summary: Get all the dedicated IPs for a specific sender
+      description: 'Retrieves the dedicated IPs associated with a specific sender.
+
+
+        Use this to:
+
+        - Check IP configuration for a sender
+
+        - Verify dedicated IP associations
+
+        - Get IP details for troubleshooting
+
+        - Monitor sender IP configuration
+
+
+        Key information returned:
+
+        - List of associated dedicated IPs
+
+        - IP addresses and domain configurations
+
+        - IP status and settings'
+      tags:
+      - Senders
+      parameters:
+      - name: senderId
+        in: path
+        description: Id of the sender
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of dedicated IPs retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Senders_getIpsFromSender_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetIpsFromSenderRequestBadRequestError'
+        '404':
+          description: Sender ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+    servers:
+    - url: https://api.brevo.com/v3
+      description: https://api.brevo.com/v3
 components:
   schemas:
+    SendersPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SendersPostResponsesContentApplicationJsonSchemaCode
+    ValidateSenderByOTPRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SendersSenderIdValidatePutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: ValidateSenderByOTPRequestBadRequestError
+    DeleteSenderRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SendersSenderIdDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteSenderRequestBadRequestError
+    SendersSenderIdValidatePutResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SendersSenderIdValidatePutResponsesContentApplicationJsonSchemaCode
+    SendersSenderIdIpsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SendersSenderIdIpsGetResponsesContentApplicationJsonSchemaCode
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
+    SendersSenderIdIpsGetResponsesContentApplicationJsonSchemaIpsItems:
+      type: object
+      properties:
+        domain:
+          type: string
+          description: Domain associated to the IP
+        id:
+          type: integer
+          format: int64
+          description: ID of the dedicated IP
+        ip:
+          type: string
+          description: Dedicated IP address
+        weight:
+          type: integer
+          format: int64
+          description: Weight of the IP for this sender
+      required:
+      - domain
+      - id
+      - ip
+      - weight
+      title: SendersSenderIdIpsGetResponsesContentApplicationJsonSchemaIpsItems
+    CreateSenderRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SendersPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreateSenderRequestBadRequestError
+    SendersSenderIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SendersSenderIdDeleteResponsesContentApplicationJsonSchemaCode
+    SendersSenderIdPutRequestBodyContentApplicationJsonSchemaIpsItems:
+      type: object
+      properties:
+        domain:
+          type: string
+          description: Domain of the IP
+        ip:
+          type: string
+          description: Dedicated IP available in your account
+        weight:
+          type: integer
+          format: int64
+          description: 'Weight to apply to the IP. Sum of all IP weights must be
+
+            100. Should be passed for either ALL or NONE of the IPs.
+
+            If it''s not passed, the sending will be equally balanced
+
+            on all IPs.'
+      required:
+      - domain
+      - ip
+      title: SendersSenderIdPutRequestBodyContentApplicationJsonSchemaIpsItems
+    SendersIpsGetResponsesContentApplicationJsonSchemaIpsItems:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID of the dedicated IP
+        active:
+          type: boolean
+          description: Status of the IP (true=active, false=inactive)
+        domain:
+          type: string
+          description: Domain associated to the IP
+        ip:
+          type: string
+          description: Dedicated IP address
+      required:
+      - id
+      - active
+      - domain
+      - ip
+      title: SendersIpsGetResponsesContentApplicationJsonSchemaIpsItems
+    SendersGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SendersGetResponsesContentApplicationJsonSchemaCode
+    GetIpsRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SendersIpsGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetIpsRequestBadRequestError
+    GetIpsFromSenderRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SendersSenderIdIpsGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetIpsFromSenderRequestBadRequestError
+    SendersGetResponsesContentApplicationJsonSchemaSendersItems:
+      type: object
+      properties:
+        active:
+          type: boolean
+          description: Status of sender (true=activated, false=deactivated)
+        email:
+          type: string
+          format: email
+          description: From Email associated to the sender
+        id:
+          type: integer
+          format: int64
+          description: Id of the sender
+        ips:
+          type: array
+          items:
+            $ref: '#/components/schemas/SendersGetResponsesContentApplicationJsonSchemaSendersItemsIpsItems'
+          description: 'List of dedicated IP(s) available in the account. This
+
+            data is displayed only for dedicated IPs. For standard accounts,
+
+            this will be an empty array.'
+        name:
+          type: string
+          description: From Name associated to the sender
+      required:
+      - active
+      - email
+      - id
+      - ips
+      - name
+      title: SendersGetResponsesContentApplicationJsonSchemaSendersItems
+    Senders_getIps_Response_200:
+      type: object
+      properties:
+        ips:
+          type: array
+          items:
+            $ref: '#/components/schemas/SendersIpsGetResponsesContentApplicationJsonSchemaIpsItems'
+          description: 'Dedicated IP(s) available on your account. Returns empty array
+
+            for standard accounts without dedicated IPs.'
+      required:
+      - ips
+      title: Senders_getIps_Response_200
+    Senders_getSenders_Response_200:
+      type: object
+      properties:
+        senders:
+          type: array
+          items:
+            $ref: '#/components/schemas/SendersGetResponsesContentApplicationJsonSchemaSendersItems'
+          description: List of the senders available in your account
+      title: Senders_getSenders_Response_200
+    SendersSenderIdPutResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SendersSenderIdPutResponsesContentApplicationJsonSchemaCode
+    SendersPostRequestBodyContentApplicationJsonSchemaIpsItems:
+      type: object
+      properties:
+        domain:
+          type: string
+          description: Domain of the IP
+        ip:
+          type: string
+          description: Dedicated IP available in your account
+        weight:
+          type: integer
+          format: int64
+          description: 'Weight to apply to the IP. Sum of all IP weights must be
+
+            100. Should be passed for either ALL or NONE of the IPs.
+
+            If it''s not passed, the sending will be equally balanced
+
+            on all IPs.'
+      required:
+      - domain
+      - ip
+      title: SendersPostRequestBodyContentApplicationJsonSchemaIpsItems
+    Senders_getIpsFromSender_Response_200:
+      type: object
+      properties:
+        ips:
+          type: array
+          items:
+            $ref: '#/components/schemas/SendersSenderIdIpsGetResponsesContentApplicationJsonSchemaIpsItems'
+          description: 'Dedicated IP(s) linked to a sender. Returns empty array for standard accounts
+
+            without dedicated IPs.'
+      required:
+      - ips
+      title: Senders_getIpsFromSender_Response_200
+    GetSendersRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SendersGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetSendersRequestBadRequestError
+    SendersGetResponsesContentApplicationJsonSchemaSendersItemsIpsItems:
+      type: object
+      properties:
+        domain:
+          type: string
+          description: Domain of the IP
+        ip:
+          type: string
+          description: Dedicated IP available in your account
+        weight:
+          type: integer
+          format: int64
+          description: Weight of the IP for this sender
+      required:
+      - domain
+      - ip
+      - weight
+      title: SendersGetResponsesContentApplicationJsonSchemaSendersItemsIpsItems
+    Senders_createSender_Response_201:
+      type: object
+      properties:
+        dkimError:
+          type: boolean
+          description: 'Status of DKIM configuration for the sender (true = DKIM not
+
+            well configured, false = DKIM well configured)'
+        id:
+          type: integer
+          format: int64
+          description: ID of the Sender created
+        spfError:
+          type: boolean
+          description: 'Status of SPF configuration for the sender (true = SPF not
+
+            well configured, false = SPF well configured)'
+      required:
+      - id
+      title: Senders_createSender_Response_201
+    UpdateSenderRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SendersSenderIdPutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UpdateSenderRequestBadRequestError
+    SendersIpsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SendersIpsGetResponsesContentApplicationJsonSchemaCode
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code identifying the type of error.
+        message:
+          type: string
+          description: Human-readable description of the error.
     SenderList:
       type: object
       properties:
@@ -103,15 +1124,6 @@ components:
               active:
                 type: boolean
                 description: Whether the sender is verified and active.
-    ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code identifying the type of error.
-        message:
-          type: string
-          description: Human-readable description of the error.
     CreateSenderResponse:
       type: object
       properties:
@@ -133,11 +1145,19 @@ components:
           format: email
           description: Email address for the new sender.
   securitySchemes:
+    api-key:
+      type: apiKey
+      in: header
+      name: api-key
+      description: The API key should be passed in the request headers as `api-key` for authentication.
     apiKeyAuth:
       type: apiKey
       in: header
       name: api-key
       description: Brevo API key passed in the api-key request header for authentication.
 externalDocs:
-  description: Brevo Contacts Documentation
-  url: https://developers.brevo.com/docs/how-it-works
+  description: Brevo Transactional Email Documentation
+  url: https://developers.brevo.com/docs/send-a-transactional-email
+x-refined-from:
+- brevo-accounts-and-settings-openapi.yml
+- brevo-transactional-email-openapi.yml

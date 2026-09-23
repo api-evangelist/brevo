@@ -6,15 +6,14 @@ servers:
 - url: https://api.brevo.com/v3
   description: https://api.brevo.com/v3
 tags:
-- name: reward
+- name: Reward
 paths:
   /loyalty/offer/programs/{pid}/code-pools/{cpid}/codes-count:
     get:
       operationId: getCodeCount
       summary: Get code count
-      description: Get code count
       tags:
-      - reward
+      - Reward
       parameters:
       - name: pid
         in: path
@@ -77,9 +76,8 @@ paths:
     get:
       operationId: getVoucherForAContact
       summary: Get voucher for a contact
-      description: Get voucher for a contact
       tags:
-      - reward
+      - Reward
       parameters:
       - name: pid
         in: path
@@ -183,7 +181,7 @@ paths:
       summary: Get Reward Page API
       description: Returns a reward page
       tags:
-      - reward
+      - Reward
       parameters:
       - name: pid
         in: path
@@ -274,7 +272,7 @@ paths:
       summary: Create a reward
       description: Creates a new reward in the loyalty program.
       tags:
-      - reward
+      - Reward
       parameters:
       - name: pid
         in: path
@@ -347,7 +345,7 @@ paths:
       summary: Get reward information
       description: Returns reward information.
       tags:
-      - reward
+      - Reward
       parameters:
       - name: pid
         in: path
@@ -425,7 +423,7 @@ paths:
       summary: Create a voucher
       description: Create a voucher and attribute it to a specific membership.
       tags:
-      - reward
+      - Reward
       parameters:
       - name: pid
         in: path
@@ -526,7 +524,7 @@ paths:
       summary: Create redeem voucher request
       description: Creates a request to redeem a voucher.
       tags:
-      - reward
+      - Reward
       parameters:
       - name: pid
         in: path
@@ -640,7 +638,7 @@ paths:
       summary: Complete redeem voucher request
       description: Completes voucher redeem request.
       tags:
-      - reward
+      - Reward
       parameters:
       - name: pid
         in: path
@@ -722,7 +720,7 @@ paths:
       summary: Revoke vouchers
       description: Revoke attributed vouchers.
       tags:
-      - reward
+      - Reward
       parameters:
       - name: pid
         in: path
@@ -769,7 +767,7 @@ paths:
       summary: Validate a reward
       description: Validates a reward.
       tags:
-      - reward
+      - Reward
       parameters:
       - name: pid
         in: path
@@ -856,101 +854,6 @@ paths:
                   description: Unique identifier for the reward
 components:
   schemas:
-    LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrder:
-      type: object
-      properties:
-        amount:
-          type: number
-          format: double
-          description: Total amount of the order
-        billing:
-          $ref: '#/components/schemas/LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrderBilling'
-          description: Billing information for the order
-        contact_id:
-          type: integer
-          format: int64
-          description: Unique identifier for the contact
-        coupons:
-          type: array
-          items:
-            type: string
-          description: List of coupon codes applied to the order
-        createdAt:
-          type: string
-          format: date-time
-          description: Timestamp when the order was created
-        email:
-          type: string
-          format: email
-          description: Email address associated with the order
-        id:
-          type: string
-          description: Unique identifier for the order
-        identifiers:
-          $ref: '#/components/schemas/LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrderIdentifiers'
-          description: Additional identifiers for the order
-        products:
-          type: array
-          items:
-            $ref: '#/components/schemas/LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrderProductsItems'
-          description: List of products in the order
-        status:
-          type: string
-          description: Current status of the order
-        storeId:
-          type: string
-          description: Identifier for the store where the order was placed
-        updatedAt:
-          type: string
-          format: date-time
-          description: Timestamp when the order was last updated
-      description: Order details for the redemption
-      title: LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrder
-    Reward_getCodeCount_Response_200:
-      type: object
-      properties:
-        count:
-          type: integer
-          format: int64
-          description: Number of codes
-      title: Reward_getCodeCount_Response_200
-    LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaRewardConfigs:
-      type: object
-      properties:
-        attribution:
-          type: string
-          description: Attribution config of the reward
-        code:
-          type: string
-          description: Code config of the reward
-        value:
-          type: string
-          description: Value config of the reward
-      description: object
-      title: LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaRewardConfigs
-    ruleConditionResponse:
-      type: object
-      properties:
-        and:
-          type: array
-          items:
-            $ref: '#/components/schemas/ruleConditionResponse'
-          description: Metric to indicate AND between rules
-        lhs:
-          $ref: '#/components/schemas/valueResponse'
-          description: Condition of the rule
-        op:
-          type: string
-          description: Selected operator for the rule
-        or:
-          type: array
-          items:
-            $ref: '#/components/schemas/ruleConditionResponse'
-          description: Metric to indicate OR between rules
-        rhs:
-          $ref: '#/components/schemas/valueResponse'
-          description: Action of the rule
-      title: ruleConditionResponse
     LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaRuleResultsItemsParametersItems:
       type: object
       properties:
@@ -961,13 +864,6 @@ components:
           $ref: '#/components/schemas/valueResponse'
           description: Selected value of the parameter to define the rule
       title: LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaRuleResultsItemsParametersItems
-    LoyaltyOfferProgramsPidOffersGetParametersVersion:
-      type: string
-      enum:
-      - active
-      - draft
-      default: draft
-      title: LoyaltyOfferProgramsPidOffersGetParametersVersion
     Reward_getVoucherForAContact_Response_200:
       type: object
       properties:
@@ -990,138 +886,6 @@ components:
           type: string
           description: Loyalty Subscription Id for the contact
       title: Reward_getVoucherForAContact_Response_200
-    Reward_createReward_Response_200:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique identifier for the reward
-        loyaltyProgramId:
-          type: string
-          format: uuid
-          description: Loyalty program to which the reward belongs
-        name:
-          type: string
-          description: Name of the reward
-        publicDescription:
-          type: string
-          description: Public description of the reward
-        publicImage:
-          type: string
-          description: Public image URL of the reward
-        publicName:
-          type: string
-          description: Public name of the reward
-        createdAt:
-          type: string
-          format: date-time
-          description: Timestamp when the reward was created
-        updatedAt:
-          type: string
-          format: date-time
-          description: Timestamp when the reward was last updated
-      title: Reward_createReward_Response_200
-    LoyaltyOfferProgramsPidVouchersGetParametersSortField:
-      type: string
-      enum:
-      - updatedAt
-      - createdAt
-      default: updatedAt
-      title: LoyaltyOfferProgramsPidVouchersGetParametersSortField
-    LoyaltyOfferProgramsPidRewardsRidGetParametersVersion:
-      type: string
-      enum:
-      - active
-      - draft
-      default: draft
-      title: LoyaltyOfferProgramsPidRewardsRidGetParametersVersion
-    LoyaltyOfferProgramsPidOffersGetResponsesContentApplicationJsonSchemaItemsItems:
-      type: object
-      properties:
-        createdAt:
-          type: string
-          format: date-time
-          description: Timestamp for when this reward was created
-        endDate:
-          type: string
-          format: date-time
-          description: Timestamp for when this reward attribution ended
-        id:
-          type: string
-          format: uuid
-          description: Unique identifier for the reward
-        loyaltyProgramId:
-          type: string
-          format: uuid
-          description: Loyalty Program to which current reward is associated
-        name:
-          type: string
-          description: Name of the reward
-        publicImage:
-          type: string
-          description: Public image of the reward
-        startDate:
-          type: string
-          format: date-time
-          description: Timestamp for when this reward attribution started
-        state:
-          type: string
-          description: State of the reward
-        updatedAt:
-          type: string
-          format: date-time
-          description: Timestamp for when this reward attribution was updated
-      title: LoyaltyOfferProgramsPidOffersGetResponsesContentApplicationJsonSchemaItemsItems
-    Reward_createVoucher_Response_200:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Generated code
-        consumedAt:
-          type: string
-          description: Timestamp for when this reward was consumed
-        contactId:
-          type: integer
-          format: int64
-          description: Id of the contact that attributed the reward
-        createdAt:
-          type: string
-          format: date-time
-          description: Timestamp for when this reward was created
-        expirationDate:
-          type: string
-          format: date-time
-          description: Expiration date of the reward
-        id:
-          type: string
-          format: uuid
-          description: Unique identifier
-        loyaltyProgramId:
-          type: string
-          description: Loyalty Program Id to which attributed reward belongs
-        meta:
-          type: object
-          additionalProperties:
-            description: Any type
-          description: Additional data to define the reward
-        rewardId:
-          type: string
-          description: Unique identifier for the reward
-        updatedAt:
-          type: string
-          format: date-time
-          description: Timestamp for when this reward was updated
-        value:
-          type: number
-          format: double
-          description: Value of the selected reward config
-        validFrom:
-          type: string
-          format: date-time
-          description: Date from which the voucher becomes valid
-      title: Reward_createVoucher_Response_200
     valueResponse:
       type: object
       properties:
@@ -1176,56 +940,157 @@ components:
           type: string
           description: Identifier for the product variant
       title: LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrderProductsItems
-    LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaGenerator:
+    LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaRuleResultsItems:
       type: object
       properties:
+        action:
+          type: string
+          description: Action for the defined rule
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaRuleResultsItemsParametersItems'
+          description: Parameters to define the reward
+        service:
+          type: string
+          description: Selected service to define the reward
+      title: LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaRuleResultsItems
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
+    Reward_createVoucher_Response_200:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Generated code
+        consumedAt:
+          type: string
+          description: Timestamp for when this reward was consumed
+        contactId:
+          type: integer
+          format: int64
+          description: Id of the contact that attributed the reward
         createdAt:
           type: string
-          description: Timestamp when the reward was created
-        description:
+          format: date-time
+          description: Timestamp for when this reward was created
+        expirationDate:
           type: string
-          description: Public facing description of the reward
+          format: date-time
+          description: Expiration date of the reward
         id:
           type: string
           format: uuid
+          description: Unique identifier
+        loyaltyProgramId:
+          type: string
+          description: Loyalty Program Id to which attributed reward belongs
+        meta:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Additional data to define the reward
+        rewardId:
+          type: string
           description: Unique identifier for the reward
-        name:
-          type: string
-          description: Name of the reward
-        pattern:
-          type: string
-          description: Generated pattern
         updatedAt:
           type: string
           format: date-time
-          description: Timestamp when the reward was created
-      description: object
-      title: LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaGenerator
-    LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaProductsItems:
+          description: Timestamp for when this reward was updated
+        value:
+          type: number
+          format: double
+          description: Value of the selected reward config
+        validFrom:
+          type: string
+          format: date-time
+          description: Date from which the voucher becomes valid
+      title: Reward_createVoucher_Response_200
+    LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaRewardConfigs:
       type: object
       properties:
-        createdAt:
+        attribution:
           type: string
-          description: Timestamp when the product was created
-        imageRef:
+          description: Attribution config of the reward
+        code:
           type: string
-          description: URL of the product image
-        productId:
-          type: string
-          description: Unique identifier for the product
+          description: Code config of the reward
         value:
           type: string
-          description: string
-      title: LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaProductsItems
-    LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaExpirationModifier:
-      type: string
-      enum:
-      - startOfPeriod
-      - endOfPeriod
-      - noModification
-      default: noModification
-      description: Select startOfPeriod to configure rewards expiry on start of day/week/month/year. Select endOfPeriod to configure reward expiry on end of day/week/month/year, else select noModification
-      title: LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaExpirationModifier
+          description: Value config of the reward
+      description: object
+      title: LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaRewardConfigs
+    LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrder:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+          description: Total amount of the order
+        billing:
+          $ref: '#/components/schemas/LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrderBilling'
+          description: Billing information for the order
+        contact_id:
+          type: integer
+          format: int64
+          description: Unique identifier for the contact
+        coupons:
+          type: array
+          items:
+            type: string
+          description: List of coupon codes applied to the order
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the order was created
+        email:
+          type: string
+          format: email
+          description: Email address associated with the order
+        id:
+          type: string
+          description: Unique identifier for the order
+        identifiers:
+          $ref: '#/components/schemas/LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrderIdentifiers'
+          description: Additional identifiers for the order
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrderProductsItems'
+          description: List of products in the order
+        status:
+          type: string
+          description: Current status of the order
+        storeId:
+          type: string
+          description: Identifier for the store where the order was placed
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the order was last updated
+      description: Order details for the redemption
+      title: LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrder
+    LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrderIdentifiers:
+      type: object
+      properties:
+        ext_id:
+          type: string
+          description: External identifier for the order
+        loyalty_subscription_id:
+          type: string
+          description: Identifier for the loyalty subscription
+      description: Additional identifiers for the order
+      title: LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrderIdentifiers
     redeem:
       type: object
       properties:
@@ -1315,173 +1180,79 @@ components:
           format: date-time
           description: Timestamp when the reward limit was created
       title: LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaLimitsItems
-    nodeResponse:
-      type: object
-      properties:
-        args:
-          type: array
-          items:
-            $ref: '#/components/schemas/nodeResponse'
-          description: array[object]
-        array:
-          type: array
-          items:
-            $ref: '#/components/schemas/nodeResponse'
-          description: Array values for rule definition
-        boolean:
-          type: boolean
-          description: Boolean values for rule definition
-        description:
-          type: string
-          description: Description for rule definition
-        float:
-          type: number
-          format: double
-          description: Float values for rule definition
-        int:
-          type: integer
-          format: int64
-          description: int64
-        op:
-          type: string
-          description: Operator selected for rule definition
-        string:
-          type: string
-          description: Boolean values for rule definition
-      title: nodeResponse
-    Reward_getRewardPageApi_Response_200:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/LoyaltyOfferProgramsPidOffersGetResponsesContentApplicationJsonSchemaItemsItems'
-          description: Items for the current reward
-        totalCount:
-          type: integer
-          description: Count of the associated parameter in current reward
-      title: Reward_getRewardPageApi_Response_200
-    LoyaltyOfferProgramsPidVouchersGetParametersSort:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: desc
-      title: LoyaltyOfferProgramsPidVouchersGetParametersSort
-    errorModel:
+    LoyaltyOfferProgramsPidVouchersGetResponsesContentApplicationJsonSchemaContactRewardsItems:
       type: object
       properties:
         code:
           type: string
-          description: Error code displayed in case of a failure
-        message:
+          description: Generated code
+        consumedAt:
           type: string
-          description: Readable message associated to the failure
-      required:
-      - message
-      title: errorModel
-    LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaRuleResultsItems:
-      type: object
-      properties:
-        action:
-          type: string
-          description: Action for the defined rule
-        parameters:
-          type: array
-          items:
-            $ref: '#/components/schemas/LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaRuleResultsItemsParametersItems'
-          description: Parameters to define the reward
-        service:
-          type: string
-          description: Selected service to define the reward
-      title: LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaRuleResultsItems
-    LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrderBilling:
-      type: object
-      properties:
-        address:
-          type: string
-          description: Address of the user
-        city:
-          type: string
-          description: City of the user
-        countryCode:
-          type: string
-          description: Country code of the user
-        paymentMethod:
-          type: string
-          description: Payment method opted by the user
-        phone:
-          type: integer
-          format: int64
-          description: Phone number of the user
-        postCode:
-          type: integer
-          format: int64
-          description: Postal Code of user's location
-        region:
-          type: string
-          description: Region where user resides
-      description: Billing information for the order
-      title: LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrderBilling
-    LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaRule:
-      type: object
-      properties:
-        condition:
-          $ref: '#/components/schemas/ruleConditionResponse'
-          description: Selected rule condition
+          description: Timestamp when the reward limit was consumed
         createdAt:
           type: string
-          description: Timestamp when the rule was created
-        description:
+          description: Timestamp when the reward limit was created
+        expirationDate:
           type: string
-          description: Description of the rule
-        event:
-          $ref: '#/components/schemas/LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaRuleEvent'
-          description: Selected event in the rule
-        isInternal:
-          type: boolean
-          description: Metric to identify if it's an internal rule or not
-        loyaltyProgramId:
+          description: Reward expiration date
+        id:
           type: string
-          description: Loyalty Program id to which current rule is associated
-        loyaltyVersionId:
-          type: integer
-          description: Loyalty Version id to which current rule is associated
+          description: Unique identifier for the contact
         meta:
           type: object
           additionalProperties:
             description: Any type
-          description: Additional data to define the rule
-        name:
+          description: Additional data for the reward
+        rewardId:
           type: string
-          description: Rule name
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaRuleResultsItems'
-          description: Results of the rule definition
-        ruleId:
+          description: Unique identifier for the reward
+        unit:
           type: string
-          description: Unique identifier for the rule
-        ruleType:
-          type: string
-          description: Type of the rule
+          description: Unit of the balance selected in the reward definition
         updatedAt:
           type: string
-          description: Timestamp when the rule was updated
-      description: Rule to define the reward
-      title: LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaRule
-    LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrderIdentifiers:
+          description: Timestamp when the reward limit was updated
+        value:
+          type: number
+          format: double
+          description: Value of the selected reward config
+        validFrom:
+          type: string
+          format: date-time
+          description: Date from which the voucher becomes valid
+      title: LoyaltyOfferProgramsPidVouchersGetResponsesContentApplicationJsonSchemaContactRewardsItems
+    Reward_createReward_Response_200:
       type: object
       properties:
-        ext_id:
+        id:
           type: string
-          description: External identifier for the order
-        loyalty_subscription_id:
+          format: uuid
+          description: Unique identifier for the reward
+        loyaltyProgramId:
           type: string
-          description: Identifier for the loyalty subscription
-      description: Additional identifiers for the order
-      title: LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrderIdentifiers
+          format: uuid
+          description: Loyalty program to which the reward belongs
+        name:
+          type: string
+          description: Name of the reward
+        publicDescription:
+          type: string
+          description: Public description of the reward
+        publicImage:
+          type: string
+          description: Public image URL of the reward
+        publicName:
+          type: string
+          description: Public name of the reward
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the reward was created
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the reward was last updated
+      title: Reward_createReward_Response_200
     Reward_getRewardInformation_Response_200:
       type: object
       properties:
@@ -1627,6 +1398,58 @@ components:
           type: string
           description: Type of config selected for reward definition
       title: Reward_getRewardInformation_Response_200
+    Reward_getRewardPageApi_Response_200:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoyaltyOfferProgramsPidOffersGetResponsesContentApplicationJsonSchemaItemsItems'
+          description: Items for the current reward
+        totalCount:
+          type: integer
+          description: Count of the associated parameter in current reward
+      title: Reward_getRewardPageApi_Response_200
+    LoyaltyOfferProgramsPidOffersGetParametersVersion:
+      type: string
+      enum:
+      - active
+      - draft
+      default: draft
+      title: LoyaltyOfferProgramsPidOffersGetParametersVersion
+    LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaGenerator:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: Timestamp when the reward was created
+        description:
+          type: string
+          description: Public facing description of the reward
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the reward
+        name:
+          type: string
+          description: Name of the reward
+        pattern:
+          type: string
+          description: Generated pattern
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the reward was created
+      description: object
+      title: LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaGenerator
+    Reward_getCodeCount_Response_200:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: Number of codes
+      title: Reward_getCodeCount_Response_200
     LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaRuleEvent:
       type: object
       properties:
@@ -1638,47 +1461,180 @@ components:
           description: Source of the event
       description: Selected event in the rule
       title: LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaRuleEvent
-    LoyaltyOfferProgramsPidVouchersGetResponsesContentApplicationJsonSchemaContactRewardsItems:
+    LoyaltyOfferProgramsPidOffersGetResponsesContentApplicationJsonSchemaItemsItems:
       type: object
       properties:
-        code:
-          type: string
-          description: Generated code
-        consumedAt:
-          type: string
-          description: Timestamp when the reward limit was consumed
         createdAt:
           type: string
-          description: Timestamp when the reward limit was created
-        expirationDate:
+          format: date-time
+          description: Timestamp for when this reward was created
+        endDate:
           type: string
-          description: Reward expiration date
+          format: date-time
+          description: Timestamp for when this reward attribution ended
         id:
           type: string
-          description: Unique identifier for the contact
+          format: uuid
+          description: Unique identifier for the reward
+        loyaltyProgramId:
+          type: string
+          format: uuid
+          description: Loyalty Program to which current reward is associated
+        name:
+          type: string
+          description: Name of the reward
+        publicImage:
+          type: string
+          description: Public image of the reward
+        startDate:
+          type: string
+          format: date-time
+          description: Timestamp for when this reward attribution started
+        state:
+          type: string
+          description: State of the reward
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp for when this reward attribution was updated
+      title: LoyaltyOfferProgramsPidOffersGetResponsesContentApplicationJsonSchemaItemsItems
+    LoyaltyOfferProgramsPidRewardsRidGetParametersVersion:
+      type: string
+      enum:
+      - active
+      - draft
+      default: draft
+      title: LoyaltyOfferProgramsPidRewardsRidGetParametersVersion
+    LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaRule:
+      type: object
+      properties:
+        condition:
+          $ref: '#/components/schemas/ruleConditionResponse'
+          description: Selected rule condition
+        createdAt:
+          type: string
+          description: Timestamp when the rule was created
+        description:
+          type: string
+          description: Description of the rule
+        event:
+          $ref: '#/components/schemas/LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaRuleEvent'
+          description: Selected event in the rule
+        isInternal:
+          type: boolean
+          description: Metric to identify if it's an internal rule or not
+        loyaltyProgramId:
+          type: string
+          description: Loyalty Program id to which current rule is associated
+        loyaltyVersionId:
+          type: integer
+          description: Loyalty Version id to which current rule is associated
         meta:
           type: object
           additionalProperties:
             description: Any type
-          description: Additional data for the reward
-        rewardId:
+          description: Additional data to define the rule
+        name:
           type: string
-          description: Unique identifier for the reward
-        unit:
+          description: Rule name
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaRuleResultsItems'
+          description: Results of the rule definition
+        ruleId:
           type: string
-          description: Unit of the balance selected in the reward definition
+          description: Unique identifier for the rule
+        ruleType:
+          type: string
+          description: Type of the rule
         updatedAt:
           type: string
-          description: Timestamp when the reward limit was updated
+          description: Timestamp when the rule was updated
+      description: Rule to define the reward
+      title: LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaRule
+    LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaProductsItems:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: Timestamp when the product was created
+        imageRef:
+          type: string
+          description: URL of the product image
+        productId:
+          type: string
+          description: Unique identifier for the product
         value:
+          type: string
+          description: string
+      title: LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaProductsItems
+    ruleConditionResponse:
+      type: object
+      properties:
+        and:
+          type: array
+          items:
+            $ref: '#/components/schemas/ruleConditionResponse'
+          description: Metric to indicate AND between rules
+        lhs:
+          $ref: '#/components/schemas/valueResponse'
+          description: Condition of the rule
+        op:
+          type: string
+          description: Selected operator for the rule
+        or:
+          type: array
+          items:
+            $ref: '#/components/schemas/ruleConditionResponse'
+          description: Metric to indicate OR between rules
+        rhs:
+          $ref: '#/components/schemas/valueResponse'
+          description: Action of the rule
+      title: ruleConditionResponse
+    nodeResponse:
+      type: object
+      properties:
+        args:
+          type: array
+          items:
+            $ref: '#/components/schemas/nodeResponse'
+          description: array[object]
+        array:
+          type: array
+          items:
+            $ref: '#/components/schemas/nodeResponse'
+          description: Array values for rule definition
+        boolean:
+          type: boolean
+          description: Boolean values for rule definition
+        description:
+          type: string
+          description: Description for rule definition
+        float:
           type: number
           format: double
-          description: Value of the selected reward config
-        validFrom:
+          description: Float values for rule definition
+        int:
+          type: integer
+          format: int64
+          description: int64
+        op:
           type: string
-          format: date-time
-          description: Date from which the voucher becomes valid
-      title: LoyaltyOfferProgramsPidVouchersGetResponsesContentApplicationJsonSchemaContactRewardsItems
+          description: Operator selected for rule definition
+        string:
+          type: string
+          description: Boolean values for rule definition
+      title: nodeResponse
+    LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaExpirationModifier:
+      type: string
+      enum:
+      - startOfPeriod
+      - endOfPeriod
+      - noModification
+      default: noModification
+      description: Select startOfPeriod to configure rewards expiry on start of day/week/month/year. Select endOfPeriod to configure reward expiry on end of day/week/month/year, else select noModification
+      title: LoyaltyOfferProgramsPidRewardsRidGetResponsesContentApplicationJsonSchemaExpirationModifier
     Reward_validateReward_Response_200:
       type: object
       properties:
@@ -1686,6 +1642,48 @@ components:
           type: boolean
           description: Boolean value to authorize a reward or not
       title: Reward_validateReward_Response_200
+    LoyaltyOfferProgramsPidVouchersGetParametersSortField:
+      type: string
+      enum:
+      - updatedAt
+      - createdAt
+      default: updatedAt
+      title: LoyaltyOfferProgramsPidVouchersGetParametersSortField
+    LoyaltyOfferProgramsPidVouchersGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: LoyaltyOfferProgramsPidVouchersGetParametersSort
+    LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrderBilling:
+      type: object
+      properties:
+        address:
+          type: string
+          description: Address of the user
+        city:
+          type: string
+          description: City of the user
+        countryCode:
+          type: string
+          description: Country code of the user
+        paymentMethod:
+          type: string
+          description: Payment method opted by the user
+        phone:
+          type: integer
+          format: int64
+          description: Phone number of the user
+        postCode:
+          type: integer
+          format: int64
+          description: Postal Code of user's location
+        region:
+          type: string
+          description: Region where user resides
+      description: Billing information for the order
+      title: LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrderBilling
   securitySchemes:
     api-key:
       type: apiKey

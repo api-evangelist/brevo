@@ -1,22 +1,19 @@
-generated: '2026-08-13'
+generated: '2026-09-19'
 method: searched
 source: live probes of Brevo API, docs, MCP and OAuth hosts
-description: >-
-  Brevo publishes a real RFC 9727 API catalog at the developer-docs host, and RFC 8414
-  authorization-server metadata on both the partner OAuth realm and the hosted MCP server.
-  The API host (api.brevo.com) serves no /.well-known/ surface at all, and neither the
-  marketing site (www.brevo.com, a Next.js app that answers 500 on every /.well-known/ path)
-  nor the apex (brevo.com, an unrouted Vercel deployment) serves one.
+description: Brevo publishes a real RFC 9727 API catalog at the developer-docs host, and RFC 8414 authorization-server
+  metadata on both the partner OAuth realm and the hosted MCP server. The API host (api.brevo.com) serves
+  no /.well-known/ surface at all, and neither the marketing site (www.brevo.com, a Next.js app that answers
+  500 on every /.well-known/ path) nor the apex (brevo.com, an unrouted Vercel deployment) serves one.
 hosts:
 - host: https://developers.brevo.com
   documents:
   - path: /.well-known/api-catalog
     status: 200
     file: brevo-api-catalog.json
-    note: >-
-      RFC 9727 linkset. 13 service-desc entries, each pointing at a published OpenAPI 3.1
-      YAML under https://developers.brevo.com/openapi/. This is how the full published
-      contract set was discovered; all 13 are now harvested verbatim into openapi/.
+    note: RFC 9727 linkset. 13 service-desc entries, each pointing at a published OpenAPI 3.1 YAML under
+      https://developers.brevo.com/openapi/. This is how the full published contract set was discovered;
+      all 13 are now harvested verbatim into openapi/.
   - path: /.well-known/security.txt
     status: 404
   - path: /.well-known/openid-configuration
@@ -34,10 +31,9 @@ hosts:
   - path: /.well-known/oauth-authorization-server
     status: 200
     file: brevo-oauth-authorization-server.json
-    note: >-
-      RFC 8414 metadata for the Brevo partner OAuth realm. Carries a live scopes_supported
-      list of 37 scopes, which the docs state is sourced from the same catalog the
-      `brevo app available-scopes` CLI command reads. Feeds scopes/brevo-scopes.yml.
+    note: RFC 8414 metadata for the Brevo partner OAuth realm. Carries a live scopes_supported list of
+      37 scopes, which the docs state is sourced from the same catalog the `brevo app available-scopes`
+      CLI command reads. Feeds scopes/brevo-scopes.yml.
   - path: /.well-known/openid-configuration
     status: 200
     file: brevo-openid-configuration.json
@@ -47,13 +43,17 @@ hosts:
   - path: /.well-known/oauth-authorization-server
     status: 200
     file: brevo-mcp-oauth-authorization-server.json
-    note: >-
-      RFC 8414 metadata for the hosted Brevo MCP server. Advertises dynamic client
-      registration (registration_endpoint), PKCE S256 only, and a single scope "all".
+    note: RFC 8414 metadata for the hosted Brevo MCP server. Advertises dynamic client registration (registration_endpoint),
+      PKCE S256 only, and a single scope "all".
   - path: /.well-known/oauth-protected-resource
     status: 404
   - path: /.well-known/agent-card.json
     status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: brevo-mcp-oauth-protected-resource.json
+    bytes: 170
+  path_echo_control: passed
 - host: https://api.brevo.com
   documents:
   - path: /.well-known/security.txt
@@ -74,10 +74,9 @@ hosts:
   documents:
   - path: /.well-known/security.txt
     status: 500
-    note: >-
-      Next.js error page, not a document. Brevo does publish a responsible-disclosure
-      policy, but as an HTML page at /legal/responsible-disclosure/ — not as RFC 9116
-      security.txt. Captured in security/brevo-vulnerability-disclosure.yml instead.
+    note: Next.js error page, not a document. Brevo does publish a responsible-disclosure policy, but
+      as an HTML page at /legal/responsible-disclosure/ — not as RFC 9116 security.txt. Captured in security/brevo-vulnerability-disclosure.yml
+      instead.
   - path: /.well-known/openid-configuration
     status: 500
   - path: /.well-known/oauth-authorization-server
@@ -101,3 +100,16 @@ x-evidence:
   fetched: '2026-08-13'
   hits: 4
   misses: 27
+x-mcp-probe:
+  probed: '2026-09-19'
+  issue: roadmap#321, roadmap#337
+  documents:
+  - host: https://mcp.brevo.com
+    path: /.well-known/oauth-protected-resource
+    file: brevo-mcp-oauth-protected-resource.json
+  validated_on: resource (RFC 9728) / issuer (RFC 8414, OIDC)
+  negative_control: one per host; a 2xx JSON object at an impossible path discards the host
+note: 'MCP-host OAuth discovery added 2026-09-19 (roadmap#321/#337): the harvest visits a provider''s
+  primary hosts, and RFC 9728 protected-resource metadata lives on the MCP host, so these documents existed
+  and were invisible to the scorer. Fetched live and validated on `resource`/`issuer`; one negative control
+  per host.'

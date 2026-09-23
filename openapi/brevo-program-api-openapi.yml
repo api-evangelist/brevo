@@ -6,7 +6,7 @@ servers:
 - url: https://api.brevo.com/v3
   description: https://api.brevo.com/v3
 tags:
-- name: program
+- name: Program
 paths:
   /loyalty/config/programs:
     get:
@@ -14,7 +14,7 @@ paths:
       summary: Get loyalty program list
       description: Returns list of loyalty programs
       tags:
-      - program
+      - Program
       parameters:
       - name: limit
         in: query
@@ -94,7 +94,7 @@ paths:
       summary: Create loyalty program
       description: Creates loyalty program
       tags:
-      - program
+      - Program
       parameters:
       - name: api-key
         in: header
@@ -168,7 +168,7 @@ paths:
       summary: Get loyalty program Info
       description: Returns loyalty program
       tags:
-      - program
+      - Program
       parameters:
       - name: pid
         in: path
@@ -225,7 +225,7 @@ paths:
       summary: Update loyalty program
       description: Updates loyalty program
       tags:
-      - program
+      - Program
       parameters:
       - name: pid
         in: path
@@ -306,7 +306,7 @@ paths:
       summary: Partially update loyalty program
       description: Partially updates loyalty program
       tags:
-      - program
+      - Program
       parameters:
       - name: pid
         in: path
@@ -385,7 +385,7 @@ paths:
       summary: Delete Loyalty Program
       description: Deletes Loyalty Program
       tags:
-      - program
+      - Program
       parameters:
       - name: pid
         in: path
@@ -444,7 +444,7 @@ paths:
       summary: Publish loyalty program
       description: Publishes loyalty program
       tags:
-      - program
+      - Program
       parameters:
       - name: pid
         in: path
@@ -502,7 +502,7 @@ paths:
       summary: Create subscription
       description: Subscribes to a loyalty program
       tags:
-      - program
+      - Program
       parameters:
       - name: pid
         in: path
@@ -591,7 +591,7 @@ paths:
       summary: Create subscription member
       description: Add member to a subscription
       tags:
-      - program
+      - Program
       parameters:
       - name: pid
         in: path
@@ -674,7 +674,7 @@ paths:
       summary: Delete subscription member
       description: Deletes member from a subscription
       tags:
-      - program
+      - Program
       parameters:
       - name: pid
         in: path
@@ -745,7 +745,7 @@ paths:
       summary: Delete subscription
       description: Delete subscription for a contact
       tags:
-      - program
+      - Program
       parameters:
       - name: pid
         in: path
@@ -816,7 +816,7 @@ paths:
       summary: Get Subscription Data
       description: Get Information of balances, tiers, rewards and subscription members for a subscription
       tags:
-      - program
+      - Program
       parameters:
       - name: pid
         in: path
@@ -894,38 +894,6 @@ paths:
                 $ref: '#/components/schemas/errorModel'
 components:
   schemas:
-    Program_getParameterSubscriptionInfo_Response_200:
-      type: object
-      properties:
-        balance:
-          $ref: '#/components/schemas/LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaBalance'
-          description: Balance details for the subscription.
-        members:
-          type: array
-          items:
-            $ref: '#/components/schemas/LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaMembersItems'
-          description: List of members associated with the subscription.
-        reward:
-          type: array
-          items:
-            $ref: '#/components/schemas/LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaRewardItems'
-          description: List of rewards associated with the subscription.
-        tier:
-          type: array
-          items:
-            $ref: '#/components/schemas/LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaTierItems'
-          description: List of tier assignments for the subscription.
-      title: Program_getParameterSubscriptionInfo_Response_200
-    LoyaltyConfigProgramsPidPutRequestBodyContentApplicationJsonSchemaMeta:
-      type: object
-      properties: {}
-      description: Loyalty Program meta data
-      title: LoyaltyConfigProgramsPidPutRequestBodyContentApplicationJsonSchemaMeta
-    LoyaltyConfigProgramsPidPatchRequestBodyContentApplicationJsonSchemaMeta:
-      type: object
-      properties: {}
-      description: Loyalty Program meta data
-      title: LoyaltyConfigProgramsPidPatchRequestBodyContentApplicationJsonSchemaMeta
     LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaTierItems:
       type: object
       properties:
@@ -953,6 +921,128 @@ components:
           type: string
           description: Timestamp when the tier was last updated
       title: LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaTierItems
+    LoyaltyConfigProgramsPidPutRequestBodyContentApplicationJsonSchemaMeta:
+      type: object
+      properties: {}
+      description: Loyalty Program meta data
+      title: LoyaltyConfigProgramsPidPutRequestBodyContentApplicationJsonSchemaMeta
+    LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaRewardItems:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Reward code assigned to the contact.
+        contactId:
+          type: integer
+          description: Unique identifier of the contact.
+        createdAt:
+          type: string
+          description: Timestamp when the reward was created.
+        expirationDate:
+          type: string
+          description: Expiration date of the reward.
+        id:
+          type: string
+          description: Unique identifier of the reward.
+        loyaltyProgramId:
+          type: string
+          description: Unique identifier of the loyalty program.
+        meta:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Additional metadata related to the reward.
+        rewardId:
+          type: string
+          description: Unique identifier of the reward definition.
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the reward was last updated.
+        validFrom:
+          type: string
+          format: date-time
+          description: Date from which the voucher becomes valid.
+      title: LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaRewardItems
+    LoyaltyConfigProgramsGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      title: LoyaltyConfigProgramsGetParametersSort
+    Program_getParameterSubscriptionInfo_Response_200:
+      type: object
+      properties:
+        balance:
+          $ref: '#/components/schemas/LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaBalance'
+          description: Balance details for the subscription.
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaMembersItems'
+          description: List of members associated with the subscription.
+        reward:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaRewardItems'
+          description: List of rewards associated with the subscription.
+        tier:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaTierItems'
+          description: List of tier assignments for the subscription.
+      title: Program_getParameterSubscriptionInfo_Response_200
+    Program_subscribeToLoyaltyProgram_Response_200:
+      type: object
+      properties:
+        organizationId:
+          type: integer
+          format: int64
+          description: Unique identifier of the organization.
+        loyaltyProgramId:
+          type: string
+          format: uuid
+          description: Unique identifier of the loyalty program.
+        versionId:
+          type: integer
+          description: Version number of the subscription.
+        contactId:
+          type: integer
+          format: int64
+          description: Unique identifier of the contact.
+        loyaltySubscriptionId:
+          type: string
+          description: Unique identifier of the subscription.
+        meta:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Metadata associated with the subscription.
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the subscription was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the subscription was last updated.
+      title: Program_subscribeToLoyaltyProgram_Response_200
+    LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaBalance:
+      type: object
+      properties:
+        balances:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaBalanceBalancesItems'
+          description: List of balance details associated with the contact.
+        contactId:
+          type: integer
+          description: Unique identifier of the contact.
+        loyaltyProgramId:
+          type: string
+          description: Unique identifier of the loyalty program.
+      description: Balance details for the subscription.
+      title: LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaBalance
     loyaltyProgram:
       type: object
       properties:
@@ -1005,149 +1095,11 @@ components:
           format: date-time
           description: Timestamp when the loyalty program was last modified.
       title: loyaltyProgram
-    LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaRewardItems:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Reward code assigned to the contact.
-        contactId:
-          type: integer
-          description: Unique identifier of the contact.
-        createdAt:
-          type: string
-          description: Timestamp when the reward was created.
-        expirationDate:
-          type: string
-          description: Expiration date of the reward.
-        id:
-          type: string
-          description: Unique identifier of the reward.
-        loyaltyProgramId:
-          type: string
-          description: Unique identifier of the loyalty program.
-        meta:
-          type: object
-          additionalProperties:
-            description: Any type
-          description: Additional metadata related to the reward.
-        rewardId:
-          type: string
-          description: Unique identifier of the reward definition.
-        updatedAt:
-          type: string
-          format: date-time
-          description: Timestamp when the reward was last updated.
-        validFrom:
-          type: string
-          format: date-time
-          description: Date from which the voucher becomes valid.
-      title: LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaRewardItems
-    LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaMembersItems:
-      type: object
-      properties:
-        createdAt:
-          type: string
-          description: Timestamp when the member was created.
-        memberContactId:
-          type: integer
-          description: Unique identifier of the member.
-        updatedAt:
-          type: string
-          description: Timestamp when the member was last updated.
-      title: LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaMembersItems
     Program_publishLoyaltyProgram_Response_200:
       type: object
       properties: {}
       description: Empty response body
       title: Program_publishLoyaltyProgram_Response_200
-    LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaBalance:
-      type: object
-      properties:
-        balances:
-          type: array
-          items:
-            $ref: '#/components/schemas/LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaBalanceBalancesItems'
-          description: List of balance details associated with the contact.
-        contactId:
-          type: integer
-          description: Unique identifier of the contact.
-        loyaltyProgramId:
-          type: string
-          description: Unique identifier of the loyalty program.
-      description: Balance details for the subscription.
-      title: LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaBalance
-    LoyaltyConfigProgramsGetParametersSortField:
-      type: string
-      enum:
-      - name
-      - created_at
-      - updated_at
-      title: LoyaltyConfigProgramsGetParametersSortField
-    LoyaltyConfigProgramsGetParametersSort:
-      type: string
-      enum:
-      - asc
-      - desc
-      title: LoyaltyConfigProgramsGetParametersSort
-    LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaBalanceBalancesItems:
-      type: object
-      properties:
-        balanceDefinitionId:
-          type: string
-          description: Unique identifier for the balance definition).
-        value:
-          type: number
-          format: double
-          description: The amount of the balance.
-      title: LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaBalanceBalancesItems
-    errorModel:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - message
-      title: errorModel
-    Program_subscribeToLoyaltyProgram_Response_200:
-      type: object
-      properties:
-        organizationId:
-          type: integer
-          format: int64
-          description: Unique identifier of the organization.
-        loyaltyProgramId:
-          type: string
-          format: uuid
-          description: Unique identifier of the loyalty program.
-        versionId:
-          type: integer
-          description: Version number of the subscription.
-        contactId:
-          type: integer
-          format: int64
-          description: Unique identifier of the contact.
-        loyaltySubscriptionId:
-          type: string
-          description: Unique identifier of the subscription.
-        meta:
-          type: object
-          additionalProperties:
-            description: Any type
-          description: Metadata associated with the subscription.
-        createdAt:
-          type: string
-          format: date-time
-          description: Timestamp when the subscription was created.
-        updatedAt:
-          type: string
-          format: date-time
-          description: Timestamp when the subscription was last updated.
-      title: Program_subscribeToLoyaltyProgram_Response_200
     Program_subscribeMemberToASubscription_Response_200:
       type: object
       properties:
@@ -1174,6 +1126,62 @@ components:
           format: date-time
           description: Timestamp when the subscription member was last updated.
       title: Program_subscribeMemberToASubscription_Response_200
+    LoyaltyConfigProgramsGetParametersSortField:
+      type: string
+      enum:
+      - name
+      - created_at
+      - updated_at
+      title: LoyaltyConfigProgramsGetParametersSortField
+    LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaBalanceBalancesItems:
+      type: object
+      properties:
+        balanceDefinitionId:
+          type: string
+          description: Unique identifier for the balance definition).
+        value:
+          type: number
+          format: double
+          description: The amount of the balance.
+      title: LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaBalanceBalancesItems
+    LoyaltyConfigProgramsPidPatchRequestBodyContentApplicationJsonSchemaMeta:
+      type: object
+      properties: {}
+      description: Loyalty Program meta data
+      title: LoyaltyConfigProgramsPidPatchRequestBodyContentApplicationJsonSchemaMeta
+    LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaMembersItems:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: Timestamp when the member was created.
+        memberContactId:
+          type: integer
+          description: Unique identifier of the member.
+        updatedAt:
+          type: string
+          description: Timestamp when the member was last updated.
+      title: LoyaltyConfigProgramsPidAccountInfoGetResponsesContentApplicationJsonSchemaMembersItems
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
+    LoyaltyProgramState:
+      type: string
+      enum:
+      - inactive
+      - active
+      - draft
+      description: Current state of the loyalty program.
+      title: LoyaltyProgramState
     Program_getLPList_Response_200:
       type: object
       properties:
@@ -1183,14 +1191,6 @@ components:
             $ref: '#/components/schemas/loyaltyProgram'
           description: Loyalty Program list
       title: Program_getLPList_Response_200
-    LoyaltyProgramState:
-      type: string
-      enum:
-      - inactive
-      - active
-      - draft
-      description: Current state of the loyalty program.
-      title: LoyaltyProgramState
   securitySchemes:
     api-key:
       type: apiKey

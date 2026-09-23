@@ -1,338 +1,4817 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Brevo Agent Status Contacts API
-  description: The Brevo Contacts API provides programmatic access to contact management features including creating, updating, and deleting contacts. Developers can organize contacts into lists, apply attributes and tags, import contacts in bulk, and build audience segments for targeted campaigns. The API also supports managing folders, contact attributes, and custom fields to structure contact data according to business needs.
-  version: '3.0'
-  contact:
-    name: Brevo Support
-    url: https://help.brevo.com
-  termsOfService: https://www.brevo.com/legal/termsofuse/
+  title: Contact Management Contacts API
+  version: 1.0.0
 servers:
 - url: https://api.brevo.com/v3
-  description: Brevo Production API Server
-security:
-- apiKeyAuth: []
+  description: https://api.brevo.com/v3
 tags:
 - name: Contacts
-  description: Create, retrieve, update, and delete individual contacts.
 paths:
-  /contacts:
-    get:
-      operationId: listContacts
-      summary: Get all contacts
-      description: Retrieves a paginated list of contacts from the account. Supports filtering by modification date and sorting. The response includes contact attributes and list memberships.
+  /contacts/attributes/{attributeCategory}/{attributeName}:
+    post:
+      operationId: createAttribute
+      summary: Create contact attribute
+      description: 'Create a new contact attribute under the specified category and name. The required body properties depend on the category: use "type" for normal, transactional, or category attributes; use "value" for calculated or global attributes; use "enumeration" for category attributes; and use "multiCategoryOptions" for normal multiple-choice attributes. None of the category or multicategory option values can exceed 200 characters.'
       tags:
       - Contacts
       parameters:
-      - $ref: '#/components/parameters/limitParam'
-      - $ref: '#/components/parameters/offsetParam'
-      - name: modifiedSince
-        in: query
-        description: Filter contacts modified since this date-time in ISO 8601 format.
-        schema:
-          type: string
-          format: date-time
-      - name: sort
-        in: query
-        description: Sort direction for the results.
-        schema:
-          type: string
-          enum:
-          - asc
-          - desc
-      responses:
-        '200':
-          description: Contacts retrieved successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ContactList'
-        '400':
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-    post:
-      operationId: createContact
-      summary: Create a contact
-      description: Creates a new contact with the specified email address and optional attributes. The contact can be immediately added to one or more lists. Duplicate email addresses will result in an update of the existing contact if updateEnabled is set.
-      tags:
-      - Contacts
-      requestBody:
+      - name: attributeCategory
+        in: path
+        description: Category of the attribute
         required: true
+        schema:
+          $ref: '#/components/schemas/ContactsAttributesAttributeCategoryAttributeNamePostParametersAttributeCategory'
+      - name: attributeName
+        in: path
+        description: Name of the attribute
+        required: true
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Attribute created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contacts_createAttribute_Response_201'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateAttributeRequestBadRequestError'
+      requestBody:
+        description: Values to create an attribute
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateContact'
+              type: object
+              properties:
+                enumeration:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ContactsAttributesAttributeCategoryAttributeNamePostRequestBodyContentApplicationJsonSchemaEnumerationItems'
+                  description: 'List of values and labels that the attribute can take. **Use only if the attribute''s category is "category"**. None of the category options can exceed max 200 characters. For example: **[{"value":1, "label":"male"}, {"value":2, "label":"female"}]**
+
+                    '
+                isRecurring:
+                  type: boolean
+                  description: 'Type of the attribute. **Use only if the attribute''s category is ''calculated'' or ''global''**
+
+                    '
+                multiCategoryOptions:
+                  type: array
+                  items:
+                    type: string
+                  description: 'List of options you want to add for multiple-choice attribute. **Use only if the attribute''s category is "normal" and attribute''s type is "multiple-choice". None of the multicategory options can exceed max 200 characters.** For example: **["USA","INDIA"]**
+
+                    '
+                type:
+                  $ref: '#/components/schemas/ContactsAttributesAttributeCategoryAttributeNamePostRequestBodyContentApplicationJsonSchemaType'
+                  description: 'Type of the attribute. **Use only if the attribute''s category is ''normal'', ''category'' or ''transactional''** Type **user and multiple-choice** is only available if the category is **normal** attribute Type **id** is only available if the category is **transactional** attribute Type **category** is only available if the category is **category** attribute
+
+                    '
+                value:
+                  type: string
+                  description: 'Value of the attribute. **Use only if the attribute''s category is ''calculated'' or ''global''**
+
+                    '
+    put:
+      operationId: updateAttribute
+      summary: Update contact attribute
+      description: Update an existing contact attribute identified by its category and name. For category-type attributes, you can update the enumeration values; for calculated or global attributes, update the computed value formula; and for normal multiple-choice attributes, update the multicategory options. None of the category or multicategory option values can exceed 200 characters.
+      tags:
+      - Contacts
+      parameters:
+      - name: attributeCategory
+        in: path
+        description: Category of the attribute
+        required: true
+        schema:
+          $ref: '#/components/schemas/ContactsAttributesAttributeCategoryAttributeNamePutParametersAttributeCategory'
+      - name: attributeName
+        in: path
+        description: Name of the existing attribute
+        required: true
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
       responses:
-        '201':
-          description: Contact created successfully
+        '204':
+          description: Attribute updated
           content:
             application/json:
               schema:
                 type: object
-                properties:
-                  id:
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateAttributeRequestBadRequestError'
+        '404':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateAttributeRequestNotFoundError'
+      requestBody:
+        description: Values to update an attribute
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                enumeration:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ContactsAttributesAttributeCategoryAttributeNamePutRequestBodyContentApplicationJsonSchemaEnumerationItems'
+                  description: 'List of the values and labels that the attribute can take. **Use only if the attribute''s category is "category"** None of the category options can exceed max 200 characters. For example, **[{"value":1, "label":"male"}, {"value":2, "label":"female"}]**
+
+                    '
+                multiCategoryOptions:
+                  type: array
+                  items:
+                    type: string
+                  description: 'Use this option to add multiple-choice attributes options only if the attribute''s category is "normal". **This option is specifically designed for updating multiple-choice attributes. None of the multicategory options can exceed max 200 characters.**. For example: **["USA","INDIA"]**
+
+                    '
+                value:
+                  type: string
+                  description: 'Value of the attribute to update. **Use only if the attribute''s category is ''calculated'' or ''global''**
+
+                    '
+    delete:
+      operationId: deleteAttribute
+      summary: Delete an attribute
+      description: Permanently delete an existing contact attribute by its category and name. The attribute must exist in the specified category (normal, transactional, category, calculated, or global), otherwise a 404 error is returned.
+      tags:
+      - Contacts
+      parameters:
+      - name: attributeCategory
+        in: path
+        description: Category of the attribute
+        required: true
+        schema:
+          $ref: '#/components/schemas/ContactsAttributesAttributeCategoryAttributeNameDeleteParametersAttributeCategory'
+      - name: attributeName
+        in: path
+        description: Name of the existing attribute
+        required: true
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Attribute deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteAttributeRequestBadRequestError'
+        '404':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteAttributeRequestNotFoundError'
+  /contacts/attributes:
+    get:
+      operationId: getAttributes
+      summary: List all attributes
+      description: Retrieve all contact attributes defined in your Brevo account, grouped by category (normal, transactional, category, calculated, global). Each attribute includes its name, type, and category, along with enumeration values for category-type attributes and options for multiple-choice-type attributes.
+      tags:
+      - Contacts
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Attributes listed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contacts_getAttributes_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAttributesRequestBadRequestError'
+  /contacts/attributes/{attributeType}/{multipleChoiceAttribute}/{multipleChoiceAttributeOption}:
+    delete:
+      operationId: deleteMultiAttributeOptions
+      summary: Delete a multiple-choice attribute option
+      description: Delete a specific option from an existing multiple-choice contact attribute. The attribute type must be "multiple-choice", and both the attribute name and the option to delete must already exist in your account.
+      tags:
+      - Contacts
+      parameters:
+      - name: attributeType
+        in: path
+        description: Type of the attribute
+        required: true
+        schema:
+          $ref: '#/components/schemas/ContactsAttributesAttributeTypeMultipleChoiceAttributeMultipleChoiceAttributeOptionDeleteParametersAttributeType'
+      - name: multipleChoiceAttribute
+        in: path
+        description: Name of the existing multiple-choice attribute
+        required: true
+        schema:
+          type: string
+      - name: multipleChoiceAttributeOption
+        in: path
+        description: Name of the existing multiple-choice attribute option that you want to delete
+        required: true
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Multiple-Choice Attribute Option Deleted Successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteMultiAttributeOptionsRequestBadRequestError'
+        '404':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteMultiAttributeOptionsRequestNotFoundError'
+  /contacts/lists:
+    post:
+      operationId: createList
+      summary: Create a list
+      description: Create a new contact list inside a specified folder. Both the list name and the parent folder ID are required. The newly created list will be empty and ready to receive contacts via the add contacts endpoint.
+      tags:
+      - Contacts
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contacts_createList_Response_201'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateListRequestBadRequestError'
+      requestBody:
+        description: Values to create a list
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                folderId:
+                  type: integer
+                  format: int64
+                  description: Id of the parent folder in which this list is to be created
+                name:
+                  type: string
+                  description: Name of the list
+              required:
+              - folderId
+              - name
+    get:
+      operationId: getLists
+      summary: Get all the lists
+      description: 'Ongoing changes for this endpoint.
+
+        We''re dropping support for the response attributes totalSubscribers and totalBlacklisted.
+
+        These are non breaking changes. The default value for the attributes will be 0.'
+      tags:
+      - Contacts
+      parameters:
+      - name: limit
+        in: query
+        description: Number of documents per page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 10
+      - name: offset
+        in: query
+        description: Index of the first document of the page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 0
+      - name: sort
+        in: query
+        description: Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed
+        required: false
+        schema:
+          $ref: '#/components/schemas/ContactsListsGetParametersSort'
+          default: desc
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Lists informations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contacts_getLists_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetListsRequestBadRequestError'
+  /contacts/lists/{listId}:
+    get:
+      operationId: getList
+      summary: Get a list's details
+      description: Retrieve the details of a specific contact list by its ID, including its name, folder ID, creation date, subscriber counts, and campaign statistics. You can optionally filter campaign statistics by providing startDate and endDate parameters (both must be used together in YYYY-MM-DD format).
+      tags:
+      - Contacts
+      parameters:
+      - name: listId
+        in: path
+        description: Id of the list
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: startDate
+        in: query
+        description: '**Mandatory if endDate is used**. Starting (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to aggregate the sent email campaigns for a specific list id. **Prefer to pass your timezone in date-time format for accurate result**
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: endDate
+        in: query
+        description: '**Mandatory if startDate is used**. Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to aggregate the sent email campaigns for a specific list id. **Prefer to pass your timezone in date-time format for accurate result**
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List informations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contacts_getList_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetListRequestBadRequestError'
+        '404':
+          description: List ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+    put:
+      operationId: updateList
+      summary: Update a list
+      description: Update an existing contact list identified by its ID. You can update the list name, move it to a different folder by providing a new folderId, or both. Only one of the two parameters (name, folderId) needs to be provided per request.
+      tags:
+      - Contacts
+      parameters:
+      - name: listId
+        in: path
+        description: Id of the list
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: List updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateListRequestBadRequestError'
+        '404':
+          description: List ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: Values to update a list
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                folderId:
+                  type: integer
+                  format: int64
+                  description: Id of the folder in which the list is to be moved. Either of the two parameters (name, folderId) can be updated at a time.
+                name:
+                  type: string
+                  description: Name of the list. Either of the two parameters (name, folderId) can be updated at a time.
+    delete:
+      operationId: deleteList
+      summary: Delete a list
+      description: Permanently delete a contact list identified by its ID. The contacts in the list are not deleted; they are only removed from this list. Returns a 404 error if the list ID does not exist.
+      tags:
+      - Contacts
+      parameters:
+      - name: listId
+        in: path
+        description: Id of the list
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: List deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteListRequestBadRequestError'
+        '404':
+          description: List ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+  /contacts/lists/{listId}/contacts:
+    get:
+      operationId: getContactsFromList
+      summary: Get contacts in a list
+      description: Retrieve all contacts belonging to a specific list, identified by its list ID. Results are paginated with a default of 50 contacts per page (maximum 500) and sorted in descending order of creation. You can optionally filter contacts by their modification date using the modifiedSince parameter.
+      tags:
+      - Contacts
+      parameters:
+      - name: listId
+        in: path
+        description: Id of the list
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: modifiedSince
+        in: query
+        description: 'Filter (urlencoded) the contacts modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). **Prefer to pass your timezone in date-time format for accurate result.**
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Number of documents per page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 50
+      - name: offset
+        in: query
+        description: Index of the first document of the page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 0
+      - name: sort
+        in: query
+        description: Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed
+        required: false
+        schema:
+          $ref: '#/components/schemas/ContactsListsListIdContactsGetParametersSort'
+          default: desc
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Contact informations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getContacts'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetContactsFromListRequestBadRequestError'
+        '404':
+          description: List ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+  /contacts/lists/{listId}/contacts/remove:
+    post:
+      operationId: removeContactFromList
+      summary: Delete a contact from a list
+      tags:
+      - Contacts
+      parameters:
+      - name: listId
+        in: path
+        description: Id of the list
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: All contacts have been removed successfully from the list with details of failed ones
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postContactInfo'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RemoveContactFromListRequestBadRequestError'
+        '404':
+          description: List ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: Emails adresses OR IDs OR EXT_ID attributes of the contacts OR 'all' true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contacts_removeContactFromList_Request'
+  /contacts/lists/{listId}/contacts/add:
+    post:
+      operationId: addContactToList
+      summary: Add existing contacts to a list
+      tags:
+      - Contacts
+      parameters:
+      - name: listId
+        in: path
+        description: Id of the list
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: All contacts have been added successfully to the list with details of failed ones
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postContactInfo'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddContactToListRequestBadRequestError'
+        '404':
+          description: List ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: Emails addresses OR IDs OR EXT_ID attributes of the contacts
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contacts_addContactToList_Request'
+  /contacts/folders:
+    post:
+      operationId: createFolder
+      summary: Create a folder
+      description: Create a new folder to organize your contact lists. Folders serve as containers for grouping related lists together. The folder name is required and must be provided in the request body.
+      tags:
+      - Contacts
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contacts_createFolder_Response_201'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateFolderRequestBadRequestError'
+      requestBody:
+        description: Name of the folder
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createUpdateFolder'
+    get:
+      operationId: getFolders
+      summary: Get all folders
+      description: 'Ongoing changes for this endpoint
+
+        We''re dropping support for the response attributes totalSubscribers and totalBlacklisted.
+
+        These are non breaking changes.
+
+        The default value for the attributes will be 0.
+
+        The uniqueSubscribers field is deprecated'
+      tags:
+      - Contacts
+      parameters:
+      - name: limit
+        in: query
+        description: Number of documents per page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 10
+      - name: offset
+        in: query
+        description: Index of the first document of the page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 0
+      - name: sort
+        in: query
+        description: Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed
+        required: false
+        schema:
+          $ref: '#/components/schemas/ContactsFoldersGetParametersSort'
+          default: desc
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Folders informations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contacts_getFolders_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFoldersRequestBadRequestError'
+  /contacts/folders/{folderId}:
+    get:
+      operationId: getFolder
+      summary: Returns a folder's details
+      description: 'Ongoing changes for this endpoint.
+
+        We''re dropping support for the response attributes totalSubscribers and totalBlacklisted.
+
+        These are non breaking changes. The default value for the attributes will be 0.'
+      tags:
+      - Contacts
+      parameters:
+      - name: folderId
+        in: path
+        description: id of the folder
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Folder details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getFolder'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFolderRequestBadRequestError'
+        '404':
+          description: Folder ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+    put:
+      operationId: updateFolder
+      summary: Update a folder
+      description: Update the name of an existing folder identified by its ID. The new folder name must be provided in the request body. Returns a 404 error if the folder ID does not exist.
+      tags:
+      - Contacts
+      parameters:
+      - name: folderId
+        in: path
+        description: Id of the folder
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Folder updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateFolderRequestBadRequestError'
+        '404':
+          description: Folder ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: Name of the folder
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createUpdateFolder'
+    delete:
+      operationId: deleteFolder
+      summary: Delete a folder (and all its lists)
+      description: Permanently delete a folder identified by its ID. Deleting a folder will also delete all the contact lists contained within it. This action cannot be undone.
+      tags:
+      - Contacts
+      parameters:
+      - name: folderId
+        in: path
+        description: Id of the folder
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Folder deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteFolderRequestBadRequestError'
+        '404':
+          description: Folder ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+  /contacts/folders/{folderId}/lists:
+    get:
+      operationId: getFolderLists
+      summary: Get lists in a folder
+      description: 'Ongoing changes for this endpoint.
+
+        We''re dropping support for the response attributes totalSubscribers and totalBlacklisted.
+
+        These are non breaking changes. The default value for the attributes will be 0.'
+      tags:
+      - Contacts
+      parameters:
+      - name: folderId
+        in: path
+        description: Id of the folder
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: limit
+        in: query
+        description: Number of documents per page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 10
+      - name: offset
+        in: query
+        description: Index of the first document of the page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 0
+      - name: sort
+        in: query
+        description: Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed
+        required: false
+        schema:
+          $ref: '#/components/schemas/ContactsFoldersFolderIdListsGetParametersSort'
+          default: desc
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Folder's Lists details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contacts_getFolderLists_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFolderListsRequestBadRequestError'
+        '404':
+          description: Folder ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+  /contacts:
+    get:
+      operationId: getContacts
+      summary: Get all the contacts
+      description: Retrieve all contacts from your Brevo account with support for pagination, filtering, and sorting. Results default to 50 contacts per page (maximum 1000) sorted in descending order of creation, and can be filtered by modification date, creation date, contact IDs (up to 20), list IDs, segment ID, or contact attributes using the equals operator. Note that either listIds or segmentId can be passed but not both simultaneously.
+      tags:
+      - Contacts
+      parameters:
+      - name: limit
+        in: query
+        description: Number of documents per page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 50
+      - name: offset
+        in: query
+        description: Index of the first document of the page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 0
+      - name: modifiedSince
+        in: query
+        description: 'Filter (urlencoded) the contacts modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). **Prefer to pass your timezone in date-time format for accurate result.**
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: createdSince
+        in: query
+        description: 'Filter (urlencoded) the contacts created after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). **Prefer to pass your timezone in date-time format for accurate result.**
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: sort
+        in: query
+        description: Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed
+        required: false
+        schema:
+          $ref: '#/components/schemas/ContactsGetParametersSort'
+          default: desc
+      - name: ids
+        in: query
+        description: Filter by a list of contact IDs. You can pass a **maximum of 20 IDs**. All elements must be integers.
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+            format: int64
+      - name: segmentId
+        in: query
+        description: Id of the segment. **Either listIds or segmentId can be passed.** Must be a positive integer (minimum value of 1).
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - name: listIds
+        in: query
+        description: Ids of the list. **Either listIds or segmentId can be passed.**
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+            format: int64
+      - name: filter
+        in: query
+        description: 'Filter the contacts on the basis of attributes. **Allowed operator: equals. For multiple-choice options, the filter will apply an AND condition between the options. For category attributes, the filter will work with both id and value. (e.g. filter=equals(FIRSTNAME,"Antoine"), filter=equals(B1, true), filter=equals(DOB, "1989-11-23"), filter=equals(GENDER, "1"), filter=equals(GENDER, "MALE"), filter=equals(COUNTRY,"USA, INDIA")**
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All contacts listed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getContacts'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetContactsRequestBadRequestError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+    post:
+      operationId: createContact
+      summary: Create a contact
+      description: 'Follow this format when passing a "SMS" phone number as an attribute.
+
+        Accepted Number Formats 91xxxxxxxxxx +91xxxxxxxxxx 0091xxxxxxxxxx
+
+        Creates new contacts on Brevo. Contacts can be created by passing either -
+
+
+        1. email address of the contact (email_id),
+
+        2. phone number of the contact (to be passed as "SMS" field in "attributes" along with proper country code), For example- {"SMS":"+91xxxxxxxxxx"} or {"SMS":"0091xxxxxxxxxx"}
+
+        3. ext_id'
+      tags:
+      - Contacts
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Contact created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contacts_createContact_Response_201'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/contactErrorModel'
+        '425':
+          description: Too Early
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/contactErrorModel'
+      requestBody:
+        description: Values to create a contact
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                attributes:
+                  type: object
+                  additionalProperties:
+                    $ref: '#/components/schemas/ContactsPostRequestBodyContentApplicationJsonSchemaAttributes'
+                  description: 'Pass the set of attributes and their values. The attribute''s parameter should be passed in capital letter while creating a contact. Values that don''t match the attribute type (e.g. text or string in a date attribute) will be ignored. **These attributes must be present in your Brevo account**. For eg: **{"FNAME":"Elly", "LNAME":"Roger", "COUNTRIES": ["India","China"]}**
+
+                    '
+                email:
+                  type: string
+                  format: email
+                  description: 'Email address of the user. **Mandatory if "ext_id"  & "SMS" field is not passed.**
+
+                    '
+                emailBlacklisted:
+                  type: boolean
+                  description: Set this field to blacklist the contact for emails (emailBlacklisted = true)
+                ext_id:
+                  type: string
+                  description: Pass your own Id to create a contact.
+                listIds:
+                  type: array
+                  items:
                     type: integer
                     format: int64
-                    description: Unique identifier of the newly created contact.
+                  description: Ids of the lists to add the contact to
+                smsBlacklisted:
+                  type: boolean
+                  description: Set this field to blacklist the contact for SMS (smsBlacklisted = true)
+                smtpBlacklistSender:
+                  type: array
+                  items:
+                    type: string
+                    format: email
+                  description: transactional email forbidden sender for contact. Use only for email Contact ( only available if updateEnabled = true )
+                updateEnabled:
+                  type: boolean
+                  default: false
+                  description: Facilitate to update the existing contact in the same request (updateEnabled = true)
+                forceMerge:
+                  type: boolean
+                  default: false
+                  description: When true, if the contact being created shares an identifier (email, SMS, ext_id, whatsapp, landline) with an existing contact, the two contacts are force-merged. The contact with the most recent `last_modified` timestamp is retained; the other is deleted. When false (default), a 4xx error is returned on identifier conflict.
+                getId:
+                  type: boolean
+                  default: false
+                  description: When true, the response returns the `id` of the surviving contact after merge.
+  /contacts/doubleOptinConfirmation:
+    post:
+      operationId: createDoiContact
+      summary: Create Contact via DOI (Double-Opt-In) Flow
+      description: attributes param in this endpoint is an object containing key-value pairs where values can be either a string, integer, array, or boolean. You can create key-value pairs with these four datatypes. When a value is an array, it should be an array of strings.
+      tags:
+      - Contacts
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: DOI Contact created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contacts_createDoiContact_Response_201'
         '400':
-          description: Bad request
+          description: bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/CreateDoiContactRequestBadRequestError'
+      requestBody:
+        description: Values to create the Double opt-in (DOI) contact
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                attributes:
+                  type: object
+                  additionalProperties:
+                    $ref: '#/components/schemas/ContactsDoubleOptinConfirmationPostRequestBodyContentApplicationJsonSchemaAttributes'
+                  description: 'Pass the set of attributes and their values. **These attributes must be present in your Brevo account**. For eg. **{''FNAME'':''Elly'', ''LNAME'':''Roger'', ''COUNTRIES'': [''India'',''China'']}**
+
+                    '
+                email:
+                  type: string
+                  format: email
+                  description: Email address where the confirmation email will be sent. This email address will be the identifier for all other contact attributes.
+                excludeListIds:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                  description: Lists under user account where contact should not be added
+                includeListIds:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                  description: Lists under user account where contact should be added
+                redirectionUrl:
+                  type: string
+                  format: url
+                  description: 'URL of the web page that user will be redirected to after clicking on the double opt in URL. When editing your DOI template you can reference this URL by using the tag **{{ params.DOIurl }}**.
+
+                    '
+                templateId:
+                  type: integer
+                  format: int64
+                  description: Id of the Double opt-in (DOI) template
+              required:
+              - email
+              - includeListIds
+              - redirectionUrl
+              - templateId
   /contacts/{identifier}:
     get:
       operationId: getContactInfo
       summary: Get a contact's details
-      description: Retrieves detailed information about a specific contact including all attributes, list memberships, and email campaign statistics. The contact can be identified by email address, phone number, or internal ID.
+      description: 'Follow this format when passing a "SMS" phone number as an attribute.
+
+        Accepted Number Formats 91xxxxxxxxxx +91xxxxxxxxxx 0091xxxxxxxxxx
+
+        There are 2 ways to get a contact
+
+
+        Option 1- https://api.brevo.com/v3/contacts/{identifier}
+
+
+        Option 2- https://api.brevo.com/v3/contacts/{identifier}?identifierType={}
+
+
+        Option 1 only works if identifierType is email_id (for EMAIL), phone_id (for SMS) or contact_id (for ID of the contact),where you can directly pass the value of EMAIL, SMS and ID of the contact.
+
+
+        Option 2 works for all identifierType, use email_id for EMAIL attribute, phone_id for SMS attribute, contact_id for ID of the contact, ext_id for EXT_ID attribute, whatsapp_id for WHATSAPP attribute, landline_number_id for LANDLINE_NUMBER attribute
+
+
+        Along with the contact details, this endpoint will show the statistics of contact for the recent 90 days by default. To fetch the earlier statistics, please use Get contact campaign stats ``https://developers.brevo.com/reference/contacts-7#getcontactstats`` endpoint with the appropriate date ranges.'
       tags:
       - Contacts
       parameters:
-      - $ref: '#/components/parameters/contactIdentifierParam'
+      - name: identifier
+        in: path
+        description: Email (urlencoded) OR ID of the contact OR its SMS attribute value OR EXT_ID attribute (urlencoded)
+        required: true
+        schema:
+          $ref: '#/components/schemas/ContactsIdentifierGetParametersIdentifier'
+      - name: identifierType
+        in: query
+        description: email_id for Email, phone_id for SMS attribute, contact_id for ID of the contact, ext_id for EXT_ID attribute, whatsapp_id for WHATSAPP attribute, landline_number_id for LANDLINE_NUMBER attribute
+        required: false
+        schema:
+          $ref: '#/components/schemas/ContactsIdentifierGetParametersIdentifierType'
       - name: startDate
         in: query
-        description: Start date for retrieving contact statistics.
+        description: '**Mandatory if endDate is used.** Starting date (YYYY-MM-DD) of the statistic events specific to campaigns. Must be lower than equal to endDate. Must not be greater than the current date.
+
+          '
+        required: false
         schema:
           type: string
-          format: date
       - name: endDate
         in: query
-        description: End date for retrieving contact statistics.
+        description: '**Mandatory if startDate is used.** Ending date (YYYY-MM-DD) of the statistic events specific to campaigns. Must be greater than equal to startDate. Must not be greater than the current date.
+
+          '
+        required: false
         schema:
           type: string
-          format: date
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
       responses:
         '200':
-          description: Contact details retrieved successfully
+          description: Contact informations
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Contact'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: Contact not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-    put:
-      operationId: updateContact
-      summary: Update a contact
-      description: Updates an existing contact's attributes and list memberships. The contact is identified by email address, phone number, or internal ID.
-      tags:
-      - Contacts
-      parameters:
-      - $ref: '#/components/parameters/contactIdentifierParam'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateContact'
-      responses:
-        '204':
-          description: Contact updated successfully
+                $ref: '#/components/schemas/Contacts_getContactInfo_Response_200'
         '400':
-          description: Bad request
+          description: bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/GetContactInfoRequestBadRequestError'
         '404':
           description: Contact not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/errorModel'
     delete:
       operationId: deleteContact
       summary: Delete a contact
-      description: Permanently deletes a contact from the account. The contact is identified by email address, phone number, or internal ID.
+      description: 'There are 2 ways to delete a contact
+
+
+        Option 1- https://api.brevo.com/v3/contacts/{identifier}
+
+
+        Option 2- https://api.brevo.com/v3/contacts/{identifier}?identifierType={}
+
+
+        Option 1 only works if identifierType is email_id (for EMAIL) or contact_id (for ID of the contact),where you can directly pass the value of EMAIL and ID of the contact.
+
+
+        Option 2 works for all identifierType, use email_id for EMAIL attribute, contact_id for ID of the contact, ext_id for EXT_ID attribute, phone_id for SMS attribute, whatsapp_id for WHATSAPP attribute, landline_number_id for LANDLINE_NUMBER attribute.'
       tags:
       - Contacts
       parameters:
-      - $ref: '#/components/parameters/contactIdentifierParam'
+      - name: identifier
+        in: path
+        description: Email (urlencoded) OR ID of the contact OR EXT_ID attribute (urlencoded)
+        required: true
+        schema:
+          $ref: '#/components/schemas/ContactsIdentifierDeleteParametersIdentifier'
+      - name: identifierType
+        in: query
+        description: email_id for Email, contact_id for ID of the contact, ext_id for EXT_ID attribute, phone_id for SMS attribute, whatsapp_id for WHATSAPP attribute, landline_number_id for LANDLINE_NUMBER attribute
+        required: false
+        schema:
+          $ref: '#/components/schemas/ContactsIdentifierDeleteParametersIdentifierType'
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
       responses:
         '204':
-          description: Contact deleted successfully
-        '401':
-          description: Unauthorized
+          description: Contact deleted
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteContactRequestBadRequestError'
         '404':
           description: Contact not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/errorModel'
+        '405':
+          description: You're not allowed to delete registered email contact with Brevo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+    put:
+      operationId: updateContact
+      summary: Update a contact
+      description: 'Follow this format when passing a "SMS" phone number as an attribute.
+
+        Accepted Number Formats 91xxxxxxxxxx +91xxxxxxxxxx 0091xxxxxxxxxx
+
+
+        If a blocklisted contact''s email address is updated, it is going to remove that blocklisting from the contact and they will be resubscribed.
+
+        There are 2 ways to update a contact
+
+
+        Option 1- https://api.brevo.com/v3/contacts/{identifier}
+
+
+        Option 2- https://api.brevo.com/v3/contacts/{identifier}?identifierType={}
+
+
+        Option 1 only works if identifierType is email_id (for EMAIL) or contact_id (for ID of the contact),where you can directly pass the value of EMAIL and ID of the contact.
+
+
+        Option 2 works for all identifierType, use email_id for EMAIL attribute, contact_id for ID of the contact, ext_id for EXT_ID attribute, phone_id for SMS attribute, whatsapp_id for WHATSAPP attribute, landline_number_id for LANDLINE attribute'
+      tags:
+      - Contacts
+      parameters:
+      - name: identifier
+        in: path
+        description: Email (urlencoded) OR ID of the contact OR EXT_ID attribute (urlencoded) OR its SMS attribute value OR its WHATSAPP attribute value OR its LANDLINE_NUMBER attribute value
+        required: true
+        schema:
+          $ref: '#/components/schemas/ContactsIdentifierPutParametersIdentifier'
+      - name: identifierType
+        in: query
+        description: email_id for Email, contact_id for ID of the contact, ext_id for EXT_ID attribute, phone_id for SMS attribute, whatsapp_id for WHATSAPP attribute, landline_number_id for LANDLINE_NUMBER attribute
+        required: false
+        schema:
+          $ref: '#/components/schemas/ContactsIdentifierPutParametersIdentifierType'
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Contact updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/contactErrorModel'
+        '404':
+          description: Contact not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/contactErrorModel'
+        '425':
+          description: Too Early
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/contactErrorModel'
+      requestBody:
+        description: Values to update a contact
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                attributes:
+                  type: object
+                  additionalProperties:
+                    $ref: '#/components/schemas/ContactsIdentifierPutRequestBodyContentApplicationJsonSchemaAttributes'
+                  description: 'Pass the set of attributes to be updated. **These attributes must be present in your account**. To update existing email address of a contact with the new one please pass EMAIL in attributes. For example, **{ "EMAIL":"newemail@domain.com", "FNAME":"Ellie", "LNAME":"Roger", "COUNTRIES":["India","China"]}**. The attribute''s parameter should be passed in capital letter while updating a contact. Values that don''t match the attribute type (e.g. text or string in a date attribute) will be ignored .Keep in mind transactional attributes can be updated the same way as normal attributes. Mobile Number in **SMS** field should be passed with proper country code. For example: **{"SMS":"+91xxxxxxxxxx"} or {"SMS":"0091xxxxxxxxxx"}**
+
+                    '
+                emailBlacklisted:
+                  type: boolean
+                  description: Set/unset this field to blacklist/allow the contact for emails (emailBlacklisted = true)
+                ext_id:
+                  type: string
+                  description: Pass your own Id to update ext_id of a contact.
+                listIds:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                  description: Ids of the lists to add the contact to
+                smsBlacklisted:
+                  type: boolean
+                  description: Set/unset this field to blacklist/allow the contact for SMS (smsBlacklisted = true)
+                smtpBlacklistSender:
+                  type: array
+                  items:
+                    type: string
+                    format: email
+                  description: transactional email forbidden sender for contact. Use only for email Contact
+                unlinkListIds:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                  description: Ids of the lists to remove the contact from
+                forceMerge:
+                  type: boolean
+                  default: false
+                  description: When true, if the contact being updated shares an identifier (email, SMS, ext_id, whatsapp, landline) with an existing contact, the two contacts are force-merged. The contact with the most recent `last_modified` timestamp is retained; the other is deleted. When false (default), a 4xx error is returned on identifier conflict.
+  /contacts/{identifier}/campaignStats:
+    get:
+      operationId: getContactStats
+      summary: Get email campaigns' statistics for a contact
+      description: Retrieve email campaign statistics for a specific contact identified by email address or numeric ID. Statistics include messages sent, opens, clicks, hard/soft bounces, deliveries, unsubscriptions, complaints, and transactional attributes. By default, data covers the last 90 days; use startDate and endDate parameters (YYYY-MM-DD) to specify a custom range with a maximum span of 90 days.
+      tags:
+      - Contacts
+      parameters:
+      - name: identifier
+        in: path
+        description: Email (urlencoded) OR ID of the contact
+        required: true
+        schema:
+          $ref: '#/components/schemas/ContactsIdentifierCampaignStatsGetParametersIdentifier'
+      - name: startDate
+        in: query
+        description: '**Mandatory if endDate is used.** Starting date (YYYY-MM-DD) of the statistic events specific to campaigns. Must be lower than equal to endDate. Must not be greater than the current date.
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: endDate
+        in: query
+        description: '**Mandatory if startDate is used.** Ending date (YYYY-MM-DD) of the statistic events specific to campaigns. Must be greater than equal to startDate. Must not be greater than the current date. Maximum difference between startDate and endDate should not be greater than 90 days.
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Contact campaign statistics informations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contacts_getContactStats_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetContactStatsRequestBadRequestError'
+        '404':
+          description: Contact not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+  /contacts/segments:
+    get:
+      operationId: getSegments
+      summary: Get all the segments
+      description: Retrieve all contact segments defined in your Brevo account with support for pagination and sorting. Results default to 10 segments per page (maximum 50) sorted in descending order of creation. Each segment includes its ID, name, category name, and last update timestamp.
+      tags:
+      - Contacts
+      parameters:
+      - name: limit
+        in: query
+        description: Number of documents per page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 10
+      - name: offset
+        in: query
+        description: Index of the first document of the page
+        required: false
+        schema:
+          type: integer
+          format: int64
+          default: 0
+      - name: sort
+        in: query
+        description: Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed
+        required: false
+        schema:
+          $ref: '#/components/schemas/ContactsSegmentsGetParametersSort'
+          default: desc
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Segments informations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contacts_getSegments_Response_200'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSegmentsRequestBadRequestError'
+  /contacts/export:
+    post:
+      operationId: requestContactExport
+      summary: Export contacts
+      description: It returns the background process ID which on completion calls the notify URL that you have set in the input. File will be available in csv.
+      tags:
+      - Contacts
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '202':
+          description: process id created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contacts_requestContactExport_Response_202'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestContactExportRequestBadRequestError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorModel'
+      requestBody:
+        description: Values to request a contact export
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customContactFilter:
+                  $ref: '#/components/schemas/ContactsExportPostRequestBodyContentApplicationJsonSchemaCustomContactFilter'
+                  description: 'Set the filter for the contacts to be exported.
+
+                    '
+                disableNotification:
+                  type: boolean
+                  default: false
+                  description: To avoid generating the email notification upon contact export, pass **true**
+                exportAttributes:
+                  type: array
+                  items:
+                    type: string
+                  description: 'List of all the attributes that you want to export. **These attributes must be present in your contact database. It is required if exportMandatoryAttributes is set false. ** For example: **[''fname'', ''lname'', ''email'']**
+
+                    '
+                exportMandatoryAttributes:
+                  type: boolean
+                  default: true
+                  description: To export mandatory attributes like EMAIL, ADDED_TIME, MODIFIED_TIME
+                exportMetadata:
+                  type: array
+                  items:
+                    type: string
+                  description: Export metadata of contacts such as _listIds, ADDED_TIME, MODIFIED_TIME.
+                exportDateInUTC:
+                  type: boolean
+                  default: false
+                  description: Specifies whether the date fields createdAt, modifiedAt in the exported data should be returned in UTC format.
+                exportSubscriptionStatus:
+                  type: array
+                  items:
+                    type: string
+                  description: Export subscription status of contacts for email & sms marketting. Pass email_marketing to obtain the marketing email subscription status & sms_marketing to retrieve the marketing SMS status of the contact.
+                notifyUrl:
+                  type: string
+                  format: url
+                  description: Webhook that will be called once the export process is finished. For reference, https://help.brevo.com/hc/en-us/articles/360007666479
+              required:
+              - customContactFilter
+  /contacts/import:
+    post:
+      operationId: importContacts
+      summary: Import contacts
+      description: 'It returns the background process ID which on completion calls the notify URL that you have set in the input. **Note**: - Any contact attribute that doesn''t exist in your account will be ignored at import end.'
+      tags:
+      - Contacts
+      parameters:
+      - name: api-key
+        in: header
+        description: The API key should be passed in the request headers as `api-key` for authentication.
+        required: true
+        schema:
+          type: string
+      responses:
+        '202':
+          description: process id created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contacts_importContacts_Response_202'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportContactsRequestBadRequestError'
+      requestBody:
+        description: Values to import contacts in Brevo. To know more about the expected format, please have a look at ``https://help.brevo.com/hc/en-us/articles/209499265-Build-contacts-lists-for-your-email-marketing-campaigns``
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                disableNotification:
+                  type: boolean
+                  default: false
+                  description: To disable email notification
+                emailBlacklist:
+                  type: boolean
+                  default: false
+                  description: To blacklist all the contacts for email
+                emptyContactsAttributes:
+                  type: boolean
+                  default: false
+                  description: 'To facilitate the choice to erase any attribute of the existing contacts with empty value. emptyContactsAttributes = true means the empty fields in your import will erase any attribute that currently contain data in Brevo, & emptyContactsAttributes = false means the empty fields will not affect your existing data ( **only available if `updateExistingContacts` set to true **)
+
+                    '
+                fileBody:
+                  type: string
+                  description: '**Mandatory if fileUrl and jsonBody is not defined.** CSV content to be imported. Use semicolon to separate multiple attributes. **Maximum allowed file body size is 10MB** . However we recommend a safe limit of around 8 MB to avoid the issues caused due to increase of file body size while parsing. Please use fileUrl instead to import bigger files.
+
+                    '
+                fileUrl:
+                  type: string
+                  format: url
+                  description: '**Mandatory if fileBody and jsonBody is not defined.** URL of the file to be imported (**no local file**). Possible file formats: #### .txt, .csv, .json
+
+                    '
+                jsonBody:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ContactsImportPostRequestBodyContentApplicationJsonSchemaJsonBodyItems'
+                  description: '**Mandatory if fileUrl and fileBody is not defined.** JSON content to be imported. **Maximum allowed json body size is 10MB** . However we recommend a safe limit of around 8 MB to avoid the issues caused due to increase of json body size while parsing. Please use fileUrl instead to import bigger files.
+
+                    '
+                listIds:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                  description: '**Mandatory if newList is not defined.** Ids of the lists in which the contacts shall be imported. For example, **[2, 4, 7]**.
+
+                    '
+                consentGroupIds:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                  description: '**Optional.** Ids of the consent groups to which all imported contacts will be added. Requires consent groups to be enabled for the organisation. For example, **[1, 3]**.
+
+                    '
+                newList:
+                  $ref: '#/components/schemas/ContactsImportPostRequestBodyContentApplicationJsonSchemaNewList'
+                  description: To create a new list and import the contacts into it, pass the listName and an optional folderId.
+                notifyUrl:
+                  type: string
+                  format: url
+                  description: URL that will be called once the import process is finished. For reference, https://help.brevo.com/hc/en-us/articles/360007666479
+                smsBlacklist:
+                  type: boolean
+                  default: false
+                  description: To blacklist all the contacts for sms
+                updateExistingContacts:
+                  type: boolean
+                  default: true
+                  description: To facilitate the choice to update the existing contacts
 components:
   schemas:
-    CreateContact:
-      type: object
-      properties:
-        email:
+    ContactsDoubleOptinConfirmationPostRequestBodyContentApplicationJsonSchemaAttributes:
+      oneOf:
+      - type: number
+        format: double
+      - type: string
+      - type: boolean
+      - type: array
+        items:
           type: string
-          format: email
-          description: Email address of the new contact.
-        attributes:
-          type: object
-          description: Custom attribute values as key-value pairs.
-          additionalProperties: true
-        listIds:
-          type: array
-          description: IDs of lists to add the contact to.
-          items:
-            type: integer
-            format: int64
-        updateEnabled:
-          type: boolean
-          description: Whether to update the contact if a duplicate email exists.
-          default: false
-        smtpBlacklistSender:
-          type: array
-          description: Sender email addresses to blacklist for this contact.
-          items:
-            type: string
-            format: email
-    ContactList:
+      title: ContactsDoubleOptinConfirmationPostRequestBodyContentApplicationJsonSchemaAttributes
+    ContactsExportPostRequestBodyContentApplicationJsonSchemaCustomContactFilterActionForSmsCampaigns:
+      type: string
+      enum:
+      - hardBounces
+      - softBounces
+      - unsubscribed
+      description: '**Mandatory if neither actionForContacts nor actionForEmailCampaigns is passed.** This will export the contacts on the basis of provided action applied on sms campaigns. * **unsubscribed** - Fetch the list of all unsubscribed (blacklisted via any means) contacts for all / particular sms campaigns. * **hardBounces & softBounces** - Fetch the list of hard bounces / soft bounces for all / particular sms campaigns.
+
+        '
+      title: ContactsExportPostRequestBodyContentApplicationJsonSchemaCustomContactFilterActionForSmsCampaigns
+    Contacts_getSegments_Response_200:
       type: object
       properties:
         count:
           type: integer
           format: int64
-          description: Total number of contacts in the account.
-        contacts:
+          description: Number of Segments in your account
+        segments:
           type: array
-          description: List of contact records.
           items:
-            $ref: '#/components/schemas/Contact'
-    Contact:
+            $ref: '#/components/schemas/ContactsSegmentsGetResponsesContentApplicationJsonSchemaSegmentsItems'
+          description: Listing of all the segments available in your account
+      title: Contacts_getSegments_Response_200
+    GetAttributesRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsAttributesGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetAttributesRequestBadRequestError
+    ContactsFoldersGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ContactsFoldersGetResponsesContentApplicationJsonSchemaCode
+    getFolder:
       type: object
       properties:
         id:
           type: integer
           format: int64
-          description: Unique identifier of the contact.
-        email:
+          description: ID of the folder
+        name:
           type: string
-          format: email
-          description: Email address of the contact.
-        emailBlacklisted:
-          type: boolean
-          description: Whether the contact's email is blacklisted.
-        smsBlacklisted:
-          type: boolean
-          description: Whether the contact's phone number is blacklisted for SMS.
-        modifiedAt:
-          type: string
-          format: date-time
-          description: UTC date-time when the contact was last modified.
-        createdAt:
-          type: string
-          format: date-time
-          description: UTC date-time when the contact was created.
-        listIds:
-          type: array
-          description: IDs of lists the contact belongs to.
-          items:
-            type: integer
-            format: int64
-        attributes:
-          type: object
-          description: Custom attribute values for the contact as key-value pairs.
-          additionalProperties: true
-    ErrorResponse:
+          description: Name of the folder
+        totalBlacklisted:
+          type: integer
+          format: int64
+          description: Number of blacklisted contacts in the folder
+        totalSubscribers:
+          type: integer
+          format: int64
+          description: Number of contacts in the folder
+        uniqueSubscribers:
+          type: integer
+          format: int64
+          description: Number of unique contacts in the folder
+      required:
+      - id
+      - name
+      - totalBlacklisted
+      - totalSubscribers
+      - uniqueSubscribers
+      title: getFolder
+    ContactsListsListIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ContactsListsListIdGetResponsesContentApplicationJsonSchemaCode
+    errorModel:
       type: object
       properties:
         code:
           type: string
-          description: Error code identifying the type of error.
+          description: Error code displayed in case of a failure
         message:
           type: string
-          description: Human-readable description of the error.
-    UpdateContact:
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
+    Contacts_getList_Response_200:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID of the list
+        name:
+          type: string
+          description: Name of the list
+        totalBlacklisted:
+          type: integer
+          format: int64
+          description: Number of blacklisted contacts in the list
+        totalSubscribers:
+          type: integer
+          format: int64
+          description: Number of contacts in the list
+        uniqueSubscribers:
+          type: integer
+          format: int64
+          description: Number of unique contacts in the list
+        campaignStats:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsListsListIdGetResponsesContentApplicationJsonSchemaCampaignStatsItems'
+        createdAt:
+          type: string
+          description: Creation UTC date-time of the list (YYYY-MM-DDTHH:mm:ss.SSSZ)
+        dynamicList:
+          type: boolean
+          description: Status telling if the list is dynamic or not (true=dynamic, false=not dynamic)
+        folderId:
+          type: integer
+          format: int64
+          description: ID of the folder
+      required:
+      - id
+      - name
+      - totalBlacklisted
+      - totalSubscribers
+      - uniqueSubscribers
+      - createdAt
+      - folderId
+      title: Contacts_getList_Response_200
+    GetListRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsListsListIdGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetListRequestBadRequestError
+    ImportContactsRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsImportPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: ImportContactsRequestBadRequestError
+    ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsUnsubscriptionsAdminUnsubscriptionItems:
+      type: object
+      properties:
+        eventTime:
+          type: string
+          description: UTC date-time of the event
+        ip:
+          type: string
+          description: IP from which the user has been unsubscribed
+      required:
+      - eventTime
+      title: ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsUnsubscriptionsAdminUnsubscriptionItems
+    RemoveContactFromListRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsListsListIdContactsRemovePostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: RemoveContactFromListRequestBadRequestError
+    getContacts:
+      type: object
+      properties:
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/getContactDetails'
+        count:
+          type: integer
+          format: int64
+          description: Number of contacts
+      required:
+      - contacts
+      - count
+      title: getContacts
+    ConsentGroupItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID of the consent group
+        status:
+          $ref: '#/components/schemas/ConsentGroupItemStatus'
+          description: The contact's subscription status within this consent group
+      required:
+      - id
+      - status
+      description: A contact's membership status in a single consent group.
+      title: ConsentGroupItem
+    DeleteFolderRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsFoldersFolderIdDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteFolderRequestBadRequestError
+    ContactsIdentifierGetParametersIdentifierType:
+      type: string
+      enum:
+      - email_id
+      - phone_id
+      - contact_id
+      - ext_id
+      - whatsapp_id
+      - landline_number_id
+      title: ContactsIdentifierGetParametersIdentifierType
+    AddContactToListRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsListsListIdContactsAddPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: AddContactToListRequestBadRequestError
+    ContactsFoldersPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ContactsFoldersPostResponsesContentApplicationJsonSchemaCode
+    ConsentGroupItemStatus:
+      type: string
+      enum:
+      - subscribed
+      - unsubscribed
+      description: The contact's subscription status within this consent group
+      title: ConsentGroupItemStatus
+    ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaMessagesSentItems:
+      type: object
+      properties:
+        campaignId:
+          type: integer
+          format: int64
+          description: ID of the campaign which generated the event
+        eventTime:
+          type: string
+          description: UTC date-time of the event
+      required:
+      - campaignId
+      - eventTime
+      title: ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaMessagesSentItems
+    GetContactInfoRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsIdentifierGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetContactInfoRequestBadRequestError
+    Contacts_createDoiContact_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Contacts_createDoiContact_Response_201
+    ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsClickedItems:
+      type: object
+      properties:
+        campaignId:
+          type: integer
+          format: int64
+          description: ID of the campaign which generated the event
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsClickedItemsLinksItems'
+          description: Listing of the clicked links for the campaign
+      required:
+      - campaignId
+      - links
+      title: ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsClickedItems
+    ContactsListsGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: ContactsListsGetParametersSort
+    ContactsIdentifierCampaignStatsGetParametersIdentifier:
+      oneOf:
+      - type: string
+      - type: integer
+      title: ContactsIdentifierCampaignStatsGetParametersIdentifier
+    Contacts_importContacts_Response_202:
+      type: object
+      properties:
+        processId:
+          type: integer
+          format: int64
+          description: Id of the process created
+      required:
+      - processId
+      title: Contacts_importContacts_Response_202
+    Contacts_getLists_Response_200:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: Number of lists in your account
+        lists:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsListsGetResponsesContentApplicationJsonSchemaListsItems'
+          description: Listing of all the lists available in your account
+      title: Contacts_getLists_Response_200
+    DeleteAttributeRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsAttributesAttributeCategoryAttributeNameDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteAttributeRequestBadRequestError
+    ContactsIdentifierPutParametersIdentifierType:
+      type: string
+      enum:
+      - email_id
+      - contact_id
+      - ext_id
+      - phone_id
+      - whatsapp_id
+      - landline_number_id
+      title: ContactsIdentifierPutParametersIdentifierType
+    ContactsListsListIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ContactsListsListIdDeleteResponsesContentApplicationJsonSchemaCode
+    PostContactInfoContactsFailure:
+      oneOf:
+      - type: array
+        items:
+          type: string
+          format: email
+      - type: array
+        items:
+          type: integer
+          format: int64
+      title: PostContactInfoContactsFailure
+    getContactDetails:
+      type: object
+      properties:
+        attributes:
+          $ref: '#/components/schemas/GetContactDetailsAttributes'
+          description: Set of attributes of the contact
+        createdAt:
+          type: string
+          description: Creation UTC date-time of the contact (YYYY-MM-DDTHH:mm:ss.SSSZ)
+        email:
+          type: string
+          format: email
+          description: Email address of the contact for which you requested the details
+        emailBlacklisted:
+          type: boolean
+          description: Blacklist status for email campaigns (true=blacklisted, false=not blacklisted)
+        id:
+          type: integer
+          format: int64
+          description: ID of the contact for which you requested the details
+        listIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+        listUnsubscribed:
+          type: array
+          items:
+            type: integer
+            format: int64
+        modifiedAt:
+          type: string
+          description: Last modification UTC date-time of the contact (YYYY-MM-DDTHH:mm:ss.SSSZ)
+        smsBlacklisted:
+          type: boolean
+          description: Blacklist status for SMS campaigns (true=blacklisted, false=not blacklisted)
+        whatsappBlacklisted:
+          type: boolean
+          description: Blacklist status for WhatsApp campaigns (true=blacklisted, false=not blacklisted)
+        consentGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConsentGroupItem'
+          description: Consent groups the contact belongs to, with their subscription status. Only present when the Consent Groups feature is enabled for your account.
+      required:
+      - attributes
+      - createdAt
+      - emailBlacklisted
+      - id
+      - listIds
+      - modifiedAt
+      - smsBlacklisted
+      - whatsappBlacklisted
+      title: getContactDetails
+    Contacts_getFolderLists_Response_200:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: Number of lists in the folder
+        lists:
+          type: array
+          items:
+            $ref: '#/components/schemas/getList'
+      title: Contacts_getFolderLists_Response_200
+    DeleteMultiAttributeOptionsRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsAttributesAttributeTypeMultipleChoiceAttributeMultipleChoiceAttributeOptionDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteMultiAttributeOptionsRequestBadRequestError
+    ContactsIdentifierGetParametersIdentifier:
+      oneOf:
+      - type: string
+      - type: integer
+      title: ContactsIdentifierGetParametersIdentifier
+    UpdateAttributeRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsAttributesAttributeCategoryAttributeNamePutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UpdateAttributeRequestNotFoundError
+    ContactsExportPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ContactsExportPostResponsesContentApplicationJsonSchemaCode
+    ContactsAttributesAttributeCategoryAttributeNameDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ContactsAttributesAttributeCategoryAttributeNameDeleteResponsesContentApplicationJsonSchemaCode
+    PostContactInfoContacts:
+      type: object
+      properties:
+        failure:
+          $ref: '#/components/schemas/PostContactInfoContactsFailure'
+        processId:
+          type: integer
+          format: int64
+          description: Id of the process created to remove contacts from list when user opts for "all" option.
+        success:
+          $ref: '#/components/schemas/PostContactInfoContactsSuccess'
+        total:
+          type: integer
+          format: int64
+          description: Displays the count of total number of contacts removed from list when user opts for "all" option.
+      title: PostContactInfoContacts
+    Contacts_getAttributes_Response_200:
+      type: object
+      properties:
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsAttributesGetResponsesContentApplicationJsonSchemaAttributesItems'
+          description: Listing of available contact attributes in your account
+      required:
+      - attributes
+      title: Contacts_getAttributes_Response_200
+    UpdateFolderRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsFoldersFolderIdPutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UpdateFolderRequestBadRequestError
+    getList:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID of the list
+        name:
+          type: string
+          description: Name of the list
+        totalBlacklisted:
+          type: integer
+          format: int64
+          description: Number of blacklisted contacts in the list
+        totalSubscribers:
+          type: integer
+          format: int64
+          description: Number of contacts in the list
+        uniqueSubscribers:
+          type: integer
+          format: int64
+          description: Number of unique contacts in the list
+      required:
+      - id
+      - name
+      - totalBlacklisted
+      - totalSubscribers
+      - uniqueSubscribers
+      title: getList
+    ContactsIdentifierPutParametersIdentifier:
+      oneOf:
+      - type: string
+      - type: integer
+      title: ContactsIdentifierPutParametersIdentifier
+    postContactInfo:
+      type: object
+      properties:
+        contacts:
+          $ref: '#/components/schemas/PostContactInfoContacts'
+      required:
+      - contacts
+      title: postContactInfo
+    ContactsAttributesAttributeCategoryAttributeNamePostParametersAttributeCategory:
+      type: string
+      enum:
+      - normal
+      - transactional
+      - category
+      - calculated
+      - global
+      title: ContactsAttributesAttributeCategoryAttributeNamePostParametersAttributeCategory
+    ContactsFoldersFolderIdListsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ContactsFoldersFolderIdListsGetResponsesContentApplicationJsonSchemaCode
+    Contacts_createAttribute_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Contacts_createAttribute_Response_201
+    ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaDeliveredItems:
+      type: object
+      properties:
+        campaignId:
+          type: integer
+          format: int64
+          description: ID of the campaign which generated the event
+        eventTime:
+          type: string
+          description: UTC date-time of the event
+      required:
+      - campaignId
+      - eventTime
+      title: ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaDeliveredItems
+    ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsSoftBouncesItems:
+      type: object
+      properties:
+        campaignId:
+          type: integer
+          format: int64
+          description: ID of the campaign which generated the event
+        eventTime:
+          type: string
+          description: UTC date-time of the event
+      required:
+      - campaignId
+      - eventTime
+      title: ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsSoftBouncesItems
+    ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsMessagesSentItems:
+      type: object
+      properties:
+        campaignId:
+          type: integer
+          format: int64
+          description: ID of the campaign which generated the event
+        eventTime:
+          type: string
+          description: UTC date-time of the event
+      required:
+      - campaignId
+      - eventTime
+      title: ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsMessagesSentItems
+    ContactsImportPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ContactsImportPostResponsesContentApplicationJsonSchemaCode
+    Contacts_getContactInfo_Response_200:
+      type: object
+      properties:
+        attributes:
+          $ref: '#/components/schemas/ContactsIdentifierGetResponsesContentApplicationJsonSchemaAttributes'
+          description: Set of attributes of the contact
+        createdAt:
+          type: string
+          description: Creation UTC date-time of the contact (YYYY-MM-DDTHH:mm:ss.SSSZ)
+        email:
+          type: string
+          format: email
+          description: Email address of the contact for which you requested the details
+        emailBlacklisted:
+          type: boolean
+          description: Blacklist status for email campaigns (true=blacklisted, false=not blacklisted)
+        id:
+          type: integer
+          format: int64
+          description: ID of the contact for which you requested the details
+        listIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+        listUnsubscribed:
+          type: array
+          items:
+            type: integer
+            format: int64
+        modifiedAt:
+          type: string
+          description: Last modification UTC date-time of the contact (YYYY-MM-DDTHH:mm:ss.SSSZ)
+        smsBlacklisted:
+          type: boolean
+          description: Blacklist status for SMS campaigns (true=blacklisted, false=not blacklisted)
+        whatsappBlacklisted:
+          type: boolean
+          description: Blacklist status for WhatsApp campaigns (true=blacklisted, false=not blacklisted)
+        consentGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConsentGroupItem'
+          description: Consent groups the contact belongs to, with their subscription status. Only present when the Consent Groups feature is enabled for your account.
+        statistics:
+          $ref: '#/components/schemas/ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatistics'
+          description: Campaign statistics of the contact
+      required:
+      - attributes
+      - createdAt
+      - emailBlacklisted
+      - id
+      - listIds
+      - modifiedAt
+      - smsBlacklisted
+      - whatsappBlacklisted
+      - statistics
+      title: Contacts_getContactInfo_Response_200
+    CreateFolderRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsFoldersPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreateFolderRequestBadRequestError
+    ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaComplaintsItems:
+      type: object
+      properties:
+        campaignId:
+          type: integer
+          format: int64
+          description: ID of the campaign which generated the event
+        eventTime:
+          type: string
+          description: UTC date-time of the event
+      required:
+      - campaignId
+      - eventTime
+      title: ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaComplaintsItems
+    ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsComplaintsItems:
+      type: object
+      properties:
+        campaignId:
+          type: integer
+          format: int64
+          description: ID of the campaign which generated the event
+        eventTime:
+          type: string
+          description: UTC date-time of the event
+      required:
+      - campaignId
+      - eventTime
+      title: ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsComplaintsItems
+    ContactsListsListIdContactsGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: ContactsListsListIdContactsGetParametersSort
+    ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaClickedItems:
+      type: object
+      properties:
+        campaignId:
+          type: integer
+          format: int64
+          description: ID of the campaign which generated the event
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaClickedItemsLinksItems'
+      required:
+      - campaignId
+      - links
+      title: ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaClickedItems
+    contactErrorModel:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactErrorModelCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+        metadata:
+          $ref: '#/components/schemas/ContactErrorModelMetadata'
+          description: Additional information about the error
+      required:
+      - code
+      - message
+      title: contactErrorModel
+    ContactsAttributesGetResponsesContentApplicationJsonSchemaAttributesItemsCategory:
+      type: string
+      enum:
+      - normal
+      - transactional
+      - category
+      - calculated
+      - global
+      description: Category of the attribute
+      title: ContactsAttributesGetResponsesContentApplicationJsonSchemaAttributesItemsCategory
+    ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaSoftBouncesItems:
+      type: object
+      properties:
+        campaignId:
+          type: integer
+          format: int64
+          description: ID of the campaign which generated the event
+        eventTime:
+          type: string
+          description: UTC date-time of the event
+      required:
+      - campaignId
+      - eventTime
+      title: ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaSoftBouncesItems
+    DeleteListRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsListsListIdDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteListRequestBadRequestError
+    ContactsAttributesAttributeCategoryAttributeNamePutParametersAttributeCategory:
+      type: string
+      enum:
+      - category
+      - calculated
+      - global
+      - normal
+      title: ContactsAttributesAttributeCategoryAttributeNamePutParametersAttributeCategory
+    ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsHardBouncesItems:
+      type: object
+      properties:
+        campaignId:
+          type: integer
+          format: int64
+          description: ID of the campaign which generated the event
+        eventTime:
+          type: string
+          description: UTC date-time of the event
+      required:
+      - campaignId
+      - eventTime
+      title: ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsHardBouncesItems
+    ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaTransacAttributesItems:
+      type: object
+      properties:
+        orderDate:
+          type: string
+          format: date
+          description: Date of the order
+        orderId:
+          type: integer
+          format: int64
+          description: ID of the order
+        orderPrice:
+          type: string
+          title: float
+          description: Price of the order
+      required:
+      - orderDate
+      - orderId
+      - orderPrice
+      title: ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaTransacAttributesItems
+    CreateListRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsListsPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreateListRequestBadRequestError
+    ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaUnsubscriptionsAdminUnsubscriptionItems:
+      type: object
+      properties:
+        eventTime:
+          type: string
+          description: UTC date-time of the event
+        ip:
+          type: string
+          description: IP from which the user has been unsubscribed
+      required:
+      - eventTime
+      title: ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaUnsubscriptionsAdminUnsubscriptionItems
+    ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaHardBouncesItems:
+      type: object
+      properties:
+        campaignId:
+          type: integer
+          format: int64
+          description: ID of the campaign which generated the event
+        eventTime:
+          type: string
+          description: UTC date-time of the event
+      required:
+      - campaignId
+      - eventTime
+      title: ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaHardBouncesItems
+    ContactsListsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ContactsListsPostResponsesContentApplicationJsonSchemaCode
+    GetContactStatsRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetContactStatsRequestBadRequestError
+    ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsTransacAttributesItems:
+      type: object
+      properties: {}
+      title: ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsTransacAttributesItems
+    ContactsFoldersFolderIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ContactsFoldersFolderIdDeleteResponsesContentApplicationJsonSchemaCode
+    ContactsAttributesAttributeCategoryAttributeNamePostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ContactsAttributesAttributeCategoryAttributeNamePostResponsesContentApplicationJsonSchemaCode
+    DeleteAttributeRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsAttributesAttributeCategoryAttributeNameDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteAttributeRequestNotFoundError
+    ContactsSegmentsGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: ContactsSegmentsGetParametersSort
+    ContactsSegmentsGetResponsesContentApplicationJsonSchemaSegmentsItems:
+      type: object
+      properties:
+        categoryName:
+          type: string
+          description: Name of the Segment Category
+        id:
+          type: integer
+          format: int64
+          description: ID of the segment
+        segmentName:
+          type: string
+          description: Name of the Segment
+        updatedAt:
+          type: string
+          description: Last update UTC date-time of the segment (YYYY-MM-DDTHH:mm:ss.SSSZ)
+      required:
+      - categoryName
+      - id
+      - segmentName
+      title: ContactsSegmentsGetResponsesContentApplicationJsonSchemaSegmentsItems
+    ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsUnsubscriptionsUserUnsubscriptionItems:
+      type: object
+      properties:
+        campaignId:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: ID of the campaign which generated the event
+        eventTime:
+          type: string
+          description: UTC date-time of the event
+        ip:
+          type: string
+          description: IP from which the user has unsubscribed
+      required:
+      - campaignId
+      - eventTime
+      title: ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsUnsubscriptionsUserUnsubscriptionItems
+    ContactsAttributesGetResponsesContentApplicationJsonSchemaAttributesItemsEnumerationItems:
+      type: object
+      properties:
+        label:
+          type: string
+          description: Label of the "category" type attribute
+        value:
+          type: integer
+          format: int64
+          description: Numeric ID of the "category" type attribute value. Set to 0 when the raw value cannot be converted to an integer (for example non-numeric values such as "en" or "fr"). Refer to `valueStr` for the original string representation.
+        valueStr:
+          type: string
+          description: String representation of the "category" type attribute value. Always contains the original value as stored. Use this field when the attribute value is non-numeric (e.g. "en", "fr") or when you need the exact string form alongside the numeric `value`.
+      required:
+      - label
+      - value
+      - valueStr
+      title: ContactsAttributesGetResponsesContentApplicationJsonSchemaAttributesItemsEnumerationItems
+    ContactsFoldersFolderIdPutResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ContactsFoldersFolderIdPutResponsesContentApplicationJsonSchemaCode
+    GetFolderListsRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsFoldersFolderIdListsGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetFolderListsRequestBadRequestError
+    ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaUnsubscriptionsUserUnsubscriptionItems:
+      type: object
+      properties:
+        campaignId:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: ID of the campaign which generated the event
+        eventTime:
+          type: string
+          description: UTC date-time of the event
+        ip:
+          type: string
+          description: IP from which the user has unsubscribed
+      required:
+      - campaignId
+      - eventTime
+      title: ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaUnsubscriptionsUserUnsubscriptionItems
+    ContactsListsListIdContactsAddPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ContactsListsListIdContactsAddPostResponsesContentApplicationJsonSchemaCode
+    ContactsIdentifierDeleteParametersIdentifier:
+      oneOf:
+      - type: string
+      - type: integer
+      title: ContactsIdentifierDeleteParametersIdentifier
+    ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsClickedItemsLinksItems:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: Number of clicks on this link for the campaign
+        eventTime:
+          type: string
+          description: UTC date-time of the event
+        ip:
+          type: string
+          description: IP from which the user has clicked on the link
+        url:
+          type: string
+          description: URL of the clicked link
+      required:
+      - count
+      - eventTime
+      - ip
+      - url
+      title: ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsClickedItemsLinksItems
+    GetContactsRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetContactsRequestBadRequestError
+    ContactErrorModelCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - document_not_found
+      - account_in_process
+      - duplicate_parameter
+      - method_not_allowed
+      - out_of_range
+      description: Error code displayed in case of a failure
+      title: ContactErrorModelCode
+    Contacts_addContactToList_Request:
+      oneOf:
+      - description: Reference to ContactsAddContactToListRequest0
+      - description: Reference to ContactsAddContactToListRequest1
+      - description: Reference to ContactsAddContactToListRequest2
+      title: Contacts_addContactToList_Request
+    ContactsAttributesGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ContactsAttributesGetResponsesContentApplicationJsonSchemaCode
+    ContactsIdentifierGetResponsesContentApplicationJsonSchemaAttributes:
+      type: object
+      properties: {}
+      description: Set of attributes of the contact
+      title: ContactsIdentifierGetResponsesContentApplicationJsonSchemaAttributes
+    DeleteContactRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsIdentifierDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteContactRequestBadRequestError
+    ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsOpenedItems:
+      type: object
+      properties:
+        campaignId:
+          type: integer
+          format: int64
+          description: ID of the campaign which generated the event
+        count:
+          type: integer
+          format: int64
+          description: Number of openings for the campaign
+        eventTime:
+          type: string
+          description: UTC date-time of the event
+        ip:
+          type: string
+          description: IP from which the user has opened the email
+      required:
+      - campaignId
+      - count
+      - eventTime
+      - ip
+      title: ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsOpenedItems
+    GetFoldersRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsFoldersGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetFoldersRequestBadRequestError
+    ContactsListsListIdContactsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ContactsListsListIdContactsGetResponsesContentApplicationJsonSchemaCode
+    ? ContactsAttributesAttributeTypeMultipleChoiceAttributeMultipleChoiceAttributeOptionDeleteResponsesContentApplicationJsonSchemaCode
+    : type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ContactsAttributesAttributeTypeMultipleChoiceAttributeMultipleChoiceAttributeOptionDeleteResponsesContentApplicationJsonSchemaCode
+    ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsDeliveredItems:
+      type: object
+      properties:
+        campaignId:
+          type: integer
+          format: int64
+          description: ID of the campaign which generated the event
+        eventTime:
+          type: string
+          description: UTC date-time of the event
+      required:
+      - campaignId
+      - eventTime
+      title: ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsDeliveredItems
+    ContactsImportPostRequestBodyContentApplicationJsonSchemaJsonBodyItems:
       type: object
       properties:
         attributes:
           type: object
-          description: Custom attribute values to update as key-value pairs.
-          additionalProperties: true
-        listIds:
+          additionalProperties:
+            description: Any type
+          description: List of attributes to be imported
+        email:
+          type: string
+      title: ContactsImportPostRequestBodyContentApplicationJsonSchemaJsonBodyItems
+    CreateAttributeRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsAttributesAttributeCategoryAttributeNamePostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreateAttributeRequestBadRequestError
+    ContactsAttributesGetResponsesContentApplicationJsonSchemaAttributesItems:
+      type: object
+      properties:
+        calculatedValue:
+          type: string
+          description: Calculated value formula
+        category:
+          $ref: '#/components/schemas/ContactsAttributesGetResponsesContentApplicationJsonSchemaAttributesItemsCategory'
+          description: Category of the attribute
+        enumeration:
           type: array
-          description: IDs of lists to set for the contact.
           items:
-            type: integer
-            format: int64
-        unlinkListIds:
+            $ref: '#/components/schemas/ContactsAttributesGetResponsesContentApplicationJsonSchemaAttributesItemsEnumerationItems'
+          description: Parameter only available for "category" type attributes.
+        multiCategoryOptions:
           type: array
-          description: IDs of lists to remove the contact from.
           items:
-            type: integer
-            format: int64
-        emailBlacklisted:
-          type: boolean
-          description: Whether to blacklist the contact's email.
-        smsBlacklisted:
-          type: boolean
-          description: Whether to blacklist the contact's phone for SMS.
-  parameters:
-    offsetParam:
-      name: offset
-      in: query
-      description: Number of results to skip for pagination.
-      schema:
-        type: integer
-        format: int64
-        default: 0
-    contactIdentifierParam:
-      name: identifier
-      in: path
-      required: true
-      description: Contact identifier which can be an email address, phone number, or internal contact ID.
-      schema:
-        type: string
-    limitParam:
-      name: limit
-      in: query
-      description: Maximum number of results to return per request.
-      schema:
-        type: integer
-        format: int64
-        default: 50
+            type: string
+          description: Parameter only available for "multiple-choice" type attributes.
+        name:
+          type: string
+          description: Name of the attribute
+        type:
+          $ref: '#/components/schemas/ContactsAttributesGetResponsesContentApplicationJsonSchemaAttributesItemsType'
+          description: Type of the attribute
+      required:
+      - category
+      - name
+      title: ContactsAttributesGetResponsesContentApplicationJsonSchemaAttributesItems
+    ContactsExportPostRequestBodyContentApplicationJsonSchemaCustomContactFilter:
+      type: object
+      properties:
+        actionForContacts:
+          $ref: '#/components/schemas/ContactsExportPostRequestBodyContentApplicationJsonSchemaCustomContactFilterActionForContacts'
+          description: '**Mandatory if neither actionForEmailCampaigns nor actionForSmsCampaigns is passed.** This will export the contacts on the basis of provided action applied on contacts as per the list id. * **allContacts** - Fetch the list of all contacts for a particular list. * **subscribed & unsubscribed** - Fetch the list of subscribed / unsubscribed (blacklisted via any means) contacts for a particular list. * **unsubscribedPerList** - Fetch the list of contacts that are unsubscribed from a particular list only.
+
+            '
+        actionForEmailCampaigns:
+          $ref: '#/components/schemas/ContactsExportPostRequestBodyContentApplicationJsonSchemaCustomContactFilterActionForEmailCampaigns'
+          description: '**Mandatory if neither actionForContacts nor actionForSmsCampaigns is passed.** This will export the contacts on the basis of provided action applied on email campaigns. * **openers & nonOpeners** - emailCampaignId is mandatory. Fetch the list of readers / non-readers for a particular email campaign. * **clickers & nonClickers** - emailCampaignId is mandatory. Fetch the list of clickers / non-clickers for a particular email campaign. * **unsubscribed** - emailCampaignId is mandatory. Fetch the list of all unsubscribed (blacklisted via any means) contacts for a particular email campaign. * **hardBounces & softBounces** - emailCampaignId is optional. Fetch the list of hard bounces / soft bounces for a particular / all email campaign(s).
+
+            '
+        actionForSmsCampaigns:
+          $ref: '#/components/schemas/ContactsExportPostRequestBodyContentApplicationJsonSchemaCustomContactFilterActionForSmsCampaigns'
+          description: '**Mandatory if neither actionForContacts nor actionForEmailCampaigns is passed.** This will export the contacts on the basis of provided action applied on sms campaigns. * **unsubscribed** - Fetch the list of all unsubscribed (blacklisted via any means) contacts for all / particular sms campaigns. * **hardBounces & softBounces** - Fetch the list of hard bounces / soft bounces for all / particular sms campaigns.
+
+            '
+        emailCampaignId:
+          type: integer
+          format: int64
+          description: 'Considered only if **actionForEmailCampaigns** is passed, ignored otherwise. **Mandatory if action is one of the following - openers, nonOpeners, clickers, nonClickers, unsubscribed.** The id of the email campaign for which the corresponding action shall be applied in the filter.
+
+            '
+        listId:
+          type: integer
+          format: int64
+          description: 'ID of the list. This is mandatory if actionForContacts is specified and segmentId is not provided. Either segmentId or listId must be included.
+
+            '
+        segmentId:
+          type: integer
+          format: int64
+          description: 'ID of the segment. This is mandatory if actionForContacts is specified and listId is not provided. Either segmentId or listId must be included.
+
+            '
+        smsCampaignId:
+          type: integer
+          format: int64
+          description: 'Considered only if **actionForSmsCampaigns** is passed, ignored otherwise. The id of sms campaign for which the corresponding action shall be applied in the filter.
+
+            '
+      description: 'Set the filter for the contacts to be exported.
+
+        '
+      title: ContactsExportPostRequestBodyContentApplicationJsonSchemaCustomContactFilter
+    UpdateListRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsListsListIdPutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UpdateListRequestBadRequestError
+    ContactsGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: ContactsGetParametersSort
+    ContactsListsListIdGetResponsesContentApplicationJsonSchemaCampaignStatsItems:
+      type: object
+      properties:
+        campaignId:
+          type: integer
+          format: int64
+          description: ID of the campaign
+        stats:
+          $ref: '#/components/schemas/getCampaignStats'
+      required:
+      - campaignId
+      - stats
+      title: ContactsListsListIdGetResponsesContentApplicationJsonSchemaCampaignStatsItems
+    ContactsAttributesAttributeTypeMultipleChoiceAttributeMultipleChoiceAttributeOptionDeleteParametersAttributeType:
+      type: string
+      enum:
+      - multiple-choice
+      title: ContactsAttributesAttributeTypeMultipleChoiceAttributeMultipleChoiceAttributeOptionDeleteParametersAttributeType
+    Contacts_removeContactFromList_Request:
+      oneOf:
+      - description: Reference to ContactsRemoveContactFromListRequest0
+      - description: Reference to ContactsRemoveContactFromListRequest1
+      - description: Reference to ContactsRemoveContactFromListRequest2
+      - description: Reference to ContactsRemoveContactFromListRequest3
+      title: Contacts_removeContactFromList_Request
+    UpdateAttributeRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsAttributesAttributeCategoryAttributeNamePutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UpdateAttributeRequestBadRequestError
+    ContactsDoubleOptinConfirmationPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ContactsDoubleOptinConfirmationPostResponsesContentApplicationJsonSchemaCode
+    ContactsAttributesAttributeCategoryAttributeNameDeleteParametersAttributeCategory:
+      type: string
+      enum:
+      - normal
+      - transactional
+      - category
+      - calculated
+      - global
+      title: ContactsAttributesAttributeCategoryAttributeNameDeleteParametersAttributeCategory
+    ContactsListsGetResponsesContentApplicationJsonSchemaListsItems:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID of the list
+        name:
+          type: string
+          description: Name of the list
+        totalBlacklisted:
+          type: integer
+          format: int64
+          description: Number of blacklisted contacts in the list
+        totalSubscribers:
+          type: integer
+          format: int64
+          description: Number of contacts in the list
+        uniqueSubscribers:
+          type: integer
+          format: int64
+          description: Number of unique contacts in the list
+        folderId:
+          type: integer
+          format: int64
+          description: ID of the folder
+      required:
+      - id
+      - name
+      - totalBlacklisted
+      - totalSubscribers
+      - uniqueSubscribers
+      - folderId
+      title: ContactsListsGetResponsesContentApplicationJsonSchemaListsItems
+    ContactsAttributesAttributeCategoryAttributeNamePutRequestBodyContentApplicationJsonSchemaEnumerationItems:
+      type: object
+      properties:
+        label:
+          type: string
+          description: Label of the value
+        value:
+          type: integer
+          description: Id of the value
+      required:
+      - label
+      - value
+      title: ContactsAttributesAttributeCategoryAttributeNamePutRequestBodyContentApplicationJsonSchemaEnumerationItems
+    ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatistics:
+      type: object
+      properties:
+        clicked:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsClickedItems'
+          description: Listing of the clicks generated by the contact
+        complaints:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsComplaintsItems'
+          description: Listing of the complaints generated by the contact
+        delivered:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsDeliveredItems'
+          description: Listing of the delivered campaign for the contact
+        hardBounces:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsHardBouncesItems'
+          description: Listing of the hard bounces generated by the contact
+        messagesSent:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsMessagesSentItems'
+          description: Listing of the sent campaign for the contact
+        opened:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsOpenedItems'
+          description: Listing of the openings generated by the contact
+        softBounces:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsSoftBouncesItems'
+          description: Listing of the soft bounces generated by the contact
+        transacAttributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsTransacAttributesItems'
+          description: Listing of the transactional attributes for the contact
+        unsubscriptions:
+          $ref: '#/components/schemas/ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsUnsubscriptions'
+          description: Listing of the unsubscription for the contact
+      description: Campaign statistics of the contact
+      title: ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatistics
+    ContactsFoldersGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: ContactsFoldersGetParametersSort
+    Contacts_requestContactExport_Response_202:
+      type: object
+      properties:
+        processId:
+          type: integer
+          format: int64
+          description: Id of the process created
+      required:
+      - processId
+      title: Contacts_requestContactExport_Response_202
+    ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaUnsubscriptions:
+      type: object
+      properties:
+        adminUnsubscription:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaUnsubscriptionsAdminUnsubscriptionItems'
+          description: Contact has been unsubscribed from the administrator
+        userUnsubscription:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaUnsubscriptionsUserUnsubscriptionItems'
+          description: Contact has unsubscribed via the unsubscription link in the email
+      required:
+      - adminUnsubscription
+      - userUnsubscription
+      title: ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaUnsubscriptions
+    Contacts_createContact_Response_201:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID of the contact when a new contact is created
+      title: Contacts_createContact_Response_201
+    ContactsListsListIdPutResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ContactsListsListIdPutResponsesContentApplicationJsonSchemaCode
+    ContactsAttributesAttributeCategoryAttributeNamePostRequestBodyContentApplicationJsonSchemaEnumerationItems:
+      type: object
+      properties:
+        label:
+          type: string
+          description: Label of the value
+        value:
+          type: integer
+          description: Id of the value
+      required:
+      - label
+      - value
+      title: ContactsAttributesAttributeCategoryAttributeNamePostRequestBodyContentApplicationJsonSchemaEnumerationItems
+    ContactsListsListIdContactsRemovePostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ContactsListsListIdContactsRemovePostResponsesContentApplicationJsonSchemaCode
+    GetFolderRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsFoldersFolderIdGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetFolderRequestBadRequestError
+    CreateDoiContactRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsDoubleOptinConfirmationPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreateDoiContactRequestBadRequestError
+    Contacts_getFolders_Response_200:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: Number of folders available in your account
+        folders:
+          type: array
+          items:
+            $ref: '#/components/schemas/getFolder'
+      title: Contacts_getFolders_Response_200
+    ContactsSegmentsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ContactsSegmentsGetResponsesContentApplicationJsonSchemaCode
+    GetSegmentsRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsSegmentsGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetSegmentsRequestBadRequestError
+    ContactsFoldersFolderIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ContactsFoldersFolderIdGetResponsesContentApplicationJsonSchemaCode
+    Contacts_getContactStats_Response_200:
+      type: object
+      properties:
+        clicked:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaClickedItems'
+        complaints:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaComplaintsItems'
+        delivered:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaDeliveredItems'
+        hardBounces:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaHardBouncesItems'
+        messagesSent:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaMessagesSentItems'
+        opened:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaOpenedItems'
+        softBounces:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaSoftBouncesItems'
+        transacAttributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaTransacAttributesItems'
+        unsubscriptions:
+          $ref: '#/components/schemas/ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaUnsubscriptions'
+      description: Campaign Statistics for the contact
+      title: Contacts_getContactStats_Response_200
+    RequestContactExportRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsExportPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: RequestContactExportRequestBadRequestError
+    ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaClickedItemsLinksItems:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: Number of clicks on this link for the campaign
+        eventTime:
+          type: string
+          description: UTC date-time of the event
+        ip:
+          type: string
+          description: IP from which the user has clicked on the link
+        url:
+          type: string
+          description: URL of the clicked link
+      required:
+      - count
+      - eventTime
+      - ip
+      - url
+      title: ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaClickedItemsLinksItems
+    ContactsFoldersFolderIdListsGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: ContactsFoldersFolderIdListsGetParametersSort
+    DeleteMultiAttributeOptionsRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsAttributesAttributeTypeMultipleChoiceAttributeMultipleChoiceAttributeOptionDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteMultiAttributeOptionsRequestNotFoundError
+    GetContactDetailsAttributes:
+      type: object
+      properties: {}
+      description: Set of attributes of the contact
+      title: GetContactDetailsAttributes
+    ContactsPostRequestBodyContentApplicationJsonSchemaAttributes:
+      oneOf:
+      - type: number
+        format: double
+      - type: integer
+      - type: string
+      - type: boolean
+      - type: array
+        items:
+          type: string
+      title: ContactsPostRequestBodyContentApplicationJsonSchemaAttributes
+    ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaOpenedItems:
+      type: object
+      properties:
+        campaignId:
+          type: integer
+          format: int64
+          description: ID of the campaign which generated the event
+        count:
+          type: integer
+          format: int64
+          description: Number of openings of the campaign
+        eventTime:
+          type: string
+          description: UTC date-time of the event
+        ip:
+          type: string
+          description: IP from which the user has opened the campaign
+      required:
+      - campaignId
+      - count
+      - eventTime
+      - ip
+      title: ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaOpenedItems
+    Contacts_createList_Response_201:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID of the object created
+      required:
+      - id
+      title: Contacts_createList_Response_201
+    PostContactInfoContactsSuccess:
+      oneOf:
+      - type: array
+        items:
+          type: string
+          format: email
+      - type: array
+        items:
+          type: integer
+          format: int64
+      title: PostContactInfoContactsSuccess
+    Contacts_createFolder_Response_201:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID of the object created
+      required:
+      - id
+      title: Contacts_createFolder_Response_201
+    ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsUnsubscriptions:
+      type: object
+      properties:
+        adminUnsubscription:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsUnsubscriptionsAdminUnsubscriptionItems'
+          description: Contact has been unsubscribed from the administrator
+        userUnsubscription:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsUnsubscriptionsUserUnsubscriptionItems'
+          description: Contact unsubscribe via unsubscription link in a campaign
+      required:
+      - adminUnsubscription
+      - userUnsubscription
+      description: Listing of the unsubscription for the contact
+      title: ContactsIdentifierGetResponsesContentApplicationJsonSchemaStatisticsUnsubscriptions
+    ContactsExportPostRequestBodyContentApplicationJsonSchemaCustomContactFilterActionForEmailCampaigns:
+      type: string
+      enum:
+      - openers
+      - nonOpeners
+      - clickers
+      - nonClickers
+      - unsubscribed
+      - hardBounces
+      - softBounces
+      description: '**Mandatory if neither actionForContacts nor actionForSmsCampaigns is passed.** This will export the contacts on the basis of provided action applied on email campaigns. * **openers & nonOpeners** - emailCampaignId is mandatory. Fetch the list of readers / non-readers for a particular email campaign. * **clickers & nonClickers** - emailCampaignId is mandatory. Fetch the list of clickers / non-clickers for a particular email campaign. * **unsubscribed** - emailCampaignId is mandatory. Fetch the list of all unsubscribed (blacklisted via any means) contacts for a particular email campaign. * **hardBounces & softBounces** - emailCampaignId is optional. Fetch the list of hard bounces / soft bounces for a particular / all email campaign(s).
+
+        '
+      title: ContactsExportPostRequestBodyContentApplicationJsonSchemaCustomContactFilterActionForEmailCampaigns
+    ContactsListsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ContactsListsGetResponsesContentApplicationJsonSchemaCode
+    ContactsIdentifierGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ContactsIdentifierGetResponsesContentApplicationJsonSchemaCode
+    ContactsExportPostRequestBodyContentApplicationJsonSchemaCustomContactFilterActionForContacts:
+      type: string
+      enum:
+      - allContacts
+      - subscribed
+      - unsubscribed
+      - unsubscribedPerList
+      description: '**Mandatory if neither actionForEmailCampaigns nor actionForSmsCampaigns is passed.** This will export the contacts on the basis of provided action applied on contacts as per the list id. * **allContacts** - Fetch the list of all contacts for a particular list. * **subscribed & unsubscribed** - Fetch the list of subscribed / unsubscribed (blacklisted via any means) contacts for a particular list. * **unsubscribedPerList** - Fetch the list of contacts that are unsubscribed from a particular list only.
+
+        '
+      title: ContactsExportPostRequestBodyContentApplicationJsonSchemaCustomContactFilterActionForContacts
+    ContactsAttributesGetResponsesContentApplicationJsonSchemaAttributesItemsType:
+      type: string
+      enum:
+      - text
+      - date
+      - float
+      - id
+      - boolean
+      - multiple-choice
+      - user
+      description: Type of the attribute
+      title: ContactsAttributesGetResponsesContentApplicationJsonSchemaAttributesItemsType
+    ContactsIdentifierDeleteParametersIdentifierType:
+      type: string
+      enum:
+      - email_id
+      - contact_id
+      - ext_id
+      - phone_id
+      - whatsapp_id
+      - landline_number_id
+      title: ContactsIdentifierDeleteParametersIdentifierType
+    GetContactsFromListRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsListsListIdContactsGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetContactsFromListRequestBadRequestError
+    ContactsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ContactsGetResponsesContentApplicationJsonSchemaCode
+    ContactsAttributesAttributeCategoryAttributeNamePutResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ContactsAttributesAttributeCategoryAttributeNamePutResponsesContentApplicationJsonSchemaCode
+    getCampaignStats:
+      type: object
+      properties:
+        appleMppOpens:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Numbers of times your email has been opened automatically through Apple MPP.
+        clickers:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Number of total clicks for the campaign
+        complaints:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Number of complaints (Spam reports) for the campaign
+        deferred:
+          type: integer
+          format: int64
+          description: Number of deferred emails for the campaign
+        delivered:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Number of delivered emails for the campaign
+        estimatedViews:
+          type: integer
+          format: int64
+          description: Rate of recipients without any privacy protection option enabled in their email client, applied to all delivered emails
+        hardBounces:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Number of hard bounces for the campaign
+        listId:
+          type: integer
+          format: int64
+          description: List Id of email campaign (only in case of get email campaign(s)(not for global stats))
+        opensRate:
+          type:
+          - string
+          - 'null'
+          title: float
+          description: Percentage of recipients who open the email out of your total number of recipients. Depending on your Campaign settings, they may include Apple MPP opens.
+        returnBounce:
+          type: integer
+          format: int64
+          description: Total number of non-delivered campaigns for a particular campaign id.
+        sent:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Number of sent emails for the campaign
+        softBounces:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Number of softbounce for the campaign
+        trackableViews:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Recipients without any privacy protection option enabled in their email email client
+        trackableViewsRate:
+          type: string
+          title: float
+          description: Rate of recipients without any privacy protection option enabled in their email client
+        uniqueClicks:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Number of unique clicks for the campaign
+        uniqueViews:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Number of unique openings for the campaign
+        unsubscriptions:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Number of unsubscription for the campaign
+        viewed:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Number of openings for the campaign
+      required:
+      - appleMppOpens
+      - clickers
+      - complaints
+      - delivered
+      - hardBounces
+      - opensRate
+      - sent
+      - softBounces
+      - trackableViews
+      - uniqueClicks
+      - uniqueViews
+      - unsubscriptions
+      - viewed
+      title: getCampaignStats
+    ContactsImportPostRequestBodyContentApplicationJsonSchemaNewList:
+      type: object
+      properties:
+        folderId:
+          type: integer
+          format: int64
+          description: 'Id of the folder where this new list shall be created. **Mandatory if listName is not empty**
+
+            '
+        listName:
+          type: string
+          description: 'List with listName will be created first and users will be imported in it. **Mandatory if listIds is empty**.
+
+            '
+      description: To create a new list and import the contacts into it, pass the listName and an optional folderId.
+      title: ContactsImportPostRequestBodyContentApplicationJsonSchemaNewList
+    ContactsAttributesAttributeCategoryAttributeNamePostRequestBodyContentApplicationJsonSchemaType:
+      type: string
+      enum:
+      - text
+      - date
+      - float
+      - boolean
+      - id
+      - category
+      - multiple-choice
+      - user
+      description: 'Type of the attribute. **Use only if the attribute''s category is ''normal'', ''category'' or ''transactional''** Type **user and multiple-choice** is only available if the category is **normal** attribute Type **id** is only available if the category is **transactional** attribute Type **category** is only available if the category is **category** attribute
+
+        '
+      title: ContactsAttributesAttributeCategoryAttributeNamePostRequestBodyContentApplicationJsonSchemaType
+    createUpdateFolder:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the folder
+      title: createUpdateFolder
+    ContactsIdentifierDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ContactsIdentifierDeleteResponsesContentApplicationJsonSchemaCode
+    ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaCode
+    GetListsRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ContactsListsGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetListsRequestBadRequestError
+    ContactsIdentifierPutRequestBodyContentApplicationJsonSchemaAttributes:
+      oneOf:
+      - type: number
+        format: double
+      - type: integer
+      - type: string
+      - type: boolean
+      - type: array
+        items:
+          type: string
+      title: ContactsIdentifierPutRequestBodyContentApplicationJsonSchemaAttributes
+    ContactErrorModelMetadata:
+      type: object
+      properties: {}
+      description: Additional information about the error
+      title: ContactErrorModelMetadata
   securitySchemes:
-    apiKeyAuth:
+    api-key:
       type: apiKey
       in: header
       name: api-key
-      description: Brevo API key passed in the api-key request header for authentication.
-externalDocs:
-  description: Brevo Contacts Documentation
-  url: https://developers.brevo.com/docs/how-it-works
+      description: The API key should be passed in the request headers as `api-key` for authentication.

@@ -6,7 +6,7 @@ servers:
 - url: https://api.brevo.com/v3
   description: https://api.brevo.com/v3
 tags:
-- name: externalFeeds
+- name: External Feeds
 paths:
   /feeds:
     get:
@@ -57,11 +57,9 @@ paths:
 
         - Search functionality works on feed name matching
 
-        - Internal feeds are system-managed and cannot be modified
-
-        '
+        - Internal feeds are system-managed and cannot be modified'
       tags:
-      - externalFeeds
+      - External Feeds
       parameters:
       - name: search
         in: query
@@ -187,11 +185,9 @@ paths:
 
         - Maximum 5 retry attempts allowed for failed requests
 
-        - Custom headers support for API integration requirements
-
-        '
+        - Custom headers support for API integration requirements'
       tags:
-      - externalFeeds
+      - External Feeds
       parameters:
       - name: api-key
         in: header
@@ -298,11 +294,9 @@ paths:
 
         - Shows current feed health status
 
-        - Useful for debugging feed issues
-
-        '
+        - Useful for debugging feed issues'
       tags:
-      - externalFeeds
+      - External Feeds
       parameters:
       - name: uuid
         in: path
@@ -370,11 +364,9 @@ paths:
 
         - URL changes should be tested before campaign use
 
-        - Monitor campaigns using this feed after updates
-
-        '
+        - Monitor campaigns using this feed after updates'
       tags:
-      - externalFeeds
+      - External Feeds
       parameters:
       - name: uuid
         in: path
@@ -478,11 +470,9 @@ paths:
 
         - Remove feed references from email templates
 
-        - Consider deactivating instead of deleting if unsure
-
-        '
+        - Consider deactivating instead of deleting if unsure'
       tags:
-      - externalFeeds
+      - External Feeds
       parameters:
       - name: uuid
         in: path
@@ -519,114 +509,22 @@ paths:
                 $ref: '#/components/schemas/DeleteExternalFeedRequestNotFoundError'
 components:
   schemas:
-    FeedsUuidPutRequestBodyContentApplicationJsonSchemaHeadersItems:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Header name
-        value:
-          type: string
-          description: Header value
-      required:
-      - name
-      - value
-      title: FeedsUuidPutRequestBodyContentApplicationJsonSchemaHeadersItems
-    External_Feeds_getAllExternalFeeds_Response_200:
-      type: object
-      properties:
-        count:
-          type: integer
-          description: Total number of feeds
-        feeds:
-          type: array
-          items:
-            $ref: '#/components/schemas/FeedsGetResponsesContentApplicationJsonSchemaFeedsItems'
-          description: List of external feeds
-      required:
-      - count
-      - feeds
-      title: External Feeds_getAllExternalFeeds_Response_200
-    UpdateExternalFeedRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/FeedsUuidPutResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: UpdateExternalFeedRequestBadRequestError
-    FeedsPostResponsesContentApplicationJsonSchemaCode:
+    FeedsGetParametersSort:
       type: string
       enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: FeedsPostResponsesContentApplicationJsonSchemaCode
-    FeedsPostRequestBodyContentApplicationJsonSchemaHeadersItems:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Header name
-        value:
-          type: string
-          description: Header value
-      required:
-      - name
-      - value
-      title: FeedsPostRequestBodyContentApplicationJsonSchemaHeadersItems
-    GetExternalFeedByUUIDRequestNotFoundError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/FeedsUuidGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetExternalFeedByUUIDRequestNotFoundError
+      - asc
+      - desc
+      default: desc
+      title: FeedsGetParametersSort
+    FeedsPostRequestBodyContentApplicationJsonSchemaAuthType:
+      type: string
+      enum:
+      - basic
+      - token
+      - noAuth
+      default: noAuth
+      description: Authentication type for accessing the feed
+      title: FeedsPostRequestBodyContentApplicationJsonSchemaAuthType
     FeedsGetResponsesContentApplicationJsonSchemaFeedsItemsHeadersItems:
       type: object
       properties:
@@ -640,55 +538,18 @@ components:
       - name
       - value
       title: FeedsGetResponsesContentApplicationJsonSchemaFeedsItemsHeadersItems
-    FeedsUuidGetResponsesContentApplicationJsonSchemaAuthType:
-      type: string
-      enum:
-      - basic
-      - token
-      - noAuth
-      description: Authentication type for accessing the feed
-      title: FeedsUuidGetResponsesContentApplicationJsonSchemaAuthType
-    FeedsUuidPutResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: FeedsUuidPutResponsesContentApplicationJsonSchemaCode
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
     DeleteExternalFeedRequestBadRequestError:
       type: object
       properties:
@@ -702,131 +563,76 @@ components:
       - code
       - message
       title: DeleteExternalFeedRequestBadRequestError
-    FeedsGetResponsesContentApplicationJsonSchemaFeedsItemsAuthType:
-      type: string
-      enum:
-      - basic
-      - token
-      - noAuth
-      description: Authentication type for accessing the feed
-      title: FeedsGetResponsesContentApplicationJsonSchemaFeedsItemsAuthType
-    UpdateExternalFeedRequestNotFoundError:
+    FeedsGetResponsesContentApplicationJsonSchemaFeedsItems:
       type: object
       properties:
-        code:
-          $ref: '#/components/schemas/FeedsUuidPutResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
+        id:
           type: string
-          description: Readable message associated to the failure
+          format: uuidv4
+          description: Unique identifier of the feed
+        name:
+          type: string
+          description: Name of the feed
+        url:
+          type: string
+          format: url
+          description: URL of the external data source
+        authType:
+          $ref: '#/components/schemas/FeedsGetResponsesContentApplicationJsonSchemaFeedsItemsAuthType'
+          description: Authentication type for accessing the feed
+        username:
+          type: string
+          description: Username for basic authentication. Only returned when authType is 'basic'. Excluded when authType is 'token'.
+        password:
+          type: string
+          description: Password for basic authentication. Only returned when authType is 'basic'. Excluded when authType is 'token'.
+        token:
+          type: string
+          description: Token for token-based authentication. Only returned when authType is 'token'. Excluded when authType is 'basic' or 'noAuth'.
+        maxRetries:
+          type: integer
+          description: Maximum number of retry attempts for failed requests
+        cache:
+          type: boolean
+          description: Whether to cache the feed response
+        headers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/FeedsGetResponsesContentApplicationJsonSchemaFeedsItemsHeadersItems'
+          description: Custom HTTP headers for the feed request
+        createdAt:
+          type: string
+          format: date-time
+          description: Feed creation timestamp
+        modifiedAt:
+          type: string
+          format: date-time
+          description: Feed last modification timestamp
       required:
-      - code
-      - message
-      title: UpdateExternalFeedRequestNotFoundError
-    DeleteExternalFeedRequestNotFoundError:
+      - id
+      - name
+      - url
+      - authType
+      - maxRetries
+      - cache
+      - createdAt
+      - modifiedAt
+      title: FeedsGetResponsesContentApplicationJsonSchemaFeedsItems
+    FeedsUuidPutRequestBodyContentApplicationJsonSchemaHeadersItems:
       type: object
       properties:
-        code:
-          $ref: '#/components/schemas/FeedsUuidDeleteResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
+        name:
           type: string
-          description: Readable message associated to the failure
+          description: Header name
+        value:
+          type: string
+          description: Header value
       required:
-      - code
-      - message
-      title: DeleteExternalFeedRequestNotFoundError
-    FeedsUuidGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: FeedsUuidGetResponsesContentApplicationJsonSchemaCode
-    FeedsUuidDeleteResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: FeedsUuidDeleteResponsesContentApplicationJsonSchemaCode
-    FeedsPostRequestBodyContentApplicationJsonSchemaAuthType:
-      type: string
-      enum:
-      - basic
-      - token
-      - noAuth
-      default: noAuth
-      description: Authentication type for accessing the feed
-      title: FeedsPostRequestBodyContentApplicationJsonSchemaAuthType
+      - name
+      - value
+      title: FeedsUuidPutRequestBodyContentApplicationJsonSchemaHeadersItems
     FeedsGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -868,6 +674,166 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: FeedsGetResponsesContentApplicationJsonSchemaCode
+    GetExternalFeedByUUIDRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/FeedsUuidGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetExternalFeedByUUIDRequestBadRequestError
+    UpdateExternalFeedRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/FeedsUuidPutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UpdateExternalFeedRequestNotFoundError
+    FeedsUuidGetResponsesContentApplicationJsonSchemaHeadersItems:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Header name
+        value:
+          type: string
+          description: Header value
+      required:
+      - name
+      - value
+      title: FeedsUuidGetResponsesContentApplicationJsonSchemaHeadersItems
+    GetExternalFeedByUUIDRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/FeedsUuidGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetExternalFeedByUUIDRequestNotFoundError
+    CreateExternalFeedRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/FeedsPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreateExternalFeedRequestBadRequestError
+    DeleteExternalFeedRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/FeedsUuidDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteExternalFeedRequestNotFoundError
+    FeedsUuidDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: FeedsUuidDeleteResponsesContentApplicationJsonSchemaCode
+    FeedsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: FeedsPostResponsesContentApplicationJsonSchemaCode
     FeedsUuidPutRequestBodyContentApplicationJsonSchemaAuthType:
       type: string
       enum:
@@ -876,6 +842,47 @@ components:
       - noAuth
       description: Authentication type for accessing the feed
       title: FeedsUuidPutRequestBodyContentApplicationJsonSchemaAuthType
+    FeedsUuidGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: FeedsUuidGetResponsesContentApplicationJsonSchemaCode
     FeedsGetParametersAuthType:
       type: string
       enum:
@@ -946,95 +953,14 @@ components:
       - createdAt
       - modifiedAt
       title: External Feeds_getExternalFeedByUUID_Response_200
-    errorModel:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - message
-      title: errorModel
-    GetExternalFeedByUUIDRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/FeedsUuidGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetExternalFeedByUUIDRequestBadRequestError
-    FeedsGetResponsesContentApplicationJsonSchemaFeedsItems:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuidv4
-          description: Unique identifier of the feed
-        name:
-          type: string
-          description: Name of the feed
-        url:
-          type: string
-          format: url
-          description: URL of the external data source
-        authType:
-          $ref: '#/components/schemas/FeedsGetResponsesContentApplicationJsonSchemaFeedsItemsAuthType'
-          description: Authentication type for accessing the feed
-        username:
-          type: string
-          description: Username for basic authentication. Only returned when authType is 'basic'. Excluded when authType is 'token'.
-        password:
-          type: string
-          description: Password for basic authentication. Only returned when authType is 'basic'. Excluded when authType is 'token'.
-        token:
-          type: string
-          description: Token for token-based authentication. Only returned when authType is 'token'. Excluded when authType is 'basic' or 'noAuth'.
-        maxRetries:
-          type: integer
-          description: Maximum number of retry attempts for failed requests
-        cache:
-          type: boolean
-          description: Whether to cache the feed response
-        headers:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/FeedsGetResponsesContentApplicationJsonSchemaFeedsItemsHeadersItems'
-          description: Custom HTTP headers for the feed request
-        createdAt:
-          type: string
-          format: date-time
-          description: Feed creation timestamp
-        modifiedAt:
-          type: string
-          format: date-time
-          description: Feed last modification timestamp
-      required:
-      - id
-      - name
-      - url
-      - authType
-      - maxRetries
-      - cache
-      - createdAt
-      - modifiedAt
-      title: FeedsGetResponsesContentApplicationJsonSchemaFeedsItems
-    FeedsGetParametersSort:
+    FeedsGetResponsesContentApplicationJsonSchemaFeedsItemsAuthType:
       type: string
       enum:
-      - asc
-      - desc
-      default: desc
-      title: FeedsGetParametersSort
+      - basic
+      - token
+      - noAuth
+      description: Authentication type for accessing the feed
+      title: FeedsGetResponsesContentApplicationJsonSchemaFeedsItemsAuthType
     External_Feeds_createExternalFeed_Response_201:
       type: object
       properties:
@@ -1045,7 +971,43 @@ components:
       required:
       - id
       title: External Feeds_createExternalFeed_Response_201
-    FeedsUuidGetResponsesContentApplicationJsonSchemaHeadersItems:
+    External_Feeds_getAllExternalFeeds_Response_200:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Total number of feeds
+        feeds:
+          type: array
+          items:
+            $ref: '#/components/schemas/FeedsGetResponsesContentApplicationJsonSchemaFeedsItems'
+          description: List of external feeds
+      required:
+      - count
+      - feeds
+      title: External Feeds_getAllExternalFeeds_Response_200
+    UpdateExternalFeedRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/FeedsUuidPutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UpdateExternalFeedRequestBadRequestError
+    FeedsUuidGetResponsesContentApplicationJsonSchemaAuthType:
+      type: string
+      enum:
+      - basic
+      - token
+      - noAuth
+      description: Authentication type for accessing the feed
+      title: FeedsUuidGetResponsesContentApplicationJsonSchemaAuthType
+    FeedsPostRequestBodyContentApplicationJsonSchemaHeadersItems:
       type: object
       properties:
         name:
@@ -1057,20 +1019,7 @@ components:
       required:
       - name
       - value
-      title: FeedsUuidGetResponsesContentApplicationJsonSchemaHeadersItems
-    CreateExternalFeedRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/FeedsPostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: CreateExternalFeedRequestBadRequestError
+      title: FeedsPostRequestBodyContentApplicationJsonSchemaHeadersItems
     GetAllExternalFeedsRequestBadRequestError:
       type: object
       properties:
@@ -1084,6 +1033,47 @@ components:
       - code
       - message
       title: GetAllExternalFeedsRequestBadRequestError
+    FeedsUuidPutResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: FeedsUuidPutResponsesContentApplicationJsonSchemaCode
   securitySchemes:
     api-key:
       type: apiKey
