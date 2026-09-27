@@ -137,22 +137,6 @@ components:
           type: string
           format: date-time
           description: UTC date-time when the category was last modified.
-    CreateUpdateCategory:
-      type: object
-      required:
-      - id
-      - name
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the category.
-        name:
-          type: string
-          description: Name of the category.
-        url:
-          type: string
-          format: uri
-          description: URL of the category page.
     CategoryList:
       type: object
       properties:
@@ -174,6 +158,22 @@ components:
         message:
           type: string
           description: Human-readable description of the error.
+    CreateUpdateCategory:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the category.
+        name:
+          type: string
+          description: Name of the category.
+        url:
+          type: string
+          format: uri
+          description: URL of the category page.
   parameters:
     limitParam:
       name: limit

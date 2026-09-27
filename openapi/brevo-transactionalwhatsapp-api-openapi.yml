@@ -137,81 +137,63 @@ paths:
                 $ref: '#/components/schemas/GetWhatsappEventReportRequestBadRequestError'
 components:
   schemas:
-    WhatsappStatisticsEventsGetParametersEvent:
-      type: string
-      enum:
-      - sent
-      - delivered
-      - read
-      - error
-      - unsubscribe
-      - reply
-      - soft-bounce
-      title: WhatsappStatisticsEventsGetParametersEvent
-    Transactional_WhatsApp_sendWhatsappMessage_Response_201:
+    WhatsappStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItems:
       type: object
       properties:
+        body:
+          type: string
+          description: Text of the reply (will be there only in case of `reply` event with text)
+        contactNumber:
+          type: string
+          format: mobile
+          description: WhatsApp Number with country code. Example, 85264318721
+        date:
+          type: string
+          description: UTC date-time on which the event has been generated
+        event:
+          $ref: '#/components/schemas/WhatsappStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItemsEvent'
+          description: Event which occurred
+        mediaUrl:
+          type: string
+          format: url
+          description: Url of the media reply (will be there only in case of `reply` event with media)
         messageId:
           type: string
-          format: uuidv4
-          description: messageId of sent message
+          description: Message ID which generated the event
+        reason:
+          type: string
+          description: Reason for the event (will be there in case of `error` and `soft-bounce` events)
+        senderNumber:
+          type: string
+          format: mobile
+          description: WhatsApp Number with country code. Example, 85264318721
       required:
+      - contactNumber
+      - date
+      - event
       - messageId
-      title: Transactional WhatsApp_sendWhatsappMessage_Response_201
-    WhatsappStatisticsEventsGetResponsesContentApplicationJsonSchemaCode:
+      - senderNumber
+      title: WhatsappStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItems
+    Transactional_WhatsApp_sendWhatsappMessage_Request:
+      oneOf:
+      - description: Reference to TransactionalWhatsAppSendWhatsappMessageRequest0
+      - description: Reference to TransactionalWhatsAppSendWhatsappMessageRequest1
+      title: Transactional WhatsApp_sendWhatsappMessage_Request
+    WhatsappStatisticsEventsGetParametersSort:
       type: string
       enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: WhatsappStatisticsEventsGetResponsesContentApplicationJsonSchemaCode
-    SendWhatsappMessageRequestBadRequestError:
+      - asc
+      - desc
+      default: desc
+      title: WhatsappStatisticsEventsGetParametersSort
+    Transactional_WhatsApp_getWhatsappEventReport_Response_200:
       type: object
       properties:
-        code:
-          $ref: '#/components/schemas/WhatsappSendMessagePostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: SendWhatsappMessageRequestBadRequestError
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/WhatsappStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItems'
+      title: Transactional WhatsApp_getWhatsappEventReport_Response_200
     WhatsappSendMessagePostResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -253,51 +235,19 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: WhatsappSendMessagePostResponsesContentApplicationJsonSchemaCode
-    WhatsappStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItems:
+    SendWhatsappMessageRequestBadRequestError:
       type: object
       properties:
-        body:
+        code:
+          $ref: '#/components/schemas/WhatsappSendMessagePostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
           type: string
-          description: Text of the reply (will be there only in case of `reply` event with text)
-        contactNumber:
-          type: string
-          format: mobile
-          description: WhatsApp Number with country code. Example, 85264318721
-        date:
-          type: string
-          description: UTC date-time on which the event has been generated
-        event:
-          $ref: '#/components/schemas/WhatsappStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItemsEvent'
-          description: Event which occurred
-        mediaUrl:
-          type: string
-          format: url
-          description: Url of the media reply (will be there only in case of `reply` event with media)
-        messageId:
-          type: string
-          description: Message ID which generated the event
-        reason:
-          type: string
-          description: Reason for the event (will be there in case of `error` and `soft-bounce` events)
-        senderNumber:
-          type: string
-          format: mobile
-          description: WhatsApp Number with country code. Example, 85264318721
+          description: Readable message associated to the failure
       required:
-      - contactNumber
-      - date
-      - event
-      - messageId
-      - senderNumber
-      title: WhatsappStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItems
-    Transactional_WhatsApp_getWhatsappEventReport_Response_200:
-      type: object
-      properties:
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/WhatsappStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItems'
-      title: Transactional WhatsApp_getWhatsappEventReport_Response_200
+      - code
+      - message
+      title: SendWhatsappMessageRequestBadRequestError
     WhatsappStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItemsEvent:
       type: string
       enum:
@@ -310,6 +260,68 @@ components:
       - soft-bounce
       description: Event which occurred
       title: WhatsappStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItemsEvent
+    Transactional_WhatsApp_sendWhatsappMessage_Response_201:
+      type: object
+      properties:
+        messageId:
+          type: string
+          format: uuidv4
+          description: messageId of sent message
+      required:
+      - messageId
+      title: Transactional WhatsApp_sendWhatsappMessage_Response_201
+    WhatsappStatisticsEventsGetParametersEvent:
+      type: string
+      enum:
+      - sent
+      - delivered
+      - read
+      - error
+      - unsubscribe
+      - reply
+      - soft-bounce
+      title: WhatsappStatisticsEventsGetParametersEvent
+    WhatsappStatisticsEventsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: WhatsappStatisticsEventsGetResponsesContentApplicationJsonSchemaCode
     GetWhatsappEventReportRequestBadRequestError:
       type: object
       properties:
@@ -323,18 +335,6 @@ components:
       - code
       - message
       title: GetWhatsappEventReportRequestBadRequestError
-    WhatsappStatisticsEventsGetParametersSort:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: desc
-      title: WhatsappStatisticsEventsGetParametersSort
-    Transactional_WhatsApp_sendWhatsappMessage_Request:
-      oneOf:
-      - description: Reference to TransactionalWhatsAppSendWhatsappMessageRequest0
-      - description: Reference to TransactionalWhatsAppSendWhatsappMessageRequest1
-      title: Transactional WhatsApp_sendWhatsappMessage_Request
   securitySchemes:
     api-key:
       type: apiKey

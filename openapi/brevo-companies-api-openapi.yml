@@ -484,6 +484,65 @@ paths:
                   description: "The mapping options in JSON format. Here is an example of the JSON structure: ```json {\n  \"link_entities\": true, // Determines whether to link related entities during the import process\n  \"unlink_entities\": false, // Determines whether to unlink related entities during the import process\n  \"update_existing_records\": true, // Determines whether to update based on company ID or treat every row as create\n  \"unset_empty_attributes\": false // Determines whether to unset a specific attribute during update if the values input is blank\n} ```\n"
 components:
   schemas:
+    Companies_createACompany_Response_200:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique company id
+      required:
+      - id
+      description: Created company id
+      title: Companies_createACompany_Response_200
+    CrmAttributesCompaniesGetResponsesContentApplicationJsonSchemaItemsAttributeOptionsItems:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+      title: CrmAttributesCompaniesGetResponsesContentApplicationJsonSchemaItemsAttributeOptionsItems
+    CompaniesLinkUnlinkIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CompaniesLinkUnlinkIdPatchResponsesContentApplicationJsonSchemaCode
     GetCompanyAttributesRequestBadRequestError:
       type: object
       properties:
@@ -497,52 +556,11 @@ components:
       - code
       - message
       title: GetCompanyAttributesRequestBadRequestError
-    CompaniesIdPatchResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: CompaniesIdPatchResponsesContentApplicationJsonSchemaCode
-    LinkAndUnlinkCompanyWithContactAndDealRequestBadRequestError:
+    GetAllCompaniesRequestBadRequestError:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/CompaniesLinkUnlinkIdPatchResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/CompaniesGetResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
@@ -550,21 +568,12 @@ components:
       required:
       - code
       - message
-      title: LinkAndUnlinkCompanyWithContactAndDealRequestBadRequestError
-    Companies_createACompanyDealAttribute_Response_200:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique ID of the created attribute
-      required:
-      - id
-      title: Companies_createACompanyDealAttribute_Response_200
-    DeleteACompanyRequestBadRequestError:
+      title: GetAllCompaniesRequestBadRequestError
+    GetACompanyRequestBadRequestError:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/CompaniesIdDeleteResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/CompaniesIdGetResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
@@ -572,73 +581,7 @@ components:
       required:
       - code
       - message
-      title: DeleteACompanyRequestBadRequestError
-    CompaniesGetParametersSort:
-      type: string
-      enum:
-      - asc
-      - desc
-      title: CompaniesGetParametersSort
-    Companies_importCompaniesCreationAndUpdation_Response_200:
-      type: object
-      properties:
-        processId:
-          type: integer
-          description: The ID of the import process
-      title: Companies_importCompaniesCreationAndUpdation_Response_200
-    errorModel:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - message
-      title: errorModel
-    CrmAttributesCompaniesGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: CrmAttributesCompaniesGetResponsesContentApplicationJsonSchemaCode
+      title: GetACompanyRequestBadRequestError
     CompaniesPostResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -680,46 +623,116 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: CompaniesPostResponsesContentApplicationJsonSchemaCode
-    CrmAttributesCompaniesGetResponsesContentApplicationJsonSchemaItemsAttributeOptionsItems:
+    CompaniesGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CompaniesGetResponsesContentApplicationJsonSchemaCode
+    Companies_createACompanyDealAttribute_Response_200:
       type: object
       properties:
-        key:
+        id:
           type: string
-        value:
-          type: string
-      title: CrmAttributesCompaniesGetResponsesContentApplicationJsonSchemaItemsAttributeOptionsItems
-    ImportCompaniesCreationAndUpdationRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-      title: ImportCompaniesCreationAndUpdationRequestBadRequestError
-    GetACompanyRequestBadRequestError:
+          description: Unique ID of the created attribute
+      required:
+      - id
+      title: Companies_createACompanyDealAttribute_Response_200
+    errorModel:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/CompaniesIdGetResponsesContentApplicationJsonSchemaCode'
+          type: string
           description: Error code displayed in case of a failure
         message:
           type: string
           description: Readable message associated to the failure
       required:
-      - code
       - message
-      title: GetACompanyRequestBadRequestError
-    GetAllCompaniesRequestBadRequestError:
+      title: errorModel
+    Companies_importCompaniesCreationAndUpdation_Response_200:
       type: object
       properties:
-        code:
-          $ref: '#/components/schemas/CompaniesGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetAllCompaniesRequestBadRequestError
+        processId:
+          type: integer
+          description: The ID of the import process
+      title: Companies_importCompaniesCreationAndUpdation_Response_200
+    CrmAttributesCompaniesGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CrmAttributesCompaniesGetResponsesContentApplicationJsonSchemaCode
     CompaniesIdGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -761,6 +774,26 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: CompaniesIdGetResponsesContentApplicationJsonSchemaCode
+    CreateACompanyRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CompaniesPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreateACompanyRequestBadRequestError
+    CrmAttributesPostRequestBodyContentApplicationJsonSchemaObjectType:
+      type: string
+      enum:
+      - companies
+      - deals
+      description: The type of object the attribute belongs to. Must be either `companies` or `deals`.
+      title: CrmAttributesPostRequestBodyContentApplicationJsonSchemaObjectType
     CompaniesIdDeleteResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -807,11 +840,63 @@ components:
       properties: {}
       description: "The mapping options in JSON format. Here is an example of the JSON structure: ```json {\n  \"link_entities\": true, // Determines whether to link related entities during the import process\n  \"unlink_entities\": false, // Determines whether to unlink related entities during the import process\n  \"update_existing_records\": true, // Determines whether to update based on company ID or treat every row as create\n  \"unset_empty_attributes\": false // Determines whether to unset a specific attribute during update if the values input is blank\n} ```\n"
       title: CompaniesImportPostRequestBodyContentMultipartFormDataSchemaMapping
-    CompaniesPostRequestBodyContentApplicationJsonSchemaAttributes:
+    LinkAndUnlinkCompanyWithContactAndDealRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CompaniesLinkUnlinkIdPatchResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: LinkAndUnlinkCompanyWithContactAndDealRequestBadRequestError
+    CompaniesIdPatchRequestBodyContentApplicationJsonSchemaAttributes:
       type: object
       properties: {}
-      description: Attributes for company creation
-      title: CompaniesPostRequestBodyContentApplicationJsonSchemaAttributes
+      description: Attributes for company update
+      title: CompaniesIdPatchRequestBodyContentApplicationJsonSchemaAttributes
+    CompaniesGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      title: CompaniesGetParametersSort
+    CrmAttributesPostRequestBodyContentApplicationJsonSchemaAttributeType:
+      type: string
+      enum:
+      - text
+      - user
+      - number
+      - single-select
+      - date
+      - boolean
+      - multi-choice
+      description: The type of attribute (must be one of the defined enums)
+      title: CrmAttributesPostRequestBodyContentApplicationJsonSchemaAttributeType
+    Company:
+      type: object
+      properties:
+        attributes:
+          $ref: '#/components/schemas/CompanyAttributes'
+          description: Company attributes with values
+        id:
+          type: string
+          description: Unique company id
+        linkedContactsIds:
+          type: array
+          items:
+            type: integer
+          description: Contact ids for contacts linked to this company
+        linkedDealsIds:
+          type: array
+          items:
+            type: string
+          description: Deal ids for deals linked to this company
+      description: Company Details
+      title: Company
     UpdateACompanyRequestBadRequestError:
       type: object
       properties:
@@ -825,69 +910,16 @@ components:
       - code
       - message
       title: UpdateACompanyRequestBadRequestError
-    CrmAttributesPostRequestBodyContentApplicationJsonSchemaAttributeType:
-      type: string
-      enum:
-      - text
-      - user
-      - number
-      - single-select
-      - date
-      - boolean
-      - multi-choice
-      description: The type of attribute (must be one of the defined enums)
-      title: CrmAttributesPostRequestBodyContentApplicationJsonSchemaAttributeType
-    CompaniesGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: CompaniesGetResponsesContentApplicationJsonSchemaCode
-    CompanyAttributes:
+    CompaniesPostRequestBodyContentApplicationJsonSchemaAttributes:
       type: object
       properties: {}
-      description: Company attributes with values
-      title: CompanyAttributes
-    CreateACompanyRequestBadRequestError:
+      description: Attributes for company creation
+      title: CompaniesPostRequestBodyContentApplicationJsonSchemaAttributes
+    DeleteACompanyRequestBadRequestError:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/CompaniesPostResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/CompaniesIdDeleteResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
@@ -895,8 +927,13 @@ components:
       required:
       - code
       - message
-      title: CreateACompanyRequestBadRequestError
-    CompaniesLinkUnlinkIdPatchResponsesContentApplicationJsonSchemaCode:
+      title: DeleteACompanyRequestBadRequestError
+    CompanyAttributes:
+      type: object
+      properties: {}
+      description: Company attributes with values
+      title: CompanyAttributes
+    CompaniesIdPatchResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - invalid_parameter
@@ -936,7 +973,7 @@ components:
       - Insufficient credits
       - Request already processed
       description: Error code displayed in case of a failure
-      title: CompaniesLinkUnlinkIdPatchResponsesContentApplicationJsonSchemaCode
+      title: CompaniesIdPatchResponsesContentApplicationJsonSchemaCode
     CrmAttributesCompaniesGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -962,42 +999,12 @@ components:
           description: Whether this attribute value is read-only
       description: Company attribute details
       title: CrmAttributesCompaniesGetResponsesContentApplicationJsonSchemaItems
-    CompaniesIdPatchRequestBodyContentApplicationJsonSchemaAttributes:
-      type: object
-      properties: {}
-      description: Attributes for company update
-      title: CompaniesIdPatchRequestBodyContentApplicationJsonSchemaAttributes
-    Companies_createACompany_Response_200:
+    ImportCompaniesCreationAndUpdationRequestBadRequestError:
       type: object
       properties:
-        id:
+        message:
           type: string
-          description: Unique company id
-      required:
-      - id
-      description: Created company id
-      title: Companies_createACompany_Response_200
-    Company:
-      type: object
-      properties:
-        attributes:
-          $ref: '#/components/schemas/CompanyAttributes'
-          description: Company attributes with values
-        id:
-          type: string
-          description: Unique company id
-        linkedContactsIds:
-          type: array
-          items:
-            type: integer
-          description: Contact ids for contacts linked to this company
-        linkedDealsIds:
-          type: array
-          items:
-            type: string
-          description: Deal ids for deals linked to this company
-      description: Company Details
-      title: Company
+      title: ImportCompaniesCreationAndUpdationRequestBadRequestError
     Companies_getAllCompanies_Response_200:
       type: object
       properties:
@@ -1008,13 +1015,6 @@ components:
           description: List of companies
       description: List of companies
       title: Companies_getAllCompanies_Response_200
-    CrmAttributesPostRequestBodyContentApplicationJsonSchemaObjectType:
-      type: string
-      enum:
-      - companies
-      - deals
-      description: The type of object the attribute belongs to. Must be either `companies` or `deals`.
-      title: CrmAttributesPostRequestBodyContentApplicationJsonSchemaObjectType
   securitySchemes:
     api-key:
       type: apiKey

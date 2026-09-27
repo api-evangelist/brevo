@@ -290,6 +290,52 @@ paths:
                 $ref: '#/components/schemas/errorModel'
 components:
   schemas:
+    ConsentGroupsListResponse:
+      type: object
+      properties:
+        consentGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConsentGroup'
+          description: List of consent groups matching the filter
+        total:
+          type: integer
+          format: int64
+          description: Total number of consent groups matching the filter
+        limit:
+          type: integer
+          format: int64
+          description: Maximum number of results returned
+        offset:
+          type: integer
+          format: int64
+          description: Number of results skipped
+      required:
+      - consentGroups
+      - total
+      - limit
+      - offset
+      description: Paginated list of consent groups.
+      title: ConsentGroupsListResponse
+    CreateConsentGroupRequestSignupMode:
+      type: string
+      enum:
+      - manual
+      - automatic
+      description: Controls how contacts are added to the group. `manual` — contacts are added explicitly via the API. `automatic` — contacts are added automatically at signup.
+      title: CreateConsentGroupRequestSignupMode
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
     ConsentGroup:
       type: object
       properties:
@@ -331,65 +377,13 @@ components:
       - updatedAt
       description: A consent group representing a category of contact opt-in/opt-out preferences.
       title: ConsentGroup
-    CreateConsentGroupRequestSignupMode:
+    ConsentGroupSignupMode:
       type: string
       enum:
       - manual
       - automatic
       description: Controls how contacts are added to the group. `manual` — contacts are added explicitly via the API. `automatic` — contacts are added automatically at signup.
-      title: CreateConsentGroupRequestSignupMode
-    ContactsConsentGroupsGetParametersSignupMode:
-      type: string
-      enum:
-      - manual
-      - automatic
-      title: ContactsConsentGroupsGetParametersSignupMode
-    UpdateConsentGroupRequestSignupMode:
-      type: string
-      enum:
-      - manual
-      - automatic
-      description: New signup mode
-      title: UpdateConsentGroupRequestSignupMode
-    ConsentGroupsListResponse:
-      type: object
-      properties:
-        consentGroups:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConsentGroup'
-          description: List of consent groups matching the filter
-        total:
-          type: integer
-          format: int64
-          description: Total number of consent groups matching the filter
-        limit:
-          type: integer
-          format: int64
-          description: Maximum number of results returned
-        offset:
-          type: integer
-          format: int64
-          description: Number of results skipped
-      required:
-      - consentGroups
-      - total
-      - limit
-      - offset
-      description: Paginated list of consent groups.
-      title: ConsentGroupsListResponse
-    errorModel:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - message
-      title: errorModel
+      title: ConsentGroupSignupMode
     UpdateConsentGroupRequest:
       type: object
       properties:
@@ -427,13 +421,19 @@ components:
       - signupMode
       description: Request body for creating a consent group.
       title: CreateConsentGroupRequest
-    ConsentGroupSignupMode:
+    ContactsConsentGroupsGetParametersSignupMode:
       type: string
       enum:
       - manual
       - automatic
-      description: Controls how contacts are added to the group. `manual` — contacts are added explicitly via the API. `automatic` — contacts are added automatically at signup.
-      title: ConsentGroupSignupMode
+      title: ContactsConsentGroupsGetParametersSignupMode
+    UpdateConsentGroupRequestSignupMode:
+      type: string
+      enum:
+      - manual
+      - automatic
+      description: New signup mode
+      title: UpdateConsentGroupRequestSignupMode
   securitySchemes:
     api-key:
       type: apiKey

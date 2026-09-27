@@ -155,41 +155,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code identifying the type of error.
-        message:
-          type: string
-          description: Human-readable description of the error.
-    UpdateAutomatedMessage:
-      type: object
-      required:
-      - text
-      properties:
-        text:
-          type: string
-          description: Updated text content of the automated message.
-    CreateAutomatedMessage:
-      type: object
-      required:
-      - visitorId
-      - text
-      properties:
-        visitorId:
-          type: string
-          description: Unique identifier of the visitor to send the automated message to.
-        text:
-          type: string
-          description: Text content of the automated message.
-        agentId:
-          type: string
-          description: Unique identifier of the agent to attribute the message to.
-        groupId:
-          type: string
-          description: Group identifier for routing the conversation.
     AutomatedMessageResponse:
       type: object
       properties:
@@ -209,6 +174,41 @@ components:
           type: string
           format: date-time
           description: UTC date-time when the message was created.
+    CreateAutomatedMessage:
+      type: object
+      required:
+      - visitorId
+      - text
+      properties:
+        visitorId:
+          type: string
+          description: Unique identifier of the visitor to send the automated message to.
+        text:
+          type: string
+          description: Text content of the automated message.
+        agentId:
+          type: string
+          description: Unique identifier of the agent to attribute the message to.
+        groupId:
+          type: string
+          description: Group identifier for routing the conversation.
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code identifying the type of error.
+        message:
+          type: string
+          description: Human-readable description of the error.
+    UpdateAutomatedMessage:
+      type: object
+      required:
+      - text
+      properties:
+        text:
+          type: string
+          description: Updated text content of the automated message.
   securitySchemes:
     apiKeyAuth:
       type: apiKey

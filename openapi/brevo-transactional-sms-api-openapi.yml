@@ -336,15 +336,6 @@ components:
           type: string
           format: uri
           description: Webhook URL to receive delivery status notifications.
-    ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code identifying the type of error.
-        message:
-          type: string
-          description: Human-readable description of the error.
     SendSmsResponse:
       type: object
       properties:
@@ -366,11 +357,287 @@ components:
           type: number
           format: float
           description: Remaining SMS credits in the account.
-    GetTransacAggregatedSmsReportRequestBadRequestError:
+    ErrorResponse:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/TransactionalSmsStatisticsAggregatedReportGetResponsesContentApplicationJsonSchemaCode'
+          type: string
+          description: Error code identifying the type of error.
+        message:
+          type: string
+          description: Human-readable description of the error.
+    TransactionalSmsSendPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: TransactionalSmsSendPostResponsesContentApplicationJsonSchemaCode
+    TransactionalSmsStatisticsReportsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: TransactionalSmsStatisticsReportsGetResponsesContentApplicationJsonSchemaCode
+    Transactional_SMS_sendAsyncTransactionalSms_Response_201:
+      type: object
+      properties:
+        messageId:
+          type: integer
+          format: int64
+      required:
+      - messageId
+      title: Transactional SMS_sendAsyncTransactionalSms_Response_201
+    TransactionalSmsStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItemsEvent:
+      type: string
+      enum:
+      - bounces
+      - hardBounces
+      - softBounces
+      - delivered
+      - sent
+      - accepted
+      - unsubscription
+      - replies
+      - blocked
+      - rejected
+      - skipped
+      description: Event which occurred
+      title: TransactionalSmsStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItemsEvent
+    TransactionalSmsStatisticsReportsGetResponsesContentApplicationJsonSchemaReportsItems:
+      type: object
+      properties:
+        accepted:
+          type: integer
+          format: int64
+          description: Number of accepted SMS for the date
+        blocked:
+          type: integer
+          format: int64
+          description: Number of blocked contact for the date
+        date:
+          type: string
+          format: date
+          description: Date for which statistics are retrieved
+        delivered:
+          type: integer
+          format: int64
+          description: Number of delivered SMS for the date
+        hardBounces:
+          type: integer
+          format: int64
+          description: Number of hardbounces for the date
+        rejected:
+          type: integer
+          format: int64
+          description: Number of rejected SMS for the date
+        replied:
+          type: integer
+          format: int64
+          description: Number of answered SMS for the date
+        requests:
+          type: integer
+          format: int64
+          description: Number of requests for the date
+        skipped:
+          type: integer
+          format: int64
+          description: Number of skipped SMS for the date
+        softBounces:
+          type: integer
+          format: int64
+          description: Number of softbounces for the date
+        unsubscribed:
+          type: integer
+          format: int64
+          description: Number of unsubscription for the date
+      title: TransactionalSmsStatisticsReportsGetResponsesContentApplicationJsonSchemaReportsItems
+    Transactional_SMS_getSmsEvents_Response_200:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionalSmsStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItems'
+      title: Transactional SMS_getSmsEvents_Response_200
+    TransactionalSmsStatisticsEventsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: TransactionalSmsStatisticsEventsGetResponsesContentApplicationJsonSchemaCode
+    TransactionalSmsStatisticsEventsGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: TransactionalSmsStatisticsEventsGetParametersSort
+    TransactionalSmsStatisticsReportsGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: TransactionalSmsStatisticsReportsGetParametersSort
+    SendTransacSmsTag:
+      oneOf:
+      - type: string
+      - type: array
+        items:
+          type: string
+      description: 'Tag of the message. Can be a single string or an array of strings (maximum 10 tags). Each tag must be a non-empty string.
+
+        '
+      title: SendTransacSmsTag
+    TransactionalSmsStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItems:
+      type: object
+      properties:
+        date:
+          type: string
+          description: UTC date-time on which the event has been generated
+        event:
+          $ref: '#/components/schemas/TransactionalSmsStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItemsEvent'
+          description: Event which occurred
+        messageId:
+          type: string
+          description: Message ID which generated the event
+        phoneNumber:
+          type: string
+          description: Phone number which has generated the event
+        reason:
+          type: string
+          description: Reason of bounce (only available if the event is hardbounce or softbounce)
+        reply:
+          type: string
+        tag:
+          type: string
+          description: Tag of the SMS which generated the event
+      title: TransactionalSmsStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItems
+    TransactionalSmsStatisticsEventsGetParametersEvent:
+      type: string
+      enum:
+      - bounces
+      - hardBounces
+      - softBounces
+      - delivered
+      - sent
+      - accepted
+      - unsubscription
+      - replies
+      - blocked
+      - rejected
+      - skipped
+      title: TransactionalSmsStatisticsEventsGetParametersEvent
+    GetSmsEventsRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/TransactionalSmsStatisticsEventsGetResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
@@ -378,20 +645,15 @@ components:
       required:
       - code
       - message
-      title: GetTransacAggregatedSmsReportRequestBadRequestError
-    GetTransacSmsReportRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/TransactionalSmsStatisticsReportsGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetTransacSmsReportRequestBadRequestError
+      title: GetSmsEventsRequestBadRequestError
+    SendTransacSmsType:
+      type: string
+      enum:
+      - transactional
+      - marketing
+      default: transactional
+      description: Type of the SMS. Marketing SMS messages are those sent typically with marketing content. Transactional SMS messages are sent to individuals and are triggered in response to some action, such as a sign-up, purchase, etc.
+      title: SendTransacSmsType
     sendTransacSms:
       type: object
       properties:
@@ -444,6 +706,47 @@ components:
       - recipient
       - sender
       title: sendTransacSms
+    TransactionalSmsStatisticsAggregatedReportGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: TransactionalSmsStatisticsAggregatedReportGetResponsesContentApplicationJsonSchemaCode
     Transactional_SMS_getTransacAggregatedSmsReport_Response_200:
       type: object
       properties:
@@ -491,182 +794,11 @@ components:
           format: int64
           description: Number of unsubscription for the timeframe
       title: Transactional SMS_getTransacAggregatedSmsReport_Response_200
-    TransactionalSmsStatisticsEventsGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: TransactionalSmsStatisticsEventsGetResponsesContentApplicationJsonSchemaCode
-    SendTransacSmsType:
-      type: string
-      enum:
-      - transactional
-      - marketing
-      default: transactional
-      description: Type of the SMS. Marketing SMS messages are those sent typically with marketing content. Transactional SMS messages are sent to individuals and are triggered in response to some action, such as a sign-up, purchase, etc.
-      title: SendTransacSmsType
-    Transactional_SMS_sendAsyncTransactionalSms_Response_201:
-      type: object
-      properties:
-        messageId:
-          type: integer
-          format: int64
-      required:
-      - messageId
-      title: Transactional SMS_sendAsyncTransactionalSms_Response_201
-    TransactionalSmsSendPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: TransactionalSmsSendPostResponsesContentApplicationJsonSchemaCode
-    TransactionalSmsStatisticsReportsGetParametersSort:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: desc
-      title: TransactionalSmsStatisticsReportsGetParametersSort
-    TransactionalSmsStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItemsEvent:
-      type: string
-      enum:
-      - bounces
-      - hardBounces
-      - softBounces
-      - delivered
-      - sent
-      - accepted
-      - unsubscription
-      - replies
-      - blocked
-      - rejected
-      - skipped
-      description: Event which occurred
-      title: TransactionalSmsStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItemsEvent
-    Transactional_SMS_getSmsEvents_Response_200:
-      type: object
-      properties:
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/TransactionalSmsStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItems'
-      title: Transactional SMS_getSmsEvents_Response_200
-    TransactionalSmsStatisticsReportsGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: TransactionalSmsStatisticsReportsGetResponsesContentApplicationJsonSchemaCode
-    GetSmsEventsRequestBadRequestError:
+    GetTransacSmsReportRequestBadRequestError:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/TransactionalSmsStatisticsEventsGetResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/TransactionalSmsStatisticsReportsGetResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
@@ -674,39 +806,7 @@ components:
       required:
       - code
       - message
-      title: GetSmsEventsRequestBadRequestError
-    TransactionalSmsStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItems:
-      type: object
-      properties:
-        date:
-          type: string
-          description: UTC date-time on which the event has been generated
-        event:
-          $ref: '#/components/schemas/TransactionalSmsStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItemsEvent'
-          description: Event which occurred
-        messageId:
-          type: string
-          description: Message ID which generated the event
-        phoneNumber:
-          type: string
-          description: Phone number which has generated the event
-        reason:
-          type: string
-          description: Reason of bounce (only available if the event is hardbounce or softbounce)
-        reply:
-          type: string
-        tag:
-          type: string
-          description: Tag of the SMS which generated the event
-      title: TransactionalSmsStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItems
-    Transactional_SMS_getTransacSmsReport_Response_200:
-      type: object
-      properties:
-        reports:
-          type: array
-          items:
-            $ref: '#/components/schemas/TransactionalSmsStatisticsReportsGetResponsesContentApplicationJsonSchemaReportsItems'
-      title: Transactional SMS_getTransacSmsReport_Response_200
+      title: GetTransacSmsReportRequestBadRequestError
     SendAsyncTransactionalSmsRequestBadRequestError:
       type: object
       properties:
@@ -720,127 +820,27 @@ components:
       - code
       - message
       title: SendAsyncTransactionalSmsRequestBadRequestError
-    TransactionalSmsStatisticsEventsGetParametersSort:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: desc
-      title: TransactionalSmsStatisticsEventsGetParametersSort
-    TransactionalSmsStatisticsAggregatedReportGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: TransactionalSmsStatisticsAggregatedReportGetResponsesContentApplicationJsonSchemaCode
-    TransactionalSmsStatisticsReportsGetResponsesContentApplicationJsonSchemaReportsItems:
+    Transactional_SMS_getTransacSmsReport_Response_200:
       type: object
       properties:
-        accepted:
-          type: integer
-          format: int64
-          description: Number of accepted SMS for the date
-        blocked:
-          type: integer
-          format: int64
-          description: Number of blocked contact for the date
-        date:
+        reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionalSmsStatisticsReportsGetResponsesContentApplicationJsonSchemaReportsItems'
+      title: Transactional SMS_getTransacSmsReport_Response_200
+    GetTransacAggregatedSmsReportRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/TransactionalSmsStatisticsAggregatedReportGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
           type: string
-          format: date
-          description: Date for which statistics are retrieved
-        delivered:
-          type: integer
-          format: int64
-          description: Number of delivered SMS for the date
-        hardBounces:
-          type: integer
-          format: int64
-          description: Number of hardbounces for the date
-        rejected:
-          type: integer
-          format: int64
-          description: Number of rejected SMS for the date
-        replied:
-          type: integer
-          format: int64
-          description: Number of answered SMS for the date
-        requests:
-          type: integer
-          format: int64
-          description: Number of requests for the date
-        skipped:
-          type: integer
-          format: int64
-          description: Number of skipped SMS for the date
-        softBounces:
-          type: integer
-          format: int64
-          description: Number of softbounces for the date
-        unsubscribed:
-          type: integer
-          format: int64
-          description: Number of unsubscription for the date
-      title: TransactionalSmsStatisticsReportsGetResponsesContentApplicationJsonSchemaReportsItems
-    SendTransacSmsTag:
-      oneOf:
-      - type: string
-      - type: array
-        items:
-          type: string
-      description: 'Tag of the message. Can be a single string or an array of strings (maximum 10 tags). Each tag must be a non-empty string.
-
-        '
-      title: SendTransacSmsTag
-    TransactionalSmsStatisticsEventsGetParametersEvent:
-      type: string
-      enum:
-      - bounces
-      - hardBounces
-      - softBounces
-      - delivered
-      - sent
-      - accepted
-      - unsubscription
-      - replies
-      - blocked
-      - rejected
-      - skipped
-      title: TransactionalSmsStatisticsEventsGetParametersEvent
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetTransacAggregatedSmsReportRequestBadRequestError
   securitySchemes:
     apiKeyAuth:
       type: apiKey

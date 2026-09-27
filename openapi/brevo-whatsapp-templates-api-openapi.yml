@@ -113,7 +113,53 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
+  parameters:
+    limitParam:
+      name: limit
+      in: query
+      description: Maximum number of results to return per request.
+      schema:
+        type: integer
+        format: int64
+        default: 50
+    offsetParam:
+      name: offset
+      in: query
+      description: Number of results to skip for pagination.
+      schema:
+        type: integer
+        format: int64
+        default: 0
   schemas:
+    CreateWhatsAppTemplate:
+      type: object
+      required:
+      - name
+      - language
+      - category
+      - bodyText
+      properties:
+        name:
+          type: string
+          description: Name for the template.
+        language:
+          type: string
+          description: Language code for the template such as en for English.
+        category:
+          type: string
+          description: Template category required by Meta for approval.
+          enum:
+          - MARKETING
+          - UTILITY
+        headerText:
+          type: string
+          description: Header text content for the template.
+        bodyText:
+          type: string
+          description: Body text content for the template with parameter placeholders.
+        footerText:
+          type: string
+          description: Footer text content for the template.
     WhatsAppTemplateList:
       type: object
       properties:
@@ -164,52 +210,6 @@ components:
         message:
           type: string
           description: Human-readable description of the error.
-    CreateWhatsAppTemplate:
-      type: object
-      required:
-      - name
-      - language
-      - category
-      - bodyText
-      properties:
-        name:
-          type: string
-          description: Name for the template.
-        language:
-          type: string
-          description: Language code for the template such as en for English.
-        category:
-          type: string
-          description: Template category required by Meta for approval.
-          enum:
-          - MARKETING
-          - UTILITY
-        headerText:
-          type: string
-          description: Header text content for the template.
-        bodyText:
-          type: string
-          description: Body text content for the template with parameter placeholders.
-        footerText:
-          type: string
-          description: Footer text content for the template.
-  parameters:
-    limitParam:
-      name: limit
-      in: query
-      description: Maximum number of results to return per request.
-      schema:
-        type: integer
-        format: int64
-        default: 50
-    offsetParam:
-      name: offset
-      in: query
-      description: Number of results to skip for pagination.
-      schema:
-        type: integer
-        format: int64
-        default: 0
   securitySchemes:
     apiKeyAuth:
       type: apiKey

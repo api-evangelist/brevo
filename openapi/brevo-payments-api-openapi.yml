@@ -181,6 +181,128 @@ paths:
                 $ref: '#/components/schemas/errorModel'
 components:
   schemas:
+    Payments_getPaymentRequest_Response_200:
+      type: object
+      properties:
+        cart:
+          $ref: '#/components/schemas/cart'
+        configuration:
+          $ref: '#/components/schemas/configuration'
+        contactId:
+          type: integer
+          format: int64
+          description: 'Brevo ID of the contact requested to pay.
+
+            '
+        notification:
+          $ref: '#/components/schemas/notification'
+        numberOfRemindersSent:
+          type: integer
+          format: int64
+          description: 'number of reminders sent.
+
+            '
+        reference:
+          type: string
+          description: 'Reference of the payment request, it will appear on the payment page.
+
+            '
+        status:
+          $ref: '#/components/schemas/PaymentsRequestsIdGetResponsesContentApplicationJsonSchemaStatus'
+          description: Status of the payment request.
+      required:
+      - cart
+      - notification
+      - reference
+      - status
+      title: Payments_getPaymentRequest_Response_200
+    cart:
+      type: object
+      properties:
+        currency:
+          $ref: '#/components/schemas/CartCurrency'
+          description: 'Currency code for the payment amount.
+
+            '
+        specificAmount:
+          type: integer
+          format: int64
+          description: 'Payment amount, in cents. e.g. if you want to request €12.00, then the amount in cents is 1200.
+
+            '
+      required:
+      - currency
+      - specificAmount
+      description: 'Specify the payment currency and amount.
+
+        '
+      title: cart
+    configuration:
+      type: object
+      properties:
+        customSuccessUrl:
+          type: string
+          format: url
+          description: 'Absolute URL of the custom success page.
+
+            '
+      required:
+      - customSuccessUrl
+      description: 'Optional. Redirect contact to a custom success page once payment is successful. If empty the default Brevo page will be displayed once a payment is validated
+
+        '
+      title: configuration
+    GetPaymentRequestRequestUnauthorizedError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/PaymentsRequestsIdGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetPaymentRequestRequestUnauthorizedError
+    DeletePaymentRequestRequestUnauthorizedError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/PaymentsRequestsIdDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeletePaymentRequestRequestUnauthorizedError
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
+    GetPaymentRequestRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/PaymentsRequestsIdGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetPaymentRequestRequestBadRequestError
     PaymentsRequestsIdGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -222,41 +344,61 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: PaymentsRequestsIdGetResponsesContentApplicationJsonSchemaCode
-    Payments_getPaymentRequest_Response_200:
+    notification:
       type: object
       properties:
-        cart:
-          $ref: '#/components/schemas/cart'
-        configuration:
-          $ref: '#/components/schemas/configuration'
-        contactId:
-          type: integer
-          format: int64
-          description: 'Brevo ID of the contact requested to pay.
+        channel:
+          $ref: '#/components/schemas/NotificationChannel'
+          description: 'Channel used to send the notifications.
 
             '
-        notification:
-          $ref: '#/components/schemas/notification'
-        numberOfRemindersSent:
-          type: integer
-          format: int64
-          description: 'number of reminders sent.
-
-            '
-        reference:
+        text:
           type: string
-          description: 'Reference of the payment request, it will appear on the payment page.
+          description: 'Use this field if you want to give more context to your contact about the payment request.
 
             '
-        status:
-          $ref: '#/components/schemas/PaymentsRequestsIdGetResponsesContentApplicationJsonSchemaStatus'
-          description: Status of the payment request.
       required:
-      - cart
-      - notification
-      - reference
-      - status
-      title: Payments_getPaymentRequest_Response_200
+      - channel
+      - text
+      description: 'Optional. Use this object if you want to let Brevo send an email to the contact, with the payment request URL. If empty, no notifications (message and reminders) will be sent.
+
+        '
+      title: notification
+    CreatePaymentRequestRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/PaymentsRequestsPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreatePaymentRequestRequestBadRequestError
+    Payments_createPaymentRequest_Response_201:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID of the object created
+        url:
+          type: string
+          description: URL of the payment request created
+      required:
+      - id
+      title: Payments_createPaymentRequest_Response_201
+    PaymentsRequestsIdGetResponsesContentApplicationJsonSchemaStatus:
+      type: string
+      enum:
+      - created
+      - sent
+      - reminderSent
+      - paid
+      description: Status of the payment request.
+      title: PaymentsRequestsIdGetResponsesContentApplicationJsonSchemaStatus
     PaymentsRequestsIdDeleteResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -298,177 +440,6 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: PaymentsRequestsIdDeleteResponsesContentApplicationJsonSchemaCode
-    CreatePaymentRequestRequestUnauthorizedError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/PaymentsRequestsPostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: CreatePaymentRequestRequestUnauthorizedError
-    cart:
-      type: object
-      properties:
-        currency:
-          $ref: '#/components/schemas/CartCurrency'
-          description: 'Currency code for the payment amount.
-
-            '
-        specificAmount:
-          type: integer
-          format: int64
-          description: 'Payment amount, in cents. e.g. if you want to request €12.00, then the amount in cents is 1200.
-
-            '
-      required:
-      - currency
-      - specificAmount
-      description: 'Specify the payment currency and amount.
-
-        '
-      title: cart
-    notification:
-      type: object
-      properties:
-        channel:
-          $ref: '#/components/schemas/NotificationChannel'
-          description: 'Channel used to send the notifications.
-
-            '
-        text:
-          type: string
-          description: 'Use this field if you want to give more context to your contact about the payment request.
-
-            '
-      required:
-      - channel
-      - text
-      description: 'Optional. Use this object if you want to let Brevo send an email to the contact, with the payment request URL. If empty, no notifications (message and reminders) will be sent.
-
-        '
-      title: notification
-    NotificationChannel:
-      type: string
-      enum:
-      - email
-      description: 'Channel used to send the notifications.
-
-        '
-      title: NotificationChannel
-    CartCurrency:
-      type: string
-      enum:
-      - EUR
-      description: 'Currency code for the payment amount.
-
-        '
-      title: CartCurrency
-    DeletePaymentRequestRequestUnauthorizedError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/PaymentsRequestsIdDeleteResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: DeletePaymentRequestRequestUnauthorizedError
-    GetPaymentRequestRequestUnauthorizedError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/PaymentsRequestsIdGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetPaymentRequestRequestUnauthorizedError
-    Payments_createPaymentRequest_Response_201:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          description: ID of the object created
-        url:
-          type: string
-          description: URL of the payment request created
-      required:
-      - id
-      title: Payments_createPaymentRequest_Response_201
-    errorModel:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - message
-      title: errorModel
-    PaymentsRequestsIdGetResponsesContentApplicationJsonSchemaStatus:
-      type: string
-      enum:
-      - created
-      - sent
-      - reminderSent
-      - paid
-      description: Status of the payment request.
-      title: PaymentsRequestsIdGetResponsesContentApplicationJsonSchemaStatus
-    GetPaymentRequestRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/PaymentsRequestsIdGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetPaymentRequestRequestBadRequestError
-    CreatePaymentRequestRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/PaymentsRequestsPostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: CreatePaymentRequestRequestBadRequestError
-    configuration:
-      type: object
-      properties:
-        customSuccessUrl:
-          type: string
-          format: url
-          description: 'Absolute URL of the custom success page.
-
-            '
-      required:
-      - customSuccessUrl
-      description: 'Optional. Redirect contact to a custom success page once payment is successful. If empty the default Brevo page will be displayed once a payment is validated
-
-        '
-      title: configuration
     PaymentsRequestsPostResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -510,6 +481,35 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: PaymentsRequestsPostResponsesContentApplicationJsonSchemaCode
+    CartCurrency:
+      type: string
+      enum:
+      - EUR
+      description: 'Currency code for the payment amount.
+
+        '
+      title: CartCurrency
+    CreatePaymentRequestRequestUnauthorizedError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/PaymentsRequestsPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreatePaymentRequestRequestUnauthorizedError
+    NotificationChannel:
+      type: string
+      enum:
+      - email
+      description: 'Channel used to send the notifications.
+
+        '
+      title: NotificationChannel
   securitySchemes:
     api-key:
       type: apiKey

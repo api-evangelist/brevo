@@ -213,11 +213,33 @@ paths:
               - events
 components:
   schemas:
-    CreateEventRequestUnauthorizedError:
+    EventsPostRequestBodyContentApplicationJsonSchemaObjectIdentifiers:
+      type: object
+      properties:
+        ext_id:
+          type: string
+          description: External object ID
+        id:
+          type: string
+          description: Internal object ID
+      description: Identifiers for the object.
+      title: EventsPostRequestBodyContentApplicationJsonSchemaObjectIdentifiers
+    EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsEventProperties:
+      oneOf:
+      - type: string
+      - type: integer
+      - type: object
+        additionalProperties:
+          description: Any type
+      - type: array
+        items:
+          description: Any type
+      title: EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsEventProperties
+    CreateBatchEventsRequestUnauthorizedError:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/EventsPostResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/EventsBatchPostResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
@@ -225,7 +247,7 @@ components:
       required:
       - code
       - message
-      title: CreateEventRequestUnauthorizedError
+      title: CreateBatchEventsRequestUnauthorizedError
     getEventsList:
       type: object
       properties:
@@ -242,17 +264,6 @@ components:
       - count
       description: Response containing a list of events and the total count for pagination
       title: getEventsList
-    EventsPostRequestBodyContentApplicationJsonSchemaObjectIdentifiers:
-      type: object
-      properties:
-        ext_id:
-          type: string
-          description: External object ID
-        id:
-          type: string
-          description: Internal object ID
-      description: Identifiers for the object.
-      title: EventsPostRequestBodyContentApplicationJsonSchemaObjectIdentifiers
     batchAcceptedResponse:
       type: object
       properties:
@@ -280,19 +291,17 @@ components:
       - code
       - message
       title: CreateEventRequestBadRequestError
-    GetEventsRequestBadRequestError:
+    EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsObjectIdentifiers:
       type: object
       properties:
-        code:
-          $ref: '#/components/schemas/EventsGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
+        ext_id:
           type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetEventsRequestBadRequestError
+          description: External object ID
+        id:
+          type: string
+          description: Internal object ID
+      description: Identifiers for the object.
+      title: EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsObjectIdentifiers
     EventsPostRequestBodyContentApplicationJsonSchemaEventProperties:
       oneOf:
       - type: string
@@ -305,6 +314,76 @@ components:
         items:
           description: Any type
       title: EventsPostRequestBodyContentApplicationJsonSchemaEventProperties
+    EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItems:
+      type: object
+      properties:
+        contact_properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsContactProperties'
+          description: 'Properties defining the state of the contact associated to this event. Useful to update contact attributes defined in your contacts database while passing the event. For example: **"FIRSTNAME": "Jane" , "AGE": 37**'
+        event_date:
+          type: string
+          description: Timestamp of when the event occurred (e.g. "2024-01-24T17:39:57+01:00"). If no value is passed, the timestamp of the event creation is used.
+        event_name:
+          type: string
+          description: The name of the event that occurred. This is how you will find your event in Brevo. Limited to 255 characters, alphanumerical characters and - _ only.
+        event_properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsEventProperties'
+          description: 'Properties of the event. Top level properties and nested properties can be used to better segment contacts and personalise workflow conditions. The following field type are supported: string, number, boolean (true/false), date (Timestamp e.g. "2024-01-24T17:39:57+01:00"). Keys are limited to 255 characters, alphanumerical characters and - _ only. Size is limited to 50Kb.'
+        identifiers:
+          $ref: '#/components/schemas/EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsIdentifiers'
+          description: Identifies the contact associated with the event. At least one identifier is required.
+        object:
+          $ref: '#/components/schemas/EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsObject'
+          description: Identifiers of the object record associated with this event. Ignored if the object type or identifier for this record does not exist on the account.
+      required:
+      - event_name
+      - identifiers
+      title: EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItems
+    CreateEventRequestUnauthorizedError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/EventsPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreateEventRequestUnauthorizedError
+    batchEventsResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status of the batch request
+        total_events:
+          type: integer
+          description: Total number of events submitted in the batch
+        successful_events:
+          type: integer
+          description: Number of events that were successfully processed
+        failed_events:
+          type: integer
+          description: Number of events that failed to be processed
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/BatchEventsResponseErrorsItems'
+          description: List of errors for the failed events
+      required:
+      - status
+      - total_events
+      - successful_events
+      - failed_events
+      - errors
+      description: Response returned when a batch of events is processed
+      title: batchEventsResponse
     EventsPostResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -346,6 +425,28 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: EventsPostResponsesContentApplicationJsonSchemaCode
+    EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsObject:
+      type: object
+      properties:
+        identifiers:
+          $ref: '#/components/schemas/EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsObjectIdentifiers'
+          description: Identifiers for the object.
+        type:
+          type: string
+          description: Type of object (e.g., subscription, vehicle, etc.)
+      description: Identifiers of the object record associated with this event. Ignored if the object type or identifier for this record does not exist on the account.
+      title: EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsObject
+    EventsPostRequestBodyContentApplicationJsonSchemaObject:
+      type: object
+      properties:
+        identifiers:
+          $ref: '#/components/schemas/EventsPostRequestBodyContentApplicationJsonSchemaObjectIdentifiers'
+          description: Identifiers for the object.
+        type:
+          type: string
+          description: Type of object (e.g., subscription, vehicle, etc.)
+      description: Identifiers of the object record associated with this event. Ignored if the object type or identifier for this record does not exist on the account.
+      title: EventsPostRequestBodyContentApplicationJsonSchemaObject
     EventsGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -387,33 +488,11 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: EventsGetResponsesContentApplicationJsonSchemaCode
-    EventsPostRequestBodyContentApplicationJsonSchemaObject:
-      type: object
-      properties:
-        identifiers:
-          $ref: '#/components/schemas/EventsPostRequestBodyContentApplicationJsonSchemaObjectIdentifiers'
-          description: Identifiers for the object.
-        type:
-          type: string
-          description: Type of object (e.g., subscription, vehicle, etc.)
-      description: Identifiers of the object record associated with this event. Ignored if the object type or identifier for this record does not exist on the account.
-      title: EventsPostRequestBodyContentApplicationJsonSchemaObject
-    EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsObject:
-      type: object
-      properties:
-        identifiers:
-          $ref: '#/components/schemas/EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsObjectIdentifiers'
-          description: Identifiers for the object.
-        type:
-          type: string
-          description: Type of object (e.g., subscription, vehicle, etc.)
-      description: Identifiers of the object record associated with this event. Ignored if the object type or identifier for this record does not exist on the account.
-      title: EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsObject
-    CreateBatchEventsRequestUnauthorizedError:
+    GetEventsRequestBadRequestError:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/EventsBatchPostResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/EventsGetResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
@@ -421,53 +500,7 @@ components:
       required:
       - code
       - message
-      title: CreateBatchEventsRequestUnauthorizedError
-    EventsPostRequestBodyContentApplicationJsonSchemaContactProperties:
-      oneOf:
-      - type: string
-      - type: integer
-      - type: boolean
-      title: EventsPostRequestBodyContentApplicationJsonSchemaContactProperties
-    EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsContactProperties:
-      oneOf:
-      - type: string
-      - type: integer
-      title: EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsContactProperties
-    EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsEventProperties:
-      oneOf:
-      - type: string
-      - type: integer
-      - type: object
-        additionalProperties:
-          description: Any type
-      - type: array
-        items:
-          description: Any type
-      title: EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsEventProperties
-    EventsPostRequestBodyContentApplicationJsonSchemaIdentifiers:
-      type: object
-      properties:
-        contact_id:
-          type: integer
-          format: int64
-          description: Internal unique contact ID. When present, this takes priority over all other identifiers for event attribution and contact resolution.
-        email_id:
-          type: string
-          description: Email Id associated with the event
-        ext_id:
-          type: string
-          description: ext_id associated with the event
-        landline_number_id:
-          type: string
-          description: landline_number associated with the event
-        phone_id:
-          type: string
-          description: SMS associated with the event
-        whatsapp_id:
-          type: string
-          description: whatsapp associated with the event
-      description: Identifies the contact associated with the event. At least one identifier is required.
-      title: EventsPostRequestBodyContentApplicationJsonSchemaIdentifiers
+      title: GetEventsRequestBadRequestError
     EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsIdentifiers:
       type: object
       properties:
@@ -492,17 +525,6 @@ components:
           description: whatsapp associated with the event
       description: Identifies the contact associated with the event. At least one identifier is required.
       title: EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsIdentifiers
-    EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsObjectIdentifiers:
-      type: object
-      properties:
-        ext_id:
-          type: string
-          description: External object ID
-        id:
-          type: string
-          description: Internal object ID
-      description: Identifiers for the object.
-      title: EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsObjectIdentifiers
     GetEventsRequestInternalServerError:
       type: object
       properties:
@@ -516,6 +538,60 @@ components:
       - code
       - message
       title: GetEventsRequestInternalServerError
+    EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsContactProperties:
+      oneOf:
+      - type: string
+      - type: integer
+      title: EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsContactProperties
+    GetEventsListEventsItems:
+      type: object
+      properties:
+        contact_id:
+          type: integer
+          format: int64
+          description: Contact ID associated with the event
+        event_date:
+          type: string
+          format: date-time
+          description: Date and time of the event
+        event_name:
+          type: string
+          description: Name of the event
+        event_filter_id:
+          type: string
+          description: Filter ID of the event
+        object_type:
+          type: string
+          description: Object type associated with the event
+        event_properties:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Event-level custom properties
+        contact_properties:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Contact-level properties at time of event
+      title: GetEventsListEventsItems
+    EventsPostRequestBodyContentApplicationJsonSchemaContactProperties:
+      oneOf:
+      - type: string
+      - type: integer
+      - type: boolean
+      title: EventsPostRequestBodyContentApplicationJsonSchemaContactProperties
+    BatchEventsResponseErrorsItems:
+      type: object
+      properties:
+        eventIndex:
+          type: array
+          items:
+            type: integer
+          description: Index positions (0-based) of the events that caused the error
+        message:
+          type: string
+          description: Description of the error
+      title: BatchEventsResponseErrorsItems
     GetEventsRequestUnauthorizedError:
       type: object
       properties:
@@ -570,106 +646,30 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: EventsBatchPostResponsesContentApplicationJsonSchemaCode
-    BatchEventsResponseErrorsItems:
-      type: object
-      properties:
-        eventIndex:
-          type: array
-          items:
-            type: integer
-          description: Index positions (0-based) of the events that caused the error
-        message:
-          type: string
-          description: Description of the error
-      title: BatchEventsResponseErrorsItems
-    GetEventsListEventsItems:
+    EventsPostRequestBodyContentApplicationJsonSchemaIdentifiers:
       type: object
       properties:
         contact_id:
           type: integer
           format: int64
-          description: Contact ID associated with the event
-        event_date:
+          description: Internal unique contact ID. When present, this takes priority over all other identifiers for event attribution and contact resolution.
+        email_id:
           type: string
-          format: date-time
-          description: Date and time of the event
-        event_name:
+          description: Email Id associated with the event
+        ext_id:
           type: string
-          description: Name of the event
-        event_filter_id:
+          description: ext_id associated with the event
+        landline_number_id:
           type: string
-          description: Filter ID of the event
-        object_type:
+          description: landline_number associated with the event
+        phone_id:
           type: string
-          description: Object type associated with the event
-        event_properties:
-          type: object
-          additionalProperties:
-            description: Any type
-          description: Event-level custom properties
-        contact_properties:
-          type: object
-          additionalProperties:
-            description: Any type
-          description: Contact-level properties at time of event
-      title: GetEventsListEventsItems
-    batchEventsResponse:
-      type: object
-      properties:
-        status:
+          description: SMS associated with the event
+        whatsapp_id:
           type: string
-          description: Status of the batch request
-        total_events:
-          type: integer
-          description: Total number of events submitted in the batch
-        successful_events:
-          type: integer
-          description: Number of events that were successfully processed
-        failed_events:
-          type: integer
-          description: Number of events that failed to be processed
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/BatchEventsResponseErrorsItems'
-          description: List of errors for the failed events
-      required:
-      - status
-      - total_events
-      - successful_events
-      - failed_events
-      - errors
-      description: Response returned when a batch of events is processed
-      title: batchEventsResponse
-    EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItems:
-      type: object
-      properties:
-        contact_properties:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsContactProperties'
-          description: 'Properties defining the state of the contact associated to this event. Useful to update contact attributes defined in your contacts database while passing the event. For example: **"FIRSTNAME": "Jane" , "AGE": 37**'
-        event_date:
-          type: string
-          description: Timestamp of when the event occurred (e.g. "2024-01-24T17:39:57+01:00"). If no value is passed, the timestamp of the event creation is used.
-        event_name:
-          type: string
-          description: The name of the event that occurred. This is how you will find your event in Brevo. Limited to 255 characters, alphanumerical characters and - _ only.
-        event_properties:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsEventProperties'
-          description: 'Properties of the event. Top level properties and nested properties can be used to better segment contacts and personalise workflow conditions. The following field type are supported: string, number, boolean (true/false), date (Timestamp e.g. "2024-01-24T17:39:57+01:00"). Keys are limited to 255 characters, alphanumerical characters and - _ only. Size is limited to 50Kb.'
-        identifiers:
-          $ref: '#/components/schemas/EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsIdentifiers'
-          description: Identifies the contact associated with the event. At least one identifier is required.
-        object:
-          $ref: '#/components/schemas/EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsObject'
-          description: Identifiers of the object record associated with this event. Ignored if the object type or identifier for this record does not exist on the account.
-      required:
-      - event_name
-      - identifiers
-      title: EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItems
+          description: whatsapp associated with the event
+      description: Identifies the contact associated with the event. At least one identifier is required.
+      title: EventsPostRequestBodyContentApplicationJsonSchemaIdentifiers
   securitySchemes:
     api-key:
       type: apiKey

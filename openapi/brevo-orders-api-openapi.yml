@@ -123,27 +123,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    OrderProduct:
-      type: object
-      required:
-      - productId
-      - quantity
-      - price
-      properties:
-        productId:
-          type: string
-          description: Unique identifier of the product.
-        quantity:
-          type: integer
-          description: Quantity of the product ordered.
-          minimum: 1
-        price:
-          type: number
-          format: float
-          description: Price of the product at the time of order.
-        variantId:
-          type: string
-          description: Variant identifier if the product has variants.
     Order:
       type: object
       properties:
@@ -170,23 +149,27 @@ components:
           type: string
           format: date-time
           description: UTC date-time when the order was created.
-    OrderList:
+    OrderProduct:
       type: object
+      required:
+      - productId
+      - quantity
+      - price
       properties:
-        orders:
-          type: array
-          description: List of order records.
-          items:
-            $ref: '#/components/schemas/Order'
-    ErrorResponse:
-      type: object
-      properties:
-        code:
+        productId:
           type: string
-          description: Error code identifying the type of error.
-        message:
+          description: Unique identifier of the product.
+        quantity:
+          type: integer
+          description: Quantity of the product ordered.
+          minimum: 1
+        price:
+          type: number
+          format: float
+          description: Price of the product at the time of order.
+        variantId:
           type: string
-          description: Human-readable description of the error.
+          description: Variant identifier if the product has variants.
     CreateUpdateOrder:
       type: object
       required:
@@ -229,6 +212,23 @@ components:
           description: Coupon codes applied to the order.
           items:
             type: string
+    OrderList:
+      type: object
+      properties:
+        orders:
+          type: array
+          description: List of order records.
+          items:
+            $ref: '#/components/schemas/Order'
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code identifying the type of error.
+        message:
+          type: string
+          description: Human-readable description of the error.
   parameters:
     limitParam:
       name: limit

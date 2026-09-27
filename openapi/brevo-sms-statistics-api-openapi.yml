@@ -182,33 +182,44 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
-  parameters:
-    limitParam:
-      name: limit
-      in: query
-      description: Maximum number of results to return per request.
-      schema:
-        type: integer
-        format: int64
-        default: 50
-    offsetParam:
-      name: offset
-      in: query
-      description: Number of results to skip for pagination.
-      schema:
-        type: integer
-        format: int64
-        default: 0
   schemas:
-    ErrorResponse:
+    SmsStatisticsReport:
       type: object
       properties:
-        code:
-          type: string
-          description: Error code identifying the type of error.
-        message:
-          type: string
-          description: Human-readable description of the error.
+        reports:
+          type: array
+          description: Daily SMS statistics reports.
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date
+                description: Date for the statistics.
+              requests:
+                type: integer
+                format: int64
+                description: Number of SMS send requests.
+              delivered:
+                type: integer
+                format: int64
+                description: Number of successfully delivered SMS.
+              hardBounces:
+                type: integer
+                format: int64
+                description: Number of hard bounces.
+              softBounces:
+                type: integer
+                format: int64
+                description: Number of soft bounces.
+              blocked:
+                type: integer
+                format: int64
+                description: Number of blocked SMS.
+              unsubscribed:
+                type: integer
+                format: int64
+                description: Number of unsubscribes.
     SmsEventReport:
       type: object
       properties:
@@ -248,6 +259,15 @@ components:
               tag:
                 type: string
                 description: Tag assigned to the SMS.
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code identifying the type of error.
+        message:
+          type: string
+          description: Human-readable description of the error.
     AggregatedSmsReport:
       type: object
       properties:
@@ -278,43 +298,23 @@ components:
           type: integer
           format: int64
           description: Total unsubscribes.
-    SmsStatisticsReport:
-      type: object
-      properties:
-        reports:
-          type: array
-          description: Daily SMS statistics reports.
-          items:
-            type: object
-            properties:
-              date:
-                type: string
-                format: date
-                description: Date for the statistics.
-              requests:
-                type: integer
-                format: int64
-                description: Number of SMS send requests.
-              delivered:
-                type: integer
-                format: int64
-                description: Number of successfully delivered SMS.
-              hardBounces:
-                type: integer
-                format: int64
-                description: Number of hard bounces.
-              softBounces:
-                type: integer
-                format: int64
-                description: Number of soft bounces.
-              blocked:
-                type: integer
-                format: int64
-                description: Number of blocked SMS.
-              unsubscribed:
-                type: integer
-                format: int64
-                description: Number of unsubscribes.
+  parameters:
+    limitParam:
+      name: limit
+      in: query
+      description: Maximum number of results to return per request.
+      schema:
+        type: integer
+        format: int64
+        default: 50
+    offsetParam:
+      name: offset
+      in: query
+      description: Number of results to skip for pagination.
+      schema:
+        type: integer
+        format: int64
+        default: 0
   securitySchemes:
     apiKeyAuth:
       type: apiKey

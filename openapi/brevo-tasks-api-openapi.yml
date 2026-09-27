@@ -385,52 +385,21 @@ paths:
                   description: Id for type of task e.g Call / Email / Meeting etc.
 components:
   schemas:
-    CrmTasksIdPatchResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: CrmTasksIdPatchResponsesContentApplicationJsonSchemaCode
-    GetAllTaskTypesRequestBadRequestError:
+    Tasks_createATask_Response_201:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique task id
+      required:
+      - id
+      description: Task Details
+      title: Tasks_createATask_Response_201
+    DeleteATaskRequestBadRequestError:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/CrmTasktypesGetResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/CrmTasksIdDeleteResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
@@ -438,82 +407,7 @@ components:
       required:
       - code
       - message
-      title: GetAllTaskTypesRequestBadRequestError
-    errorModel:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - message
-      title: errorModel
-    CrmTasktypesGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Id of task type
-        title:
-          type: string
-          description: Title of task type
-      title: CrmTasktypesGetResponsesContentApplicationJsonSchemaItems
-    TaskReminderTypesItems:
-      type: string
-      enum:
-      - email
-      - push
-      title: TaskReminderTypesItems
-    CrmTasksGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: CrmTasksGetResponsesContentApplicationJsonSchemaCode
-    CrmTasksGetParametersFilterStatus:
-      type: string
-      enum:
-      - done
-      - undone
-      title: CrmTasksGetParametersFilterStatus
+      title: DeleteATaskRequestBadRequestError
     Task:
       type: object
       properties:
@@ -568,6 +462,124 @@ components:
       - date
       description: Task Details
       title: Task
+    Tasks_getAllTasks_Response_200:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Task'
+          description: List of tasks
+      description: List of tasks
+      title: Tasks_getAllTasks_Response_200
+    GetAllTasksRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CrmTasksGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetAllTasksRequestBadRequestError
+    TaskReminder:
+      type: object
+      properties:
+        types:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskReminderTypesItems'
+          description: Type of task reminder e.g email, push
+        unit:
+          $ref: '#/components/schemas/TaskReminderUnit'
+          description: Unit of time before reminder is to be sent
+        value:
+          type: integer
+          description: Value of time unit before reminder is to be sent
+      required:
+      - types
+      - unit
+      - value
+      description: Task reminder date/time for a task
+      title: TaskReminder
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
+    CrmTasksIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CrmTasksIdPatchResponsesContentApplicationJsonSchemaCode
+    CrmTasktypesGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of task type
+        title:
+          type: string
+          description: Title of task type
+      title: CrmTasktypesGetResponsesContentApplicationJsonSchemaItems
+    CrmTasksGetParametersFilterStatus:
+      type: string
+      enum:
+      - done
+      - undone
+      title: CrmTasksGetParametersFilterStatus
+    CrmTasksGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      title: CrmTasksGetParametersSort
     UpdateATaskRequestBadRequestError:
       type: object
       properties:
@@ -622,70 +634,6 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: CrmTasksIdDeleteResponsesContentApplicationJsonSchemaCode
-    CrmTasksGetParametersSort:
-      type: string
-      enum:
-      - asc
-      - desc
-      title: CrmTasksGetParametersSort
-    Tasks_createATask_Response_201:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique task id
-      required:
-      - id
-      description: Task Details
-      title: Tasks_createATask_Response_201
-    TaskReminderUnit:
-      type: string
-      enum:
-      - minutes
-      - hours
-      - weeks
-      - days
-      description: Unit of time before reminder is to be sent
-      title: TaskReminderUnit
-    Tasks_getAllTasks_Response_200:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Task'
-          description: List of tasks
-      description: List of tasks
-      title: Tasks_getAllTasks_Response_200
-    TaskReminder:
-      type: object
-      properties:
-        types:
-          type: array
-          items:
-            $ref: '#/components/schemas/TaskReminderTypesItems'
-          description: Type of task reminder e.g email, push
-        unit:
-          $ref: '#/components/schemas/TaskReminderUnit'
-          description: Unit of time before reminder is to be sent
-        value:
-          type: integer
-          description: Value of time unit before reminder is to be sent
-      required:
-      - types
-      - unit
-      - value
-      description: Task reminder date/time for a task
-      title: TaskReminder
-    CrmTasksGetParametersFilterDate:
-      type: string
-      enum:
-      - overdue
-      - today
-      - tomorrow
-      - week
-      - range
-      title: CrmTasksGetParametersFilterDate
     CrmTasktypesGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -727,11 +675,11 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: CrmTasktypesGetResponsesContentApplicationJsonSchemaCode
-    DeleteATaskRequestBadRequestError:
+    GetAllTaskTypesRequestBadRequestError:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/CrmTasksIdDeleteResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/CrmTasktypesGetResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
@@ -739,20 +687,72 @@ components:
       required:
       - code
       - message
-      title: DeleteATaskRequestBadRequestError
-    GetAllTasksRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/CrmTasksGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetAllTasksRequestBadRequestError
+      title: GetAllTaskTypesRequestBadRequestError
+    TaskReminderUnit:
+      type: string
+      enum:
+      - minutes
+      - hours
+      - weeks
+      - days
+      description: Unit of time before reminder is to be sent
+      title: TaskReminderUnit
+    CrmTasksGetParametersFilterDate:
+      type: string
+      enum:
+      - overdue
+      - today
+      - tomorrow
+      - week
+      - range
+      title: CrmTasksGetParametersFilterDate
+    TaskReminderTypesItems:
+      type: string
+      enum:
+      - email
+      - push
+      title: TaskReminderTypesItems
+    CrmTasksGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CrmTasksGetResponsesContentApplicationJsonSchemaCode
   securitySchemes:
     api-key:
       type: apiKey

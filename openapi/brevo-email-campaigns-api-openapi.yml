@@ -989,404 +989,6 @@ paths:
               - imageUrl
 components:
   schemas:
-    EmailCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaEmailExpirationDate:
-      type: object
-      properties:
-        duration:
-          type: integer
-          format: int64
-          description: Duration of the email expiry. maximum duration can be 3600 days or 480 weeks or 120 months.
-        unit:
-          $ref: '#/components/schemas/EmailCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaEmailExpirationDateUnit'
-          description: unit of the duration
-      description: To reduce your carbon footprint, set an expiration date for your email. If supported, it will be automatically deleted from the recipient’s inbox, saving storage space and energy.
-      title: EmailCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaEmailExpirationDate
-    errorModel:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - message
-      title: errorModel
-    EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaWinningCriteria:
-      type: string
-      enum:
-      - Open
-      - Click
-      description: Criteria chosen for winning version (Open/Click)
-      title: EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaWinningCriteria
-    EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaCode
-    EmailCampaignsCampaignIdSendNowPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: EmailCampaignsCampaignIdSendNowPostResponsesContentApplicationJsonSchemaCode
-    getDeviceBrowserStats:
-      type: object
-      properties:
-        clickers:
-          type: integer
-          format: int64
-          description: Number of total clicks for the campaign using the particular browser
-        uniqueClicks:
-          type: integer
-          format: int64
-          description: Number of unique clicks for the campaign using the particular browser
-        uniqueViews:
-          type: integer
-          format: int64
-          description: Number of unique openings for the campaign using the particular browser
-        viewed:
-          type: integer
-          format: int64
-          description: Number of openings for the campaign using the particular browser
-      required:
-      - clickers
-      - uniqueClicks
-      - uniqueViews
-      - viewed
-      title: getDeviceBrowserStats
-    Email_Campaigns_getSharedTemplateUrl_Response_200:
-      type: object
-      properties:
-        sharedUrl:
-          type: string
-          format: url
-          description: A unique URL for the email campaign or transactional template. This URL can be shared with other Brevo users.
-      required:
-      - sharedUrl
-      title: Email Campaigns_getSharedTemplateUrl_Response_200
-    DeleteEmailCampaignRequestNotFoundError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/EmailCampaignsCampaignIdDeleteResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: DeleteEmailCampaignRequestNotFoundError
-    EmailCampaignsCampaignIdSharedUrlGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: EmailCampaignsCampaignIdSharedUrlGetResponsesContentApplicationJsonSchemaCode
-    abTestVersionStats:
-      type: object
-      properties:
-        Version A:
-          type: string
-          description: percentage of an event for version A
-        Version B:
-          type: string
-          description: percentage of an event for version B
-      required:
-      - Version A
-      - Version B
-      description: Percentage of a particular event for both versions
-      title: abTestVersionStats
-    UpdateEmailCampaignRequestNotFoundError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/EmailCampaignsCampaignIdPutResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: UpdateEmailCampaignRequestNotFoundError
-    Email_Campaigns_getEmailCampaigns_Response_200:
-      type: object
-      properties:
-        campaigns:
-          type: array
-          items:
-            $ref: '#/components/schemas/EmailCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItems'
-        count:
-          type: integer
-          format: int64
-          description: Number of Email campaigns retrieved
-      title: Email Campaigns_getEmailCampaigns_Response_200
-    EmailCampaignsPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: EmailCampaignsPostResponsesContentApplicationJsonSchemaCode
-    EmailCampaignsImagesPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: EmailCampaignsImagesPostResponsesContentApplicationJsonSchemaCode
-    Email_Campaigns_getAbTestCampaignResult_Response_200:
-      type: object
-      properties:
-        clickRate:
-          type: string
-          description: Click rate for current winning version
-        clickedLinks:
-          $ref: '#/components/schemas/EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaClickedLinks'
-        openRate:
-          type: string
-          description: Open rate for current winning version
-        statistics:
-          $ref: '#/components/schemas/EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaStatistics'
-        winningCriteria:
-          $ref: '#/components/schemas/EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaWinningCriteria'
-          description: Criteria chosen for winning version (Open/Click)
-        winningSubjectLine:
-          type: string
-          description: Subject Line of current winning version
-        winningVersion:
-          $ref: '#/components/schemas/EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaWinningVersion'
-          description: Winning Campaign Info. pending = Campaign has been picked for sending and winning version is yet to be decided, tie = A tie happened between both the versions, notAvailable = Campaign has not yet been picked for sending.
-        winningVersionRate:
-          type: string
-          description: Open/Click rate for the winner version
-      title: Email Campaigns_getAbTestCampaignResult_Response_200
-    EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaCode
-    EmailCampaignsPostRequestBodyContentApplicationJsonSchemaEmailExpirationDateUnit:
-      type: string
-      enum:
-      - days
-      - weeks
-      - months
-      description: unit of the duration
-      title: EmailCampaignsPostRequestBodyContentApplicationJsonSchemaEmailExpirationDateUnit
     EmailCampaignsCampaignIdExportRecipientsPostResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -1428,7 +1030,7 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: EmailCampaignsCampaignIdExportRecipientsPostResponsesContentApplicationJsonSchemaCode
-    EmailCampaignsCampaignIdDeleteResponsesContentApplicationJsonSchemaCode:
+    EmailCampaignsCampaignIdSendNowPostResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - invalid_parameter
@@ -1468,17 +1070,142 @@ components:
       - Insufficient credits
       - Request already processed
       description: Error code displayed in case of a failure
-      title: EmailCampaignsCampaignIdDeleteResponsesContentApplicationJsonSchemaCode
-    updateCampaignStatus:
+      title: EmailCampaignsCampaignIdSendNowPostResponsesContentApplicationJsonSchemaCode
+    EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaStatus:
+      type: string
+      enum:
+      - draft
+      - sent
+      - archive
+      - queued
+      - suspended
+      - in_process
+      - in_review
+      - cancelling
+      - cancelled
+      description: Status of the campaign
+      title: EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaStatus
+    EmailCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaRecipients:
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/UpdateCampaignStatusStatus'
-          description: 'Note:- **replicateTemplate** status will be available **only for template type campaigns.**
+        exclusionListIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: List ids which have to be excluded from a campaign
+        exclusionSegmentIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: 'Segment ids which have to be excluded from a campaign.
 
             '
-      description: Status of the campaign
-      title: updateCampaignStatus
+        listIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: 'Lists Ids to send the campaign to. **Campaign should only be updated with listIds if listIds were used to create it. REQUIRED if already not present in campaign and scheduledAt is not empty**
+
+            '
+        segmentIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: '**Mandatory if listIds are not used. Campaign should only be updated with segmentIds if segmentIds were used to create it.** Segment ids to send the campaign to.
+
+            '
+      description: Segment ids and List ids to include/exclude from campaign
+      title: EmailCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaRecipients
+    EmailCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaWinnerCriteria:
+      type: string
+      enum:
+      - open
+      - click
+      description: 'Choose the metrics that will determinate the winning version. **Mandatory if _splitRule_ >= 1 and < 50**. If splitRule = 50, `winnerCriteria` is ignored if passed
+
+        '
+      title: EmailCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaWinnerCriteria
+    EmailCampaignsGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: EmailCampaignsGetParametersSort
+    GetExtendedCampaignStatsStatsByDevice:
+      type: object
+      properties:
+        desktop:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/getDeviceBrowserStats'
+          description: Statistics of the campaign on the basis of desktop devices
+        mobile:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/getDeviceBrowserStats'
+          description: Statistics of the campaign on the basis of mobile devices
+        tablet:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/getDeviceBrowserStats'
+          description: Statistics of the campaign on the basis of tablet devices
+        unknown:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/getDeviceBrowserStats'
+          description: Statistics of the campaign on the basis of unknown devices
+      title: GetExtendedCampaignStatsStatsByDevice
+    sendTestEmail:
+      type: object
+      properties:
+        emailTo:
+          type: array
+          items:
+            type: string
+            format: email
+          description: 'List of the email addresses of the recipients whom you wish to send the test mail. _If left empty, the test mail will be sent to your entire test list. You can not send more than 50 test emails per day_.
+
+            '
+      title: sendTestEmail
+    EmailCampaignsPostRequestBodyContentApplicationJsonSchemaSender:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: 'Sender email. Must be a valid email address. Cannot be used together with `id` in the same request.
+
+            '
+        id:
+          type: integer
+          format: int64
+          description: 'Select the sender for the campaign on the basis of sender id. Cannot be used together with `email` in the same request. _In order to select a sender with a specific pool of IPs, dedicated IP users shall pass id (instead of email)._
+
+            '
+        name:
+          type: string
+          description: Sender Name
+      description: 'Sender details including id or email and name (optional). Only one of either Sender’s email or Sender’s ID shall be passed in one request at a time. Passing both `email` and `id` will result in an error. For example: **{"name":"xyz", "email":"example@abc.com"}** or **{"name":"xyz", "id":123}**
+
+        '
+      title: EmailCampaignsPostRequestBodyContentApplicationJsonSchemaSender
+    EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaEmailExpirationDate:
+      type: object
+      properties:
+        duration:
+          type: integer
+          format: int64
+          description: Duration of the email expiry
+        unit:
+          $ref: '#/components/schemas/EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaEmailExpirationDateUnit'
+          description: Unit of the duration
+      description: Expiration date configuration for the email campaign, if set. Contains the duration and unit of the email expiry.
+      title: EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaEmailExpirationDate
     EmailCampaignsCampaignIdStatusPutResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -1520,6 +1247,426 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: EmailCampaignsCampaignIdStatusPutResponsesContentApplicationJsonSchemaCode
+    GetAbTestCampaignResultRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetAbTestCampaignResultRequestBadRequestError
+    EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaSender:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Sender email of the campaign
+        id:
+          type: integer
+          format: int64
+          description: Sender id of the campaign
+        name:
+          type: string
+          description: Sender name of the campaign
+      title: EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaSender
+    UploadImageToGalleryRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/EmailCampaignsImagesPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UploadImageToGalleryRequestBadRequestError
+    EmailCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsEmailExpirationDateUnit:
+      type: string
+      enum:
+      - days
+      - weeks
+      - months
+      description: Unit of the duration
+      title: EmailCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsEmailExpirationDateUnit
+    SendReportRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/EmailCampaignsCampaignIdSendReportPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: SendReportRequestNotFoundError
+    Email_Campaigns_getEmailCampaigns_Response_200:
+      type: object
+      properties:
+        campaigns:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmailCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItems'
+        count:
+          type: integer
+          format: int64
+          description: Number of Email campaigns retrieved
+      title: Email Campaigns_getEmailCampaigns_Response_200
+    EmailCampaignsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: EmailCampaignsGetResponsesContentApplicationJsonSchemaCode
+    Email_Campaigns_getSharedTemplateUrl_Response_200:
+      type: object
+      properties:
+        sharedUrl:
+          type: string
+          format: url
+          description: A unique URL for the email campaign or transactional template. This URL can be shared with other Brevo users.
+      required:
+      - sharedUrl
+      title: Email Campaigns_getSharedTemplateUrl_Response_200
+    EmailCampaignsCampaignIdSharedUrlGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: EmailCampaignsCampaignIdSharedUrlGetResponsesContentApplicationJsonSchemaCode
+    EmailCampaignsCampaignIdGetParametersStatistics:
+      type: string
+      enum:
+      - globalStats
+      - linksStats
+      - statsByDomain
+      - statsByDevice
+      - statsByBrowser
+      title: EmailCampaignsCampaignIdGetParametersStatistics
+    EmailExportRecipientsRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/EmailCampaignsCampaignIdExportRecipientsPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: EmailExportRecipientsRequestBadRequestError
+    EmailCampaignsPostRequestBodyContentApplicationJsonSchemaRecipients:
+      type: object
+      properties:
+        exclusionListIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: List ids to exclude from the campaign
+        exclusionSegmentIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: 'Segment ids which have to be excluded from a campaign.
+
+            '
+        listIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: '**Mandatory if scheduledAt is not empty**. List Ids to send the campaign to
+
+            '
+        segmentIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: '**Mandatory if listIds are not used**. Segment ids to send the campaign to.
+
+            '
+      description: Segment ids and List ids to include/exclude from campaign
+      title: EmailCampaignsPostRequestBodyContentApplicationJsonSchemaRecipients
+    UpdateEmailCampaignRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/EmailCampaignsCampaignIdPutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UpdateEmailCampaignRequestBadRequestError
+    EmailCampaignsCampaignIdPutResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: EmailCampaignsCampaignIdPutResponsesContentApplicationJsonSchemaCode
+    EmailCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaEmailExpirationDateUnit:
+      type: string
+      enum:
+      - days
+      - weeks
+      - months
+      description: unit of the duration
+      title: EmailCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaEmailExpirationDateUnit
+    EmailCampaignsPostRequestBodyContentApplicationJsonSchemaWinnerCriteria:
+      type: string
+      enum:
+      - open
+      - click
+      description: 'Choose the metrics that will determinate the winning version. **Mandatory if _splitRule_ >= 1 and < 50**. If splitRule = 50, `winnerCriteria` is ignored if passed
+
+        '
+      title: EmailCampaignsPostRequestBodyContentApplicationJsonSchemaWinnerCriteria
+    getCampaignStats:
+      type: object
+      properties:
+        appleMppOpens:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Numbers of times your email has been opened automatically through Apple MPP.
+        clickers:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Number of total clicks for the campaign
+        complaints:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Number of complaints (Spam reports) for the campaign
+        deferred:
+          type: integer
+          format: int64
+          description: Number of deferred emails for the campaign
+        delivered:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Number of delivered emails for the campaign
+        estimatedViews:
+          type: integer
+          format: int64
+          description: Rate of recipients without any privacy protection option enabled in their email client, applied to all delivered emails
+        hardBounces:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Number of hard bounces for the campaign
+        listId:
+          type: integer
+          format: int64
+          description: List Id of email campaign (only in case of get email campaign(s)(not for global stats))
+        opensRate:
+          type:
+          - string
+          - 'null'
+          title: float
+          description: Percentage of recipients who open the email out of your total number of recipients. Depending on your Campaign settings, they may include Apple MPP opens.
+        returnBounce:
+          type: integer
+          format: int64
+          description: Total number of non-delivered campaigns for a particular campaign id.
+        sent:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Number of sent emails for the campaign
+        softBounces:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Number of softbounce for the campaign
+        trackableViews:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Recipients without any privacy protection option enabled in their email email client
+        trackableViewsRate:
+          type: string
+          title: float
+          description: Rate of recipients without any privacy protection option enabled in their email client
+        uniqueClicks:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Number of unique clicks for the campaign
+        uniqueViews:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Number of unique openings for the campaign
+        unsubscriptions:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Number of unsubscription for the campaign
+        viewed:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Number of openings for the campaign
+      required:
+      - appleMppOpens
+      - clickers
+      - complaints
+      - delivered
+      - hardBounces
+      - opensRate
+      - sent
+      - softBounces
+      - trackableViews
+      - uniqueClicks
+      - uniqueViews
+      - unsubscriptions
+      - viewed
+      title: getCampaignStats
+    Email_Campaigns_emailExportRecipients_Response_202:
+      type: object
+      properties:
+        processId:
+          type: integer
+          format: int64
+          description: Id of the process created
+      required:
+      - processId
+      title: Email Campaigns_emailExportRecipients_Response_202
     getCampaignRecipients:
       type: object
       properties:
@@ -1549,20 +1696,11 @@ components:
       - exclusionLists
       - lists
       title: getCampaignRecipients
-    EmailCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaWinnerCriteria:
-      type: string
-      enum:
-      - open
-      - click
-      description: 'Choose the metrics that will determinate the winning version. **Mandatory if _splitRule_ >= 1 and < 50**. If splitRule = 50, `winnerCriteria` is ignored if passed
-
-        '
-      title: EmailCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaWinnerCriteria
-    UpdateCampaignStatusRequestNotFoundError:
+    UpdateEmailCampaignRequestNotFoundError:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/EmailCampaignsCampaignIdStatusPutResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/EmailCampaignsCampaignIdPutResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
@@ -1570,60 +1708,7 @@ components:
       required:
       - code
       - message
-      title: UpdateCampaignStatusRequestNotFoundError
-    AbTestVersionClicksItems:
-      type: object
-      properties:
-        clickRate:
-          type: string
-          description: Percentage of clicks of link with respect to total clicks
-        clicksCount:
-          type: integer
-          format: int64
-          description: Number of times a link is clicked
-        link:
-          type: string
-          description: URL of the link
-      required:
-      - clickRate
-      - clicksCount
-      - link
-      title: AbTestVersionClicksItems
-    EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaEmailExpirationDate:
-      type: object
-      properties:
-        duration:
-          type: integer
-          format: int64
-          description: Duration of the email expiry
-        unit:
-          $ref: '#/components/schemas/EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaEmailExpirationDateUnit'
-          description: Unit of the duration
-      description: Expiration date configuration for the email campaign, if set. Contains the duration and unit of the email expiry.
-      title: EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaEmailExpirationDate
-    Email_Campaigns_createEmailCampaign_Response_201:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          description: ID of the object created
-      required:
-      - id
-      title: Email Campaigns_createEmailCampaign_Response_201
-    UpdateCampaignStatusRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/EmailCampaignsCampaignIdStatusPutResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: UpdateCampaignStatusRequestBadRequestError
+      title: UpdateEmailCampaignRequestNotFoundError
     EmailCampaignsGetParametersStatus:
       type: string
       enum:
@@ -1637,54 +1722,12 @@ components:
       - cancelling
       - cancelled
       title: EmailCampaignsGetParametersStatus
-    UpdateEmailCampaignRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/EmailCampaignsCampaignIdPutResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: UpdateEmailCampaignRequestBadRequestError
-    EmailExportRecipientsRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/EmailCampaignsCampaignIdExportRecipientsPostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: EmailExportRecipientsRequestBadRequestError
-    EmailCampaignsPostRequestBodyContentApplicationJsonSchemaSender:
-      type: object
-      properties:
-        email:
-          type: string
-          format: email
-          description: 'Sender email. Must be a valid email address. Cannot be used together with `id` in the same request.
-
-            '
-        id:
-          type: integer
-          format: int64
-          description: 'Select the sender for the campaign on the basis of sender id. Cannot be used together with `email` in the same request. _In order to select a sender with a specific pool of IPs, dedicated IP users shall pass id (instead of email)._
-
-            '
-        name:
-          type: string
-          description: Sender Name
-      description: 'Sender details including id or email and name (optional). Only one of either Sender’s email or Sender’s ID shall be passed in one request at a time. Passing both `email` and `id` will result in an error. For example: **{"name":"xyz", "email":"example@abc.com"}** or **{"name":"xyz", "id":123}**
-
-        '
-      title: EmailCampaignsPostRequestBodyContentApplicationJsonSchemaSender
+    abTestVersionClicks:
+      type: array
+      items:
+        $ref: '#/components/schemas/AbTestVersionClicksItems'
+      description: Information on clicked links for a particular version
+      title: abTestVersionClicks
     EmailCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItems:
       type: object
       properties:
@@ -1834,11 +1877,11 @@ components:
       - recipients
       - statistics
       title: EmailCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItems
-    GetSharedTemplateUrlRequestBadRequestError:
+    DeleteEmailCampaignRequestNotFoundError:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/EmailCampaignsCampaignIdSharedUrlGetResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/EmailCampaignsCampaignIdDeleteResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
@@ -1846,43 +1889,42 @@ components:
       required:
       - code
       - message
-      title: GetSharedTemplateUrlRequestBadRequestError
-    EmailCampaignsPostRequestBodyContentApplicationJsonSchemaRecipients:
+      title: DeleteEmailCampaignRequestNotFoundError
+    EmailCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsEmailExpirationDate:
       type: object
       properties:
-        exclusionListIds:
-          type: array
-          items:
-            type: integer
-            format: int64
-          description: List ids to exclude from the campaign
-        exclusionSegmentIds:
-          type: array
-          items:
-            type: integer
-            format: int64
-          description: 'Segment ids which have to be excluded from a campaign.
-
-            '
-        listIds:
-          type: array
-          items:
-            type: integer
-            format: int64
-          description: '**Mandatory if scheduledAt is not empty**. List Ids to send the campaign to
-
-            '
-        segmentIds:
-          type: array
-          items:
-            type: integer
-            format: int64
-          description: '**Mandatory if listIds are not used**. Segment ids to send the campaign to.
-
-            '
-      description: Segment ids and List ids to include/exclude from campaign
-      title: EmailCampaignsPostRequestBodyContentApplicationJsonSchemaRecipients
-    EmailCampaignsCampaignIdPutResponsesContentApplicationJsonSchemaCode:
+        duration:
+          type: integer
+          format: int64
+          description: Duration of the email expiry
+        unit:
+          $ref: '#/components/schemas/EmailCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsEmailExpirationDateUnit'
+          description: Unit of the duration
+      description: Expiration date configuration for the email campaign, if set. Contains the duration and unit of the email expiry.
+      title: EmailCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsEmailExpirationDate
+    EmailCampaignsPostRequestBodyContentApplicationJsonSchemaEmailExpirationDate:
+      type: object
+      properties:
+        duration:
+          type: integer
+          format: int64
+          description: Duration of the email expiry. maximum duration can be 3600 days or 480 weeks or 120 months.
+        unit:
+          $ref: '#/components/schemas/EmailCampaignsPostRequestBodyContentApplicationJsonSchemaEmailExpirationDateUnit'
+          description: unit of the duration
+      description: To reduce your carbon footprint, set an expiration date for your email. If supported, it will be automatically deleted from the recipient’s inbox, saving storage space and energy. Learn more about setting an email expiration date. For reference , ``https://help.brevo.com/hc/en-us/articles/4413566705298-Create-an-email-campaign``
+      title: EmailCampaignsPostRequestBodyContentApplicationJsonSchemaEmailExpirationDate
+    EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaWinningVersion:
+      type: string
+      enum:
+      - notAvailable
+      - pending
+      - tie
+      - A
+      - B
+      description: Winning Campaign Info. pending = Campaign has been picked for sending and winning version is yet to be decided, tie = A tie happened between both the versions, notAvailable = Campaign has not yet been picked for sending.
+      title: EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaWinningVersion
+    EmailCampaignsPostResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - invalid_parameter
@@ -1922,7 +1964,42 @@ components:
       - Insufficient credits
       - Request already processed
       description: Error code displayed in case of a failure
-      title: EmailCampaignsCampaignIdPutResponsesContentApplicationJsonSchemaCode
+      title: EmailCampaignsPostResponsesContentApplicationJsonSchemaCode
+    Email_Campaigns_createEmailCampaign_Response_201:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID of the object created
+      required:
+      - id
+      title: Email Campaigns_createEmailCampaign_Response_201
+    getDeviceBrowserStats:
+      type: object
+      properties:
+        clickers:
+          type: integer
+          format: int64
+          description: Number of total clicks for the campaign using the particular browser
+        uniqueClicks:
+          type: integer
+          format: int64
+          description: Number of unique clicks for the campaign using the particular browser
+        uniqueViews:
+          type: integer
+          format: int64
+          description: Number of unique openings for the campaign using the particular browser
+        viewed:
+          type: integer
+          format: int64
+          description: Number of openings for the campaign using the particular browser
+      required:
+      - clickers
+      - uniqueClicks
+      - uniqueViews
+      - viewed
+      title: getDeviceBrowserStats
     GetEmailCampaignRequestBadRequestError:
       type: object
       properties:
@@ -1936,93 +2013,128 @@ components:
       - code
       - message
       title: GetEmailCampaignRequestBadRequestError
-    EmailCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsType:
+    EmailCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaSender:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Sender email from which the campaign emails are sent
+        id:
+          type: integer
+          format: int64
+          description: 'Select the sender for the campaign on the basis of sender id. **In order to select a sender with specific pool of IP’s, dedicated ip users shall pass id (instead of email)**.
+
+            '
+        name:
+          type: string
+          description: Sender Name from which the campaign emails are sent
+      description: 'Sender details including id or email and name (optional). Only one of either Sender''s email or Sender''s ID shall be passed in one request at a time. For example: **{"name":"xyz", "email":"example@abc.com"}** **{"name":"xyz", "id":123}**
+
+        '
+      title: EmailCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaSender
+    abTestVersionStats:
+      type: object
+      properties:
+        Version A:
+          type: string
+          description: percentage of an event for version A
+        Version B:
+          type: string
+          description: percentage of an event for version B
+      required:
+      - Version A
+      - Version B
+      description: Percentage of a particular event for both versions
+      title: abTestVersionStats
+    Email_Campaigns_uploadImageToGallery_Response_201:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL of the image uploaded
+      title: Email Campaigns_uploadImageToGallery_Response_201
+    updateCampaignStatus:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/UpdateCampaignStatusStatus'
+          description: 'Note:- **replicateTemplate** status will be available **only for template type campaigns.**
+
+            '
+      description: Status of the campaign
+      title: updateCampaignStatus
+    SendReportEmail:
+      type: object
+      properties:
+        body:
+          type: string
+          description: Custom text message to be presented in the report email.
+        to:
+          type: array
+          items:
+            type: string
+            format: email
+          description: Email addresses of the recipients
+      required:
+      - body
+      - to
+      description: Custom attributes for the report email.
+      title: SendReportEmail
+    EmailCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaEmailExpirationDate:
+      type: object
+      properties:
+        duration:
+          type: integer
+          format: int64
+          description: Duration of the email expiry. maximum duration can be 3600 days or 480 weeks or 120 months.
+        unit:
+          $ref: '#/components/schemas/EmailCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaEmailExpirationDateUnit'
+          description: unit of the duration
+      description: To reduce your carbon footprint, set an expiration date for your email. If supported, it will be automatically deleted from the recipient’s inbox, saving storage space and energy.
+      title: EmailCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaEmailExpirationDate
+    EmailCampaignsPostRequestBodyContentApplicationJsonSchemaEmailExpirationDateUnit:
       type: string
       enum:
-      - classic
-      - trigger
-      description: Type of campaign
-      title: EmailCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsType
-    EmailCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaRecipients:
+      - days
+      - weeks
+      - months
+      description: unit of the duration
+      title: EmailCampaignsPostRequestBodyContentApplicationJsonSchemaEmailExpirationDateUnit
+    EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaEmailExpirationDateUnit:
+      type: string
+      enum:
+      - days
+      - weeks
+      - months
+      description: Unit of the duration
+      title: EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaEmailExpirationDateUnit
+    UpdateCampaignStatusRequestBadRequestError:
       type: object
       properties:
-        exclusionListIds:
-          type: array
-          items:
-            type: integer
-            format: int64
-          description: List ids which have to be excluded from a campaign
-        exclusionSegmentIds:
-          type: array
-          items:
-            type: integer
-            format: int64
-          description: 'Segment ids which have to be excluded from a campaign.
-
-            '
-        listIds:
-          type: array
-          items:
-            type: integer
-            format: int64
-          description: 'Lists Ids to send the campaign to. **Campaign should only be updated with listIds if listIds were used to create it. REQUIRED if already not present in campaign and scheduledAt is not empty**
-
-            '
-        segmentIds:
-          type: array
-          items:
-            type: integer
-            format: int64
-          description: '**Mandatory if listIds are not used. Campaign should only be updated with segmentIds if segmentIds were used to create it.** Segment ids to send the campaign to.
-
-            '
-      description: Segment ids and List ids to include/exclude from campaign
-      title: EmailCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaRecipients
-    getExtendedCampaignStats:
-      type: object
-      properties:
-        campaignStats:
-          type: array
-          items:
-            $ref: '#/components/schemas/getCampaignStats'
-          description: List-wise statistics of the campaign.
-        globalStats:
-          $ref: '#/components/schemas/getCampaignStats'
-          description: Overall statistics of the campaign
-        linksStats:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-          description: Statistics about the number of clicks for each link in the campaign. Keys are the link URLs, values are click counts. Only populated when the `statistics` query parameter is set to `linksStats`.
-        mirrorClick:
-          type: integer
-          format: int64
-          description: Number of clicks on mirror link
-        remaining:
-          type: integer
-          format: int64
-          description: Number of remaining emails to send
-        statsByBrowser:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/getDeviceBrowserStats'
-          description: Statistics of the campaign grouped by browser. Only available when retrieving a single campaign with the `statistics` query parameter set to `statsByBrowser`.
-        statsByDevice:
-          $ref: '#/components/schemas/GetExtendedCampaignStatsStatsByDevice'
-        statsByDomain:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/getCampaignStats'
-          description: Statistics of the campaign grouped by email domain. Only populated when the `statistics` query parameter is set to `statsByDomain`.
+        code:
+          $ref: '#/components/schemas/EmailCampaignsCampaignIdStatusPutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
       required:
-      - campaignStats
-      - globalStats
-      - linksStats
-      - mirrorClick
-      - remaining
-      title: getExtendedCampaignStats
-    EmailCampaignsGetResponsesContentApplicationJsonSchemaCode:
+      - code
+      - message
+      title: UpdateCampaignStatusRequestBadRequestError
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
+    EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - invalid_parameter
@@ -2062,183 +2174,7 @@ components:
       - Insufficient credits
       - Request already processed
       description: Error code displayed in case of a failure
-      title: EmailCampaignsGetResponsesContentApplicationJsonSchemaCode
-    Email_Campaigns_emailExportRecipients_Response_202:
-      type: object
-      properties:
-        processId:
-          type: integer
-          format: int64
-          description: Id of the process created
-      required:
-      - processId
-      title: Email Campaigns_emailExportRecipients_Response_202
-    postSendFailed:
-      type: object
-      properties:
-        blackListedEmails:
-          type: array
-          items:
-            type: string
-            format: email
-        code:
-          type: string
-          description: Response code
-        message:
-          type: string
-          description: Response message
-        unexistingEmails:
-          type: array
-          items:
-            type: string
-            format: email
-        withoutListEmails:
-          type: array
-          items:
-            type: string
-            format: email
-      required:
-      - code
-      - message
-      title: postSendFailed
-    EmailCampaignsGetParametersType:
-      type: string
-      enum:
-      - classic
-      - trigger
-      title: EmailCampaignsGetParametersType
-    EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaWinningVersion:
-      type: string
-      enum:
-      - notAvailable
-      - pending
-      - tie
-      - A
-      - B
-      description: Winning Campaign Info. pending = Campaign has been picked for sending and winning version is yet to be decided, tie = A tie happened between both the versions, notAvailable = Campaign has not yet been picked for sending.
-      title: EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaWinningVersion
-    EmailCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsStatus:
-      type: string
-      enum:
-      - draft
-      - sent
-      - archive
-      - queued
-      - suspended
-      - in_process
-      - in_review
-      - cancelling
-      - cancelled
-      description: Status of the campaign
-      title: EmailCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsStatus
-    EmailCampaignsGetParametersSort:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: desc
-      title: EmailCampaignsGetParametersSort
-    DeleteEmailCampaignRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/EmailCampaignsCampaignIdDeleteResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: DeleteEmailCampaignRequestBadRequestError
-    SendReportRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/EmailCampaignsCampaignIdSendReportPostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: SendReportRequestBadRequestError
-    EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaEmailExpirationDateUnit:
-      type: string
-      enum:
-      - days
-      - weeks
-      - months
-      description: Unit of the duration
-      title: EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaEmailExpirationDateUnit
-    sendReport:
-      type: object
-      properties:
-        email:
-          $ref: '#/components/schemas/SendReportEmail'
-          description: Custom attributes for the report email.
-        language:
-          $ref: '#/components/schemas/SendReportLanguage'
-          default: fr
-          description: Language of email content for campaign report sending.
-      required:
-      - email
-      title: sendReport
-    EmailCampaignsPostRequestBodyContentApplicationJsonSchemaEmailExpirationDate:
-      type: object
-      properties:
-        duration:
-          type: integer
-          format: int64
-          description: Duration of the email expiry. maximum duration can be 3600 days or 480 weeks or 120 months.
-        unit:
-          $ref: '#/components/schemas/EmailCampaignsPostRequestBodyContentApplicationJsonSchemaEmailExpirationDateUnit'
-          description: unit of the duration
-      description: To reduce your carbon footprint, set an expiration date for your email. If supported, it will be automatically deleted from the recipient’s inbox, saving storage space and energy. Learn more about setting an email expiration date. For reference , ``https://help.brevo.com/hc/en-us/articles/4413566705298-Create-an-email-campaign``
-      title: EmailCampaignsPostRequestBodyContentApplicationJsonSchemaEmailExpirationDate
-    EmailCampaignsPostRequestBodyContentApplicationJsonSchemaWinnerCriteria:
-      type: string
-      enum:
-      - open
-      - click
-      description: 'Choose the metrics that will determinate the winning version. **Mandatory if _splitRule_ >= 1 and < 50**. If splitRule = 50, `winnerCriteria` is ignored if passed
-
-        '
-      title: EmailCampaignsPostRequestBodyContentApplicationJsonSchemaWinnerCriteria
-    EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaType:
-      type: string
-      enum:
-      - classic
-      - trigger
-      description: Type of campaign
-      title: EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaType
-    SendReportRequestNotFoundError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/EmailCampaignsCampaignIdSendReportPostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: SendReportRequestNotFoundError
-    EmailCampaignsCampaignIdExportRecipientsPostRequestBodyContentApplicationJsonSchemaRecipientsType:
-      type: string
-      enum:
-      - all
-      - nonClickers
-      - nonOpeners
-      - clickers
-      - openers
-      - softBounces
-      - hardBounces
-      - unsubscribed
-      description: Type of recipients to export for a campaign
-      title: EmailCampaignsCampaignIdExportRecipientsPostRequestBodyContentApplicationJsonSchemaRecipientsType
+      title: EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaCode
     SendEmailCampaignNowRequestNotFoundError:
       type: object
       properties:
@@ -2252,84 +2188,11 @@ components:
       - code
       - message
       title: SendEmailCampaignNowRequestNotFoundError
-    EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaStatus:
-      type: string
-      enum:
-      - draft
-      - sent
-      - archive
-      - queued
-      - suspended
-      - in_process
-      - in_review
-      - cancelling
-      - cancelled
-      description: Status of the campaign
-      title: EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaStatus
-    abTestVersionClicks:
-      type: array
-      items:
-        $ref: '#/components/schemas/AbTestVersionClicksItems'
-      description: Information on clicked links for a particular version
-      title: abTestVersionClicks
-    EmailCampaignsCampaignIdSendReportPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: EmailCampaignsCampaignIdSendReportPostResponsesContentApplicationJsonSchemaCode
-    SendReportLanguage:
-      type: string
-      enum:
-      - fr
-      - es
-      - pt
-      - it
-      - de
-      - en
-      default: fr
-      description: Language of email content for campaign report sending.
-      title: SendReportLanguage
-    UploadImageToGalleryRequestBadRequestError:
+    GetEmailCampaignsRequestBadRequestError:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/EmailCampaignsImagesPostResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/EmailCampaignsGetResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
@@ -2337,111 +2200,7 @@ components:
       required:
       - code
       - message
-      title: UploadImageToGalleryRequestBadRequestError
-    EmailCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaEmailExpirationDateUnit:
-      type: string
-      enum:
-      - days
-      - weeks
-      - months
-      description: unit of the duration
-      title: EmailCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaEmailExpirationDateUnit
-    EmailCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsSender:
-      type: object
-      properties:
-        email:
-          type: string
-          format: email
-          description: Sender email of the campaign
-        id:
-          type: integer
-          format: int64
-          description: Sender id of the campaign
-        name:
-          type: string
-          description: Sender name of the campaign
-      title: EmailCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsSender
-    GetEmailCampaignRequestNotFoundError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetEmailCampaignRequestNotFoundError
-    EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaClickedLinks:
-      type: object
-      properties:
-        Version A:
-          $ref: '#/components/schemas/abTestVersionClicks'
-        Version B:
-          $ref: '#/components/schemas/abTestVersionClicks'
-      required:
-      - Version A
-      - Version B
-      title: EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaClickedLinks
-    sendTestEmail:
-      type: object
-      properties:
-        emailTo:
-          type: array
-          items:
-            type: string
-            format: email
-          description: 'List of the email addresses of the recipients whom you wish to send the test mail. _If left empty, the test mail will be sent to your entire test list. You can not send more than 50 test emails per day_.
-
-            '
-      title: sendTestEmail
-    EmailCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsEmailExpirationDateUnit:
-      type: string
-      enum:
-      - days
-      - weeks
-      - months
-      description: Unit of the duration
-      title: EmailCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsEmailExpirationDateUnit
-    EmailExportRecipientsRequestNotFoundError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/EmailCampaignsCampaignIdExportRecipientsPostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: EmailExportRecipientsRequestNotFoundError
-    GetExtendedCampaignStatsStatsByDevice:
-      type: object
-      properties:
-        desktop:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/getDeviceBrowserStats'
-          description: Statistics of the campaign on the basis of desktop devices
-        mobile:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/getDeviceBrowserStats'
-          description: Statistics of the campaign on the basis of mobile devices
-        tablet:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/getDeviceBrowserStats'
-          description: Statistics of the campaign on the basis of tablet devices
-        unknown:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/getDeviceBrowserStats'
-          description: Statistics of the campaign on the basis of unknown devices
-      title: GetExtendedCampaignStatsStatsByDevice
+      title: GetEmailCampaignsRequestBadRequestError
     Email_Campaigns_getEmailCampaign_Response_200:
       type: object
       properties:
@@ -2590,40 +2349,128 @@ components:
       - recipients
       - statistics
       title: Email Campaigns_getEmailCampaign_Response_200
-    EmailCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsEmailExpirationDate:
+    EmailCampaignsCampaignIdSendReportPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: EmailCampaignsCampaignIdSendReportPostResponsesContentApplicationJsonSchemaCode
+    sendReport:
       type: object
       properties:
-        duration:
+        email:
+          $ref: '#/components/schemas/SendReportEmail'
+          description: Custom attributes for the report email.
+        language:
+          $ref: '#/components/schemas/SendReportLanguage'
+          default: fr
+          description: Language of email content for campaign report sending.
+      required:
+      - email
+      title: sendReport
+    EmailCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsSender:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Sender email of the campaign
+        id:
           type: integer
           format: int64
-          description: Duration of the email expiry
-        unit:
-          $ref: '#/components/schemas/EmailCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsEmailExpirationDateUnit'
-          description: Unit of the duration
-      description: Expiration date configuration for the email campaign, if set. Contains the duration and unit of the email expiry.
-      title: EmailCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsEmailExpirationDate
-    SendReportEmail:
-      type: object
-      properties:
-        body:
+          description: Sender id of the campaign
+        name:
           type: string
-          description: Custom text message to be presented in the report email.
-        to:
-          type: array
-          items:
-            type: string
-            format: email
-          description: Email addresses of the recipients
-      required:
-      - body
-      - to
-      description: Custom attributes for the report email.
-      title: SendReportEmail
-    GetEmailCampaignsRequestBadRequestError:
+          description: Sender name of the campaign
+      title: EmailCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsSender
+    EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaCode
+    EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaWinningCriteria:
+      type: string
+      enum:
+      - Open
+      - Click
+      description: Criteria chosen for winning version (Open/Click)
+      title: EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaWinningCriteria
+    UpdateCampaignStatusRequestNotFoundError:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/EmailCampaignsGetResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/EmailCampaignsCampaignIdStatusPutResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
@@ -2631,23 +2478,46 @@ components:
       required:
       - code
       - message
-      title: GetEmailCampaignsRequestBadRequestError
-    EmailCampaignsGetParametersStatistics:
+      title: UpdateCampaignStatusRequestNotFoundError
+    EmailCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsType:
       type: string
       enum:
-      - globalStats
-      - linksStats
-      - statsByDomain
-      title: EmailCampaignsGetParametersStatistics
-    EmailCampaignsCampaignIdGetParametersStatistics:
+      - classic
+      - trigger
+      description: Type of campaign
+      title: EmailCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsType
+    GetSharedTemplateUrlRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/EmailCampaignsCampaignIdSharedUrlGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetSharedTemplateUrlRequestBadRequestError
+    EmailExportRecipientsRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/EmailCampaignsCampaignIdExportRecipientsPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: EmailExportRecipientsRequestNotFoundError
+    EmailCampaignsGetParametersType:
       type: string
       enum:
-      - globalStats
-      - linksStats
-      - statsByDomain
-      - statsByDevice
-      - statsByBrowser
-      title: EmailCampaignsCampaignIdGetParametersStatistics
+      - classic
+      - trigger
+      title: EmailCampaignsGetParametersType
     UpdateCampaignStatusStatus:
       type: string
       enum:
@@ -2664,162 +2534,76 @@ components:
 
         '
       title: UpdateCampaignStatusStatus
-    EmailCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaSender:
+    EmailCampaignsGetParametersStatistics:
+      type: string
+      enum:
+      - globalStats
+      - linksStats
+      - statsByDomain
+      title: EmailCampaignsGetParametersStatistics
+    AbTestVersionClicksItems:
       type: object
       properties:
-        email:
+        clickRate:
           type: string
-          format: email
-          description: Sender email from which the campaign emails are sent
-        id:
+          description: Percentage of clicks of link with respect to total clicks
+        clicksCount:
           type: integer
           format: int64
-          description: 'Select the sender for the campaign on the basis of sender id. **In order to select a sender with specific pool of IP’s, dedicated ip users shall pass id (instead of email)**.
-
-            '
-        name:
+          description: Number of times a link is clicked
+        link:
           type: string
-          description: Sender Name from which the campaign emails are sent
-      description: 'Sender details including id or email and name (optional). Only one of either Sender''s email or Sender''s ID shall be passed in one request at a time. For example: **{"name":"xyz", "email":"example@abc.com"}** **{"name":"xyz", "id":123}**
-
-        '
-      title: EmailCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaSender
-    EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaSender:
-      type: object
-      properties:
-        email:
-          type: string
-          format: email
-          description: Sender email of the campaign
-        id:
-          type: integer
-          format: int64
-          description: Sender id of the campaign
-        name:
-          type: string
-          description: Sender name of the campaign
-      title: EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaSender
-    getCampaignStats:
-      type: object
-      properties:
-        appleMppOpens:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Numbers of times your email has been opened automatically through Apple MPP.
-        clickers:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Number of total clicks for the campaign
-        complaints:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Number of complaints (Spam reports) for the campaign
-        deferred:
-          type: integer
-          format: int64
-          description: Number of deferred emails for the campaign
-        delivered:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Number of delivered emails for the campaign
-        estimatedViews:
-          type: integer
-          format: int64
-          description: Rate of recipients without any privacy protection option enabled in their email client, applied to all delivered emails
-        hardBounces:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Number of hard bounces for the campaign
-        listId:
-          type: integer
-          format: int64
-          description: List Id of email campaign (only in case of get email campaign(s)(not for global stats))
-        opensRate:
-          type:
-          - string
-          - 'null'
-          title: float
-          description: Percentage of recipients who open the email out of your total number of recipients. Depending on your Campaign settings, they may include Apple MPP opens.
-        returnBounce:
-          type: integer
-          format: int64
-          description: Total number of non-delivered campaigns for a particular campaign id.
-        sent:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Number of sent emails for the campaign
-        softBounces:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Number of softbounce for the campaign
-        trackableViews:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Recipients without any privacy protection option enabled in their email email client
-        trackableViewsRate:
-          type: string
-          title: float
-          description: Rate of recipients without any privacy protection option enabled in their email client
-        uniqueClicks:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Number of unique clicks for the campaign
-        uniqueViews:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Number of unique openings for the campaign
-        unsubscriptions:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Number of unsubscription for the campaign
-        viewed:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Number of openings for the campaign
+          description: URL of the link
       required:
-      - appleMppOpens
-      - clickers
-      - complaints
-      - delivered
-      - hardBounces
-      - opensRate
-      - sent
-      - softBounces
-      - trackableViews
-      - uniqueClicks
-      - uniqueViews
-      - unsubscriptions
-      - viewed
-      title: getCampaignStats
-    GetAbTestCampaignResultRequestBadRequestError:
+      - clickRate
+      - clicksCount
+      - link
+      title: AbTestVersionClicksItems
+    SendReportLanguage:
+      type: string
+      enum:
+      - fr
+      - es
+      - pt
+      - it
+      - de
+      - en
+      default: fr
+      description: Language of email content for campaign report sending.
+      title: SendReportLanguage
+    postSendFailed:
+      type: object
+      properties:
+        blackListedEmails:
+          type: array
+          items:
+            type: string
+            format: email
+        code:
+          type: string
+          description: Response code
+        message:
+          type: string
+          description: Response message
+        unexistingEmails:
+          type: array
+          items:
+            type: string
+            format: email
+        withoutListEmails:
+          type: array
+          items:
+            type: string
+            format: email
+      required:
+      - code
+      - message
+      title: postSendFailed
+    DeleteEmailCampaignRequestBadRequestError:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/EmailCampaignsCampaignIdDeleteResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
@@ -2827,7 +2611,54 @@ components:
       required:
       - code
       - message
-      title: GetAbTestCampaignResultRequestBadRequestError
+      title: DeleteEmailCampaignRequestBadRequestError
+    EmailCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsStatus:
+      type: string
+      enum:
+      - draft
+      - sent
+      - archive
+      - queued
+      - suspended
+      - in_process
+      - in_review
+      - cancelling
+      - cancelled
+      description: Status of the campaign
+      title: EmailCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsStatus
+    EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaType:
+      type: string
+      enum:
+      - classic
+      - trigger
+      description: Type of campaign
+      title: EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaType
+    EmailCampaignsCampaignIdExportRecipientsPostRequestBodyContentApplicationJsonSchemaRecipientsType:
+      type: string
+      enum:
+      - all
+      - nonClickers
+      - nonOpeners
+      - clickers
+      - openers
+      - softBounces
+      - hardBounces
+      - unsubscribed
+      description: Type of recipients to export for a campaign
+      title: EmailCampaignsCampaignIdExportRecipientsPostRequestBodyContentApplicationJsonSchemaRecipientsType
+    SendReportRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/EmailCampaignsCampaignIdSendReportPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: SendReportRequestBadRequestError
     EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaStatistics:
       type: object
       properties:
@@ -2864,13 +2695,182 @@ components:
       - code
       - message
       title: CreateEmailCampaignRequestBadRequestError
-    Email_Campaigns_uploadImageToGallery_Response_201:
+    EmailCampaignsCampaignIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: EmailCampaignsCampaignIdDeleteResponsesContentApplicationJsonSchemaCode
+    Email_Campaigns_getAbTestCampaignResult_Response_200:
       type: object
       properties:
-        url:
+        clickRate:
           type: string
-          description: URL of the image uploaded
-      title: Email Campaigns_uploadImageToGallery_Response_201
+          description: Click rate for current winning version
+        clickedLinks:
+          $ref: '#/components/schemas/EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaClickedLinks'
+        openRate:
+          type: string
+          description: Open rate for current winning version
+        statistics:
+          $ref: '#/components/schemas/EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaStatistics'
+        winningCriteria:
+          $ref: '#/components/schemas/EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaWinningCriteria'
+          description: Criteria chosen for winning version (Open/Click)
+        winningSubjectLine:
+          type: string
+          description: Subject Line of current winning version
+        winningVersion:
+          $ref: '#/components/schemas/EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaWinningVersion'
+          description: Winning Campaign Info. pending = Campaign has been picked for sending and winning version is yet to be decided, tie = A tie happened between both the versions, notAvailable = Campaign has not yet been picked for sending.
+        winningVersionRate:
+          type: string
+          description: Open/Click rate for the winner version
+      title: Email Campaigns_getAbTestCampaignResult_Response_200
+    EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaClickedLinks:
+      type: object
+      properties:
+        Version A:
+          $ref: '#/components/schemas/abTestVersionClicks'
+        Version B:
+          $ref: '#/components/schemas/abTestVersionClicks'
+      required:
+      - Version A
+      - Version B
+      title: EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaClickedLinks
+    getExtendedCampaignStats:
+      type: object
+      properties:
+        campaignStats:
+          type: array
+          items:
+            $ref: '#/components/schemas/getCampaignStats'
+          description: List-wise statistics of the campaign.
+        globalStats:
+          $ref: '#/components/schemas/getCampaignStats'
+          description: Overall statistics of the campaign
+        linksStats:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+          description: Statistics about the number of clicks for each link in the campaign. Keys are the link URLs, values are click counts. Only populated when the `statistics` query parameter is set to `linksStats`.
+        mirrorClick:
+          type: integer
+          format: int64
+          description: Number of clicks on mirror link
+        remaining:
+          type: integer
+          format: int64
+          description: Number of remaining emails to send
+        statsByBrowser:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/getDeviceBrowserStats'
+          description: Statistics of the campaign grouped by browser. Only available when retrieving a single campaign with the `statistics` query parameter set to `statsByBrowser`.
+        statsByDevice:
+          $ref: '#/components/schemas/GetExtendedCampaignStatsStatsByDevice'
+        statsByDomain:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/getCampaignStats'
+          description: Statistics of the campaign grouped by email domain. Only populated when the `statistics` query parameter is set to `statsByDomain`.
+      required:
+      - campaignStats
+      - globalStats
+      - linksStats
+      - mirrorClick
+      - remaining
+      title: getExtendedCampaignStats
+    GetEmailCampaignRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetEmailCampaignRequestNotFoundError
+    EmailCampaignsImagesPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: EmailCampaignsImagesPostResponsesContentApplicationJsonSchemaCode
   securitySchemes:
     api-key:
       type: apiKey

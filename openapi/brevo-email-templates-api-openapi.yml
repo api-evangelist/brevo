@@ -163,14 +163,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   parameters:
-    limitParam:
-      name: limit
-      in: query
-      description: Maximum number of results to return per request.
-      schema:
-        type: integer
-        format: int64
-        default: 50
     templateIdParam:
       name: templateId
       in: path
@@ -179,6 +171,14 @@ components:
       schema:
         type: integer
         format: int64
+    limitParam:
+      name: limit
+      in: query
+      description: Maximum number of results to return per request.
+      schema:
+        type: integer
+        format: int64
+        default: 50
     offsetParam:
       name: offset
       in: query
@@ -188,15 +188,55 @@ components:
         format: int64
         default: 0
   schemas:
-    ErrorResponse:
+    CreateTemplateResponse:
       type: object
       properties:
-        code:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the newly created template.
+    UpdateSmtpTemplate:
+      type: object
+      properties:
+        templateName:
           type: string
-          description: Error code identifying the type of error.
-        message:
+          description: Updated name for the template.
+        subject:
           type: string
-          description: Human-readable description of the error.
+          description: Updated subject line for the template.
+        htmlContent:
+          type: string
+          description: Updated HTML content for the template body.
+        sender:
+          type: object
+          description: Updated sender identity for the template.
+          properties:
+            name:
+              type: string
+              description: Sender display name.
+            email:
+              type: string
+              format: email
+              description: Sender email address.
+        replyTo:
+          type: string
+          format: email
+          description: Updated reply-to email address.
+        isActive:
+          type: boolean
+          description: Whether the template should be active.
+    TemplateList:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: Total number of templates available.
+        templates:
+          type: array
+          description: List of email template summaries.
+          items:
+            $ref: '#/components/schemas/SmtpTemplate'
     CreateSmtpTemplate:
       type: object
       required:
@@ -274,55 +314,15 @@ components:
           type: string
           format: date-time
           description: UTC date-time when the template was last modified.
-    CreateTemplateResponse:
+    ErrorResponse:
       type: object
       properties:
-        id:
-          type: integer
-          format: int64
-          description: Unique identifier of the newly created template.
-    TemplateList:
-      type: object
-      properties:
-        count:
-          type: integer
-          format: int64
-          description: Total number of templates available.
-        templates:
-          type: array
-          description: List of email template summaries.
-          items:
-            $ref: '#/components/schemas/SmtpTemplate'
-    UpdateSmtpTemplate:
-      type: object
-      properties:
-        templateName:
+        code:
           type: string
-          description: Updated name for the template.
-        subject:
+          description: Error code identifying the type of error.
+        message:
           type: string
-          description: Updated subject line for the template.
-        htmlContent:
-          type: string
-          description: Updated HTML content for the template body.
-        sender:
-          type: object
-          description: Updated sender identity for the template.
-          properties:
-            name:
-              type: string
-              description: Sender display name.
-            email:
-              type: string
-              format: email
-              description: Sender email address.
-        replyTo:
-          type: string
-          format: email
-          description: Updated reply-to email address.
-        isActive:
-          type: boolean
-          description: Whether the template should be active.
+          description: Human-readable description of the error.
   securitySchemes:
     apiKeyAuth:
       type: apiKey
