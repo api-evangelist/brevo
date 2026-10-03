@@ -246,52 +246,11 @@ paths:
                 $ref: '#/components/schemas/errorModel'
 components:
   schemas:
-    CrmFilesIdDataGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: CrmFilesIdDataGetResponsesContentApplicationJsonSchemaCode
-    GetAllFilesRequestBadRequestError:
+    GetFileDetailsRequestBadRequestError:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/CrmFilesGetResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/CrmFilesIdDataGetResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
@@ -299,73 +258,7 @@ components:
       required:
       - code
       - message
-      title: GetAllFilesRequestBadRequestError
-    CrmFilesIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: CrmFilesIdGetResponsesContentApplicationJsonSchemaCode
-    DeleteAFileRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/CrmFilesIdDeleteResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: DeleteAFileRequestBadRequestError
-    errorModel:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - message
-      title: errorModel
+      title: GetFileDetailsRequestBadRequestError
     DownloadAFileRequestBadRequestError:
       type: object
       properties:
@@ -379,81 +272,6 @@ components:
       - code
       - message
       title: DownloadAFileRequestBadRequestError
-    CrmFilesGetParametersEntity:
-      type: string
-      enum:
-      - companies
-      - deals
-      - contacts
-      title: CrmFilesGetParametersEntity
-    CrmFilesGetParametersSort:
-      type: string
-      enum:
-      - asc
-      - desc
-      title: CrmFilesGetParametersSort
-    UploadAFileRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/CrmFilesPostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: UploadAFileRequestBadRequestError
-    CrmFilesIdDeleteResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: CrmFilesIdDeleteResponsesContentApplicationJsonSchemaCode
-    Files_downloadAFile_Response_200:
-      type: object
-      properties:
-        fileUrl:
-          type: string
-          description: A unique link to download the requested file.
-      description: Downloadable file link
-      title: Files_downloadAFile_Response_200
     FileData:
       type: object
       properties:
@@ -486,60 +304,6 @@ components:
           description: File created date/time
       description: File data that is uploaded
       title: FileData
-    CrmFilesPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: CrmFilesPostResponsesContentApplicationJsonSchemaCode
-    GetFileDetailsRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/CrmFilesIdDataGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetFileDetailsRequestBadRequestError
     CrmFilesGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -581,6 +345,242 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: CrmFilesGetResponsesContentApplicationJsonSchemaCode
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
+    CrmFilesIdDataGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CrmFilesIdDataGetResponsesContentApplicationJsonSchemaCode
+    CrmFilesIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CrmFilesIdDeleteResponsesContentApplicationJsonSchemaCode
+    DeleteAFileRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CrmFilesIdDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteAFileRequestBadRequestError
+    CrmFilesGetParametersEntity:
+      type: string
+      enum:
+      - companies
+      - deals
+      - contacts
+      title: CrmFilesGetParametersEntity
+    CrmFilesPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CrmFilesPostResponsesContentApplicationJsonSchemaCode
+    Files_downloadAFile_Response_200:
+      type: object
+      properties:
+        fileUrl:
+          type: string
+          description: A unique link to download the requested file.
+      description: Downloadable file link
+      title: Files_downloadAFile_Response_200
+    CrmFilesGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      title: CrmFilesGetParametersSort
+    CrmFilesIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CrmFilesIdGetResponsesContentApplicationJsonSchemaCode
+    UploadAFileRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CrmFilesPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UploadAFileRequestBadRequestError
+    GetAllFilesRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CrmFilesGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetAllFilesRequestBadRequestError
   securitySchemes:
     api-key:
       type: apiKey

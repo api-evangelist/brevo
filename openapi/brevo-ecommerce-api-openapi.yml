@@ -1105,7 +1105,63 @@ paths:
                 $ref: '#/components/schemas/errorModel'
 components:
   schemas:
-    EcommerceAttributionMetricsGetResponsesContentApplicationJsonSchemaCode:
+    getCategoryDetails:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: Creation UTC date-time of the category (YYYY-MM-DDTHH:mm:ss.SSSZ)
+        id:
+          type: string
+          format: string
+          description: Category ID for which you requested the details
+        isDeleted:
+          type: boolean
+          description: category deleted from the shop's database
+        modifiedAt:
+          type: string
+          description: Last modification UTC date-time of the category (YYYY-MM-DDTHH:mm:ss.SSSZ)
+        name:
+          type: string
+          format: string
+          description: Name of the category for which you requested the details
+        url:
+          type: string
+          format: string
+          description: URL to the category
+      required:
+      - createdAt
+      - id
+      - isDeleted
+      - modifiedAt
+      - name
+      title: getCategoryDetails
+    CategoriesBatchPostRequestBodyContentApplicationJsonSchemaCategoriesItems:
+      type: object
+      properties:
+        deletedAt:
+          type: string
+          description: UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) of the category deleted from the shop's database
+        id:
+          type: string
+          description: 'Unique Category ID as saved in the shop
+
+            '
+        isDeleted:
+          type: boolean
+          description: category deleted from the shop's database
+        name:
+          type: string
+          description: '**Mandatory in case of creation**. Name of the Category, as displayed in the shop
+
+            '
+        url:
+          type: string
+          description: URL to the category
+      required:
+      - id
+      title: CategoriesBatchPostRequestBodyContentApplicationJsonSchemaCategoriesItems
+    CategoriesBatchPostResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - invalid_parameter
@@ -1145,7 +1201,25 @@ components:
       - Insufficient credits
       - Request already processed
       description: Error code displayed in case of a failure
-      title: EcommerceAttributionMetricsGetResponsesContentApplicationJsonSchemaCode
+      title: CategoriesBatchPostResponsesContentApplicationJsonSchemaCode
+    EcommerceAttributionMetricsGetResponsesContentApplicationJsonSchemaTotals:
+      type: object
+      properties:
+        averageBasket:
+          type: string
+          title: float
+        ordersCount:
+          type: number
+          format: double
+        revenue:
+          type: string
+          title: float
+      required:
+      - averageBasket
+      - ordersCount
+      - revenue
+      description: Attribution list aggregated totals
+      title: EcommerceAttributionMetricsGetResponsesContentApplicationJsonSchemaTotals
     EcommerceAttributionProductsConversionSourceConversionSourceIdGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -1187,15 +1261,245 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: EcommerceAttributionProductsConversionSourceConversionSourceIdGetResponsesContentApplicationJsonSchemaCode
-    Ecommerce_setConfigDisplayCurrency_Response_200:
+    order:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+          description: Total amount of the order, including all shipping expenses, tax and the price of items.
+        billing:
+          $ref: '#/components/schemas/OrderBilling'
+          description: Billing details of an order.
+        coupons:
+          type: array
+          items:
+            type: string
+          description: Coupons applied to the order. Stored case insensitive.
+        createdAt:
+          type: string
+          description: Event occurrence UTC date-time (YYYY-MM-DDTHH:mm:ssZ), when order is actually created.
+        id:
+          type: string
+          description: Unique ID of the order.
+        identifiers:
+          $ref: '#/components/schemas/OrderIdentifiers'
+          description: Identifies the contact associated with the order.
+        metaInfo:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/OrderMetaInfo'
+          description: Meta data of order to store additional detail such as custom message, customer type, source.
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderProductsItems'
+        status:
+          type: string
+          description: State of the order.
+        storeId:
+          type: string
+          description: ID of store where the order is placed
+        updatedAt:
+          type: string
+          description: Event updated UTC date-time (YYYY-MM-DDTHH:mm:ssZ), when the status of the order is actually changed/updated.
+      required:
+      - amount
+      - createdAt
+      - id
+      - products
+      - status
+      - updatedAt
+      title: order
+    OrdersStatusPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: OrdersStatusPostResponsesContentApplicationJsonSchemaCode
+    Ecommerce_getAttributionMetricsForOneOrMoreBrevoCampaignsOrWorkflows_Response_200:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversionSourceMetrics'
+          description: List of conversion attribution metrics
+        totals:
+          $ref: '#/components/schemas/EcommerceAttributionMetricsGetResponsesContentApplicationJsonSchemaTotals'
+          description: Attribution list aggregated totals
+      required:
+      - results
+      - totals
+      title: Ecommerce_getAttributionMetricsForOneOrMoreBrevoCampaignsOrWorkflows_Response_200
+    EcommerceAttributionMetricsConversionSourceConversionSourceIdGetResponsesContentApplicationJsonSchemaConversionSource:
+      type: string
+      enum:
+      - email_campaign
+      - sms_campaign
+      - automation_workflow_email
+      - automation_workflow_sms
+      title: EcommerceAttributionMetricsConversionSourceConversionSourceIdGetResponsesContentApplicationJsonSchemaConversionSource
+    OrdersGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: OrdersGetResponsesContentApplicationJsonSchemaCode
+    GetCategoryInfoRequestNotFoundError:
       type: object
       properties:
         code:
+          $ref: '#/components/schemas/CategoriesIdGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
           type: string
-          description: ISO 4217 compliant display currency code
+          description: Readable message associated to the failure
       required:
       - code
-      title: Ecommerce_setConfigDisplayCurrency_Response_200
+      - message
+      title: GetCategoryInfoRequestNotFoundError
+    EcommerceAttributionProductsConversionSourceConversionSourceIdGetResponsesContentApplicationJsonSchemaProductsItems:
+      type: object
+      properties:
+        id:
+          type: string
+        imageUrl:
+          type: string
+        name:
+          type: string
+        ordersCount:
+          type: integer
+        price:
+          type: string
+          title: float
+        revenue:
+          type: string
+          title: float
+        sku:
+          type: string
+        url:
+          type: string
+      required:
+      - id
+      title: EcommerceAttributionProductsConversionSourceConversionSourceIdGetResponsesContentApplicationJsonSchemaProductsItems
+    ProductsBatchPostRequestBodyContentApplicationJsonSchemaProductsItemsMetaInfo:
+      oneOf:
+      - type: string
+      - type: integer
+      title: ProductsBatchPostRequestBodyContentApplicationJsonSchemaProductsItemsMetaInfo
+    GetTheIso4217CompliantDisplayCurrencyCodeForYourBrevoAccountRequestUnauthorizedError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/EcommerceConfigDisplayCurrencyGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetTheIso4217CompliantDisplayCurrencyCodeForYourBrevoAccountRequestUnauthorizedError
+    EcommerceAttributionProductsConversionSourceConversionSourceIdGetParametersConversionSource:
+      type: string
+      enum:
+      - email_campaign
+      - sms_campaign
+      - automation_workflow_email
+      - automation_workflow_sms
+      title: EcommerceAttributionProductsConversionSourceConversionSourceIdGetParametersConversionSource
+    OrderMetaInfo:
+      oneOf:
+      - type: string
+      - type: integer
+      - type: boolean
+      title: OrderMetaInfo
+    Ecommerce_getProducts_Response_200:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: Number of products
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/getProductDetails'
+      required:
+      - count
+      - products
+      title: Ecommerce_getProducts_Response_200
     GetCategoryInfoRequestBadRequestError:
       type: object
       properties:
@@ -1209,7 +1513,152 @@ components:
       - code
       - message
       title: GetCategoryInfoRequestBadRequestError
-    SetConfigDisplayCurrencyRequestBadRequestError:
+    Ecommerce_createUpdateBatchCategory_Response_201:
+      type: object
+      properties:
+        createdCount:
+          type: integer
+          format: int64
+          description: Number of the new created categories
+        updatedCount:
+          type: integer
+          format: int64
+          description: Number of the existing categories updated
+      title: Ecommerce_createUpdateBatchCategory_Response_201
+    Ecommerce_getDetailedAttributionMetricsForASingleBrevoCampaignOrWorkflow_Response_200:
+      type: object
+      properties:
+        averageBasket:
+          type: string
+          title: float
+        conversionSource:
+          $ref: '#/components/schemas/EcommerceAttributionMetricsConversionSourceConversionSourceIdGetResponsesContentApplicationJsonSchemaConversionSource'
+        id:
+          type: number
+          format: double
+        ordersCount:
+          type: number
+          format: double
+        revenue:
+          type: string
+          title: float
+        newCustomersCount:
+          type: number
+          format: double
+      required:
+      - averageBasket
+      - conversionSource
+      - id
+      - ordersCount
+      - revenue
+      - newCustomersCount
+      title: Ecommerce_getDetailedAttributionMetricsForASingleBrevoCampaignOrWorkflow_Response_200
+    Ecommerce_createUpdateBatchProducts_Response_201:
+      type: object
+      properties:
+        createdCount:
+          type: integer
+          format: int64
+          description: Number of the new created products
+        updatedCount:
+          type: integer
+          format: int64
+          description: Number of the existing products updated
+      title: Ecommerce_createUpdateBatchProducts_Response_201
+    CreateOrderRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/OrdersStatusPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreateOrderRequestBadRequestError
+    CreateBatchOrderRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/OrdersStatusBatchPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreateBatchOrderRequestBadRequestError
+    EcommerceAttributionMetricsConversionSourceConversionSourceIdGetParametersConversionSource:
+      type: string
+      enum:
+      - email_campaign
+      - sms_campaign
+      - automation_workflow_email
+      - automation_workflow_sms
+      title: EcommerceAttributionMetricsConversionSourceConversionSourceIdGetParametersConversionSource
+    EcommerceConfigDisplayCurrencyPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: EcommerceConfigDisplayCurrencyPostResponsesContentApplicationJsonSchemaCode
+    ProductsIdAlertsTypePostParametersType:
+      type: string
+      enum:
+      - back_in_stock
+      title: ProductsIdAlertsTypePostParametersType
+    GetTheIso4217CompliantDisplayCurrencyCodeForYourBrevoAccountRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/EcommerceConfigDisplayCurrencyGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetTheIso4217CompliantDisplayCurrencyCodeForYourBrevoAccountRequestBadRequestError
+    SetConfigDisplayCurrencyRequestUnauthorizedError:
       type: object
       properties:
         code:
@@ -1221,20 +1670,74 @@ components:
       required:
       - code
       - message
-      title: SetConfigDisplayCurrencyRequestBadRequestError
-    CreateUpdateCategoryRequestBadRequestError:
+      title: SetConfigDisplayCurrencyRequestUnauthorizedError
+    Ecommerce_getTheIso4217CompliantDisplayCurrencyCodeForYourBrevoAccount_Response_200:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/CategoriesPostResponsesContentApplicationJsonSchemaCode'
+          type: string
+          description: ISO 4217 compliant display currency code
+      required:
+      - code
+      title: Ecommerce_getTheIso4217CompliantDisplayCurrencyCodeForYourBrevoAccount_Response_200
+    EcommerceActivatePostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: EcommerceActivatePostResponsesContentApplicationJsonSchemaCode
+    Ecommerce_getOrders_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Ecommerce_getOrders_Response_200
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
           description: Error code displayed in case of a failure
         message:
           type: string
           description: Readable message associated to the failure
       required:
-      - code
       - message
-      title: CreateUpdateCategoryRequestBadRequestError
+      title: errorModel
     getProductDetails:
       type: object
       properties:
@@ -1317,430 +1820,6 @@ components:
       - s3ThumbAnalytics
       - s3ThumbEditor
       title: getProductDetails
-    OrdersGetParametersSort:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: desc
-      title: OrdersGetParametersSort
-    CategoriesGetParametersSort:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: desc
-      title: CategoriesGetParametersSort
-    ProductsBatchPostRequestBodyContentApplicationJsonSchemaProductsItemsMetaInfo:
-      oneOf:
-      - type: string
-      - type: integer
-      title: ProductsBatchPostRequestBodyContentApplicationJsonSchemaProductsItemsMetaInfo
-    CategoriesBatchPostRequestBodyContentApplicationJsonSchemaCategoriesItems:
-      type: object
-      properties:
-        deletedAt:
-          type: string
-          description: UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) of the category deleted from the shop's database
-        id:
-          type: string
-          description: 'Unique Category ID as saved in the shop
-
-            '
-        isDeleted:
-          type: boolean
-          description: category deleted from the shop's database
-        name:
-          type: string
-          description: '**Mandatory in case of creation**. Name of the Category, as displayed in the shop
-
-            '
-        url:
-          type: string
-          description: URL to the category
-      required:
-      - id
-      title: CategoriesBatchPostRequestBodyContentApplicationJsonSchemaCategoriesItems
-    Ecommerce_getProducts_Response_200:
-      type: object
-      properties:
-        count:
-          type: integer
-          format: int64
-          description: Number of products
-        products:
-          type: array
-          items:
-            $ref: '#/components/schemas/getProductDetails'
-      required:
-      - count
-      - products
-      title: Ecommerce_getProducts_Response_200
-    Ecommerce_activateTheECommerceApp_Response_200:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Ecommerce_activateTheECommerceApp_Response_200
-    GetAttributionMetricsForOneOrMoreBrevoCampaignsOrWorkflowsRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/EcommerceAttributionMetricsGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetAttributionMetricsForOneOrMoreBrevoCampaignsOrWorkflowsRequestBadRequestError
-    Ecommerce_createBatchOrder_Response_202:
-      type: object
-      properties:
-        count:
-          type: integer
-          format: int64
-          description: Number of orders
-        batch_id:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Batch ID of the request
-      required:
-      - batch_id
-      title: Ecommerce_createBatchOrder_Response_202
-    Ecommerce_getAttributionMetricsForOneOrMoreBrevoCampaignsOrWorkflows_Response_200:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConversionSourceMetrics'
-          description: List of conversion attribution metrics
-        totals:
-          $ref: '#/components/schemas/EcommerceAttributionMetricsGetResponsesContentApplicationJsonSchemaTotals'
-          description: Attribution list aggregated totals
-      required:
-      - results
-      - totals
-      title: Ecommerce_getAttributionMetricsForOneOrMoreBrevoCampaignsOrWorkflows_Response_200
-    CreateOrderRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/OrdersStatusPostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: CreateOrderRequestBadRequestError
-    CreateUpdateProductRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/ProductsPostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: CreateUpdateProductRequestBadRequestError
-    CategoriesGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: CategoriesGetResponsesContentApplicationJsonSchemaCode
-    getCategoryDetails:
-      type: object
-      properties:
-        createdAt:
-          type: string
-          description: Creation UTC date-time of the category (YYYY-MM-DDTHH:mm:ss.SSSZ)
-        id:
-          type: string
-          format: string
-          description: Category ID for which you requested the details
-        isDeleted:
-          type: boolean
-          description: category deleted from the shop's database
-        modifiedAt:
-          type: string
-          description: Last modification UTC date-time of the category (YYYY-MM-DDTHH:mm:ss.SSSZ)
-        name:
-          type: string
-          format: string
-          description: Name of the category for which you requested the details
-        url:
-          type: string
-          format: string
-          description: URL to the category
-      required:
-      - createdAt
-      - id
-      - isDeleted
-      - modifiedAt
-      - name
-      title: getCategoryDetails
-    ProductsGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: ProductsGetResponsesContentApplicationJsonSchemaCode
-    GetProductsRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/ProductsGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetProductsRequestBadRequestError
-    GetProductDetailsMetaInfo:
-      type: object
-      properties: {}
-      description: Meta data of product such as description, vendor, producer, stock level, etc.
-      title: GetProductDetailsMetaInfo
-    ConversionSourceMetricsConversionSource:
-      type: string
-      enum:
-      - email_campaign
-      - sms_campaign
-      - automation_workflow_email
-      - automation_workflow_sms
-      title: ConversionSourceMetricsConversionSource
-    Ecommerce_createUpdateProduct_Response_201:
-      type: object
-      properties:
-        id:
-          type: string
-          description: ID of the product when a new product is created
-      title: Ecommerce_createUpdateProduct_Response_201
-    CreateUpdateBatchCategoryRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/CategoriesBatchPostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: CreateUpdateBatchCategoryRequestBadRequestError
-    CreateBatchOrderRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/OrdersStatusBatchPostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: CreateBatchOrderRequestBadRequestError
-    OrderBilling:
-      type: object
-      properties:
-        address:
-          type: string
-          description: Full billing address.
-        city:
-          type: string
-          description: Exact city of the address.
-        country:
-          type: string
-          description: Billing country name.
-        countryCode:
-          type: string
-          description: Billing country 2-letter ISO code.
-        paymentMethod:
-          type: string
-          description: How the visitor will pay for the item(s), e.g. paypal, check, etc.
-        phone:
-          type: string
-          description: Billing phone number.
-        postCode:
-          type: string
-          description: Postcode for delivery and billing.
-        region:
-          type: string
-          description: Exact region (state/province) for delivery and billing.
-      description: Billing details of an order.
-      title: OrderBilling
-    ProductsIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: ProductsIdGetResponsesContentApplicationJsonSchemaCode
-    CategoriesBatchPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: CategoriesBatchPostResponsesContentApplicationJsonSchemaCode
-    Ecommerce_createUpdateCategory_Response_201:
-      type: object
-      properties:
-        id:
-          type: string
-          description: ID of the category when a new category is created
-      title: Ecommerce_createUpdateCategory_Response_201
     Ecommerce_getAttributedProductSalesForASingleBrevoCampaignOrWorkflow_Response_200:
       type: object
       properties:
@@ -1752,314 +1831,6 @@ components:
       required:
       - products
       title: Ecommerce_getAttributedProductSalesForASingleBrevoCampaignOrWorkflow_Response_200
-    CategoriesIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: CategoriesIdGetResponsesContentApplicationJsonSchemaCode
-    GetAttributedProductSalesForASingleBrevoCampaignOrWorkflowRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/EcommerceAttributionProductsConversionSourceConversionSourceIdGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetAttributedProductSalesForASingleBrevoCampaignOrWorkflowRequestBadRequestError
-    ProductsPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: ProductsPostResponsesContentApplicationJsonSchemaCode
-    ProductsPostRequestBodyContentApplicationJsonSchemaMetaInfo:
-      oneOf:
-      - type: string
-      - type: integer
-      title: ProductsPostRequestBodyContentApplicationJsonSchemaMetaInfo
-    ConversionSourceMetrics:
-      type: object
-      properties:
-        averageBasket:
-          type: string
-          title: float
-        conversionSource:
-          $ref: '#/components/schemas/ConversionSourceMetricsConversionSource'
-        id:
-          type: number
-          format: double
-        ordersCount:
-          type: number
-          format: double
-        revenue:
-          type: string
-          title: float
-      required:
-      - averageBasket
-      - conversionSource
-      - id
-      - ordersCount
-      - revenue
-      title: ConversionSourceMetrics
-    EcommerceAttributionMetricsConversionSourceConversionSourceIdGetResponsesContentApplicationJsonSchemaConversionSource:
-      type: string
-      enum:
-      - email_campaign
-      - sms_campaign
-      - automation_workflow_email
-      - automation_workflow_sms
-      title: EcommerceAttributionMetricsConversionSourceConversionSourceIdGetResponsesContentApplicationJsonSchemaConversionSource
-    ProductsBatchPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: ProductsBatchPostResponsesContentApplicationJsonSchemaCode
-    SetConfigDisplayCurrencyRequestUnauthorizedError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/EcommerceConfigDisplayCurrencyPostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: SetConfigDisplayCurrencyRequestUnauthorizedError
-    Ecommerce_getOrders_Response_200:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Ecommerce_getOrders_Response_200
-    ActivateTheECommerceAppRequestUnauthorizedError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/EcommerceActivatePostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: ActivateTheECommerceAppRequestUnauthorizedError
-    Ecommerce_getTheIso4217CompliantDisplayCurrencyCodeForYourBrevoAccount_Response_200:
-      type: object
-      properties:
-        code:
-          type: string
-          description: ISO 4217 compliant display currency code
-      required:
-      - code
-      title: Ecommerce_getTheIso4217CompliantDisplayCurrencyCodeForYourBrevoAccount_Response_200
-    GetCategoryInfoRequestNotFoundError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/CategoriesIdGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetCategoryInfoRequestNotFoundError
-    Ecommerce_createUpdateBatchCategory_Response_201:
-      type: object
-      properties:
-        createdCount:
-          type: integer
-          format: int64
-          description: Number of the new created categories
-        updatedCount:
-          type: integer
-          format: int64
-          description: Number of the existing categories updated
-      title: Ecommerce_createUpdateBatchCategory_Response_201
-    OrderIdentifiers:
-      type: object
-      properties:
-        email_id:
-          type: string
-          description: Email of the contact associated with the order
-        ext_id:
-          type: string
-          description: ext_id associated with the order
-        loyalty_subscription_id:
-          type: string
-          description: loyalty_subscription_id associated with the order
-        phone_id:
-          type: string
-          description: Phone number of the contact associated with the order
-      description: Identifies the contact associated with the order.
-      title: OrderIdentifiers
-    errorModel:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - message
-      title: errorModel
-    OrdersGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: OrdersGetResponsesContentApplicationJsonSchemaCode
     CategoriesPostResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -2101,7 +1872,7 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: CategoriesPostResponsesContentApplicationJsonSchemaCode
-    EcommerceActivatePostResponsesContentApplicationJsonSchemaCode:
+    EcommerceAttributionMetricsGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - invalid_parameter
@@ -2141,7 +1912,234 @@ components:
       - Insufficient credits
       - Request already processed
       description: Error code displayed in case of a failure
-      title: EcommerceActivatePostResponsesContentApplicationJsonSchemaCode
+      title: EcommerceAttributionMetricsGetResponsesContentApplicationJsonSchemaCode
+    OrderBilling:
+      type: object
+      properties:
+        address:
+          type: string
+          description: Full billing address.
+        city:
+          type: string
+          description: Exact city of the address.
+        country:
+          type: string
+          description: Billing country name.
+        countryCode:
+          type: string
+          description: Billing country 2-letter ISO code.
+        paymentMethod:
+          type: string
+          description: How the visitor will pay for the item(s), e.g. paypal, check, etc.
+        phone:
+          type: string
+          description: Billing phone number.
+        postCode:
+          type: string
+          description: Postcode for delivery and billing.
+        region:
+          type: string
+          description: Exact region (state/province) for delivery and billing.
+      description: Billing details of an order.
+      title: OrderBilling
+    Ecommerce_setConfigDisplayCurrency_Response_200:
+      type: object
+      properties:
+        code:
+          type: string
+          description: ISO 4217 compliant display currency code
+      required:
+      - code
+      title: Ecommerce_setConfigDisplayCurrency_Response_200
+    GetProductDetailsMetaInfo:
+      type: object
+      properties: {}
+      description: Meta data of product such as description, vendor, producer, stock level, etc.
+      title: GetProductDetailsMetaInfo
+    ProductsIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ProductsIdGetResponsesContentApplicationJsonSchemaCode
+    ActivateTheECommerceAppRequestUnauthorizedError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/EcommerceActivatePostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: ActivateTheECommerceAppRequestUnauthorizedError
+    CategoriesIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CategoriesIdGetResponsesContentApplicationJsonSchemaCode
+    ProductsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ProductsPostResponsesContentApplicationJsonSchemaCode
+    ProductsBatchPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ProductsBatchPostResponsesContentApplicationJsonSchemaCode
+    Ecommerce_createUpdateCategory_Response_201:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID of the category when a new category is created
+      title: Ecommerce_createUpdateCategory_Response_201
     OrderProductsItems:
       type: object
       properties:
@@ -2177,181 +2175,24 @@ components:
       - productId
       description: Details for the Products in an order.
       title: OrderProductsItems
-    EcommerceAttributionProductsConversionSourceConversionSourceIdGetParametersConversionSource:
+    ProductsGetParametersSort:
       type: string
       enum:
-      - email_campaign
-      - sms_campaign
-      - automation_workflow_email
-      - automation_workflow_sms
-      title: EcommerceAttributionProductsConversionSourceConversionSourceIdGetParametersConversionSource
-    EcommerceAttributionProductsConversionSourceConversionSourceIdGetResponsesContentApplicationJsonSchemaProductsItems:
-      type: object
-      properties:
-        id:
-          type: string
-        imageUrl:
-          type: string
-        name:
-          type: string
-        ordersCount:
-          type: integer
-        price:
-          type: string
-          title: float
-        revenue:
-          type: string
-          title: float
-        sku:
-          type: string
-        url:
-          type: string
-      required:
-      - id
-      title: EcommerceAttributionProductsConversionSourceConversionSourceIdGetResponsesContentApplicationJsonSchemaProductsItems
-    order:
-      type: object
-      properties:
-        amount:
-          type: number
-          format: double
-          description: Total amount of the order, including all shipping expenses, tax and the price of items.
-        billing:
-          $ref: '#/components/schemas/OrderBilling'
-          description: Billing details of an order.
-        coupons:
-          type: array
-          items:
-            type: string
-          description: Coupons applied to the order. Stored case insensitive.
-        createdAt:
-          type: string
-          description: Event occurrence UTC date-time (YYYY-MM-DDTHH:mm:ssZ), when order is actually created.
-        id:
-          type: string
-          description: Unique ID of the order.
-        identifiers:
-          $ref: '#/components/schemas/OrderIdentifiers'
-          description: Identifies the contact associated with the order.
-        metaInfo:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/OrderMetaInfo'
-          description: Meta data of order to store additional detail such as custom message, customer type, source.
-        products:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderProductsItems'
-        status:
-          type: string
-          description: State of the order.
-        storeId:
-          type: string
-          description: ID of store where the order is placed
-        updatedAt:
-          type: string
-          description: Event updated UTC date-time (YYYY-MM-DDTHH:mm:ssZ), when the status of the order is actually changed/updated.
-      required:
-      - amount
-      - createdAt
-      - id
-      - products
-      - status
-      - updatedAt
-      title: order
-    EcommerceAttributionMetricsConversionSourceConversionSourceIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: EcommerceAttributionMetricsConversionSourceConversionSourceIdGetResponsesContentApplicationJsonSchemaCode
-    ProductsIdAlertsTypePostParametersType:
-      type: string
-      enum:
-      - back_in_stock
-      title: ProductsIdAlertsTypePostParametersType
-    OrdersStatusPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: OrdersStatusPostResponsesContentApplicationJsonSchemaCode
-    EcommerceAttributionMetricsGetResponsesContentApplicationJsonSchemaTotals:
+      - asc
+      - desc
+      default: desc
+      title: ProductsGetParametersSort
+    ConversionSourceMetrics:
       type: object
       properties:
         averageBasket:
           type: string
           title: float
+        conversionSource:
+          $ref: '#/components/schemas/ConversionSourceMetricsConversionSource'
+        id:
+          type: number
+          format: double
         ordersCount:
           type: number
           format: double
@@ -2360,64 +2201,11 @@ components:
           title: float
       required:
       - averageBasket
+      - conversionSource
+      - id
       - ordersCount
       - revenue
-      description: Attribution list aggregated totals
-      title: EcommerceAttributionMetricsGetResponsesContentApplicationJsonSchemaTotals
-    EcommerceConfigDisplayCurrencyPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: EcommerceConfigDisplayCurrencyPostResponsesContentApplicationJsonSchemaCode
-    GetTheIso4217CompliantDisplayCurrencyCodeForYourBrevoAccountRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/EcommerceConfigDisplayCurrencyGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetTheIso4217CompliantDisplayCurrencyCodeForYourBrevoAccountRequestBadRequestError
+      title: ConversionSourceMetrics
     OrdersStatusBatchPostResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -2459,18 +2247,6 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: OrdersStatusBatchPostResponsesContentApplicationJsonSchemaCode
-    Ecommerce_createUpdateBatchProducts_Response_201:
-      type: object
-      properties:
-        createdCount:
-          type: integer
-          format: int64
-          description: Number of the new created products
-        updatedCount:
-          type: integer
-          format: int64
-          description: Number of the existing products updated
-      title: Ecommerce_createUpdateBatchProducts_Response_201
     ActivateTheECommerceAppRequestNotFoundError:
       type: object
       properties:
@@ -2484,124 +2260,7 @@ components:
       - code
       - message
       title: ActivateTheECommerceAppRequestNotFoundError
-    GetOrdersRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/OrdersGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetOrdersRequestBadRequestError
-    ProductsIdAlertsTypePostRequestBodyContentApplicationJsonSchemaContactIdentifiers:
-      type: object
-      properties:
-        email:
-          type: string
-          format: email
-          description: Email address of the contact
-        ext_id:
-          type: string
-          description: Contact ID in your system
-        sms:
-          type: string
-          description: Sms of the contact
-      title: ProductsIdAlertsTypePostRequestBodyContentApplicationJsonSchemaContactIdentifiers
-    CreateUpdateBatchProductsRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/ProductsBatchPostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: CreateUpdateBatchProductsRequestBadRequestError
-    EcommerceAttributionMetricsConversionSourceConversionSourceIdGetParametersConversionSource:
-      type: string
-      enum:
-      - email_campaign
-      - sms_campaign
-      - automation_workflow_email
-      - automation_workflow_sms
-      title: EcommerceAttributionMetricsConversionSourceConversionSourceIdGetParametersConversionSource
-    ProductsGetParametersSortByField:
-      type: string
-      enum:
-      - created_at
-      - name
-      - price
-      - id
-      title: ProductsGetParametersSortByField
-    GetProductInfoRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/ProductsIdGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetProductInfoRequestBadRequestError
-    GetTheIso4217CompliantDisplayCurrencyCodeForYourBrevoAccountRequestUnauthorizedError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/EcommerceConfigDisplayCurrencyGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetTheIso4217CompliantDisplayCurrencyCodeForYourBrevoAccountRequestUnauthorizedError
-    Ecommerce_getDetailedAttributionMetricsForASingleBrevoCampaignOrWorkflow_Response_200:
-      type: object
-      properties:
-        averageBasket:
-          type: string
-          title: float
-        conversionSource:
-          $ref: '#/components/schemas/EcommerceAttributionMetricsConversionSourceConversionSourceIdGetResponsesContentApplicationJsonSchemaConversionSource'
-        id:
-          type: number
-          format: double
-        ordersCount:
-          type: number
-          format: double
-        revenue:
-          type: string
-          title: float
-        newCustomersCount:
-          type: number
-          format: double
-      required:
-      - averageBasket
-      - conversionSource
-      - id
-      - ordersCount
-      - revenue
-      - newCustomersCount
-      title: Ecommerce_getDetailedAttributionMetricsForASingleBrevoCampaignOrWorkflow_Response_200
-    ProductsGetParametersSort:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: desc
-      title: ProductsGetParametersSort
-    EcommerceConfigDisplayCurrencyGetResponsesContentApplicationJsonSchemaCode:
+    ProductsGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - invalid_parameter
@@ -2641,7 +2300,66 @@ components:
       - Insufficient credits
       - Request already processed
       description: Error code displayed in case of a failure
-      title: EcommerceConfigDisplayCurrencyGetResponsesContentApplicationJsonSchemaCode
+      title: ProductsGetResponsesContentApplicationJsonSchemaCode
+    GetOrdersRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/OrdersGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetOrdersRequestBadRequestError
+    GetAttributedProductSalesForASingleBrevoCampaignOrWorkflowRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/EcommerceAttributionProductsConversionSourceConversionSourceIdGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetAttributedProductSalesForASingleBrevoCampaignOrWorkflowRequestBadRequestError
+    CreateUpdateProductRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ProductsPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreateUpdateProductRequestBadRequestError
+    CreateUpdateBatchCategoryRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CategoriesBatchPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreateUpdateBatchCategoryRequestBadRequestError
+    Ecommerce_createUpdateProduct_Response_201:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID of the product when a new product is created
+      title: Ecommerce_createUpdateProduct_Response_201
     ProductsBatchPostRequestBodyContentApplicationJsonSchemaProductsItems:
       type: object
       properties:
@@ -2706,12 +2424,50 @@ components:
       - id
       - name
       title: ProductsBatchPostRequestBodyContentApplicationJsonSchemaProductsItems
-    OrderMetaInfo:
+    GetProductsRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ProductsGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetProductsRequestBadRequestError
+    CreateUpdateCategoryRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CategoriesPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreateUpdateCategoryRequestBadRequestError
+    ProductsPostRequestBodyContentApplicationJsonSchemaMetaInfo:
       oneOf:
       - type: string
       - type: integer
-      - type: boolean
-      title: OrderMetaInfo
+      title: ProductsPostRequestBodyContentApplicationJsonSchemaMetaInfo
+    GetAttributionMetricsForOneOrMoreBrevoCampaignsOrWorkflowsRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/EcommerceAttributionMetricsGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetAttributionMetricsForOneOrMoreBrevoCampaignsOrWorkflowsRequestBadRequestError
     Ecommerce_getCategories_Response_200:
       type: object
       properties:
@@ -2727,19 +2483,6 @@ components:
       - categories
       - count
       title: Ecommerce_getCategories_Response_200
-    GetCategoriesRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/CategoriesGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetCategoriesRequestBadRequestError
     GetDetailedAttributionMetricsForASingleBrevoCampaignOrWorkflowRequestBadRequestError:
       type: object
       properties:
@@ -2753,6 +2496,263 @@ components:
       - code
       - message
       title: GetDetailedAttributionMetricsForASingleBrevoCampaignOrWorkflowRequestBadRequestError
+    EcommerceAttributionMetricsConversionSourceConversionSourceIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: EcommerceAttributionMetricsConversionSourceConversionSourceIdGetResponsesContentApplicationJsonSchemaCode
+    Ecommerce_activateTheECommerceApp_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Ecommerce_activateTheECommerceApp_Response_200
+    EcommerceConfigDisplayCurrencyGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: EcommerceConfigDisplayCurrencyGetResponsesContentApplicationJsonSchemaCode
+    CategoriesGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: CategoriesGetParametersSort
+    ProductsIdAlertsTypePostRequestBodyContentApplicationJsonSchemaContactIdentifiers:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email address of the contact
+        ext_id:
+          type: string
+          description: Contact ID in your system
+        sms:
+          type: string
+          description: Sms of the contact
+      title: ProductsIdAlertsTypePostRequestBodyContentApplicationJsonSchemaContactIdentifiers
+    ConversionSourceMetricsConversionSource:
+      type: string
+      enum:
+      - email_campaign
+      - sms_campaign
+      - automation_workflow_email
+      - automation_workflow_sms
+      title: ConversionSourceMetricsConversionSource
+    SetConfigDisplayCurrencyRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/EcommerceConfigDisplayCurrencyPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: SetConfigDisplayCurrencyRequestBadRequestError
+    OrdersGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: OrdersGetParametersSort
+    Ecommerce_createBatchOrder_Response_202:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: Number of orders
+        batch_id:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Batch ID of the request
+      required:
+      - batch_id
+      title: Ecommerce_createBatchOrder_Response_202
+    CategoriesGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CategoriesGetResponsesContentApplicationJsonSchemaCode
+    CreateUpdateBatchProductsRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ProductsBatchPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreateUpdateBatchProductsRequestBadRequestError
+    OrderIdentifiers:
+      type: object
+      properties:
+        email_id:
+          type: string
+          description: Email of the contact associated with the order
+        ext_id:
+          type: string
+          description: ext_id associated with the order
+        loyalty_subscription_id:
+          type: string
+          description: loyalty_subscription_id associated with the order
+        phone_id:
+          type: string
+          description: Phone number of the contact associated with the order
+      description: Identifies the contact associated with the order.
+      title: OrderIdentifiers
+    GetCategoriesRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CategoriesGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetCategoriesRequestBadRequestError
+    GetProductInfoRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ProductsIdGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetProductInfoRequestBadRequestError
+    ProductsGetParametersSortByField:
+      type: string
+      enum:
+      - created_at
+      - name
+      - price
+      - id
+      title: ProductsGetParametersSortByField
   securitySchemes:
     api-key:
       type: apiKey

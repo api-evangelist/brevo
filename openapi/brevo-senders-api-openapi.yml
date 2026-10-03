@@ -505,203 +505,6 @@ paths:
       description: https://api.brevo.com/v3
 components:
   schemas:
-    SendersPostRequestBodyContentApplicationJsonSchemaIpsItems:
-      type: object
-      properties:
-        domain:
-          type: string
-          description: Domain of the IP
-        ip:
-          type: string
-          description: Dedicated IP available in your account
-        weight:
-          type: integer
-          format: int64
-          description: 'Weight to apply to the IP. Sum of all IP weights must be
-
-            100. Should be passed for either ALL or NONE of the IPs.
-
-            If it''s not passed, the sending will be equally balanced
-
-            on all IPs.'
-      required:
-      - domain
-      - ip
-      title: SendersPostRequestBodyContentApplicationJsonSchemaIpsItems
-    DeleteSenderRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/SendersSenderIdDeleteResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: DeleteSenderRequestBadRequestError
-    Senders_getIps_Response_200:
-      type: object
-      properties:
-        ips:
-          type: array
-          items:
-            $ref: '#/components/schemas/SendersIpsGetResponsesContentApplicationJsonSchemaIpsItems'
-          description: 'Dedicated IP(s) available on your account. Returns empty array
-
-            for standard accounts without dedicated IPs.'
-      required:
-      - ips
-      title: Senders_getIps_Response_200
-    SendersGetResponsesContentApplicationJsonSchemaSendersItems:
-      type: object
-      properties:
-        active:
-          type: boolean
-          description: Status of sender (true=activated, false=deactivated)
-        email:
-          type: string
-          format: email
-          description: From Email associated to the sender
-        id:
-          type: integer
-          format: int64
-          description: Id of the sender
-        ips:
-          type: array
-          items:
-            $ref: '#/components/schemas/SendersGetResponsesContentApplicationJsonSchemaSendersItemsIpsItems'
-          description: 'List of dedicated IP(s) available in the account. This
-
-            data is displayed only for dedicated IPs. For standard accounts,
-
-            this will be an empty array.'
-        name:
-          type: string
-          description: From Name associated to the sender
-      required:
-      - active
-      - email
-      - id
-      - ips
-      - name
-      title: SendersGetResponsesContentApplicationJsonSchemaSendersItems
-    SendersIpsGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: SendersIpsGetResponsesContentApplicationJsonSchemaCode
-    errorModel:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - message
-      title: errorModel
-    GetIpsRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/SendersIpsGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetIpsRequestBadRequestError
-    SendersSenderIdIpsGetResponsesContentApplicationJsonSchemaIpsItems:
-      type: object
-      properties:
-        domain:
-          type: string
-          description: Domain associated to the IP
-        id:
-          type: integer
-          format: int64
-          description: ID of the dedicated IP
-        ip:
-          type: string
-          description: Dedicated IP address
-        weight:
-          type: integer
-          format: int64
-          description: Weight of the IP for this sender
-      required:
-      - domain
-      - id
-      - ip
-      - weight
-      title: SendersSenderIdIpsGetResponsesContentApplicationJsonSchemaIpsItems
-    GetIpsFromSenderRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/SendersSenderIdIpsGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetIpsFromSenderRequestBadRequestError
-    UpdateSenderRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/SendersSenderIdPutResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: UpdateSenderRequestBadRequestError
     SendersSenderIdPutRequestBodyContentApplicationJsonSchemaIpsItems:
       type: object
       properties:
@@ -725,6 +528,19 @@ components:
       - domain
       - ip
       title: SendersSenderIdPutRequestBodyContentApplicationJsonSchemaIpsItems
+    Senders_getIpsFromSender_Response_200:
+      type: object
+      properties:
+        ips:
+          type: array
+          items:
+            $ref: '#/components/schemas/SendersSenderIdIpsGetResponsesContentApplicationJsonSchemaIpsItems'
+          description: 'Dedicated IP(s) linked to a sender. Returns empty array for standard accounts
+
+            without dedicated IPs.'
+      required:
+      - ips
+      title: Senders_getIpsFromSender_Response_200
     SendersIpsGetResponsesContentApplicationJsonSchemaIpsItems:
       type: object
       properties:
@@ -767,200 +583,34 @@ components:
       required:
       - id
       title: Senders_createSender_Response_201
-    CreateSenderRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/SendersPostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: CreateSenderRequestBadRequestError
-    Senders_getSenders_Response_200:
-      type: object
-      properties:
-        senders:
-          type: array
-          items:
-            $ref: '#/components/schemas/SendersGetResponsesContentApplicationJsonSchemaSendersItems'
-          description: List of the senders available in your account
-      title: Senders_getSenders_Response_200
-    ValidateSenderByOTPRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/SendersSenderIdValidatePutResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: ValidateSenderByOTPRequestBadRequestError
-    SendersPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: SendersPostResponsesContentApplicationJsonSchemaCode
-    SendersSenderIdDeleteResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: SendersSenderIdDeleteResponsesContentApplicationJsonSchemaCode
-    SendersGetResponsesContentApplicationJsonSchemaSendersItemsIpsItems:
+    SendersSenderIdIpsGetResponsesContentApplicationJsonSchemaIpsItems:
       type: object
       properties:
         domain:
           type: string
-          description: Domain of the IP
+          description: Domain associated to the IP
+        id:
+          type: integer
+          format: int64
+          description: ID of the dedicated IP
         ip:
           type: string
-          description: Dedicated IP available in your account
+          description: Dedicated IP address
         weight:
           type: integer
           format: int64
           description: Weight of the IP for this sender
       required:
       - domain
+      - id
       - ip
       - weight
-      title: SendersGetResponsesContentApplicationJsonSchemaSendersItemsIpsItems
-    Senders_getIpsFromSender_Response_200:
-      type: object
-      properties:
-        ips:
-          type: array
-          items:
-            $ref: '#/components/schemas/SendersSenderIdIpsGetResponsesContentApplicationJsonSchemaIpsItems'
-          description: 'Dedicated IP(s) linked to a sender. Returns empty array for standard accounts
-
-            without dedicated IPs.'
-      required:
-      - ips
-      title: Senders_getIpsFromSender_Response_200
-    SendersSenderIdValidatePutResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: SendersSenderIdValidatePutResponsesContentApplicationJsonSchemaCode
-    GetSendersRequestBadRequestError:
+      title: SendersSenderIdIpsGetResponsesContentApplicationJsonSchemaIpsItems
+    GetIpsFromSenderRequestBadRequestError:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/SendersGetResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/SendersSenderIdIpsGetResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
@@ -968,48 +618,7 @@ components:
       required:
       - code
       - message
-      title: GetSendersRequestBadRequestError
-    SendersSenderIdPutResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: SendersSenderIdPutResponsesContentApplicationJsonSchemaCode
+      title: GetIpsFromSenderRequestBadRequestError
     SendersSenderIdIpsGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -1051,6 +660,118 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: SendersSenderIdIpsGetResponsesContentApplicationJsonSchemaCode
+    Senders_getSenders_Response_200:
+      type: object
+      properties:
+        senders:
+          type: array
+          items:
+            $ref: '#/components/schemas/SendersGetResponsesContentApplicationJsonSchemaSendersItems'
+          description: List of the senders available in your account
+      title: Senders_getSenders_Response_200
+    SendersPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SendersPostResponsesContentApplicationJsonSchemaCode
+    GetIpsRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SendersIpsGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetIpsRequestBadRequestError
+    Senders_getIps_Response_200:
+      type: object
+      properties:
+        ips:
+          type: array
+          items:
+            $ref: '#/components/schemas/SendersIpsGetResponsesContentApplicationJsonSchemaIpsItems'
+          description: 'Dedicated IP(s) available on your account. Returns empty array
+
+            for standard accounts without dedicated IPs.'
+      required:
+      - ips
+      title: Senders_getIps_Response_200
+    GetSendersRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SendersGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetSendersRequestBadRequestError
+    SendersPostRequestBodyContentApplicationJsonSchemaIpsItems:
+      type: object
+      properties:
+        domain:
+          type: string
+          description: Domain of the IP
+        ip:
+          type: string
+          description: Dedicated IP available in your account
+        weight:
+          type: integer
+          format: int64
+          description: 'Weight to apply to the IP. Sum of all IP weights must be
+
+            100. Should be passed for either ALL or NONE of the IPs.
+
+            If it''s not passed, the sending will be equally balanced
+
+            on all IPs.'
+      required:
+      - domain
+      - ip
+      title: SendersPostRequestBodyContentApplicationJsonSchemaIpsItems
     SendersGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -1092,6 +813,314 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: SendersGetResponsesContentApplicationJsonSchemaCode
+    SendersGetResponsesContentApplicationJsonSchemaSendersItems:
+      type: object
+      properties:
+        active:
+          type: boolean
+          description: Status of sender (true=activated, false=deactivated)
+        email:
+          type: string
+          format: email
+          description: From Email associated to the sender
+        id:
+          type: integer
+          format: int64
+          description: Id of the sender
+        ips:
+          type: array
+          items:
+            $ref: '#/components/schemas/SendersGetResponsesContentApplicationJsonSchemaSendersItemsIpsItems'
+          description: 'List of dedicated IP(s) available in the account. This
+
+            data is displayed only for dedicated IPs. For standard accounts,
+
+            this will be an empty array.'
+        name:
+          type: string
+          description: From Name associated to the sender
+      required:
+      - active
+      - email
+      - id
+      - ips
+      - name
+      title: SendersGetResponsesContentApplicationJsonSchemaSendersItems
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
+    UpdateSenderRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SendersSenderIdPutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UpdateSenderRequestBadRequestError
+    SendersSenderIdValidatePutResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SendersSenderIdValidatePutResponsesContentApplicationJsonSchemaCode
+    SendersIpsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SendersIpsGetResponsesContentApplicationJsonSchemaCode
+    CreateSenderRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SendersPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreateSenderRequestBadRequestError
+    SendersSenderIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SendersSenderIdDeleteResponsesContentApplicationJsonSchemaCode
+    ValidateSenderByOTPRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SendersSenderIdValidatePutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: ValidateSenderByOTPRequestBadRequestError
+    DeleteSenderRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SendersSenderIdDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteSenderRequestBadRequestError
+    SendersGetResponsesContentApplicationJsonSchemaSendersItemsIpsItems:
+      type: object
+      properties:
+        domain:
+          type: string
+          description: Domain of the IP
+        ip:
+          type: string
+          description: Dedicated IP available in your account
+        weight:
+          type: integer
+          format: int64
+          description: Weight of the IP for this sender
+      required:
+      - domain
+      - ip
+      - weight
+      title: SendersGetResponsesContentApplicationJsonSchemaSendersItemsIpsItems
+    SendersSenderIdPutResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SendersSenderIdPutResponsesContentApplicationJsonSchemaCode
+    CreateSenderResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the newly created sender.
+    CreateSender:
+      type: object
+      required:
+      - name
+      - email
+      properties:
+        name:
+          type: string
+          description: Display name for the new sender.
+        email:
+          type: string
+          format: email
+          description: Email address for the new sender.
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code identifying the type of error.
+        message:
+          type: string
+          description: Human-readable description of the error.
     SenderList:
       type: object
       properties:
@@ -1115,35 +1144,6 @@ components:
               active:
                 type: boolean
                 description: Whether the sender is verified and active.
-    CreateSender:
-      type: object
-      required:
-      - name
-      - email
-      properties:
-        name:
-          type: string
-          description: Display name for the new sender.
-        email:
-          type: string
-          format: email
-          description: Email address for the new sender.
-    ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code identifying the type of error.
-        message:
-          type: string
-          description: Human-readable description of the error.
-    CreateSenderResponse:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          description: Unique identifier of the newly created sender.
   securitySchemes:
     api-key:
       type: apiKey

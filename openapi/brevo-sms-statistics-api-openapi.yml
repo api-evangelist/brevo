@@ -182,6 +182,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
+  parameters:
+    offsetParam:
+      name: offset
+      in: query
+      description: Number of results to skip for pagination.
+      schema:
+        type: integer
+        format: int64
+        default: 0
+    limitParam:
+      name: limit
+      in: query
+      description: Maximum number of results to return per request.
+      schema:
+        type: integer
+        format: int64
+        default: 50
   schemas:
     SmsStatisticsReport:
       type: object
@@ -220,6 +237,36 @@ components:
                 type: integer
                 format: int64
                 description: Number of unsubscribes.
+    AggregatedSmsReport:
+      type: object
+      properties:
+        range:
+          type: string
+          description: Date range for the aggregated statistics.
+        requests:
+          type: integer
+          format: int64
+          description: Total SMS send requests.
+        delivered:
+          type: integer
+          format: int64
+          description: Total successfully delivered SMS.
+        hardBounces:
+          type: integer
+          format: int64
+          description: Total hard bounces.
+        softBounces:
+          type: integer
+          format: int64
+          description: Total soft bounces.
+        blocked:
+          type: integer
+          format: int64
+          description: Total blocked SMS.
+        unsubscribed:
+          type: integer
+          format: int64
+          description: Total unsubscribes.
     SmsEventReport:
       type: object
       properties:
@@ -268,53 +315,6 @@ components:
         message:
           type: string
           description: Human-readable description of the error.
-    AggregatedSmsReport:
-      type: object
-      properties:
-        range:
-          type: string
-          description: Date range for the aggregated statistics.
-        requests:
-          type: integer
-          format: int64
-          description: Total SMS send requests.
-        delivered:
-          type: integer
-          format: int64
-          description: Total successfully delivered SMS.
-        hardBounces:
-          type: integer
-          format: int64
-          description: Total hard bounces.
-        softBounces:
-          type: integer
-          format: int64
-          description: Total soft bounces.
-        blocked:
-          type: integer
-          format: int64
-          description: Total blocked SMS.
-        unsubscribed:
-          type: integer
-          format: int64
-          description: Total unsubscribes.
-  parameters:
-    limitParam:
-      name: limit
-      in: query
-      description: Maximum number of results to return per request.
-      schema:
-        type: integer
-        format: int64
-        default: 50
-    offsetParam:
-      name: offset
-      in: query
-      description: Number of results to skip for pagination.
-      schema:
-        type: integer
-        format: int64
-        default: 0
   securitySchemes:
     apiKeyAuth:
       type: apiKey

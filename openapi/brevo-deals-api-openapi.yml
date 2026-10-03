@@ -527,58 +527,19 @@ paths:
                   description: "The mapping options in JSON format. Here is an example of the JSON structure: ```json {\n  \"link_entities\": true, // Determines whether to link related entities during the import process\n  \"unlink_entities\": false, // Determines whether to unlink related entities during the import process\n  \"update_existing_records\": true, // Determines whether to update based on deal ID or treat every row as create\n  \"unset_empty_attributes\": false // Determines whether to unset a specific attribute during update if the values input is blank\n} ```\n"
 components:
   schemas:
-    CrmDealsIdDeleteResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: CrmDealsIdDeleteResponsesContentApplicationJsonSchemaCode
-    ImportDealsCreationAndUpdationRequestBadRequestError:
+    CrmAttributesDealsGetResponsesContentApplicationJsonSchemaItemsAttributeOptionsItems:
       type: object
       properties:
-        message:
+        key:
           type: string
-      title: ImportDealsCreationAndUpdationRequestBadRequestError
-    GetAllDealsRequestBadRequestError:
+        value:
+          type: string
+      title: CrmAttributesDealsGetResponsesContentApplicationJsonSchemaItemsAttributeOptionsItems
+    GetPipelineStagesRequestBadRequestError:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/CrmDealsGetResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/CrmPipelineDetailsGetResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
@@ -586,83 +547,7 @@ components:
       required:
       - code
       - message
-      title: GetAllDealsRequestBadRequestError
-    CrmDealsGetParametersSort:
-      type: string
-      enum:
-      - asc
-      - desc
-      title: CrmDealsGetParametersSort
-    PipelineStagesItems:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Stage id
-        name:
-          type: string
-          description: Stage name
-      description: Stage details
-      title: PipelineStagesItems
-    CrmDealsImportPostRequestBodyContentMultipartFormDataSchemaMapping:
-      type: object
-      properties: {}
-      description: "The mapping options in JSON format. Here is an example of the JSON structure: ```json {\n  \"link_entities\": true, // Determines whether to link related entities during the import process\n  \"unlink_entities\": false, // Determines whether to unlink related entities during the import process\n  \"update_existing_records\": true, // Determines whether to update based on deal ID or treat every row as create\n  \"unset_empty_attributes\": false // Determines whether to unset a specific attribute during update if the values input is blank\n} ```\n"
-      title: CrmDealsImportPostRequestBodyContentMultipartFormDataSchemaMapping
-    CrmDealsIdPatchResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: CrmDealsIdPatchResponsesContentApplicationJsonSchemaCode
-    GetDealAttributesRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/CrmAttributesDealsGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetDealAttributesRequestBadRequestError
+      title: GetPipelineStagesRequestBadRequestError
     Pipeline:
       type: object
       properties:
@@ -679,126 +564,13 @@ components:
           description: List of pipeline stages
       description: Pipeline details with stages
       title: Pipeline
-    GetPipelineStagesRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/CrmPipelineDetailsGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetPipelineStagesRequestBadRequestError
-    errorModel:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - message
-      title: errorModel
-    CrmAttributesDealsGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        internalName:
-          type: string
-          description: Internal name of the attribute
-        attributeTypeName:
-          type: string
-          description: Type of the attribute
-        label:
-          type: string
-          description: Display label of the attribute
-        attributeOptions:
-          type: array
-          items:
-            $ref: '#/components/schemas/CrmAttributesDealsGetResponsesContentApplicationJsonSchemaItemsAttributeOptionsItems'
-          description: Options for single-select or multi-choice attributes
-        isRequired:
-          type: boolean
-          description: Whether this attribute is required
-        isValueReadonly:
-          type: boolean
-          description: Whether this attribute value is read-only
-      description: Deal attribute details
-      title: CrmAttributesDealsGetResponsesContentApplicationJsonSchemaItems
-    CrmAttributesDealsGetResponsesContentApplicationJsonSchemaItemsAttributeOptionsItems:
-      type: object
-      properties:
-        key:
-          type: string
-        value:
-          type: string
-      title: CrmAttributesDealsGetResponsesContentApplicationJsonSchemaItemsAttributeOptionsItems
-    Deals_createADeal_Response_201:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique deal id
-      required:
-      - id
-      description: Created deal id
-      title: Deals_createADeal_Response_201
-    Pipelines:
-      type: array
-      items:
-        $ref: '#/components/schemas/Pipeline'
-      description: List of pipeline
-      title: Pipelines
-    DealAttributes:
+    CrmDealsIdPatchRequestBodyContentApplicationJsonSchemaAttributes:
       type: object
       properties: {}
-      description: Deal attributes with values
-      title: DealAttributes
-    CrmDealsPostRequestBodyContentApplicationJsonSchemaAttributes:
-      type: object
-      properties: {}
-      description: 'Attributes for deal creation To assign owner of a Deal you can send attributes.deal_owner and utilize the account email or ID. If you want to create a deal on a specific pipeline and stage you can use the following attributes `pipeline` and `deal_stage`. Pipeline and deal_stage are ids you can fetch using this endpoint `/crm/pipeline/details/{pipelineID}`
+      description: 'Attributes for deal update To assign owner of a Deal you can send attributes.deal_owner and utilize the account email or ID. If you wish to update the pipeline of a deal you need to provide the `pipeline` and the `deal_stage` Pipeline and deal_stage are ids you can fetch using this endpoint `/crm/pipeline/details/{pipelineID}`
 
         '
-      title: CrmDealsPostRequestBodyContentApplicationJsonSchemaAttributes
-    Deal:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique deal id
-        attributes:
-          $ref: '#/components/schemas/DealAttributes'
-          description: Deal attributes with values
-        linkedContactsIds:
-          type: array
-          items:
-            type: integer
-          description: Contact ids for contacts linked to this deal
-        linkedCompaniesIds:
-          type: array
-          items:
-            type: string
-          description: Companies ids for companies linked to this deal
-      description: Deal Details
-      title: Deal
-    UpdateADealRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/CrmDealsIdPatchResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: UpdateADealRequestBadRequestError
+      title: CrmDealsIdPatchRequestBodyContentApplicationJsonSchemaAttributes
     CrmDealsGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -840,6 +612,71 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: CrmDealsGetResponsesContentApplicationJsonSchemaCode
+    CrmDealsIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CrmDealsIdPatchResponsesContentApplicationJsonSchemaCode
+    PipelineStagesItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Stage id
+        name:
+          type: string
+          description: Stage name
+      description: Stage details
+      title: PipelineStagesItems
+    DeleteADealRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CrmDealsIdDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteADealRequestBadRequestError
     Deals_importDealsCreationAndUpdation_Response_200:
       type: object
       properties:
@@ -847,6 +684,38 @@ components:
           type: integer
           description: The ID of the import process
       title: Deals_importDealsCreationAndUpdation_Response_200
+    CrmDealsImportPostRequestBodyContentMultipartFormDataSchemaMapping:
+      type: object
+      properties: {}
+      description: "The mapping options in JSON format. Here is an example of the JSON structure: ```json {\n  \"link_entities\": true, // Determines whether to link related entities during the import process\n  \"unlink_entities\": false, // Determines whether to unlink related entities during the import process\n  \"update_existing_records\": true, // Determines whether to update based on deal ID or treat every row as create\n  \"unset_empty_attributes\": false // Determines whether to unset a specific attribute during update if the values input is blank\n} ```\n"
+      title: CrmDealsImportPostRequestBodyContentMultipartFormDataSchemaMapping
+    Deal:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique deal id
+        attributes:
+          $ref: '#/components/schemas/DealAttributes'
+          description: Deal attributes with values
+        linkedContactsIds:
+          type: array
+          items:
+            type: integer
+          description: Contact ids for contacts linked to this deal
+        linkedCompaniesIds:
+          type: array
+          items:
+            type: string
+          description: Companies ids for companies linked to this deal
+      description: Deal Details
+      title: Deal
+    Pipelines:
+      type: array
+      items:
+        $ref: '#/components/schemas/Pipeline'
+      description: List of pipeline
+      title: Pipelines
     CrmAttributesDealsGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -888,28 +757,11 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: CrmAttributesDealsGetResponsesContentApplicationJsonSchemaCode
-    CrmDealsIdPatchRequestBodyContentApplicationJsonSchemaAttributes:
-      type: object
-      properties: {}
-      description: 'Attributes for deal update To assign owner of a Deal you can send attributes.deal_owner and utilize the account email or ID. If you wish to update the pipeline of a deal you need to provide the `pipeline` and the `deal_stage` Pipeline and deal_stage are ids you can fetch using this endpoint `/crm/pipeline/details/{pipelineID}`
-
-        '
-      title: CrmDealsIdPatchRequestBodyContentApplicationJsonSchemaAttributes
-    Deals_getAllDeals_Response_200:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Deal'
-          description: List of deals
-      description: List of Deals
-      title: Deals_getAllDeals_Response_200
-    DeleteADealRequestBadRequestError:
+    UpdateADealRequestBadRequestError:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/CrmDealsIdDeleteResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/CrmDealsIdPatchResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
@@ -917,7 +769,37 @@ components:
       required:
       - code
       - message
-      title: DeleteADealRequestBadRequestError
+      title: UpdateADealRequestBadRequestError
+    DealAttributes:
+      type: object
+      properties: {}
+      description: Deal attributes with values
+      title: DealAttributes
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
+    GetAllDealsRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CrmDealsGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetAllDealsRequestBadRequestError
     CrmPipelineDetailsGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -959,6 +841,124 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: CrmPipelineDetailsGetResponsesContentApplicationJsonSchemaCode
+    ImportDealsCreationAndUpdationRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+      title: ImportDealsCreationAndUpdationRequestBadRequestError
+    GetDealAttributesRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CrmAttributesDealsGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetDealAttributesRequestBadRequestError
+    CrmDealsIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CrmDealsIdDeleteResponsesContentApplicationJsonSchemaCode
+    CrmDealsGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      title: CrmDealsGetParametersSort
+    CrmDealsPostRequestBodyContentApplicationJsonSchemaAttributes:
+      type: object
+      properties: {}
+      description: 'Attributes for deal creation To assign owner of a Deal you can send attributes.deal_owner and utilize the account email or ID. If you want to create a deal on a specific pipeline and stage you can use the following attributes `pipeline` and `deal_stage`. Pipeline and deal_stage are ids you can fetch using this endpoint `/crm/pipeline/details/{pipelineID}`
+
+        '
+      title: CrmDealsPostRequestBodyContentApplicationJsonSchemaAttributes
+    Deals_createADeal_Response_201:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique deal id
+      required:
+      - id
+      description: Created deal id
+      title: Deals_createADeal_Response_201
+    CrmAttributesDealsGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        internalName:
+          type: string
+          description: Internal name of the attribute
+        attributeTypeName:
+          type: string
+          description: Type of the attribute
+        label:
+          type: string
+          description: Display label of the attribute
+        attributeOptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/CrmAttributesDealsGetResponsesContentApplicationJsonSchemaItemsAttributeOptionsItems'
+          description: Options for single-select or multi-choice attributes
+        isRequired:
+          type: boolean
+          description: Whether this attribute is required
+        isValueReadonly:
+          type: boolean
+          description: Whether this attribute value is read-only
+      description: Deal attribute details
+      title: CrmAttributesDealsGetResponsesContentApplicationJsonSchemaItems
+    Deals_getAllDeals_Response_200:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Deal'
+          description: List of deals
+      description: List of Deals
+      title: Deals_getAllDeals_Response_200
   securitySchemes:
     api-key:
       type: apiKey

@@ -59,6 +59,12 @@ components:
         message:
           type: string
           description: Human-readable description of the error.
+    SendWhatsAppResponse:
+      type: object
+      properties:
+        messageId:
+          type: string
+          description: Unique identifier assigned to the sent WhatsApp message.
     SendWhatsAppMessage:
       type: object
       required:
@@ -79,12 +85,6 @@ components:
           description: Dynamic parameter values to substitute into the template.
           items:
             type: string
-    SendWhatsAppResponse:
-      type: object
-      properties:
-        messageId:
-          type: string
-          description: Unique identifier assigned to the sent WhatsApp message.
   securitySchemes:
     apiKeyAuth:
       type: apiKey

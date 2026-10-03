@@ -132,14 +132,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   parameters:
-    limitParam:
-      name: limit
-      in: query
-      description: Maximum number of results to return per request.
-      schema:
-        type: integer
-        format: int64
-        default: 50
     offsetParam:
       name: offset
       in: query
@@ -148,55 +140,15 @@ components:
         type: integer
         format: int64
         default: 0
+    limitParam:
+      name: limit
+      in: query
+      description: Maximum number of results to return per request.
+      schema:
+        type: integer
+        format: int64
+        default: 50
   schemas:
-    EmailEventReport:
-      type: object
-      properties:
-        events:
-          type: array
-          description: List of transactional email activity events.
-          items:
-            type: object
-            properties:
-              email:
-                type: string
-                format: email
-                description: Recipient email address associated with the event.
-              date:
-                type: string
-                format: date-time
-                description: UTC date-time when the event occurred.
-              messageId:
-                type: string
-                description: Unique identifier of the email message.
-              event:
-                type: string
-                description: Type of email event that occurred.
-                enum:
-                - sent
-                - delivered
-                - opened
-                - clicked
-                - hardBounce
-                - softBounce
-                - blocked
-                - spam
-                - invalid
-                - deferred
-                - unsubscribed
-              reason:
-                type: string
-                description: Reason for the event if applicable, such as bounce details.
-              tag:
-                type: string
-                description: Tag assigned to the email for categorization.
-              subject:
-                type: string
-                description: Subject line of the email message.
-              templateId:
-                type: integer
-                format: int64
-                description: Template ID used for the email if applicable.
     AggregatedEmailReport:
       type: object
       properties:
@@ -251,6 +203,54 @@ components:
           type: integer
           format: int64
           description: Total number of unsubscribes.
+    EmailEventReport:
+      type: object
+      properties:
+        events:
+          type: array
+          description: List of transactional email activity events.
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+                format: email
+                description: Recipient email address associated with the event.
+              date:
+                type: string
+                format: date-time
+                description: UTC date-time when the event occurred.
+              messageId:
+                type: string
+                description: Unique identifier of the email message.
+              event:
+                type: string
+                description: Type of email event that occurred.
+                enum:
+                - sent
+                - delivered
+                - opened
+                - clicked
+                - hardBounce
+                - softBounce
+                - blocked
+                - spam
+                - invalid
+                - deferred
+                - unsubscribed
+              reason:
+                type: string
+                description: Reason for the event if applicable, such as bounce details.
+              tag:
+                type: string
+                description: Tag assigned to the email for categorization.
+              subject:
+                type: string
+                description: Subject line of the email message.
+              templateId:
+                type: integer
+                format: int64
+                description: Template ID used for the email if applicable.
     ErrorResponse:
       type: object
       properties:

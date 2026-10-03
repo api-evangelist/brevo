@@ -474,287 +474,6 @@ paths:
               $ref: '#/components/schemas/inviteuser'
 components:
   schemas:
-    OrganizationUserInvitationActionEmailPutParametersAction:
-      type: string
-      enum:
-      - resend
-      - cancel
-      title: OrganizationUserInvitationActionEmailPutParametersAction
-    OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItems:
-      type: object
-      properties:
-        email:
-          type: string
-          description: Email address of the user.
-        feature_access:
-          $ref: '#/components/schemas/OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItemsFeatureAccess'
-          description: Feature accessiblity given to the user.
-        is_owner:
-          type: string
-          description: Flag for indicating is user owner of the organization.
-        status:
-          type: string
-          description: Status of the invited user.
-      required:
-      - email
-      - feature_access
-      - is_owner
-      - status
-      title: OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItems
-    User_getInvitedUsersList_Response_200:
-      type: object
-      properties:
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItems'
-          description: Get invited users list
-      title: User_getInvitedUsersList_Response_200
-    User_inviteuser_Response_200:
-      type: object
-      properties:
-        invoice_id:
-          type: string
-          description: Invoice id
-        status:
-          type: string
-          description: Status of the API operation.
-      required:
-      - status
-      title: User_inviteuser_Response_200
-    InviteuserPrivilegesItemsPermissionsItems:
-      type: string
-      enum:
-      - create_edit_delete
-      - send_schedule_suspend
-      - view
-      - import
-      - export
-      - list_and_attributes
-      - forms
-      - activate_deactivate
-      - activate_deactivate_pause
-      - settings
-      - schedule_pause
-      - all
-      - logs
-      - access
-      - assign
-      - configure
-      - create_edit_deals
-      - delete_deals
-      - manage_others_deals_tasks
-      - manage_owned_companies
-      - manage_others_companies
-      - reports
-      - senders_management
-      - domains_management
-      - dedicated_ips_management
-      - send
-      - smtp
-      - api_keys
-      - authorized_ips
-      - none
-      title: InviteuserPrivilegesItemsPermissionsItems
-    OrganizationUserInvitationActionEmailPutResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: OrganizationUserInvitationActionEmailPutResponsesContentApplicationJsonSchemaCode
-    User_EditUserPermission_Response_200:
-      type: object
-      properties:
-        credit_notes:
-          type: array
-          items:
-            type: string
-          description: Credit note
-        invoice_id:
-          type: string
-          description: Invoice id
-        status:
-          type: string
-          description: Status of the API operation.
-      required:
-      - status
-      title: User_EditUserPermission_Response_200
-    User_putresendcancelinvitation_Response_200:
-      type: object
-      properties:
-        credit_notes:
-          type: array
-          items:
-            type: string
-          description: Credit note
-        status:
-          type: string
-          description: Status of the API operation.
-      required:
-      - status
-      title: User_putresendcancelinvitation_Response_200
-    PutresendcancelinvitationRequestForbiddenError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/OrganizationUserInvitationActionEmailPutResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: PutresendcancelinvitationRequestForbiddenError
-    InviteuserRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/OrganizationUserInvitationSendPostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: InviteuserRequestBadRequestError
-    GetInvitedUsersListRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetInvitedUsersListRequestBadRequestError
-    PutRevokeUserPermissionRequestForbiddenError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/OrganizationUserInvitationRevokeEmailPutResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: PutRevokeUserPermissionRequestForbiddenError
-    User_putRevokeUserPermission_Response_200:
-      type: object
-      properties:
-        credit_notes:
-          type: array
-          items:
-            type: string
-          description: Credit note
-        status:
-          type: string
-          description: Status of the API operation.
-      required:
-      - status
-      title: User_putRevokeUserPermission_Response_200
-    InviteuserPrivilegesItemsFeature:
-      type: string
-      enum:
-      - email_campaigns
-      - sms_campaigns
-      - contacts
-      - templates
-      - workflows
-      - landing_pages
-      - transactional_emails
-      - smtp_api
-      - user_management
-      - sales_platform
-      - phone
-      - conversations
-      - senders_domains_dedicated_ips
-      - push_notifications
-      - companies
-      description: Feature name
-      title: InviteuserPrivilegesItemsFeature
-    OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaCode
     OrganizationUserUpdatePermissionsPostResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -796,6 +515,87 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: OrganizationUserUpdatePermissionsPostResponsesContentApplicationJsonSchemaCode
+    OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaCode
+    OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItems:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email address of the user.
+        feature_access:
+          $ref: '#/components/schemas/OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItemsFeatureAccess'
+          description: Feature accessiblity given to the user.
+        is_owner:
+          type: string
+          description: Flag for indicating is user owner of the organization.
+        status:
+          type: string
+          description: Status of the invited user.
+      required:
+      - email
+      - feature_access
+      - is_owner
+      - status
+      title: OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItems
+    inviteuser:
+      type: object
+      properties:
+        all_features_access:
+          type: boolean
+          description: All access to the features
+        email:
+          type: string
+          format: email
+          description: Email address for the organization
+        privileges:
+          type: array
+          items:
+            $ref: '#/components/schemas/InviteuserPrivilegesItems'
+      required:
+      - all_features_access
+      - email
+      - privileges
+      title: inviteuser
     User_getUserPermission_Response_200:
       type: object
       properties:
@@ -816,47 +616,6 @@ components:
       - status
       description: Check user permission
       title: User_getUserPermission_Response_200
-    OrganizationUserEmailPermissionsGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: OrganizationUserEmailPermissionsGetResponsesContentApplicationJsonSchemaCode
     OrganizationUserEmailPermissionsGetResponsesContentApplicationJsonSchemaPrivilegesItems:
       type: object
       properties:
@@ -870,47 +629,12 @@ components:
       - feature
       - permissions
       title: OrganizationUserEmailPermissionsGetResponsesContentApplicationJsonSchemaPrivilegesItems
-    OrganizationUserInvitationRevokeEmailPutResponsesContentApplicationJsonSchemaCode:
+    OrganizationUserInvitationActionEmailPutParametersAction:
       type: string
       enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: OrganizationUserInvitationRevokeEmailPutResponsesContentApplicationJsonSchemaCode
+      - resend
+      - cancel
+      title: OrganizationUserInvitationActionEmailPutParametersAction
     InviteuserPrivilegesItems:
       type: object
       properties:
@@ -924,30 +648,11 @@ components:
           description: Permissions for a given feature
       description: Privileges given to the user
       title: InviteuserPrivilegesItems
-    inviteuser:
-      type: object
-      properties:
-        all_features_access:
-          type: boolean
-          description: All access to the features
-        email:
-          type: string
-          format: email
-          description: Email address for the organization
-        privileges:
-          type: array
-          items:
-            $ref: '#/components/schemas/InviteuserPrivilegesItems'
-      required:
-      - all_features_access
-      - email
-      - privileges
-      title: inviteuser
-    EditUserPermissionRequestBadRequestError:
+    PutRevokeUserPermissionRequestForbiddenError:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/OrganizationUserUpdatePermissionsPostResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/OrganizationUserInvitationRevokeEmailPutResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
@@ -955,21 +660,7 @@ components:
       required:
       - code
       - message
-      title: EditUserPermissionRequestBadRequestError
-    OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItemsFeatureAccess:
-      type: object
-      properties:
-        conversations:
-          type: string
-          description: Conversations features accessiblity.
-        crm:
-          type: string
-          description: CRM features accessiblity.
-        marketing:
-          type: string
-          description: Marketing features accessiblity.
-      description: Feature accessiblity given to the user.
-      title: OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItemsFeatureAccess
+      title: PutRevokeUserPermissionRequestForbiddenError
     OrganizationUserInvitationSendPostResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -1011,6 +702,315 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: OrganizationUserInvitationSendPostResponsesContentApplicationJsonSchemaCode
+    User_EditUserPermission_Response_200:
+      type: object
+      properties:
+        credit_notes:
+          type: array
+          items:
+            type: string
+          description: Credit note
+        invoice_id:
+          type: string
+          description: Invoice id
+        status:
+          type: string
+          description: Status of the API operation.
+      required:
+      - status
+      title: User_EditUserPermission_Response_200
+    User_inviteuser_Response_200:
+      type: object
+      properties:
+        invoice_id:
+          type: string
+          description: Invoice id
+        status:
+          type: string
+          description: Status of the API operation.
+      required:
+      - status
+      title: User_inviteuser_Response_200
+    PutresendcancelinvitationRequestForbiddenError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/OrganizationUserInvitationActionEmailPutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: PutresendcancelinvitationRequestForbiddenError
+    OrganizationUserInvitationActionEmailPutResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: OrganizationUserInvitationActionEmailPutResponsesContentApplicationJsonSchemaCode
+    InviteuserRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/OrganizationUserInvitationSendPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: InviteuserRequestBadRequestError
+    GetInvitedUsersListRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetInvitedUsersListRequestBadRequestError
+    OrganizationUserInvitationRevokeEmailPutResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: OrganizationUserInvitationRevokeEmailPutResponsesContentApplicationJsonSchemaCode
+    User_getInvitedUsersList_Response_200:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItems'
+          description: Get invited users list
+      title: User_getInvitedUsersList_Response_200
+    OrganizationUserEmailPermissionsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: OrganizationUserEmailPermissionsGetResponsesContentApplicationJsonSchemaCode
+    OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItemsFeatureAccess:
+      type: object
+      properties:
+        conversations:
+          type: string
+          description: Conversations features accessiblity.
+        crm:
+          type: string
+          description: CRM features accessiblity.
+        marketing:
+          type: string
+          description: Marketing features accessiblity.
+      description: Feature accessiblity given to the user.
+      title: OrganizationInvitedUsersGetResponsesContentApplicationJsonSchemaUsersItemsFeatureAccess
+    InviteuserPrivilegesItemsFeature:
+      type: string
+      enum:
+      - email_campaigns
+      - sms_campaigns
+      - contacts
+      - templates
+      - workflows
+      - landing_pages
+      - transactional_emails
+      - smtp_api
+      - user_management
+      - sales_platform
+      - phone
+      - conversations
+      - senders_domains_dedicated_ips
+      - push_notifications
+      - companies
+      description: Feature name
+      title: InviteuserPrivilegesItemsFeature
+    EditUserPermissionRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/OrganizationUserUpdatePermissionsPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: EditUserPermissionRequestBadRequestError
+    User_putresendcancelinvitation_Response_200:
+      type: object
+      properties:
+        credit_notes:
+          type: array
+          items:
+            type: string
+          description: Credit note
+        status:
+          type: string
+          description: Status of the API operation.
+      required:
+      - status
+      title: User_putresendcancelinvitation_Response_200
+    InviteuserPrivilegesItemsPermissionsItems:
+      type: string
+      enum:
+      - create_edit_delete
+      - send_schedule_suspend
+      - view
+      - import
+      - export
+      - list_and_attributes
+      - forms
+      - activate_deactivate
+      - activate_deactivate_pause
+      - settings
+      - schedule_pause
+      - all
+      - logs
+      - access
+      - assign
+      - configure
+      - create_edit_deals
+      - delete_deals
+      - manage_others_deals_tasks
+      - manage_owned_companies
+      - manage_others_companies
+      - reports
+      - senders_management
+      - domains_management
+      - dedicated_ips_management
+      - send
+      - smtp
+      - api_keys
+      - authorized_ips
+      - none
+      title: InviteuserPrivilegesItemsPermissionsItems
+    User_putRevokeUserPermission_Response_200:
+      type: object
+      properties:
+        credit_notes:
+          type: array
+          items:
+            type: string
+          description: Credit note
+        status:
+          type: string
+          description: Status of the API operation.
+      required:
+      - status
+      title: User_putRevokeUserPermission_Response_200
     GetUserPermissionRequestBadRequestError:
       type: object
       properties:

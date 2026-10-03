@@ -180,142 +180,6 @@ paths:
                 $ref: '#/components/schemas/GetAccountActivityRequestBadRequestError'
 components:
   schemas:
-    AccountGetResponsesContentApplicationJsonSchemaMarketingAutomation:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: 'Status of Marketing Automation Plateform activation
-
-            for your account (true=enabled, false=disabled)'
-        key:
-          type: string
-          description: Marketing Automation Tracker ID
-      required:
-      - enabled
-      title: AccountGetResponsesContentApplicationJsonSchemaMarketingAutomation
-    AccountGetResponsesContentApplicationJsonSchemaPlanItemsType:
-      type: string
-      enum:
-      - payAsYouGo
-      - free
-      - subscription
-      - sms
-      description: Displays the plan type of the user
-      title: AccountGetResponsesContentApplicationJsonSchemaPlanItemsType
-    GetAccountRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetAccountRequestBadRequestError
-    AccountGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: AccountGetResponsesContentApplicationJsonSchemaCode
-    AccountGetResponsesContentApplicationJsonSchemaRelay:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaRelayData'
-          description: Data regarding the transactional email account
-        enabled:
-          type: boolean
-          description: 'Status of your transactional email Account
-
-            (true=Enabled, false=Disabled)'
-      required:
-      - data
-      - enabled
-      description: Information about your transactional email account
-      title: AccountGetResponsesContentApplicationJsonSchemaRelay
-    AccountGetResponsesContentApplicationJsonSchemaAddress:
-      type: object
-      properties:
-        city:
-          type: string
-          description: City information
-        country:
-          type: string
-          description: Country information
-        street:
-          type: string
-          description: Street information
-        zipCode:
-          type: string
-          description: Zip Code information
-      required:
-      - city
-      - country
-      - street
-      - zipCode
-      description: Address informations
-      title: AccountGetResponsesContentApplicationJsonSchemaAddress
-    Account_getAccountActivity_Response_200:
-      type: object
-      properties:
-        logs:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationActivitiesGetResponsesContentApplicationJsonSchemaLogsItems'
-          description: Get user activity logs
-      title: Account_getAccountActivity_Response_200
-    AccountGetResponsesContentApplicationJsonSchemaPlanItemsCreditsType:
-      type: string
-      enum:
-      - sendLimit
-      description: 'This is the type of the credit, "Send Limit" is one
-
-        of the possible types of credit of a user. "Send
-
-        Limit" implies the total number of emails you can
-
-        send to the subscribers in your account.'
-      title: AccountGetResponsesContentApplicationJsonSchemaPlanItemsCreditsType
     AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsUsers:
       type: object
       properties:
@@ -330,100 +194,15 @@ components:
       - usedSeats
       description: User seat information for the plan
       title: AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsUsers
-    AccountGetResponsesContentApplicationJsonSchemaPlanItems:
+    Account_getAccountActivity_Response_200:
       type: object
       properties:
-        credits:
-          type: string
-          title: float
-          description: Remaining credits of the user
-        creditsType:
-          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaPlanItemsCreditsType'
-          description: 'This is the type of the credit, "Send Limit" is one
-
-            of the possible types of credit of a user. "Send
-
-            Limit" implies the total number of emails you can
-
-            send to the subscribers in your account.'
-        endDate:
-          type: string
-          description: 'Date of the period from which the plan will end
-
-            (Unix timestamp format)'
-        startDate:
-          type: string
-          description: 'Date of the period from which the plan will start
-
-            (Unix timestamp format)'
-        type:
-          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaPlanItemsType'
-          description: Displays the plan type of the user
-      required:
-      - credits
-      - creditsType
-      - type
-      title: AccountGetResponsesContentApplicationJsonSchemaPlanItems
-    AccountGetResponsesContentApplicationJsonSchemaRelayData:
-      type: object
-      properties:
-        port:
-          type: integer
-          description: Port used for SMTP Relay
-        relay:
-          type: string
-          description: URL of the SMTP Relay
-        userName:
-          type: string
-          format: email
-          description: Email to use as login on transactional platform
-      required:
-      - port
-      - relay
-      - userName
-      description: Data regarding the transactional email account
-      title: AccountGetResponsesContentApplicationJsonSchemaRelayData
-    OrganizationActivitiesGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: OrganizationActivitiesGetResponsesContentApplicationJsonSchemaCode
+        logs:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationActivitiesGetResponsesContentApplicationJsonSchemaLogsItems'
+          description: Get user activity logs
+      title: Account_getAccountActivity_Response_200
     AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItems:
       type: object
       properties:
@@ -459,34 +238,18 @@ components:
       - name
       - status
       title: AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItems
-    AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsStatus:
+    AccountGetResponsesContentApplicationJsonSchemaPlanItemsCreditsType:
       type: string
       enum:
-      - active
-      - inactive
-      description: Current status of the plan
-      title: AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsStatus
-    GetAccountActivityRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/OrganizationActivitiesGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetAccountActivityRequestBadRequestError
-    AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsPlanCategory:
-      type: string
-      enum:
-      - Marketing
-      - Chat
-      - CRM
-      description: Category of the plan
-      title: AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsPlanCategory
+      - sendLimit
+      description: 'This is the type of the credit, "Send Limit" is one
+
+        of the possible types of credit of a user. "Send
+
+        Limit" implies the total number of emails you can
+
+        send to the subscribers in your account.'
+      title: AccountGetResponsesContentApplicationJsonSchemaPlanItemsCreditsType
     Account_getAccount_Response_200:
       type: object
       properties:
@@ -541,6 +304,243 @@ components:
       - plan
       - relay
       title: Account_getAccount_Response_200
+    AccountGetResponsesContentApplicationJsonSchemaRelay:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaRelayData'
+          description: Data regarding the transactional email account
+        enabled:
+          type: boolean
+          description: 'Status of your transactional email Account
+
+            (true=Enabled, false=Disabled)'
+      required:
+      - data
+      - enabled
+      description: Information about your transactional email account
+      title: AccountGetResponsesContentApplicationJsonSchemaRelay
+    AccountGetResponsesContentApplicationJsonSchemaAddress:
+      type: object
+      properties:
+        city:
+          type: string
+          description: City information
+        country:
+          type: string
+          description: Country information
+        street:
+          type: string
+          description: Street information
+        zipCode:
+          type: string
+          description: Zip Code information
+      required:
+      - city
+      - country
+      - street
+      - zipCode
+      description: Address informations
+      title: AccountGetResponsesContentApplicationJsonSchemaAddress
+    AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsStatus:
+      type: string
+      enum:
+      - active
+      - inactive
+      description: Current status of the plan
+      title: AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsStatus
+    OrganizationActivitiesGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: OrganizationActivitiesGetResponsesContentApplicationJsonSchemaCode
+    GetAccountActivityRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/OrganizationActivitiesGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetAccountActivityRequestBadRequestError
+    AccountGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: AccountGetResponsesContentApplicationJsonSchemaCode
+    AccountGetResponsesContentApplicationJsonSchemaPlanItems:
+      type: object
+      properties:
+        credits:
+          type: string
+          title: float
+          description: Remaining credits of the user
+        creditsType:
+          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaPlanItemsCreditsType'
+          description: 'This is the type of the credit, "Send Limit" is one
+
+            of the possible types of credit of a user. "Send
+
+            Limit" implies the total number of emails you can
+
+            send to the subscribers in your account.'
+        endDate:
+          type: string
+          description: 'Date of the period from which the plan will end
+
+            (Unix timestamp format)'
+        startDate:
+          type: string
+          description: 'Date of the period from which the plan will start
+
+            (Unix timestamp format)'
+        type:
+          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaPlanItemsType'
+          description: Displays the plan type of the user
+      required:
+      - credits
+      - creditsType
+      - type
+      title: AccountGetResponsesContentApplicationJsonSchemaPlanItems
+    AccountGetResponsesContentApplicationJsonSchemaRelayData:
+      type: object
+      properties:
+        port:
+          type: integer
+          description: Port used for SMTP Relay
+        relay:
+          type: string
+          description: URL of the SMTP Relay
+        userName:
+          type: string
+          format: email
+          description: Email to use as login on transactional platform
+      required:
+      - port
+      - relay
+      - userName
+      description: Data regarding the transactional email account
+      title: AccountGetResponsesContentApplicationJsonSchemaRelayData
+    AccountGetResponsesContentApplicationJsonSchemaMarketingAutomation:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: 'Status of Marketing Automation Plateform activation
+
+            for your account (true=enabled, false=disabled)'
+        key:
+          type: string
+          description: Marketing Automation Tracker ID
+      required:
+      - enabled
+      title: AccountGetResponsesContentApplicationJsonSchemaMarketingAutomation
+    GetAccountRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/AccountGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetAccountRequestBadRequestError
+    AccountGetResponsesContentApplicationJsonSchemaPlanItemsType:
+      type: string
+      enum:
+      - payAsYouGo
+      - free
+      - subscription
+      - sms
+      description: Displays the plan type of the user
+      title: AccountGetResponsesContentApplicationJsonSchemaPlanItemsType
+    AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsPlanCategory:
+      type: string
+      enum:
+      - Marketing
+      - Chat
+      - CRM
+      description: Category of the plan
+      title: AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsPlanCategory
     OrganizationActivitiesGetResponsesContentApplicationJsonSchemaLogsItems:
       type: object
       properties:

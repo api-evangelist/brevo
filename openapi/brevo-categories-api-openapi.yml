@@ -116,6 +116,18 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    CategoryList:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: Total number of categories.
+        categories:
+          type: array
+          description: List of category records.
+          items:
+            $ref: '#/components/schemas/Category'
     Category:
       type: object
       properties:
@@ -137,27 +149,6 @@ components:
           type: string
           format: date-time
           description: UTC date-time when the category was last modified.
-    CategoryList:
-      type: object
-      properties:
-        count:
-          type: integer
-          format: int64
-          description: Total number of categories.
-        categories:
-          type: array
-          description: List of category records.
-          items:
-            $ref: '#/components/schemas/Category'
-    ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code identifying the type of error.
-        message:
-          type: string
-          description: Human-readable description of the error.
     CreateUpdateCategory:
       type: object
       required:
@@ -174,15 +165,16 @@ components:
           type: string
           format: uri
           description: URL of the category page.
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code identifying the type of error.
+        message:
+          type: string
+          description: Human-readable description of the error.
   parameters:
-    limitParam:
-      name: limit
-      in: query
-      description: Maximum number of results to return per request.
-      schema:
-        type: integer
-        format: int64
-        default: 50
     offsetParam:
       name: offset
       in: query
@@ -191,6 +183,14 @@ components:
         type: integer
         format: int64
         default: 0
+    limitParam:
+      name: limit
+      in: query
+      description: Maximum number of results to return per request.
+      schema:
+        type: integer
+        format: int64
+        default: 50
   securitySchemes:
     apiKeyAuth:
       type: apiKey
