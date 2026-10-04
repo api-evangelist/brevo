@@ -800,130 +800,13 @@ paths:
                 $ref: '#/components/schemas/errorModel'
 components:
   schemas:
-    TierAccessConditionsItems:
-      type: object
-      properties:
-        balanceDefinitionId:
-          type: string
-          format: uuid
-          description: Balance definition identifier
-        createdAt:
-          type: string
-          format: date-time
-        minimumValue:
-          type: integer
-          description: Minimum value required to access this tier
-        updatedAt:
-          type: string
-          format: date-time
-      title: TierAccessConditionsItems
-    LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeSchedule:
-      type: object
-      properties:
-        durationValue:
-          type: integer
-          description: Duration value for the schedule.
-        durationUnit:
-          $ref: '#/components/schemas/LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeScheduleDurationUnit'
-          description: Duration unit for the schedule.
-        durationModifier:
-          $ref: '#/components/schemas/LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeScheduleDurationModifier'
-          description: Modifier for the duration.
-        scheduledDate:
-          type: string
-          description: Scheduled date in DD/MM format.
-      description: Schedule configuration for tier downgrades. Required when downgradeStrategy is set to a schedule-based strategy.
-      title: LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeSchedule
-    LoyaltyTierProgramsPidTierGroupsGidPutRequestBodyContentApplicationJsonSchemaDowngradeStrategy:
+    LoyaltyTierProgramsPidTierGroupsGetParametersVersion:
       type: string
       enum:
-      - real_time
-      - membership_anniversary
-      - tier_anniversary
-      default: real_time
-      description: Select real_time to downgrade tier on real time balance updates. Select membership_anniversary to downgrade tier on subscription anniversary. Select tier_anniversary to downgrade tier on tier anniversary.
-      title: LoyaltyTierProgramsPidTierGroupsGidPutRequestBodyContentApplicationJsonSchemaDowngradeStrategy
-    Tier_getLoyaltyProgramTier_Response_200:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/tier'
-      title: Tier_getLoyaltyProgramTier_Response_200
-    TierGroupUpgradeScheduleDurationUnit:
-      type: string
-      enum:
-      - day
-      - week
-      - month
-      - year
-      description: Duration unit for the schedule.
-      title: TierGroupUpgradeScheduleDurationUnit
-    LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeScheduleDurationModifier:
-      type: string
-      enum:
-      - start_of_period
-      - end_of_period
-      description: Modifier for the duration.
-      title: LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeScheduleDurationModifier
-    LoyaltyTierProgramsPidTierGroupsGidPutRequestBodyContentApplicationJsonSchemaMeta:
-      type: object
-      properties:
-        isInternal:
-          type: boolean
-          description: Indicates whether the tier group is internal.
-      description: Additional metadata for the tier group.
-      title: LoyaltyTierProgramsPidTierGroupsGidPutRequestBodyContentApplicationJsonSchemaMeta
-    LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeStrategy:
-      type: string
-      enum:
-      - real_time
-      - membership_anniversary
-      - tier_anniversary
-      default: real_time
-      description: Select real_time to downgrade tier on real time balance updates. Select membership_anniversary to downgrade tier on subscription anniversary. Select tier_anniversary to downgrade tier on tier anniversary.
-      title: LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeStrategy
-    LoyaltyTierProgramsPidTierGroupsGidTiersPostRequestBodyContentApplicationJsonSchemaTierRewardsItems:
-      type: object
-      properties:
-        rewardId:
-          type: string
-          format: uuid
-          description: Reward unique identifier
-      title: LoyaltyTierProgramsPidTierGroupsGidTiersPostRequestBodyContentApplicationJsonSchemaTierRewardsItems
-    Tier_getListOfTierGroups_Response_200:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/tierGroup'
-      title: Tier_getListOfTierGroups_Response_200
-    LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeSchedule:
-      type: object
-      properties:
-        durationValue:
-          type: integer
-          description: Duration value for the schedule.
-        durationUnit:
-          $ref: '#/components/schemas/LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeScheduleDurationUnit'
-          description: Duration unit for the schedule.
-        durationModifier:
-          $ref: '#/components/schemas/LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeScheduleDurationModifier'
-          description: Modifier for the duration.
-        scheduledDate:
-          type: string
-          description: Scheduled date in DD/MM format.
-      description: Schedule configuration for tier upgrades. Required when upgradeStrategy is set to a schedule-based strategy.
-      title: LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeSchedule
-    TierGroupDowngradeScheduleDurationModifier:
-      type: string
-      enum:
-      - start_of_period
-      - end_of_period
-      description: Modifier for the duration.
-      title: TierGroupDowngradeScheduleDurationModifier
+      - active
+      - draft
+      default: draft
+      title: LoyaltyTierProgramsPidTierGroupsGetParametersVersion
     Tier_addSubscriptionToTier_Response_200:
       type: object
       properties:
@@ -954,106 +837,6 @@ components:
           type: string
           format: date-time
       title: Tier_addSubscriptionToTier_Response_200
-    LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeScheduleDurationModifier:
-      type: string
-      enum:
-      - start_of_period
-      - end_of_period
-      description: Modifier for the duration.
-      title: LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeScheduleDurationModifier
-    TierGroupDowngradeSchedule:
-      type: object
-      properties:
-        strategy:
-          type: string
-          description: Schedule strategy type.
-        durationValue:
-          type: integer
-          description: Duration value for the schedule.
-        durationUnit:
-          $ref: '#/components/schemas/TierGroupDowngradeScheduleDurationUnit'
-          description: Duration unit for the schedule.
-        durationModifier:
-          $ref: '#/components/schemas/TierGroupDowngradeScheduleDurationModifier'
-          description: Modifier for the duration.
-        scheduledDate:
-          type: string
-          description: Scheduled date in DD/MM format.
-      description: Schedule configuration for tier downgrades.
-      title: TierGroupDowngradeSchedule
-    TierGroupDowngradeStrategy:
-      type: string
-      enum:
-      - real_time
-      - membership_anniversary
-      - tier_anniversary
-      default: real_time
-      description: Select real_time to downgrade tier on real time balance updates. Select membership_anniversary to downgrade tier on subscription anniversary. Select tier_anniversary to downgrade tier on tier anniversary.
-      title: TierGroupDowngradeStrategy
-    LoyaltyTierProgramsPidTiersTidPutRequestBodyContentApplicationJsonSchemaTierRewardsItems:
-      type: object
-      properties:
-        rewardId:
-          type: string
-          format: uuid
-          description: Reward unique identifier
-      title: LoyaltyTierProgramsPidTiersTidPutRequestBodyContentApplicationJsonSchemaTierRewardsItems
-    LoyaltyTierProgramsPidTierGroupsGetParametersVersion:
-      type: string
-      enum:
-      - active
-      - draft
-      default: draft
-      title: LoyaltyTierProgramsPidTierGroupsGetParametersVersion
-    LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeStrategy:
-      type: string
-      enum:
-      - real_time
-      - membership_anniversary
-      - tier_anniversary
-      default: real_time
-      description: Select real_time to upgrade tier on real time balance updates. Select membership_anniversary to upgrade tier on subscription anniversary. Select tier_anniversary to upgrade tier on tier anniversary.
-      title: LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeStrategy
-    LoyaltyTierProgramsPidTierGroupsGidPutRequestBodyContentApplicationJsonSchemaUpgradeStrategy:
-      type: string
-      enum:
-      - real_time
-      - membership_anniversary
-      - tier_anniversary
-      default: real_time
-      description: Select real_time to upgrade tier on real time balance updates. Select membership_anniversary to upgrade tier on subscription anniversary. Select tier_anniversary to upgrade tier on tier anniversary.
-      title: LoyaltyTierProgramsPidTierGroupsGidPutRequestBodyContentApplicationJsonSchemaUpgradeStrategy
-    LoyaltyTierProgramsPidTierGroupsGidTiersPostRequestBodyContentApplicationJsonSchemaAccessConditionsItems:
-      type: object
-      properties:
-        balanceDefinitionId:
-          type: string
-          format: uuid
-          description: Balance definition identifier for accessing the tier
-        minimumValue:
-          type: integer
-          description: Minimum value required to access the tier
-      title: LoyaltyTierProgramsPidTierGroupsGidTiersPostRequestBodyContentApplicationJsonSchemaAccessConditionsItems
-    TierGroupUpgradeSchedule:
-      type: object
-      properties:
-        strategy:
-          type: string
-          description: Schedule strategy type.
-        durationValue:
-          type: integer
-          description: Duration value for the schedule.
-        durationUnit:
-          $ref: '#/components/schemas/TierGroupUpgradeScheduleDurationUnit'
-          description: Duration unit for the schedule.
-        durationModifier:
-          $ref: '#/components/schemas/TierGroupUpgradeScheduleDurationModifier'
-          description: Modifier for the duration.
-        scheduledDate:
-          type: string
-          description: Scheduled date in DD/MM format.
-      description: Schedule configuration for tier upgrades.
-      title: TierGroupUpgradeSchedule
     errorModel:
       type: object
       properties:
@@ -1066,39 +849,15 @@ components:
       required:
       - message
       title: errorModel
-    TierGroupUpgradeScheduleDurationModifier:
+    TierGroupUpgradeStrategy:
       type: string
       enum:
-      - start_of_period
-      - end_of_period
-      description: Modifier for the duration.
-      title: TierGroupUpgradeScheduleDurationModifier
-    LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaMeta:
-      type: object
-      properties:
-        isInternal:
-          type: boolean
-          description: Indicates whether the tier group is internal.
-      description: Additional metadata for the tier group.
-      title: LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaMeta
-    LoyaltyTierProgramsPidTiersTidPutRequestBodyContentApplicationJsonSchemaAccessConditionsItems:
-      type: object
-      properties:
-        balanceDefinitionId:
-          type: string
-          format: uuid
-          description: Balance definition identifier for accessing the tier
-        minimumValue:
-          type: integer
-          description: Minimum value required to access the tier
-      title: LoyaltyTierProgramsPidTiersTidPutRequestBodyContentApplicationJsonSchemaAccessConditionsItems
-    LoyaltyTierProgramsPidTiersGetParametersVersion:
-      type: string
-      enum:
-      - active
-      - draft
-      default: draft
-      title: LoyaltyTierProgramsPidTiersGetParametersVersion
+      - real_time
+      - membership_anniversary
+      - tier_anniversary
+      default: real_time
+      description: Select real_time to upgrade tier on real time balance updates. Select membership_anniversary to upgrade tier on subscription anniversary. Select tier_anniversary to upgrade tier on tier anniversary.
+      title: TierGroupUpgradeStrategy
     tierGroup:
       type: object
       properties:
@@ -1142,6 +901,151 @@ components:
           $ref: '#/components/schemas/TierGroupDowngradeSchedule'
           description: Schedule configuration for tier downgrades.
       title: tierGroup
+    TierGroupDowngradeStrategy:
+      type: string
+      enum:
+      - real_time
+      - membership_anniversary
+      - tier_anniversary
+      default: real_time
+      description: Select real_time to downgrade tier on real time balance updates. Select membership_anniversary to downgrade tier on subscription anniversary. Select tier_anniversary to downgrade tier on tier anniversary.
+      title: TierGroupDowngradeStrategy
+    LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeStrategy:
+      type: string
+      enum:
+      - real_time
+      - membership_anniversary
+      - tier_anniversary
+      default: real_time
+      description: Select real_time to downgrade tier on real time balance updates. Select membership_anniversary to downgrade tier on subscription anniversary. Select tier_anniversary to downgrade tier on tier anniversary.
+      title: LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeStrategy
+    Tier_getLoyaltyProgramTier_Response_200:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/tier'
+      title: Tier_getLoyaltyProgramTier_Response_200
+    LoyaltyTierProgramsPidTierGroupsGidTiersPostRequestBodyContentApplicationJsonSchemaTierRewardsItems:
+      type: object
+      properties:
+        rewardId:
+          type: string
+          format: uuid
+          description: Reward unique identifier
+      title: LoyaltyTierProgramsPidTierGroupsGidTiersPostRequestBodyContentApplicationJsonSchemaTierRewardsItems
+    LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeScheduleDurationUnit:
+      type: string
+      enum:
+      - day
+      - week
+      - month
+      - year
+      description: Duration unit for the schedule.
+      title: LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeScheduleDurationUnit
+    LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeSchedule:
+      type: object
+      properties:
+        durationValue:
+          type: integer
+          description: Duration value for the schedule.
+        durationUnit:
+          $ref: '#/components/schemas/LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeScheduleDurationUnit'
+          description: Duration unit for the schedule.
+        durationModifier:
+          $ref: '#/components/schemas/LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeScheduleDurationModifier'
+          description: Modifier for the duration.
+        scheduledDate:
+          type: string
+          description: Scheduled date in DD/MM format.
+      description: Schedule configuration for tier downgrades. Required when downgradeStrategy is set to a schedule-based strategy.
+      title: LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeSchedule
+    TierGroupDowngradeScheduleDurationModifier:
+      type: string
+      enum:
+      - start_of_period
+      - end_of_period
+      description: Modifier for the duration.
+      title: TierGroupDowngradeScheduleDurationModifier
+    LoyaltyTierProgramsPidTierGroupsGidGetParametersVersion:
+      type: string
+      enum:
+      - active
+      - draft
+      default: draft
+      title: LoyaltyTierProgramsPidTierGroupsGidGetParametersVersion
+    TierGroupDowngradeSchedule:
+      type: object
+      properties:
+        strategy:
+          type: string
+          description: Schedule strategy type.
+        durationValue:
+          type: integer
+          description: Duration value for the schedule.
+        durationUnit:
+          $ref: '#/components/schemas/TierGroupDowngradeScheduleDurationUnit'
+          description: Duration unit for the schedule.
+        durationModifier:
+          $ref: '#/components/schemas/TierGroupDowngradeScheduleDurationModifier'
+          description: Modifier for the duration.
+        scheduledDate:
+          type: string
+          description: Scheduled date in DD/MM format.
+      description: Schedule configuration for tier downgrades.
+      title: TierGroupDowngradeSchedule
+    LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeScheduleDurationUnit:
+      type: string
+      enum:
+      - day
+      - week
+      - month
+      - year
+      description: Duration unit for the schedule.
+      title: LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeScheduleDurationUnit
+    LoyaltyTierProgramsPidTierGroupsGidPutRequestBodyContentApplicationJsonSchemaMeta:
+      type: object
+      properties:
+        isInternal:
+          type: boolean
+          description: Indicates whether the tier group is internal.
+      description: Additional metadata for the tier group.
+      title: LoyaltyTierProgramsPidTierGroupsGidPutRequestBodyContentApplicationJsonSchemaMeta
+    TierGroupUpgradeScheduleDurationUnit:
+      type: string
+      enum:
+      - day
+      - week
+      - month
+      - year
+      description: Duration unit for the schedule.
+      title: TierGroupUpgradeScheduleDurationUnit
+    LoyaltyTierProgramsPidTiersTidPutRequestBodyContentApplicationJsonSchemaTierRewardsItems:
+      type: object
+      properties:
+        rewardId:
+          type: string
+          format: uuid
+          description: Reward unique identifier
+      title: LoyaltyTierProgramsPidTiersTidPutRequestBodyContentApplicationJsonSchemaTierRewardsItems
+    TierAccessConditionsItems:
+      type: object
+      properties:
+        balanceDefinitionId:
+          type: string
+          format: uuid
+          description: Balance definition identifier
+        createdAt:
+          type: string
+          format: date-time
+        minimumValue:
+          type: integer
+          description: Minimum value required to access this tier
+        updatedAt:
+          type: string
+          format: date-time
+      title: TierAccessConditionsItems
     TierGroupDowngradeScheduleDurationUnit:
       type: string
       enum:
@@ -1151,6 +1055,50 @@ components:
       - year
       description: Duration unit for the schedule.
       title: TierGroupDowngradeScheduleDurationUnit
+    TierGroupUpgradeSchedule:
+      type: object
+      properties:
+        strategy:
+          type: string
+          description: Schedule strategy type.
+        durationValue:
+          type: integer
+          description: Duration value for the schedule.
+        durationUnit:
+          $ref: '#/components/schemas/TierGroupUpgradeScheduleDurationUnit'
+          description: Duration unit for the schedule.
+        durationModifier:
+          $ref: '#/components/schemas/TierGroupUpgradeScheduleDurationModifier'
+          description: Modifier for the duration.
+        scheduledDate:
+          type: string
+          description: Scheduled date in DD/MM format.
+      description: Schedule configuration for tier upgrades.
+      title: TierGroupUpgradeSchedule
+    LoyaltyTierProgramsPidTiersGetParametersVersion:
+      type: string
+      enum:
+      - active
+      - draft
+      default: draft
+      title: LoyaltyTierProgramsPidTiersGetParametersVersion
+    LoyaltyTierProgramsPidTierGroupsGidPutRequestBodyContentApplicationJsonSchemaUpgradeStrategy:
+      type: string
+      enum:
+      - real_time
+      - membership_anniversary
+      - tier_anniversary
+      default: real_time
+      description: Select real_time to upgrade tier on real time balance updates. Select membership_anniversary to upgrade tier on subscription anniversary. Select tier_anniversary to upgrade tier on tier anniversary.
+      title: LoyaltyTierProgramsPidTierGroupsGidPutRequestBodyContentApplicationJsonSchemaUpgradeStrategy
+    LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaMeta:
+      type: object
+      properties:
+        isInternal:
+          type: boolean
+          description: Indicates whether the tier group is internal.
+      description: Additional metadata for the tier group.
+      title: LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaMeta
     tier:
       type: object
       properties:
@@ -1189,6 +1137,15 @@ components:
           type: string
           format: date-time
       title: tier
+    LoyaltyTierProgramsPidTierGroupsGidPutRequestBodyContentApplicationJsonSchemaDowngradeStrategy:
+      type: string
+      enum:
+      - real_time
+      - membership_anniversary
+      - tier_anniversary
+      default: real_time
+      description: Select real_time to downgrade tier on real time balance updates. Select membership_anniversary to downgrade tier on subscription anniversary. Select tier_anniversary to downgrade tier on tier anniversary.
+      title: LoyaltyTierProgramsPidTierGroupsGidPutRequestBodyContentApplicationJsonSchemaDowngradeStrategy
     TierTierRewardsItems:
       type: object
       properties:
@@ -1203,16 +1160,7 @@ components:
           type: string
           format: date-time
       title: TierTierRewardsItems
-    LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeScheduleDurationUnit:
-      type: string
-      enum:
-      - day
-      - week
-      - month
-      - year
-      description: Duration unit for the schedule.
-      title: LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeScheduleDurationUnit
-    TierGroupUpgradeStrategy:
+    LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeStrategy:
       type: string
       enum:
       - real_time
@@ -1220,23 +1168,75 @@ components:
       - tier_anniversary
       default: real_time
       description: Select real_time to upgrade tier on real time balance updates. Select membership_anniversary to upgrade tier on subscription anniversary. Select tier_anniversary to upgrade tier on tier anniversary.
-      title: TierGroupUpgradeStrategy
-    LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeScheduleDurationUnit:
+      title: LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeStrategy
+    TierGroupUpgradeScheduleDurationModifier:
       type: string
       enum:
-      - day
-      - week
-      - month
-      - year
-      description: Duration unit for the schedule.
-      title: LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeScheduleDurationUnit
-    LoyaltyTierProgramsPidTierGroupsGidGetParametersVersion:
+      - start_of_period
+      - end_of_period
+      description: Modifier for the duration.
+      title: TierGroupUpgradeScheduleDurationModifier
+    LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeSchedule:
+      type: object
+      properties:
+        durationValue:
+          type: integer
+          description: Duration value for the schedule.
+        durationUnit:
+          $ref: '#/components/schemas/LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeScheduleDurationUnit'
+          description: Duration unit for the schedule.
+        durationModifier:
+          $ref: '#/components/schemas/LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeScheduleDurationModifier'
+          description: Modifier for the duration.
+        scheduledDate:
+          type: string
+          description: Scheduled date in DD/MM format.
+      description: Schedule configuration for tier upgrades. Required when upgradeStrategy is set to a schedule-based strategy.
+      title: LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeSchedule
+    Tier_getListOfTierGroups_Response_200:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/tierGroup'
+      title: Tier_getListOfTierGroups_Response_200
+    LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeScheduleDurationModifier:
       type: string
       enum:
-      - active
-      - draft
-      default: draft
-      title: LoyaltyTierProgramsPidTierGroupsGidGetParametersVersion
+      - start_of_period
+      - end_of_period
+      description: Modifier for the duration.
+      title: LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaDowngradeScheduleDurationModifier
+    LoyaltyTierProgramsPidTierGroupsGidTiersPostRequestBodyContentApplicationJsonSchemaAccessConditionsItems:
+      type: object
+      properties:
+        balanceDefinitionId:
+          type: string
+          format: uuid
+          description: Balance definition identifier for accessing the tier
+        minimumValue:
+          type: integer
+          description: Minimum value required to access the tier
+      title: LoyaltyTierProgramsPidTierGroupsGidTiersPostRequestBodyContentApplicationJsonSchemaAccessConditionsItems
+    LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeScheduleDurationModifier:
+      type: string
+      enum:
+      - start_of_period
+      - end_of_period
+      description: Modifier for the duration.
+      title: LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeScheduleDurationModifier
+    LoyaltyTierProgramsPidTiersTidPutRequestBodyContentApplicationJsonSchemaAccessConditionsItems:
+      type: object
+      properties:
+        balanceDefinitionId:
+          type: string
+          format: uuid
+          description: Balance definition identifier for accessing the tier
+        minimumValue:
+          type: integer
+          description: Minimum value required to access the tier
+      title: LoyaltyTierProgramsPidTiersTidPutRequestBodyContentApplicationJsonSchemaAccessConditionsItems
   securitySchemes:
     api-key:
       type: apiKey

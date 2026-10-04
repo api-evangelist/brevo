@@ -115,19 +115,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
+  parameters:
+    limitParam:
+      name: limit
+      in: query
+      description: Maximum number of results to return per request.
+      schema:
+        type: integer
+        format: int64
+        default: 50
+    offsetParam:
+      name: offset
+      in: query
+      description: Number of results to skip for pagination.
+      schema:
+        type: integer
+        format: int64
+        default: 0
   schemas:
-    CategoryList:
-      type: object
-      properties:
-        count:
-          type: integer
-          format: int64
-          description: Total number of categories.
-        categories:
-          type: array
-          description: List of category records.
-          items:
-            $ref: '#/components/schemas/Category'
     Category:
       type: object
       properties:
@@ -149,6 +154,15 @@ components:
           type: string
           format: date-time
           description: UTC date-time when the category was last modified.
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code identifying the type of error.
+        message:
+          type: string
+          description: Human-readable description of the error.
     CreateUpdateCategory:
       type: object
       required:
@@ -165,32 +179,18 @@ components:
           type: string
           format: uri
           description: URL of the category page.
-    ErrorResponse:
+    CategoryList:
       type: object
       properties:
-        code:
-          type: string
-          description: Error code identifying the type of error.
-        message:
-          type: string
-          description: Human-readable description of the error.
-  parameters:
-    offsetParam:
-      name: offset
-      in: query
-      description: Number of results to skip for pagination.
-      schema:
-        type: integer
-        format: int64
-        default: 0
-    limitParam:
-      name: limit
-      in: query
-      description: Maximum number of results to return per request.
-      schema:
-        type: integer
-        format: int64
-        default: 50
+        count:
+          type: integer
+          format: int64
+          description: Total number of categories.
+        categories:
+          type: array
+          description: List of category records.
+          items:
+            $ref: '#/components/schemas/Category'
   securitySchemes:
     apiKeyAuth:
       type: apiKey

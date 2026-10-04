@@ -146,6 +146,15 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code identifying the type of error.
+        message:
+          type: string
+          description: Human-readable description of the error.
     MessageResponse:
       type: object
       properties:
@@ -175,15 +184,6 @@ components:
           type: string
           format: date-time
           description: UTC date-time when the message was created.
-    ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code identifying the type of error.
-        message:
-          type: string
-          description: Human-readable description of the error.
     SendMessage:
       type: object
       required:

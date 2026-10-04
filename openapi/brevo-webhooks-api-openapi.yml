@@ -460,6 +460,100 @@ paths:
               $ref: '#/components/schemas/Webhooks_exportWebhooksHistory_Request'
 components:
   schemas:
+    GetWebhookRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/WebhooksWebhookIdGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetWebhookRequestBadRequestError
+    GetWebhookAuth:
+      type: object
+      properties: {}
+      description: Authentication header to be send with the webhook requests
+      title: GetWebhookAuth
+    ExportWebhooksHistoryRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/WebhooksExportPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: ExportWebhooksHistoryRequestBadRequestError
+    WebhooksPostRequestBodyContentApplicationJsonSchemaType:
+      type: string
+      enum:
+      - transactional
+      - marketing
+      - inbound
+      default: transactional
+      description: Type of the webhook
+      title: WebhooksPostRequestBodyContentApplicationJsonSchemaType
+    WebhooksGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: WebhooksGetResponsesContentApplicationJsonSchemaCode
+    CreateWebhookRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/WebhooksPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreateWebhookRequestBadRequestError
     WebhooksGetParametersSort:
       type: string
       enum:
@@ -467,11 +561,67 @@ components:
       - desc
       default: desc
       title: WebhooksGetParametersSort
-    GetWebhookHeadersItems:
+    GetWebhookType:
+      type: string
+      enum:
+      - marketing
+      - transactional
+      - inbound
+      description: Type of webhook (marketing, transactional, or inbound)
+      title: GetWebhookType
+    Webhooks_exportWebhooksHistory_Request:
+      oneOf:
+      - description: Reference to WebhooksExportWebhooksHistoryRequest0
+      title: Webhooks_exportWebhooksHistory_Request
+    Webhooks_getWebhooks_Response_200:
       type: object
-      properties: {}
-      description: Headers send with the requests to the webhook
-      title: GetWebhookHeadersItems
+      properties:
+        webhooks:
+          type: array
+          items:
+            $ref: '#/components/schemas/getWebhook'
+      required:
+      - webhooks
+      title: Webhooks_getWebhooks_Response_200
+    GetWebhookRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/WebhooksWebhookIdGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetWebhookRequestNotFoundError
+    DeleteWebhookRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/WebhooksWebhookIdDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteWebhookRequestBadRequestError
+    UpdateWebhookRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/WebhooksWebhookIdPutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UpdateWebhookRequestNotFoundError
     WebhooksWebhookIdDeleteResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -513,6 +663,208 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: WebhooksWebhookIdDeleteResponsesContentApplicationJsonSchemaCode
+    WebhooksPostRequestBodyContentApplicationJsonSchemaAuth:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Webhook authentication token
+        type:
+          type: string
+          description: Type of authentication
+      description: Add authentication on webhook url
+      title: WebhooksPostRequestBodyContentApplicationJsonSchemaAuth
+    WebhooksWebhookIdPutRequestBodyContentApplicationJsonSchemaAuth:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Webhook authentication token
+        type:
+          type: string
+          description: Type of authentication
+      description: Add authentication on webhook url
+      title: WebhooksWebhookIdPutRequestBodyContentApplicationJsonSchemaAuth
+    WebhooksWebhookIdPutRequestBodyContentApplicationJsonSchemaEventsItems:
+      type: string
+      enum:
+      - sent
+      - hardBounce
+      - softBounce
+      - blocked
+      - spam
+      - delivered
+      - request
+      - click
+      - invalid
+      - deferred
+      - opened
+      - uniqueOpened
+      - unsubscribed
+      - listAddition
+      - contactUpdated
+      - contactDeleted
+      - inboundEmailProcessed
+      - reply
+      title: WebhooksWebhookIdPutRequestBodyContentApplicationJsonSchemaEventsItems
+    Webhooks_exportWebhooksHistory_Response_202:
+      type: object
+      properties:
+        processId:
+          type: integer
+          format: int64
+          description: Id of the process created
+      required:
+      - processId
+      title: Webhooks_exportWebhooksHistory_Response_202
+    UpdateWebhookRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/WebhooksWebhookIdPutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UpdateWebhookRequestBadRequestError
+    GetWebhooksRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/WebhooksGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetWebhooksRequestBadRequestError
+    WebhooksExportPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: WebhooksExportPostResponsesContentApplicationJsonSchemaCode
+    WebhooksPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: WebhooksPostResponsesContentApplicationJsonSchemaCode
+    WebhooksPostRequestBodyContentApplicationJsonSchemaHeadersItems:
+      type: object
+      properties:
+        key:
+          type: string
+          description: Header key name
+        value:
+          type: string
+          description: Header value
+      title: WebhooksPostRequestBodyContentApplicationJsonSchemaHeadersItems
+    WebhooksPostRequestBodyContentApplicationJsonSchemaEventsItems:
+      type: string
+      enum:
+      - sent
+      - hardBounce
+      - softBounce
+      - blocked
+      - spam
+      - delivered
+      - request
+      - click
+      - invalid
+      - deferred
+      - opened
+      - uniqueOpened
+      - unsubscribed
+      - listAddition
+      - contactUpdated
+      - contactDeleted
+      - inboundEmailProcessed
+      - reply
+      title: WebhooksPostRequestBodyContentApplicationJsonSchemaEventsItems
+    WebhooksPostRequestBodyContentApplicationJsonSchemaChannel:
+      type: string
+      enum:
+      - email
+      - sms
+      default: email
+      description: Channel of the webhook
+      title: WebhooksPostRequestBodyContentApplicationJsonSchemaChannel
     WebhooksWebhookIdPutRequestBodyContentApplicationJsonSchemaHeadersItems:
       type: object
       properties:
@@ -523,23 +875,73 @@ components:
           type: string
           description: Header value
       title: WebhooksWebhookIdPutRequestBodyContentApplicationJsonSchemaHeadersItems
-    GetWebhookType:
+    DeleteWebhookRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/WebhooksWebhookIdDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteWebhookRequestNotFoundError
+    WebhooksGetParametersType:
       type: string
       enum:
       - marketing
       - transactional
-      - inbound
-      description: Type of webhook (marketing, transactional, or inbound)
-      title: GetWebhookType
-    WebhooksPostRequestBodyContentApplicationJsonSchemaType:
-      type: string
-      enum:
-      - transactional
-      - marketing
       - inbound
       default: transactional
-      description: Type of the webhook
-      title: WebhooksPostRequestBodyContentApplicationJsonSchemaType
+      title: WebhooksGetParametersType
+    WebhooksWebhookIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: WebhooksWebhookIdGetResponsesContentApplicationJsonSchemaCode
+    GetWebhookHeadersItems:
+      type: object
+      properties: {}
+      description: Headers send with the requests to the webhook
+      title: GetWebhookHeadersItems
     getWebhook:
       type: object
       properties:
@@ -632,265 +1034,6 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: WebhooksWebhookIdPutResponsesContentApplicationJsonSchemaCode
-    WebhooksPostRequestBodyContentApplicationJsonSchemaAuth:
-      type: object
-      properties:
-        token:
-          type: string
-          description: Webhook authentication token
-        type:
-          type: string
-          description: Type of authentication
-      description: Add authentication on webhook url
-      title: WebhooksPostRequestBodyContentApplicationJsonSchemaAuth
-    Webhooks_exportWebhooksHistory_Request:
-      oneOf:
-      - description: Reference to WebhooksExportWebhooksHistoryRequest0
-      title: Webhooks_exportWebhooksHistory_Request
-    ExportWebhooksHistoryRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/WebhooksExportPostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: ExportWebhooksHistoryRequestBadRequestError
-    DeleteWebhookRequestNotFoundError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/WebhooksWebhookIdDeleteResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: DeleteWebhookRequestNotFoundError
-    WebhooksExportPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: WebhooksExportPostResponsesContentApplicationJsonSchemaCode
-    GetWebhookAuth:
-      type: object
-      properties: {}
-      description: Authentication header to be send with the webhook requests
-      title: GetWebhookAuth
-    WebhooksGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: WebhooksGetResponsesContentApplicationJsonSchemaCode
-    UpdateWebhookRequestNotFoundError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/WebhooksWebhookIdPutResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: UpdateWebhookRequestNotFoundError
-    Webhooks_getWebhooks_Response_200:
-      type: object
-      properties:
-        webhooks:
-          type: array
-          items:
-            $ref: '#/components/schemas/getWebhook'
-      required:
-      - webhooks
-      title: Webhooks_getWebhooks_Response_200
-    WebhooksPostRequestBodyContentApplicationJsonSchemaEventsItems:
-      type: string
-      enum:
-      - sent
-      - hardBounce
-      - softBounce
-      - blocked
-      - spam
-      - delivered
-      - request
-      - click
-      - invalid
-      - deferred
-      - opened
-      - uniqueOpened
-      - unsubscribed
-      - listAddition
-      - contactUpdated
-      - contactDeleted
-      - inboundEmailProcessed
-      - reply
-      title: WebhooksPostRequestBodyContentApplicationJsonSchemaEventsItems
-    GetWebhookRequestNotFoundError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/WebhooksWebhookIdGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetWebhookRequestNotFoundError
-    DeleteWebhookRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/WebhooksWebhookIdDeleteResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: DeleteWebhookRequestBadRequestError
-    WebhooksPostRequestBodyContentApplicationJsonSchemaHeadersItems:
-      type: object
-      properties:
-        key:
-          type: string
-          description: Header key name
-        value:
-          type: string
-          description: Header value
-      title: WebhooksPostRequestBodyContentApplicationJsonSchemaHeadersItems
-    WebhooksPostRequestBodyContentApplicationJsonSchemaChannel:
-      type: string
-      enum:
-      - email
-      - sms
-      default: email
-      description: Channel of the webhook
-      title: WebhooksPostRequestBodyContentApplicationJsonSchemaChannel
-    WebhooksWebhookIdPutRequestBodyContentApplicationJsonSchemaAuth:
-      type: object
-      properties:
-        token:
-          type: string
-          description: Webhook authentication token
-        type:
-          type: string
-          description: Type of authentication
-      description: Add authentication on webhook url
-      title: WebhooksWebhookIdPutRequestBodyContentApplicationJsonSchemaAuth
-    WebhooksGetParametersType:
-      type: string
-      enum:
-      - marketing
-      - transactional
-      - inbound
-      default: transactional
-      title: WebhooksGetParametersType
-    Webhooks_exportWebhooksHistory_Response_202:
-      type: object
-      properties:
-        processId:
-          type: integer
-          format: int64
-          description: Id of the process created
-      required:
-      - processId
-      title: Webhooks_exportWebhooksHistory_Response_202
-    UpdateWebhookRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/WebhooksWebhookIdPutResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: UpdateWebhookRequestBadRequestError
     Webhooks_createWebhook_Response_201:
       type: object
       properties:
@@ -901,149 +1044,6 @@ components:
       required:
       - id
       title: Webhooks_createWebhook_Response_201
-    WebhooksWebhookIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: WebhooksWebhookIdGetResponsesContentApplicationJsonSchemaCode
-    WebhooksPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: WebhooksPostResponsesContentApplicationJsonSchemaCode
-    GetWebhooksRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/WebhooksGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetWebhooksRequestBadRequestError
-    GetWebhookRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/WebhooksWebhookIdGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetWebhookRequestBadRequestError
-    WebhooksWebhookIdPutRequestBodyContentApplicationJsonSchemaEventsItems:
-      type: string
-      enum:
-      - sent
-      - hardBounce
-      - softBounce
-      - blocked
-      - spam
-      - delivered
-      - request
-      - click
-      - invalid
-      - deferred
-      - opened
-      - uniqueOpened
-      - unsubscribed
-      - listAddition
-      - contactUpdated
-      - contactDeleted
-      - inboundEmailProcessed
-      - reply
-      title: WebhooksWebhookIdPutRequestBodyContentApplicationJsonSchemaEventsItems
-    CreateWebhookRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/WebhooksPostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: CreateWebhookRequestBadRequestError
   securitySchemes:
     api-key:
       type: apiKey

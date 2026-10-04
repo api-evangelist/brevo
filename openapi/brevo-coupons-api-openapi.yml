@@ -294,11 +294,11 @@ paths:
               - coupons
 components:
   schemas:
-    UpdateCouponCollectionRequestBadRequestError:
+    GetCouponCollectionsRequestUnauthorizedError:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/CouponCollectionsIdPatchResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/CouponCollectionsGetResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
@@ -306,8 +306,33 @@ components:
       required:
       - code
       - message
-      title: UpdateCouponCollectionRequestBadRequestError
-    CouponsPostResponsesContentApplicationJsonSchemaCode:
+      title: GetCouponCollectionsRequestUnauthorizedError
+    GetCouponCollectionsRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CouponCollectionsGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetCouponCollectionsRequestBadRequestError
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
+    CouponCollectionsIdPatchResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - invalid_parameter
@@ -347,12 +372,12 @@ components:
       - Insufficient credits
       - Request already processed
       description: Error code displayed in case of a failure
-      title: CouponsPostResponsesContentApplicationJsonSchemaCode
-    GetCouponCollectionRequestUnauthorizedError:
+      title: CouponCollectionsIdPatchResponsesContentApplicationJsonSchemaCode
+    CreateCouponCollectionRequestUnauthorizedError:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/CouponCollectionsIdGetResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/CouponCollectionsPostResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
@@ -360,7 +385,61 @@ components:
       required:
       - code
       - message
-      title: GetCouponCollectionRequestUnauthorizedError
+      title: CreateCouponCollectionRequestUnauthorizedError
+    CouponCollectionsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CouponCollectionsPostResponsesContentApplicationJsonSchemaCode
+    CreateCouponsRequestUnauthorizedError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CouponsPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreateCouponsRequestUnauthorizedError
     getCouponCollection:
       type: object
       properties:
@@ -404,60 +483,13 @@ components:
       - remainingCoupons
       - totalCoupons
       title: getCouponCollection
-    CouponCollectionsIdGetResponsesContentApplicationJsonSchemaCode:
+    CouponCollectionsGetParametersSort:
       type: string
       enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: CouponCollectionsIdGetResponsesContentApplicationJsonSchemaCode
-    CreateCouponsRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/CouponsPostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: CreateCouponsRequestBadRequestError
+      - asc
+      - desc
+      default: desc
+      title: CouponCollectionsGetParametersSort
     Coupons_createCouponCollection_Response_201:
       type: object
       properties:
@@ -468,52 +500,6 @@ components:
       required:
       - id
       title: Coupons_createCouponCollection_Response_201
-    CouponCollectionsGetParametersSortBy:
-      type: string
-      enum:
-      - createdAt
-      - remainingCoupons
-      - expirationDate
-      default: createdAt
-      title: CouponCollectionsGetParametersSortBy
-    CouponCollectionsGetParametersSort:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: desc
-      title: CouponCollectionsGetParametersSort
-    Coupons_updateCouponCollection_Response_200:
-      type: object
-      properties:
-        defaultCoupon:
-          type: string
-          description: The default coupon of the collection
-        id:
-          type: string
-          format: uuidv4
-          description: The id of the collection
-        name:
-          type: string
-          description: The name of the collection
-      required:
-      - defaultCoupon
-      - id
-      - name
-      title: Coupons_updateCouponCollection_Response_200
-    CreateCouponCollectionRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/CouponCollectionsPostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: CreateCouponCollectionRequestBadRequestError
     CouponCollectionsGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -555,18 +541,19 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: CouponCollectionsGetResponsesContentApplicationJsonSchemaCode
-    errorModel:
+    GetCouponCollectionRequestUnauthorizedError:
       type: object
       properties:
         code:
-          type: string
+          $ref: '#/components/schemas/CouponCollectionsIdGetResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
           description: Readable message associated to the failure
       required:
+      - code
       - message
-      title: errorModel
+      title: GetCouponCollectionRequestUnauthorizedError
     UpdateCouponCollectionRequestUnauthorizedError:
       type: object
       properties:
@@ -580,7 +567,25 @@ components:
       - code
       - message
       title: UpdateCouponCollectionRequestUnauthorizedError
-    CouponCollectionsIdPatchResponsesContentApplicationJsonSchemaCode:
+    Coupons_updateCouponCollection_Response_200:
+      type: object
+      properties:
+        defaultCoupon:
+          type: string
+          description: The default coupon of the collection
+        id:
+          type: string
+          format: uuidv4
+          description: The id of the collection
+        name:
+          type: string
+          description: The name of the collection
+      required:
+      - defaultCoupon
+      - id
+      - name
+      title: Coupons_updateCouponCollection_Response_200
+    CouponCollectionsIdGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - invalid_parameter
@@ -620,7 +625,82 @@ components:
       - Insufficient credits
       - Request already processed
       description: Error code displayed in case of a failure
-      title: CouponCollectionsIdPatchResponsesContentApplicationJsonSchemaCode
+      title: CouponCollectionsIdGetResponsesContentApplicationJsonSchemaCode
+    UpdateCouponCollectionRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CouponCollectionsIdPatchResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UpdateCouponCollectionRequestBadRequestError
+    CreateCouponCollectionRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CouponCollectionsPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreateCouponCollectionRequestBadRequestError
+    CouponsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CouponsPostResponsesContentApplicationJsonSchemaCode
+    CouponCollectionsGetParametersSortBy:
+      type: string
+      enum:
+      - createdAt
+      - remainingCoupons
+      - expirationDate
+      default: createdAt
+      title: CouponCollectionsGetParametersSortBy
     GetCouponCollectionRequestBadRequestError:
       type: object
       properties:
@@ -634,87 +714,7 @@ components:
       - code
       - message
       title: GetCouponCollectionRequestBadRequestError
-    GetCouponCollectionsRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/CouponCollectionsGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetCouponCollectionsRequestBadRequestError
-    CouponCollectionsPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: CouponCollectionsPostResponsesContentApplicationJsonSchemaCode
-    GetCouponCollectionsRequestUnauthorizedError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/CouponCollectionsGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetCouponCollectionsRequestUnauthorizedError
-    CreateCouponCollectionRequestUnauthorizedError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/CouponCollectionsPostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: CreateCouponCollectionRequestUnauthorizedError
-    CreateCouponsRequestUnauthorizedError:
+    CreateCouponsRequestBadRequestError:
       type: object
       properties:
         code:
@@ -726,7 +726,7 @@ components:
       required:
       - code
       - message
-      title: CreateCouponsRequestUnauthorizedError
+      title: CreateCouponsRequestBadRequestError
   securitySchemes:
     api-key:
       type: apiKey

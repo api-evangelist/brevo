@@ -144,43 +144,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    CreateUpdateProduct:
-      type: object
-      required:
-      - id
-      - name
-      - url
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the product.
-        name:
-          type: string
-          description: Name of the product.
-        url:
-          type: string
-          format: uri
-          description: URL of the product page.
-        imageUrl:
-          type: string
-          format: uri
-          description: URL of the product image.
-        sku:
-          type: string
-          description: Stock keeping unit identifier.
-        price:
-          type: number
-          format: float
-          description: Price of the product.
-        categories:
-          type: array
-          description: IDs of categories to assign the product to.
-          items:
-            type: string
-        metaInfo:
-          type: object
-          description: Additional metadata as key-value pairs.
-          additionalProperties: true
     Product:
       type: object
       properties:
@@ -222,6 +185,52 @@ components:
           type: string
           format: date-time
           description: UTC date-time when the product was last modified.
+    CreateUpdateProduct:
+      type: object
+      required:
+      - id
+      - name
+      - url
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the product.
+        name:
+          type: string
+          description: Name of the product.
+        url:
+          type: string
+          format: uri
+          description: URL of the product page.
+        imageUrl:
+          type: string
+          format: uri
+          description: URL of the product image.
+        sku:
+          type: string
+          description: Stock keeping unit identifier.
+        price:
+          type: number
+          format: float
+          description: Price of the product.
+        categories:
+          type: array
+          description: IDs of categories to assign the product to.
+          items:
+            type: string
+        metaInfo:
+          type: object
+          description: Additional metadata as key-value pairs.
+          additionalProperties: true
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code identifying the type of error.
+        message:
+          type: string
+          description: Human-readable description of the error.
     ProductList:
       type: object
       properties:
@@ -234,16 +243,15 @@ components:
           description: List of product records.
           items:
             $ref: '#/components/schemas/Product'
-    ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code identifying the type of error.
-        message:
-          type: string
-          description: Human-readable description of the error.
   parameters:
+    limitParam:
+      name: limit
+      in: query
+      description: Maximum number of results to return per request.
+      schema:
+        type: integer
+        format: int64
+        default: 50
     offsetParam:
       name: offset
       in: query
@@ -259,14 +267,6 @@ components:
       description: Unique identifier of the product.
       schema:
         type: string
-    limitParam:
-      name: limit
-      in: query
-      description: Maximum number of results to return per request.
-      schema:
-        type: integer
-        format: int64
-        default: 50
   securitySchemes:
     apiKeyAuth:
       type: apiKey
