@@ -167,3 +167,18 @@ x-evidence:
     method: POST
     http_status: 200
     note: initialize handshake succeeded anonymously
+rfc9728:
+  endpoint: https://mcp.brevo.com/v1/brevo/mcp
+  metadata_url: https://mcp.brevo.com/.well-known/oauth-protected-resource/v1/brevo/mcp
+  discovered_via: WWW-Authenticate resource_metadata on an anonymous POST initialize
+  fetched: '2026-09-25'
+  http_status: 200
+  content_type: application/json
+  document:
+    resource: https://mcp.brevo.com/v1/brevo/mcp
+    authorization_servers:
+    - https://mcp.brevo.com/oauth
+    scopes_supported:
+    - all
+    bearer_methods_supported:
+    - header
