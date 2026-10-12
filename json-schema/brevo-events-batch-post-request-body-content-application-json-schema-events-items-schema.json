@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-events-batch-post-request-body-content-application-json-schema-events-items-schema.json",
+  "title": "EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItems",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-event-api-openapi.yml#/components/schemas/EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItems",
+  "type": "object",
+  "properties": {
+    "contact_properties": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsContactProperties"
+      },
+      "description": "Properties defining the state of the contact associated to this event. Useful to update contact attributes defined in your contacts database while passing the event. For example: **\"FIRSTNAME\": \"Jane\" , \"AGE\": 37**"
+    },
+    "event_date": {
+      "type": "string",
+      "description": "Timestamp of when the event occurred (e.g. \"2024-01-24T17:39:57+01:00\"). If no value is passed, the timestamp of the event creation is used."
+    },
+    "event_name": {
+      "type": "string",
+      "description": "The name of the event that occurred. This is how you will find your event in Brevo. Limited to 255 characters, alphanumerical characters and - _ only."
+    },
+    "event_properties": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsEventProperties"
+      },
+      "description": "Properties of the event. Top level properties and nested properties can be used to better segment contacts and personalise workflow conditions. The following field type are supported: string, number, boolean (true/false), date (Timestamp e.g. \"2024-01-24T17:39:57+01:00\"). Keys are limited to 255 characters, alphanumerical characters and - _ only. Size is limited to 50Kb."
+    },
+    "identifiers": {
+      "$ref": "#/$defs/EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsIdentifiers",
+      "description": "Identifies the contact associated with the event. At least one identifier is required."
+    },
+    "object": {
+      "$ref": "#/$defs/EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsObject",
+      "description": "Identifiers of the object record associated with this event. Ignored if the object type or identifier for this record does not exist on the account."
+    }
+  },
+  "required": [
+    "event_name",
+    "identifiers"
+  ],
+  "$defs": {
+    "EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsContactProperties": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "integer"
+        }
+      ],
+      "title": "EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsContactProperties"
+    },
+    "EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsEventProperties": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "integer"
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "description": "Any type"
+          }
+        },
+        {
+          "type": "array",
+          "items": {
+            "description": "Any type"
+          }
+        }
+      ],
+      "title": "EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsEventProperties"
+    },
+    "EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsIdentifiers": {
+      "type": "object",
+      "properties": {
+        "contact_id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Internal unique contact ID. When present, this takes priority over all other identifiers for event attribution and contact resolution."
+        },
+        "email_id": {
+          "type": "string",
+          "description": "Email Id associated with the event"
+        },
+        "ext_id": {
+          "type": "string",
+          "description": "ext_id associated with the event"
+        },
+        "landline_number_id": {
+          "type": "string",
+          "description": "landline_number associated with the event"
+        },
+        "phone_id": {
+          "type": "string",
+          "description": "SMS associated with the event"
+        },
+        "whatsapp_id": {
+          "type": "string",
+          "description": "whatsapp associated with the event"
+        }
+      },
+      "description": "Identifies the contact associated with the event. At least one identifier is required.",
+      "title": "EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsIdentifiers"
+    },
+    "EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsObject": {
+      "type": "object",
+      "properties": {
+        "identifiers": {
+          "$ref": "#/$defs/EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsObjectIdentifiers",
+          "description": "Identifiers for the object."
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of object (e.g., subscription, vehicle, etc.)"
+        }
+      },
+      "description": "Identifiers of the object record associated with this event. Ignored if the object type or identifier for this record does not exist on the account.",
+      "title": "EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsObject"
+    },
+    "EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsObjectIdentifiers": {
+      "type": "object",
+      "properties": {
+        "ext_id": {
+          "type": "string",
+          "description": "External object ID"
+        },
+        "id": {
+          "type": "string",
+          "description": "Internal object ID"
+        }
+      },
+      "description": "Identifiers for the object.",
+      "title": "EventsBatchPostRequestBodyContentApplicationJsonSchemaEventsItemsObjectIdentifiers"
+    }
+  }
+}

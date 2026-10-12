@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-pipeline-schema.json",
+  "title": "Pipeline",
+  "description": "Pipeline details with stages",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-deals-api-openapi.yml#/components/schemas/Pipeline",
+  "type": "object",
+  "properties": {
+    "pipeline": {
+      "type": "string",
+      "description": "Pipeline id"
+    },
+    "pipeline_name": {
+      "type": "string",
+      "description": "Pipeline Name"
+    },
+    "stages": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/PipelineStagesItems"
+      },
+      "description": "List of pipeline stages"
+    }
+  },
+  "$defs": {
+    "PipelineStagesItems": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Stage id"
+        },
+        "name": {
+          "type": "string",
+          "description": "Stage name"
+        }
+      },
+      "description": "Stage details",
+      "title": "PipelineStagesItems"
+    }
+  }
+}

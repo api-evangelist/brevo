@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-sms-campaigns-post-request-body-content-application-json-schema-recipients-schema.json",
+  "title": "SmsCampaignsPostRequestBodyContentApplicationJsonSchemaRecipients",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-sms-campaigns-api-openapi.yml#/components/schemas/SmsCampaignsPostRequestBodyContentApplicationJsonSchemaRecipients",
+  "type": "object",
+  "properties": {
+    "exclusionListIds": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "description": "List ids which have to be excluded from a campaign"
+    },
+    "listIds": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "description": "Lists Ids to send the campaign to. **REQUIRED if scheduledAt is not empty**\n"
+    }
+  },
+  "required": [
+    "listIds"
+  ]
+}

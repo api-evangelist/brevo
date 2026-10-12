@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-inviteuser-schema.json",
+  "title": "inviteuser",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-user-api-openapi.yml#/components/schemas/inviteuser",
+  "type": "object",
+  "properties": {
+    "all_features_access": {
+      "type": "boolean",
+      "description": "All access to the features"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address for the organization"
+    },
+    "privileges": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/InviteuserPrivilegesItems"
+      }
+    }
+  },
+  "required": [
+    "all_features_access",
+    "email",
+    "privileges"
+  ],
+  "$defs": {
+    "InviteuserPrivilegesItems": {
+      "type": "object",
+      "properties": {
+        "feature": {
+          "$ref": "#/$defs/InviteuserPrivilegesItemsFeature",
+          "description": "Feature name"
+        },
+        "permissions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InviteuserPrivilegesItemsPermissionsItems"
+          },
+          "description": "Permissions for a given feature"
+        }
+      },
+      "description": "Privileges given to the user",
+      "title": "InviteuserPrivilegesItems"
+    },
+    "InviteuserPrivilegesItemsFeature": {
+      "type": "string",
+      "enum": [
+        "email_campaigns",
+        "sms_campaigns",
+        "contacts",
+        "templates",
+        "workflows",
+        "landing_pages",
+        "transactional_emails",
+        "smtp_api",
+        "user_management",
+        "sales_platform",
+        "phone",
+        "conversations",
+        "senders_domains_dedicated_ips",
+        "push_notifications",
+        "companies"
+      ],
+      "description": "Feature name",
+      "title": "InviteuserPrivilegesItemsFeature"
+    },
+    "InviteuserPrivilegesItemsPermissionsItems": {
+      "type": "string",
+      "enum": [
+        "create_edit_delete",
+        "send_schedule_suspend",
+        "view",
+        "import",
+        "export",
+        "list_and_attributes",
+        "forms",
+        "activate_deactivate",
+        "activate_deactivate_pause",
+        "settings",
+        "schedule_pause",
+        "all",
+        "logs",
+        "access",
+        "assign",
+        "configure",
+        "create_edit_deals",
+        "delete_deals",
+        "manage_others_deals_tasks",
+        "manage_owned_companies",
+        "manage_others_companies",
+        "reports",
+        "senders_management",
+        "domains_management",
+        "dedicated_ips_management",
+        "send",
+        "smtp",
+        "api_keys",
+        "authorized_ips",
+        "none"
+      ],
+      "title": "InviteuserPrivilegesItemsPermissionsItems"
+    }
+  }
+}

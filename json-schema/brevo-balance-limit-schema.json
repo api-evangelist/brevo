@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-balance-limit-schema.json",
+  "title": "balanceLimit",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-balance-api-openapi.yml#/components/schemas/balanceLimit",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the balance limit."
+    },
+    "balanceDefinitionId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Balance definition ID."
+    },
+    "transactionType": {
+      "$ref": "#/$defs/BalanceLimitTransactionType",
+      "description": "Specifies whether the limit applies to credit or debit transactions."
+    },
+    "constraintType": {
+      "$ref": "#/$defs/BalanceLimitConstraintType",
+      "description": "Defines the type of constraint (transaction count or amount)."
+    },
+    "durationValue": {
+      "type": "integer",
+      "description": "Number of time units the balance limit applies to."
+    },
+    "durationUnit": {
+      "$ref": "#/$defs/BalanceLimitDurationUnit",
+      "description": "Time unit for the balance limit."
+    },
+    "value": {
+      "type": "number",
+      "format": "double",
+      "description": "The maximum allowed value for the defined constraint."
+    },
+    "slidingSchedule": {
+      "type": "boolean",
+      "description": "Indicates if the limit resets periodically based on a sliding schedule."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of when the balance limit was created."
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of the last update to the balance limit."
+    }
+  },
+  "$defs": {
+    "BalanceLimitConstraintType": {
+      "type": "string",
+      "enum": [
+        "transaction",
+        "amount"
+      ],
+      "description": "Defines the type of constraint (transaction count or amount).",
+      "title": "BalanceLimitConstraintType"
+    },
+    "BalanceLimitDurationUnit": {
+      "type": "string",
+      "enum": [
+        "hour",
+        "day",
+        "week",
+        "month",
+        "year"
+      ],
+      "description": "Time unit for the balance limit.",
+      "title": "BalanceLimitDurationUnit"
+    },
+    "BalanceLimitTransactionType": {
+      "type": "string",
+      "enum": [
+        "credit",
+        "debit"
+      ],
+      "description": "Specifies whether the limit applies to credit or debit transactions.",
+      "title": "BalanceLimitTransactionType"
+    }
+  }
+}

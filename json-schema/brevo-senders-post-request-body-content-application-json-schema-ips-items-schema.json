@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-senders-post-request-body-content-application-json-schema-ips-items-schema.json",
+  "title": "SendersPostRequestBodyContentApplicationJsonSchemaIpsItems",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-senders-api-openapi.yml#/components/schemas/SendersPostRequestBodyContentApplicationJsonSchemaIpsItems",
+  "type": "object",
+  "properties": {
+    "domain": {
+      "type": "string",
+      "description": "Domain of the IP"
+    },
+    "ip": {
+      "type": "string",
+      "description": "Dedicated IP available in your account"
+    },
+    "weight": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Weight to apply to the IP. Sum of all IP weights must be\n100. Should be passed for either ALL or NONE of the IPs.\nIf it's not passed, the sending will be equally balanced\non all IPs."
+    }
+  },
+  "required": [
+    "domain",
+    "ip"
+  ]
+}

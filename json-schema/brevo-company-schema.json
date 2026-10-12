@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-company-schema.json",
+  "title": "Company",
+  "description": "Company Details",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-companies-api-openapi.yml#/components/schemas/Company",
+  "type": "object",
+  "properties": {
+    "attributes": {
+      "$ref": "#/$defs/CompanyAttributes",
+      "description": "Company attributes with values"
+    },
+    "id": {
+      "type": "string",
+      "description": "Unique company id"
+    },
+    "linkedContactsIds": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "Contact ids for contacts linked to this company"
+    },
+    "linkedDealsIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Deal ids for deals linked to this company"
+    }
+  },
+  "$defs": {
+    "CompanyAttributes": {
+      "type": "object",
+      "properties": {},
+      "description": "Company attributes with values",
+      "title": "CompanyAttributes"
+    }
+  }
+}

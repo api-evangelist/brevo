@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-send-sms-response-schema.json",
+  "title": "SendSmsResponse",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-transactional-sms-api-openapi.yml#/components/schemas/SendSmsResponse",
+  "type": "object",
+  "properties": {
+    "reference": {
+      "type": "string",
+      "description": "Unique reference identifier for the sent SMS message."
+    },
+    "messageId": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unique message ID assigned to the SMS."
+    },
+    "smsCount": {
+      "type": "integer",
+      "description": "Number of SMS segments used to send the message."
+    },
+    "usedCredits": {
+      "type": "number",
+      "format": "float",
+      "description": "Number of SMS credits consumed."
+    },
+    "remainingCredits": {
+      "type": "number",
+      "format": "float",
+      "description": "Remaining SMS credits in the account."
+    }
+  }
+}

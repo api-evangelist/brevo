@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-product-list-schema.json",
+  "title": "ProductList",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-products-api-openapi.yml#/components/schemas/ProductList",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total number of products."
+    },
+    "products": {
+      "type": "array",
+      "description": "List of product records.",
+      "items": {
+        "$ref": "#/$defs/Product"
+      }
+    }
+  },
+  "$defs": {
+    "Product": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of the product."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the product."
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the product page."
+        },
+        "imageUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the product image."
+        },
+        "sku": {
+          "type": "string",
+          "description": "Stock keeping unit identifier."
+        },
+        "price": {
+          "type": "number",
+          "format": "float",
+          "description": "Price of the product."
+        },
+        "categories": {
+          "type": "array",
+          "description": "IDs of categories the product belongs to.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "metaInfo": {
+          "type": "object",
+          "description": "Additional metadata for the product as key-value pairs.",
+          "additionalProperties": true
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "UTC date-time when the product was created."
+        },
+        "modifiedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "UTC date-time when the product was last modified."
+        }
+      }
+    }
+  }
+}

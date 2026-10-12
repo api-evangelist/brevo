@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-products-batch-post-request-body-content-application-json-schema-products-items-schema.json",
+  "title": "ProductsBatchPostRequestBodyContentApplicationJsonSchemaProductsItems",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-ecommerce-api-openapi.yml#/components/schemas/ProductsBatchPostRequestBodyContentApplicationJsonSchemaProductsItems",
+  "type": "object",
+  "properties": {
+    "brand": {
+      "type": "string",
+      "description": "Brand of the product"
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Category ID-s of the product"
+    },
+    "deletedAt": {
+      "type": "string",
+      "description": "UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) of the product deleted from the shop's database"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the product"
+    },
+    "id": {
+      "type": "string",
+      "format": "string",
+      "description": "Product ID for which you requested the details"
+    },
+    "imageUrl": {
+      "type": "string",
+      "format": "string",
+      "description": "Absolute URL to the cover image of the product"
+    },
+    "isDeleted": {
+      "type": "boolean",
+      "description": "product deleted from the shop's database"
+    },
+    "metaInfo": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/ProductsBatchPostRequestBodyContentApplicationJsonSchemaProductsItemsMetaInfo"
+      },
+      "description": "Meta data of product such as description, vendor, producer, stock level. The total characters of cumulative metaInfo shall not exceed **20000 characters**."
+    },
+    "name": {
+      "type": "string",
+      "description": "**Mandatory in case of creation**. Name of the product, as displayed in the shop"
+    },
+    "parentId": {
+      "type": "string",
+      "format": "string",
+      "description": "Parent product id of the product"
+    },
+    "price": {
+      "type": "string",
+      "title": "float",
+      "description": "Price of the product"
+    },
+    "alternativePrice": {
+      "type": "string",
+      "title": "float",
+      "description": "Alternative price of the product"
+    },
+    "sku": {
+      "type": "string",
+      "format": "string",
+      "description": "Product identifier from the shop"
+    },
+    "stock": {
+      "type": "number",
+      "format": "double",
+      "description": "Current stock value of the product from the shop's database"
+    },
+    "url": {
+      "type": "string",
+      "format": "string",
+      "description": "URL to the product"
+    }
+  },
+  "required": [
+    "id",
+    "name"
+  ],
+  "$defs": {
+    "ProductsBatchPostRequestBodyContentApplicationJsonSchemaProductsItemsMetaInfo": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "integer"
+        }
+      ],
+      "title": "ProductsBatchPostRequestBodyContentApplicationJsonSchemaProductsItemsMetaInfo"
+    }
+  }
+}

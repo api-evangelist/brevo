@@ -1,0 +1,309 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-account-get-account-response-200-schema.json",
+  "title": "Account_getAccount_Response_200",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-account-api-openapi.yml#/components/schemas/Account_getAccount_Response_200",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "Unique identifier for the organization"
+    },
+    "user_id": {
+      "type": "integer",
+      "description": "Unique identifier for the user"
+    },
+    "enterprise": {
+      "type": "boolean",
+      "description": "Indicates if the account has enterprise features"
+    },
+    "companyName": {
+      "type": "string",
+      "description": "Name of the company"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Login Email"
+    },
+    "firstName": {
+      "type": "string",
+      "description": "First Name"
+    },
+    "lastName": {
+      "type": "string",
+      "description": "Last Name"
+    },
+    "address": {
+      "$ref": "#/$defs/AccountGetResponsesContentApplicationJsonSchemaAddress",
+      "description": "Address informations"
+    },
+    "marketingAutomation": {
+      "$ref": "#/$defs/AccountGetResponsesContentApplicationJsonSchemaMarketingAutomation"
+    },
+    "plan": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/AccountGetResponsesContentApplicationJsonSchemaPlanItems"
+      },
+      "description": "Information about your plans and credits"
+    },
+    "planVerticals": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItems"
+      },
+      "description": "Detailed information about different plan categories"
+    },
+    "relay": {
+      "$ref": "#/$defs/AccountGetResponsesContentApplicationJsonSchemaRelay",
+      "description": "Information about your transactional email account"
+    }
+  },
+  "required": [
+    "organization_id",
+    "user_id",
+    "enterprise",
+    "companyName",
+    "email",
+    "firstName",
+    "lastName",
+    "plan",
+    "relay"
+  ],
+  "$defs": {
+    "AccountGetResponsesContentApplicationJsonSchemaAddress": {
+      "type": "object",
+      "properties": {
+        "city": {
+          "type": "string",
+          "description": "City information"
+        },
+        "country": {
+          "type": "string",
+          "description": "Country information"
+        },
+        "street": {
+          "type": "string",
+          "description": "Street information"
+        },
+        "zipCode": {
+          "type": "string",
+          "description": "Zip Code information"
+        }
+      },
+      "required": [
+        "city",
+        "country",
+        "street",
+        "zipCode"
+      ],
+      "description": "Address informations",
+      "title": "AccountGetResponsesContentApplicationJsonSchemaAddress"
+    },
+    "AccountGetResponsesContentApplicationJsonSchemaMarketingAutomation": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Status of Marketing Automation Plateform activation\nfor your account (true=enabled, false=disabled)"
+        },
+        "key": {
+          "type": "string",
+          "description": "Marketing Automation Tracker ID"
+        }
+      },
+      "required": [
+        "enabled"
+      ],
+      "title": "AccountGetResponsesContentApplicationJsonSchemaMarketingAutomation"
+    },
+    "AccountGetResponsesContentApplicationJsonSchemaPlanItems": {
+      "type": "object",
+      "properties": {
+        "credits": {
+          "type": "string",
+          "title": "float",
+          "description": "Remaining credits of the user"
+        },
+        "creditsType": {
+          "$ref": "#/$defs/AccountGetResponsesContentApplicationJsonSchemaPlanItemsCreditsType",
+          "description": "This is the type of the credit, \"Send Limit\" is one\nof the possible types of credit of a user. \"Send\nLimit\" implies the total number of emails you can\nsend to the subscribers in your account."
+        },
+        "endDate": {
+          "type": "string",
+          "description": "Date of the period from which the plan will end\n(Unix timestamp format)"
+        },
+        "startDate": {
+          "type": "string",
+          "description": "Date of the period from which the plan will start\n(Unix timestamp format)"
+        },
+        "type": {
+          "$ref": "#/$defs/AccountGetResponsesContentApplicationJsonSchemaPlanItemsType",
+          "description": "Displays the plan type of the user"
+        }
+      },
+      "required": [
+        "credits",
+        "creditsType",
+        "type"
+      ],
+      "title": "AccountGetResponsesContentApplicationJsonSchemaPlanItems"
+    },
+    "AccountGetResponsesContentApplicationJsonSchemaPlanItemsCreditsType": {
+      "type": "string",
+      "enum": [
+        "sendLimit"
+      ],
+      "description": "This is the type of the credit, \"Send Limit\" is one\nof the possible types of credit of a user. \"Send\nLimit\" implies the total number of emails you can\nsend to the subscribers in your account.",
+      "title": "AccountGetResponsesContentApplicationJsonSchemaPlanItemsCreditsType"
+    },
+    "AccountGetResponsesContentApplicationJsonSchemaPlanItemsType": {
+      "type": "string",
+      "enum": [
+        "payAsYouGo",
+        "free",
+        "subscription",
+        "sms"
+      ],
+      "description": "Displays the plan type of the user",
+      "title": "AccountGetResponsesContentApplicationJsonSchemaPlanItemsType"
+    },
+    "AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItems": {
+      "type": "object",
+      "properties": {
+        "planCategory": {
+          "$ref": "#/$defs/AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsPlanCategory",
+          "description": "Category of the plan"
+        },
+        "planType": {
+          "type": "string",
+          "description": "Type of plan within the category"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the plan"
+        },
+        "status": {
+          "$ref": "#/$defs/AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsStatus",
+          "description": "Current status of the plan"
+        },
+        "startDate": {
+          "type": "string",
+          "description": "Plan start date (Unix timestamp)"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "Plan end date (Unix timestamp)"
+        },
+        "users": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsUsers"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "User seat information for the plan"
+        },
+        "credits": {
+          "type": "string",
+          "description": "Credits allocated for this plan category (optional, may not be present for all plan categories)"
+        }
+      },
+      "required": [
+        "planCategory",
+        "planType",
+        "name",
+        "status"
+      ],
+      "title": "AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItems"
+    },
+    "AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsPlanCategory": {
+      "type": "string",
+      "enum": [
+        "Marketing",
+        "Chat",
+        "CRM"
+      ],
+      "description": "Category of the plan",
+      "title": "AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsPlanCategory"
+    },
+    "AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsStatus": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive"
+      ],
+      "description": "Current status of the plan",
+      "title": "AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsStatus"
+    },
+    "AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsUsers": {
+      "type": "object",
+      "properties": {
+        "purchasedSeats": {
+          "type": "string",
+          "description": "Number of purchased user seats"
+        },
+        "usedSeats": {
+          "type": "string",
+          "description": "Number of used user seats"
+        }
+      },
+      "required": [
+        "purchasedSeats",
+        "usedSeats"
+      ],
+      "description": "User seat information for the plan",
+      "title": "AccountGetResponsesContentApplicationJsonSchemaPlanVerticalsItemsUsers"
+    },
+    "AccountGetResponsesContentApplicationJsonSchemaRelay": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/$defs/AccountGetResponsesContentApplicationJsonSchemaRelayData",
+          "description": "Data regarding the transactional email account"
+        },
+        "enabled": {
+          "type": "boolean",
+          "description": "Status of your transactional email Account\n(true=Enabled, false=Disabled)"
+        }
+      },
+      "required": [
+        "data",
+        "enabled"
+      ],
+      "description": "Information about your transactional email account",
+      "title": "AccountGetResponsesContentApplicationJsonSchemaRelay"
+    },
+    "AccountGetResponsesContentApplicationJsonSchemaRelayData": {
+      "type": "object",
+      "properties": {
+        "port": {
+          "type": "integer",
+          "description": "Port used for SMTP Relay"
+        },
+        "relay": {
+          "type": "string",
+          "description": "URL of the SMTP Relay"
+        },
+        "userName": {
+          "type": "string",
+          "format": "email",
+          "description": "Email to use as login on transactional platform"
+        }
+      },
+      "required": [
+        "port",
+        "relay",
+        "userName"
+      ],
+      "description": "Data regarding the transactional email account",
+      "title": "AccountGetResponsesContentApplicationJsonSchemaRelayData"
+    }
+  }
+}

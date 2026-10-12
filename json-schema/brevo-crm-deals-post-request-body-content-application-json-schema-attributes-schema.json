@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-crm-deals-post-request-body-content-application-json-schema-attributes-schema.json",
+  "title": "CrmDealsPostRequestBodyContentApplicationJsonSchemaAttributes",
+  "description": "Attributes for deal creation To assign owner of a Deal you can send attributes.deal_owner and utilize the account email or ID. If you want to create a deal on a specific pipeline and stage you can use the following attributes `pipeline` and `deal_stage`. Pipeline and deal_stage are ids you can fetch using this endpoint `/crm/pipeline/details/{pipelineID}`\n",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-deals-api-openapi.yml#/components/schemas/CrmDealsPostRequestBodyContentApplicationJsonSchemaAttributes",
+  "type": "object",
+  "properties": {}
+}

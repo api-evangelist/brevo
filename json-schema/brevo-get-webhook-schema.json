@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-get-webhook-schema.json",
+  "title": "getWebhook",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-webhooks-api-openapi.yml#/components/schemas/getWebhook",
+  "type": "object",
+  "properties": {
+    "auth": {
+      "$ref": "#/$defs/GetWebhookAuth",
+      "description": "Authentication header to be send with the webhook requests"
+    },
+    "batched": {
+      "type": "boolean",
+      "description": "Batching configuration of the webhook, we send batched webhooks if its\ntrue"
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Creation UTC date-time of the webhook (YYYY-MM-DDTHH:mm:ss.SSSZ)"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the webhook"
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "headers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/GetWebhookHeadersItems"
+      }
+    },
+    "id": {
+      "type": "integer",
+      "format": "int64",
+      "description": "ID of the webhook"
+    },
+    "modifiedAt": {
+      "type": "string",
+      "description": "Last modification UTC date-time of the webhook (YYYY-MM-DDTHH:mm:ss.SSSZ)"
+    },
+    "type": {
+      "$ref": "#/$defs/GetWebhookType",
+      "description": "Type of webhook (marketing, transactional, or inbound)"
+    },
+    "domain": {
+      "type": "string",
+      "description": "Inbound domain of the webhook, only returned for inbound type webhooks"
+    },
+    "url": {
+      "type": "string",
+      "format": "url",
+      "description": "URL of the webhook"
+    }
+  },
+  "required": [
+    "createdAt",
+    "description",
+    "events",
+    "id",
+    "modifiedAt",
+    "type",
+    "url"
+  ],
+  "$defs": {
+    "GetWebhookAuth": {
+      "type": "object",
+      "properties": {},
+      "description": "Authentication header to be send with the webhook requests",
+      "title": "GetWebhookAuth"
+    },
+    "GetWebhookHeadersItems": {
+      "type": "object",
+      "properties": {},
+      "description": "Headers send with the requests to the webhook",
+      "title": "GetWebhookHeadersItems"
+    },
+    "GetWebhookType": {
+      "type": "string",
+      "enum": [
+        "marketing",
+        "transactional",
+        "inbound"
+      ],
+      "description": "Type of webhook (marketing, transactional, or inbound)",
+      "title": "GetWebhookType"
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-balance-create-subscription-balances-response-200-schema.json",
+  "title": "Balance_createSubscriptionBalances_Response_200",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-balance-api-openapi.yml#/components/schemas/Balance_createSubscriptionBalances_Response_200",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the balance."
+    },
+    "amount": {
+      "type": "string",
+      "title": "float",
+      "description": "The current amount available in the balance."
+    },
+    "loyaltyProgramId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Loyalty program ID."
+    },
+    "organizationId": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Organization ID."
+    },
+    "contactId": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Contact ID."
+    },
+    "balanceDefinitionId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Balance definition ID."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of when the balance was created."
+    },
+    "expiresAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Expiration timestamp of the balance."
+    },
+    "consumedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of when the balance was last consumed."
+    }
+  }
+}

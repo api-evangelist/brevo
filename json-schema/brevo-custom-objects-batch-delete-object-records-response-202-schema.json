@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-custom-objects-batch-delete-object-records-response-202-schema.json",
+  "title": "Custom Objects_batchDeleteObjectRecords_Response_202",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-custom-objects-api-openapi.yml#/components/schemas/Custom_Objects_batchDeleteObjectRecords_Response_202",
+  "type": "object",
+  "properties": {
+    "processId": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Identifier for batch process tracking"
+    },
+    "message": {
+      "type": "string"
+    }
+  }
+}

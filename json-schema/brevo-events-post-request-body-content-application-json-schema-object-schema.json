@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-events-post-request-body-content-application-json-schema-object-schema.json",
+  "title": "EventsPostRequestBodyContentApplicationJsonSchemaObject",
+  "description": "Identifiers of the object record associated with this event. Ignored if the object type or identifier for this record does not exist on the account.",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-event-api-openapi.yml#/components/schemas/EventsPostRequestBodyContentApplicationJsonSchemaObject",
+  "type": "object",
+  "properties": {
+    "identifiers": {
+      "$ref": "#/$defs/EventsPostRequestBodyContentApplicationJsonSchemaObjectIdentifiers",
+      "description": "Identifiers for the object."
+    },
+    "type": {
+      "type": "string",
+      "description": "Type of object (e.g., subscription, vehicle, etc.)"
+    }
+  },
+  "$defs": {
+    "EventsPostRequestBodyContentApplicationJsonSchemaObjectIdentifiers": {
+      "type": "object",
+      "properties": {
+        "ext_id": {
+          "type": "string",
+          "description": "External object ID"
+        },
+        "id": {
+          "type": "string",
+          "description": "Internal object ID"
+        }
+      },
+      "description": "Identifiers for the object.",
+      "title": "EventsPostRequestBodyContentApplicationJsonSchemaObjectIdentifiers"
+    }
+  }
+}

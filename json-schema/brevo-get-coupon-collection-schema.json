@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-get-coupon-collection-schema.json",
+  "title": "getCouponCollection",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-coupons-api-openapi.yml#/components/schemas/getCouponCollection",
+  "type": "object",
+  "properties": {
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Datetime on which the collection was created."
+    },
+    "defaultCoupon": {
+      "type": "string",
+      "description": "The default coupon of the collection."
+    },
+    "expirationDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Expiration date for the coupon collection in RFC3339 format."
+    },
+    "id": {
+      "type": "string",
+      "format": "uuidv4",
+      "description": "The id of the collection."
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the collection."
+    },
+    "remainingCoupons": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Number of coupons that have not been sent yet."
+    },
+    "remainingCouponsAlert": {
+      "type": "integer",
+      "description": "If present, an email notification is going to be sent when the total number of available coupons falls below the defined threshold."
+    },
+    "remainingDaysAlert": {
+      "type": "integer",
+      "description": "If present, an email notification is going to be sent the defined amount of days before to the expiration date."
+    },
+    "totalCoupons": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total number of coupons in the collection."
+    }
+  },
+  "required": [
+    "createdAt",
+    "defaultCoupon",
+    "id",
+    "name",
+    "remainingCoupons",
+    "totalCoupons"
+  ]
+}

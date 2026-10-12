@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-companies-get-all-companies-response-200-schema.json",
+  "title": "Companies_getAllCompanies_Response_200",
+  "description": "List of companies",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-companies-api-openapi.yml#/components/schemas/Companies_getAllCompanies_Response_200",
+  "type": "object",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Company"
+      },
+      "description": "List of companies"
+    }
+  },
+  "$defs": {
+    "Company": {
+      "type": "object",
+      "properties": {
+        "attributes": {
+          "$ref": "#/$defs/CompanyAttributes",
+          "description": "Company attributes with values"
+        },
+        "id": {
+          "type": "string",
+          "description": "Unique company id"
+        },
+        "linkedContactsIds": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "description": "Contact ids for contacts linked to this company"
+        },
+        "linkedDealsIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Deal ids for deals linked to this company"
+        }
+      },
+      "description": "Company Details",
+      "title": "Company"
+    },
+    "CompanyAttributes": {
+      "type": "object",
+      "properties": {},
+      "description": "Company attributes with values",
+      "title": "CompanyAttributes"
+    }
+  }
+}

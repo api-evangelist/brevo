@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-domains-get-domain-configuration-response-200-schema.json",
+  "title": "Domains_getDomainConfiguration_Response_200",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-domains-api-openapi.yml#/components/schemas/Domains_getDomainConfiguration_Response_200",
+  "type": "object",
+  "properties": {
+    "domain": {
+      "type": "string",
+      "description": "Domain name"
+    },
+    "verified": {
+      "type": "boolean",
+      "description": "Status of domain verification (true=verified, false=non\nverified)"
+    },
+    "authenticated": {
+      "type": "boolean",
+      "description": "Status of domain authentication (true=authenticated, false=non\nauthenticated)"
+    },
+    "dns_records": {
+      "$ref": "#/$defs/SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecords",
+      "description": "DNS records configuration and status"
+    }
+  },
+  "required": [
+    "domain",
+    "verified",
+    "authenticated",
+    "dns_records"
+  ],
+  "$defs": {
+    "SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecords": {
+      "type": "object",
+      "properties": {
+        "brevo_code": {
+          "$ref": "#/$defs/SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecordsBrevoCode",
+          "description": "Brevo verification code record"
+        },
+        "dkim_record": {
+          "$ref": "#/$defs/SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecordsDkimRecord",
+          "description": "DKIM authentication record"
+        },
+        "dmarc_record": {
+          "$ref": "#/$defs/SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecordsDmarcRecord",
+          "description": "DMARC policy record"
+        }
+      },
+      "required": [
+        "brevo_code",
+        "dkim_record",
+        "dmarc_record"
+      ],
+      "description": "DNS records configuration and status",
+      "title": "SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecords"
+    },
+    "SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecordsBrevoCode": {
+      "type": "object",
+      "properties": {
+        "host_name": {
+          "type": "string",
+          "description": "DNS record hostname"
+        },
+        "type": {
+          "type": "string",
+          "description": "DNS record type"
+        },
+        "value": {
+          "type": "string",
+          "description": "DNS record value"
+        },
+        "status": {
+          "type": "boolean",
+          "description": "Whether the record is properly configured"
+        }
+      },
+      "required": [
+        "host_name",
+        "type",
+        "value",
+        "status"
+      ],
+      "description": "Brevo verification code record",
+      "title": "SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecordsBrevoCode"
+    },
+    "SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecordsDkimRecord": {
+      "type": "object",
+      "properties": {
+        "host_name": {
+          "type": "string",
+          "description": "DNS record hostname"
+        },
+        "type": {
+          "type": "string",
+          "description": "DNS record type"
+        },
+        "value": {
+          "type": "string",
+          "description": "DNS record value"
+        },
+        "status": {
+          "type": "boolean",
+          "description": "Whether the record is properly configured"
+        }
+      },
+      "required": [
+        "host_name",
+        "type",
+        "value",
+        "status"
+      ],
+      "description": "DKIM authentication record",
+      "title": "SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecordsDkimRecord"
+    },
+    "SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecordsDmarcRecord": {
+      "type": "object",
+      "properties": {
+        "host_name": {
+          "type": "string",
+          "description": "DNS record hostname"
+        },
+        "type": {
+          "type": "string",
+          "description": "DNS record type"
+        },
+        "value": {
+          "type": "string",
+          "description": "DNS record value"
+        },
+        "status": {
+          "type": "boolean",
+          "description": "Whether the record is properly configured"
+        }
+      },
+      "required": [
+        "host_name",
+        "type",
+        "value",
+        "status"
+      ],
+      "description": "DMARC policy record",
+      "title": "SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecordsDmarcRecord"
+    }
+  }
+}

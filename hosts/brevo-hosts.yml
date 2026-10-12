@@ -1,0 +1,151 @@
+generated: '2026-10-12'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 11
+  own: 8
+  other_domain: 0
+  platform: 3
+  roles:
+  - api
+  - collections
+  - identity
+  - other
+  - portal
+  - source
+  - status
+  - support
+  - website
+hosts:
+- host: api.brevo.com
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: brevo.com
+  role: api
+  relation: own
+- host: app.brevo.com
+  found_by:
+  - pointer
+  types:
+  - Login
+  serves: []
+  registrable_domain: brevo.com
+  role: identity
+  relation: own
+- host: developers.brevo.com
+  found_by:
+  - pointer
+  - apis[]
+  - vendor-detect
+  types:
+  - LlmsText
+  - OpenAPI
+  - Deprecation
+  - ChangeLog
+  - Webhooks
+  - DeveloperPortal
+  - Documentation
+  - APIReference
+  - GettingStarted
+  serves:
+  - docs
+  - cdn
+  vendor: cloudflare
+  registrable_domain: brevo.com
+  role: portal
+  relation: own
+- host: github.com
+  found_by:
+  - pointer
+  types:
+  - GitHubOrganization
+  serves: []
+  registrable_domain: github.com
+  role: source
+  relation: platform
+- host: help.brevo.com
+  found_by:
+  - pointer
+  - vendor-detect
+  types:
+  - Support
+  serves:
+  - support
+  vendor: zendesk
+  registrable_domain: brevo.com
+  role: support
+  relation: own
+- host: oauth.brevo.com
+  found_by:
+  - vendor-detect
+  types: []
+  serves:
+  - identity
+  vendor: keycloak
+  registrable_domain: brevo.com
+  role: other
+  relation: own
+- host: onboarding.brevo.com
+  found_by:
+  - pointer
+  types:
+  - SignUp
+  serves: []
+  registrable_domain: brevo.com
+  role: identity
+  relation: own
+- host: status.brevo.com
+  found_by:
+  - pointer
+  - vendor-detect
+  types:
+  - StatusPage
+  serves:
+  - hosting
+  - status-page
+  vendor: vercel
+  registrable_domain: brevo.com
+  role: status
+  relation: own
+- host: www.brevo.com
+  found_by:
+  - pointer
+  types:
+  - Newsroom
+  - Leadership
+  - Compliance
+  - Security
+  - Blog
+  - Pricing
+  - TermsOfService
+  - PrivacyPolicy
+  - Website
+  serves: []
+  registrable_domain: brevo.com
+  role: website
+  relation: own
+- host: www.linkedin.com
+  found_by:
+  - pointer
+  types:
+  - LinkedIn
+  serves: []
+  registrable_domain: linkedin.com
+  role: other
+  relation: platform
+- host: www.postman.com
+  found_by:
+  - pointer
+  - vendor-detect
+  types:
+  - Postman
+  serves:
+  - api-collections
+  vendor: postman
+  registrable_domain: postman.com
+  role: collections
+  relation: platform

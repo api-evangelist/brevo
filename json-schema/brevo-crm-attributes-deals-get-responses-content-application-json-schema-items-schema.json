@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-crm-attributes-deals-get-responses-content-application-json-schema-items-schema.json",
+  "title": "CrmAttributesDealsGetResponsesContentApplicationJsonSchemaItems",
+  "description": "Deal attribute details",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-deals-api-openapi.yml#/components/schemas/CrmAttributesDealsGetResponsesContentApplicationJsonSchemaItems",
+  "type": "object",
+  "properties": {
+    "internalName": {
+      "type": "string",
+      "description": "Internal name of the attribute"
+    },
+    "attributeTypeName": {
+      "type": "string",
+      "description": "Type of the attribute"
+    },
+    "label": {
+      "type": "string",
+      "description": "Display label of the attribute"
+    },
+    "attributeOptions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/CrmAttributesDealsGetResponsesContentApplicationJsonSchemaItemsAttributeOptionsItems"
+      },
+      "description": "Options for single-select or multi-choice attributes"
+    },
+    "isRequired": {
+      "type": "boolean",
+      "description": "Whether this attribute is required"
+    },
+    "isValueReadonly": {
+      "type": "boolean",
+      "description": "Whether this attribute value is read-only"
+    }
+  },
+  "$defs": {
+    "CrmAttributesDealsGetResponsesContentApplicationJsonSchemaItemsAttributeOptionsItems": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "title": "CrmAttributesDealsGetResponsesContentApplicationJsonSchemaItemsAttributeOptionsItems"
+    }
+  }
+}

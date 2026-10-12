@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-webhooks-webhook-id-put-request-body-content-application-json-schema-auth-schema.json",
+  "title": "WebhooksWebhookIdPutRequestBodyContentApplicationJsonSchemaAuth",
+  "description": "Add authentication on webhook url",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-webhooks-api-openapi.yml#/components/schemas/WebhooksWebhookIdPutRequestBodyContentApplicationJsonSchemaAuth",
+  "type": "object",
+  "properties": {
+    "token": {
+      "type": "string",
+      "description": "Webhook authentication token"
+    },
+    "type": {
+      "type": "string",
+      "description": "Type of authentication"
+    }
+  }
+}

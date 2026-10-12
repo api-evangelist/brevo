@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-email-campaigns-post-request-body-content-application-json-schema-sender-schema.json",
+  "title": "EmailCampaignsPostRequestBodyContentApplicationJsonSchemaSender",
+  "description": "Sender details including id or email and name (optional). Only one of either Sender’s email or Sender’s ID shall be passed in one request at a time. Passing both `email` and `id` will result in an error. For example: **{\"name\":\"xyz\", \"email\":\"example@abc.com\"}** or **{\"name\":\"xyz\", \"id\":123}**\n",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-email-campaigns-api-openapi.yml#/components/schemas/EmailCampaignsPostRequestBodyContentApplicationJsonSchemaSender",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Sender email. Must be a valid email address. Cannot be used together with `id` in the same request.\n"
+    },
+    "id": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Select the sender for the campaign on the basis of sender id. Cannot be used together with `email` in the same request. _In order to select a sender with a specific pool of IPs, dedicated IP users shall pass id (instead of email)._\n"
+    },
+    "name": {
+      "type": "string",
+      "description": "Sender Name"
+    }
+  }
+}

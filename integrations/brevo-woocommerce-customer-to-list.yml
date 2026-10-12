@@ -1,0 +1,86 @@
+arazzo: 1.0.1
+info:
+  title: Brevo WooCommerce customer to contact list
+  summary: Brevo WooCommerce customer to contact list
+  description: Brevo-built WooCommerce integration. Reads a WooCommerce customer, upserts it as a Brevo contact and adds it
+    to a Brevo list.
+  version: 1.0.0
+sourceDescriptions:
+- name: woocommerceCustomers
+  url: https://raw.githubusercontent.com/api-evangelist/woocommerce/refs/heads/main/openapi/woocommerce-customers-api-openapi.yml
+  type: openapi
+- name: brevoContacts
+  url: https://raw.githubusercontent.com/api-evangelist/brevo/refs/heads/main/openapi/brevo-contacts-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: woocommerce-customer-to-brevo-list
+  summary: Brevo WooCommerce customer to contact list
+  description: Brevo-built WooCommerce integration. Reads a WooCommerce customer, upserts it as a Brevo contact and adds it
+    to a Brevo list.
+  inputs:
+    type: object
+    properties:
+      customerId:
+        type: string
+        description: WooCommerce customer id
+      listId:
+        type: string
+        description: Brevo list id
+  steps:
+  - stepId: get-customer
+    description: Read the WooCommerce customer.
+    operationId: $sourceDescriptions.woocommerceCustomers.getCustomer
+    parameters:
+    - name: id
+      in: path
+      value: $inputs.customerId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      email: $response.body#/email
+      firstName: $response.body#/first_name
+      lastName: $response.body#/last_name
+  - stepId: create-contact
+    description: Create or update the Brevo contact (updateEnabled upserts by email).
+    operationId: $sourceDescriptions.brevoContacts.createContact
+    requestBody:
+      contentType: application/json
+      payload:
+        email: $steps.get-customer.outputs.email
+        attributes:
+          FIRSTNAME: $steps.get-customer.outputs.firstName
+          LASTNAME: $steps.get-customer.outputs.lastName
+        updateEnabled: true
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      contactId: $response.body#/id
+  - stepId: add-to-list
+    description: Add the contact to the Brevo list by email.
+    operationId: $sourceDescriptions.brevoContacts.addContactToList
+    parameters:
+    - name: listId
+      in: path
+      value: $inputs.listId
+    requestBody:
+      contentType: application/json
+      payload:
+        emails:
+        - $steps.get-customer.outputs.email
+    successCriteria:
+    - condition: $statusCode == 201
+  outputs:
+    contactId: $steps.create-contact.outputs.contactId
+x-integration:
+  partner: woocommerce
+  template: null
+  edge_evidence: https://www.brevo.com/integrations/
+  edge_type: claimed
+  edge_direction: provider-built
+  method: generated
+  generated: '2026-10-12'
+  generator: enrichment pass local-v5 (provider-integrations-arazzo)
+  guessed_steps:
+  - step: create-contact
+    cause: provider-contract
+    why: Brevo attribute names (FIRSTNAME/LASTNAME) are account-defined, not declared in the contract

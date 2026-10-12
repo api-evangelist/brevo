@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-consent-groups-list-response-schema.json",
+  "title": "ConsentGroupsListResponse",
+  "description": "Paginated list of consent groups.",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-consent-groups-api-openapi.yml#/components/schemas/ConsentGroupsListResponse",
+  "type": "object",
+  "properties": {
+    "consentGroups": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ConsentGroup"
+      },
+      "description": "List of consent groups matching the filter"
+    },
+    "total": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total number of consent groups matching the filter"
+    },
+    "limit": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Maximum number of results returned"
+    },
+    "offset": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Number of results skipped"
+    }
+  },
+  "required": [
+    "consentGroups",
+    "total",
+    "limit",
+    "offset"
+  ],
+  "$defs": {
+    "ConsentGroup": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Unique identifier for the consent group"
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name of the consent group"
+        },
+        "description": {
+          "type": "string",
+          "description": "Optional description of the consent group"
+        },
+        "signupMode": {
+          "$ref": "#/$defs/ConsentGroupSignupMode",
+          "description": "Controls how contacts are added to the group. `manual` — contacts are added explicitly via the API. `automatic` — contacts are added automatically at signup."
+        },
+        "contactsCount": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of contacts currently in this consent group"
+        },
+        "isDefault": {
+          "type": "boolean",
+          "description": "Whether this is a system-created default consent group"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "UTC date-time when the consent group was created (YYYY-MM-DDTHH:mm:ss.SSSZ)"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "UTC date-time when the consent group was last updated (YYYY-MM-DDTHH:mm:ss.SSSZ)"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "signupMode",
+        "contactsCount",
+        "isDefault",
+        "createdAt",
+        "updatedAt"
+      ],
+      "description": "A consent group representing a category of contact opt-in/opt-out preferences.",
+      "title": "ConsentGroup"
+    },
+    "ConsentGroupSignupMode": {
+      "type": "string",
+      "enum": [
+        "manual",
+        "automatic"
+      ],
+      "description": "Controls how contacts are added to the group. `manual` — contacts are added explicitly via the API. `automatic` — contacts are added automatically at signup.",
+      "title": "ConsentGroupSignupMode"
+    }
+  }
+}

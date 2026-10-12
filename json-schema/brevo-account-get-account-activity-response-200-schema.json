@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-account-get-account-activity-response-200-schema.json",
+  "title": "Account_getAccountActivity_Response_200",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-account-api-openapi.yml#/components/schemas/Account_getAccountActivity_Response_200",
+  "type": "object",
+  "properties": {
+    "logs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/OrganizationActivitiesGetResponsesContentApplicationJsonSchemaLogsItems"
+      },
+      "description": "Get user activity logs"
+    }
+  },
+  "$defs": {
+    "OrganizationActivitiesGetResponsesContentApplicationJsonSchemaLogsItems": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "description": "Type of activity in the account."
+        },
+        "date": {
+          "type": "string",
+          "description": "Time of the activity."
+        },
+        "user_agent": {
+          "type": "string",
+          "description": "Browser details of the user who performed the activity."
+        },
+        "user_email": {
+          "type": "string",
+          "description": "Email address of the user who performed activity in the\naccount."
+        },
+        "user_ip": {
+          "type": "string",
+          "description": "IP address of the user who performed activity in the\naccount."
+        }
+      },
+      "required": [
+        "action",
+        "date",
+        "user_agent",
+        "user_email",
+        "user_ip"
+      ],
+      "title": "OrganizationActivitiesGetResponsesContentApplicationJsonSchemaLogsItems"
+    }
+  }
+}

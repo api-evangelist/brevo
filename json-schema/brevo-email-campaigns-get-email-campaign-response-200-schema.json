@@ -1,0 +1,588 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-email-campaigns-get-email-campaign-response-200-schema.json",
+  "title": "Email Campaigns_getEmailCampaign_Response_200",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-email-campaigns-api-openapi.yml#/components/schemas/Email_Campaigns_getEmailCampaign_Response_200",
+  "type": "object",
+  "properties": {
+    "attachmentFile": {
+      "type": "string",
+      "description": "Url of the attachment file. Only available if the campaign has an attachment."
+    },
+    "abTesting": {
+      "type": "boolean",
+      "description": "Status of A/B Test for the campaign. abTesting = false means it is disabled, & abTesting = true means it is enabled."
+    },
+    "id": {
+      "type": "integer",
+      "format": "int64",
+      "description": "ID of the campaign"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the campaign"
+    },
+    "previewText": {
+      "type": "string",
+      "description": "Preview text or preheader of the email campaign"
+    },
+    "scheduledAt": {
+      "type": "string",
+      "description": "UTC date-time on which campaign is scheduled (YYYY-MM-DDTHH:mm:ss.SSSZ)"
+    },
+    "sendAtBestTime": {
+      "type": "boolean",
+      "description": "It is true if you have chosen to send your campaign at best time, otherwise it is false"
+    },
+    "splitRule": {
+      "type": "integer",
+      "description": "The size of your ab-test groups. Only available if `abTesting` flag of the campaign is `true`"
+    },
+    "status": {
+      "$ref": "#/$defs/EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaStatus",
+      "description": "Status of the campaign"
+    },
+    "subject": {
+      "type": "string",
+      "description": "Subject of the campaign. Only available if `abTesting` flag of the campaign is `false`"
+    },
+    "subjectA": {
+      "type": "string",
+      "description": "Subject A of the ab-test campaign. Only available if `abTesting` flag of the campaign is `true`"
+    },
+    "subjectB": {
+      "type": "string",
+      "description": "Subject B of the ab-test campaign. Only available if `abTesting` flag of the campaign is `true`"
+    },
+    "type": {
+      "$ref": "#/$defs/EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaType",
+      "description": "Type of campaign"
+    },
+    "winnerCriteria": {
+      "type": "string",
+      "description": "Criteria for the winning version. Only available if `abTesting` flag of the campaign is `true`"
+    },
+    "winnerDelay": {
+      "type": "integer",
+      "description": "The duration of the test in hours at the end of which the winning version will be sent. Only available if `abTesting` flag of the campaign is `true`"
+    },
+    "attachmentUrl": {
+      "type": "string",
+      "description": "URL of the attachment file associated with the campaign. Empty string if no attachment is present."
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Creation UTC date-time of the campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)"
+    },
+    "emailExpirationDate": {
+      "$ref": "#/$defs/EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaEmailExpirationDate",
+      "description": "Expiration date configuration for the email campaign, if set. Contains the duration and unit of the email expiry."
+    },
+    "footer": {
+      "type": "string",
+      "description": "Footer of the campaign"
+    },
+    "header": {
+      "type": "string",
+      "description": "Header of the campaign"
+    },
+    "htmlContent": {
+      "type": "string",
+      "description": "HTML content of the campaign"
+    },
+    "inlineImageActivation": {
+      "type": "boolean",
+      "description": "Status of inline image. inlineImageActivation = false means image can’t be embedded, & inlineImageActivation = true means image can be embedded, in the email."
+    },
+    "mirrorActive": {
+      "type": "boolean",
+      "description": "Status of mirror links in campaign. mirrorActive = false means mirror links are deactivated, & mirrorActive = true means mirror links are activated, in the campaign"
+    },
+    "modifiedAt": {
+      "type": "string",
+      "description": "UTC date-time of last modification of the campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)"
+    },
+    "recurring": {
+      "type": "boolean",
+      "description": "FOR TRIGGER ONLY ! Type of trigger campaign.recurring = false means contact can receive the same Trigger campaign only once, & recurring = true means contact can receive the same Trigger campaign several times"
+    },
+    "replyTo": {
+      "type": "string",
+      "format": "email",
+      "description": "Email defined as the \"Reply to\" of the campaign"
+    },
+    "returnBounce": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total number of non-delivered campaigns for a particular campaign id."
+    },
+    "sender": {
+      "$ref": "#/$defs/EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaSender"
+    },
+    "sentDate": {
+      "type": "string",
+      "description": "Sent UTC date-time of the campaign (YYYY-MM-DDTHH:mm:ss.SSSZ). Only available if 'status' of the campaign is 'sent'"
+    },
+    "shareLink": {
+      "type": "string",
+      "description": "Link to share the campaign on social media. For trigger campaigns, this returns a descriptive message instead of a URL. For classic campaigns that have not been sent, this also returns a descriptive message."
+    },
+    "tag": {
+      "type": "string",
+      "description": "Tag of the campaign"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of tags of the campaign"
+    },
+    "testSent": {
+      "type": "boolean",
+      "description": "Retrieved the status of test email sending. (true=Test email has been sent  false=Test email has not been sent)"
+    },
+    "toField": {
+      "type": "string",
+      "description": "Customisation of the \"to\" field of the campaign"
+    },
+    "utmCampaignValue": {
+      "type": "string",
+      "description": "The utm_campaign value associated with the campaign. Only present if a UTM campaign value was set."
+    },
+    "utmContent": {
+      "type": "string",
+      "description": "The utm_content value associated with the campaign. Only present if a utm_content value was set on create or update."
+    },
+    "utmID": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The campaign ID used as utm_id parameter. Only present if UTM campaign tracking with ID is enabled."
+    },
+    "utmMedium": {
+      "type": "string",
+      "description": "The utm_medium value. Set to \"EMAIL\" when UTM campaign tracking is enabled."
+    },
+    "utmSource": {
+      "type": "string",
+      "description": "The utm_source value. Set to \"Brevo\" when UTM campaign tracking is enabled."
+    },
+    "utmTerm": {
+      "type": "string",
+      "description": "The utm_term value associated with the campaign. Only present if a utm_term value was set on create or update."
+    },
+    "recipients": {
+      "$ref": "#/$defs/getCampaignRecipients"
+    },
+    "statistics": {
+      "$ref": "#/$defs/getExtendedCampaignStats"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "status",
+    "type",
+    "createdAt",
+    "footer",
+    "header",
+    "htmlContent",
+    "modifiedAt",
+    "replyTo",
+    "sender",
+    "testSent",
+    "recipients",
+    "statistics"
+  ],
+  "$defs": {
+    "EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaEmailExpirationDate": {
+      "type": "object",
+      "properties": {
+        "duration": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Duration of the email expiry"
+        },
+        "unit": {
+          "$ref": "#/$defs/EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaEmailExpirationDateUnit",
+          "description": "Unit of the duration"
+        }
+      },
+      "description": "Expiration date configuration for the email campaign, if set. Contains the duration and unit of the email expiry.",
+      "title": "EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaEmailExpirationDate"
+    },
+    "EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaEmailExpirationDateUnit": {
+      "type": "string",
+      "enum": [
+        "days",
+        "weeks",
+        "months"
+      ],
+      "description": "Unit of the duration",
+      "title": "EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaEmailExpirationDateUnit"
+    },
+    "EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaSender": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Sender email of the campaign"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Sender id of the campaign"
+        },
+        "name": {
+          "type": "string",
+          "description": "Sender name of the campaign"
+        }
+      },
+      "title": "EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaSender"
+    },
+    "EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaStatus": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "sent",
+        "archive",
+        "queued",
+        "suspended",
+        "in_process",
+        "in_review",
+        "cancelling",
+        "cancelled"
+      ],
+      "description": "Status of the campaign",
+      "title": "EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaStatus"
+    },
+    "EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaType": {
+      "type": "string",
+      "enum": [
+        "classic",
+        "trigger"
+      ],
+      "description": "Type of campaign",
+      "title": "EmailCampaignsCampaignIdGetResponsesContentApplicationJsonSchemaType"
+    },
+    "GetExtendedCampaignStatsStatsByDevice": {
+      "type": "object",
+      "properties": {
+        "desktop": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/getDeviceBrowserStats"
+          },
+          "description": "Statistics of the campaign on the basis of desktop devices"
+        },
+        "mobile": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/getDeviceBrowserStats"
+          },
+          "description": "Statistics of the campaign on the basis of mobile devices"
+        },
+        "tablet": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/getDeviceBrowserStats"
+          },
+          "description": "Statistics of the campaign on the basis of tablet devices"
+        },
+        "unknown": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/getDeviceBrowserStats"
+          },
+          "description": "Statistics of the campaign on the basis of unknown devices"
+        }
+      },
+      "title": "GetExtendedCampaignStatsStatsByDevice"
+    },
+    "getCampaignRecipients": {
+      "type": "object",
+      "properties": {
+        "excludedSegments": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "description": "Segment IDs excluded from the campaign"
+        },
+        "exclusionLists": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "lists": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "segments": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "description": "Segment IDs included in the campaign"
+        }
+      },
+      "required": [
+        "exclusionLists",
+        "lists"
+      ],
+      "title": "getCampaignRecipients"
+    },
+    "getCampaignStats": {
+      "type": "object",
+      "properties": {
+        "appleMppOpens": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int64",
+          "description": "Numbers of times your email has been opened automatically through Apple MPP."
+        },
+        "clickers": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int64",
+          "description": "Number of total clicks for the campaign"
+        },
+        "complaints": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int64",
+          "description": "Number of complaints (Spam reports) for the campaign"
+        },
+        "deferred": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of deferred emails for the campaign"
+        },
+        "delivered": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int64",
+          "description": "Number of delivered emails for the campaign"
+        },
+        "estimatedViews": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Rate of recipients without any privacy protection option enabled in their email client, applied to all delivered emails"
+        },
+        "hardBounces": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int64",
+          "description": "Number of hard bounces for the campaign"
+        },
+        "listId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "List Id of email campaign (only in case of get email campaign(s)(not for global stats))"
+        },
+        "opensRate": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "float",
+          "description": "Percentage of recipients who open the email out of your total number of recipients. Depending on your Campaign settings, they may include Apple MPP opens."
+        },
+        "returnBounce": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Total number of non-delivered campaigns for a particular campaign id."
+        },
+        "sent": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int64",
+          "description": "Number of sent emails for the campaign"
+        },
+        "softBounces": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int64",
+          "description": "Number of softbounce for the campaign"
+        },
+        "trackableViews": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int64",
+          "description": "Recipients without any privacy protection option enabled in their email email client"
+        },
+        "trackableViewsRate": {
+          "type": "string",
+          "title": "float",
+          "description": "Rate of recipients without any privacy protection option enabled in their email client"
+        },
+        "uniqueClicks": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int64",
+          "description": "Number of unique clicks for the campaign"
+        },
+        "uniqueViews": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int64",
+          "description": "Number of unique openings for the campaign"
+        },
+        "unsubscriptions": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int64",
+          "description": "Number of unsubscription for the campaign"
+        },
+        "viewed": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int64",
+          "description": "Number of openings for the campaign"
+        }
+      },
+      "required": [
+        "appleMppOpens",
+        "clickers",
+        "complaints",
+        "delivered",
+        "hardBounces",
+        "opensRate",
+        "sent",
+        "softBounces",
+        "trackableViews",
+        "uniqueClicks",
+        "uniqueViews",
+        "unsubscriptions",
+        "viewed"
+      ],
+      "title": "getCampaignStats"
+    },
+    "getDeviceBrowserStats": {
+      "type": "object",
+      "properties": {
+        "clickers": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of total clicks for the campaign using the particular browser"
+        },
+        "uniqueClicks": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of unique clicks for the campaign using the particular browser"
+        },
+        "uniqueViews": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of unique openings for the campaign using the particular browser"
+        },
+        "viewed": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of openings for the campaign using the particular browser"
+        }
+      },
+      "required": [
+        "clickers",
+        "uniqueClicks",
+        "uniqueViews",
+        "viewed"
+      ],
+      "title": "getDeviceBrowserStats"
+    },
+    "getExtendedCampaignStats": {
+      "type": "object",
+      "properties": {
+        "campaignStats": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/getCampaignStats"
+          },
+          "description": "List-wise statistics of the campaign."
+        },
+        "globalStats": {
+          "$ref": "#/$defs/getCampaignStats",
+          "description": "Overall statistics of the campaign"
+        },
+        "linksStats": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "description": "Statistics about the number of clicks for each link in the campaign. Keys are the link URLs, values are click counts. Only populated when the `statistics` query parameter is set to `linksStats`."
+        },
+        "mirrorClick": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of clicks on mirror link"
+        },
+        "remaining": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of remaining emails to send"
+        },
+        "statsByBrowser": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/getDeviceBrowserStats"
+          },
+          "description": "Statistics of the campaign grouped by browser. Only available when retrieving a single campaign with the `statistics` query parameter set to `statsByBrowser`."
+        },
+        "statsByDevice": {
+          "$ref": "#/$defs/GetExtendedCampaignStatsStatsByDevice"
+        },
+        "statsByDomain": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/getCampaignStats"
+          },
+          "description": "Statistics of the campaign grouped by email domain. Only populated when the `statistics` query parameter is set to `statsByDomain`."
+        }
+      },
+      "required": [
+        "campaignStats",
+        "globalStats",
+        "linksStats",
+        "mirrorClick",
+        "remaining"
+      ],
+      "title": "getExtendedCampaignStats"
+    }
+  }
+}

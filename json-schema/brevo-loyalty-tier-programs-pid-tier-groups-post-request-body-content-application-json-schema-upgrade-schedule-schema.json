@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-loyalty-tier-programs-pid-tier-groups-post-request-body-content-application-json-schema-upgrade-schedule-schema.json",
+  "title": "LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeSchedule",
+  "description": "Schedule configuration for tier upgrades. Required when upgradeStrategy is set to a schedule-based strategy.",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-tier-api-openapi.yml#/components/schemas/LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeSchedule",
+  "type": "object",
+  "properties": {
+    "durationValue": {
+      "type": "integer",
+      "description": "Duration value for the schedule."
+    },
+    "durationUnit": {
+      "$ref": "#/$defs/LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeScheduleDurationUnit",
+      "description": "Duration unit for the schedule."
+    },
+    "durationModifier": {
+      "$ref": "#/$defs/LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeScheduleDurationModifier",
+      "description": "Modifier for the duration."
+    },
+    "scheduledDate": {
+      "type": "string",
+      "description": "Scheduled date in DD/MM format."
+    }
+  },
+  "$defs": {
+    "LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeScheduleDurationModifier": {
+      "type": "string",
+      "enum": [
+        "start_of_period",
+        "end_of_period"
+      ],
+      "description": "Modifier for the duration.",
+      "title": "LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeScheduleDurationModifier"
+    },
+    "LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeScheduleDurationUnit": {
+      "type": "string",
+      "enum": [
+        "day",
+        "week",
+        "month",
+        "year"
+      ],
+      "description": "Duration unit for the schedule.",
+      "title": "LoyaltyTierProgramsPidTierGroupsPostRequestBodyContentApplicationJsonSchemaUpgradeScheduleDurationUnit"
+    }
+  }
+}

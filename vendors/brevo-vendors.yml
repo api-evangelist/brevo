@@ -1,0 +1,99 @@
+generated: '2026-10-12'
+method: probed
+source: pre-flight dossier (docs platform, portal detections) + CNAME chains and response headers of the hosts apis.yml names
+registry: all/0-working/vendors.yml
+areas_vocabulary:
+- documentation
+- developer-portal
+- api-gateway
+- cdn
+- hosting
+- sdk-generation
+- api-collections
+- status-page
+- support
+- community
+- identity
+- mcp-hosting
+vendors:
+- vendor: postman
+  name: Postman
+  area: api-collections
+  host: www.postman.com
+  evidence: https://www.postman.com/sib-apiv3/workspace/sendinblue
+  signal: url:postman.com
+  confidence: high
+  kin_score:
+  - postman_collection
+- vendor: cloudflare
+  name: Cloudflare
+  area: cdn
+  host: developers.brevo.com
+  evidence: header:cf-ray
+  signal: header
+  confidence: high
+  kin_score:
+  - https_enforced
+  - hsts
+- vendor: vercel
+  name: Vercel
+  area: hosting
+  host: status.brevo.com
+  evidence: cname:vercel-dns.com
+  signal: cname
+  confidence: high
+  kin_score: []
+- vendor: keycloak
+  name: Keycloak
+  area: identity
+  host: oauth.brevo.com
+  evidence: brevo-oauth-authorization-server.json names keycloak in its OAuth metadata
+  signal: oauth-metadata
+  confidence: high
+  kin_score:
+  - authentication
+- vendor: incident-io
+  name: incident.io
+  area: status-page
+  host: status.brevo.com
+  evidence: cname:incident.io
+  signal: cname
+  confidence: high
+  kin_score:
+  - status_page
+- vendor: zendesk
+  name: Zendesk
+  area: support
+  host: help.brevo.com
+  evidence: cname:zendesk.com
+  signal: cname
+  confidence: high
+  kin_score:
+  - support_channel
+reliance:
+  areas_vendor_served:
+  - api-collections
+  - cdn
+  - hosting
+  - identity
+  - status-page
+  - support
+  vendor_count: 6
+  areas_observed: 12
+  share_of_observable_areas: 0.5
+  note: areas where a third party was DETECTED serving this provider; an area absent here was either self-run or not observed, and this script
+    cannot tell those apart
+checked:
+- 'docs-platform: not probed'
+- status.brevo.com (StatusPage)
+- developers.brevo.com (DeveloperPortal)
+- developers.brevo.com (Documentation)
+- developers.brevo.com (APIReference)
+- developers.brevo.com (GettingStarted)
+- help.brevo.com (Support)
+- www.postman.com (Postman)
+- onboarding.brevo.com (SignUp)
+- app.brevo.com (Login)
+- www.brevo.com (Website)
+- api.brevo.com (baseURL)
+- mcp.brevo.com (mcp)

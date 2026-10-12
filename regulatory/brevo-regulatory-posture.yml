@@ -1,0 +1,10 @@
+generated: '2026-10-12'
+method: none
+signals: {}
+checked:
+- {url: 'https://www.brevo.com/legal/subprocessors/', status: 404}
+- {url: 'https://www.brevo.com/legal/dpa/', status: 404}
+- {url: 'https://www.brevo.com/accessibility/', status: 404}
+- {url: 'https://www.brevo.com/features/data-security/', status: 200, note: 'ISO 27001:2022 and GDPR/CASL/CCPA support claims (recorded in security/); no residency, subprocessor table, SBOM or accessibility report'}
+- {url: 'https://www.brevo.com/legal/privacypolicy/', status: 200, note: '"Subprocessors are listed as part of the Data Processing Agreement." -- the list itself is not published as a page we could read'}
+note: No horizontal-regulatory signal met the substance bar on 2026-10-12; the subprocessor list exists only inside the DPA.

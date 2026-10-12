@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-loyalty-offer-programs-pid-rewards-redeem-post-request-body-content-application-json-schema-order-schema.json",
+  "title": "LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrder",
+  "description": "Order details for the redemption",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-reward-api-openapi.yml#/components/schemas/LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrder",
+  "type": "object",
+  "properties": {
+    "amount": {
+      "type": "number",
+      "format": "double",
+      "description": "Total amount of the order"
+    },
+    "billing": {
+      "$ref": "#/$defs/LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrderBilling",
+      "description": "Billing information for the order"
+    },
+    "contact_id": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unique identifier for the contact"
+    },
+    "coupons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of coupon codes applied to the order"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the order was created"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address associated with the order"
+    },
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the order"
+    },
+    "identifiers": {
+      "$ref": "#/$defs/LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrderIdentifiers",
+      "description": "Additional identifiers for the order"
+    },
+    "products": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrderProductsItems"
+      },
+      "description": "List of products in the order"
+    },
+    "status": {
+      "type": "string",
+      "description": "Current status of the order"
+    },
+    "storeId": {
+      "type": "string",
+      "description": "Identifier for the store where the order was placed"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the order was last updated"
+    }
+  },
+  "$defs": {
+    "LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrderBilling": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string",
+          "description": "Address of the user"
+        },
+        "city": {
+          "type": "string",
+          "description": "City of the user"
+        },
+        "countryCode": {
+          "type": "string",
+          "description": "Country code of the user"
+        },
+        "paymentMethod": {
+          "type": "string",
+          "description": "Payment method opted by the user"
+        },
+        "phone": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Phone number of the user"
+        },
+        "postCode": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Postal Code of user's location"
+        },
+        "region": {
+          "type": "string",
+          "description": "Region where user resides"
+        }
+      },
+      "description": "Billing information for the order",
+      "title": "LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrderBilling"
+    },
+    "LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrderIdentifiers": {
+      "type": "object",
+      "properties": {
+        "ext_id": {
+          "type": "string",
+          "description": "External identifier for the order"
+        },
+        "loyalty_subscription_id": {
+          "type": "string",
+          "description": "Identifier for the loyalty subscription"
+        }
+      },
+      "description": "Additional identifiers for the order",
+      "title": "LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrderIdentifiers"
+    },
+    "LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrderProductsItems": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of categories the product belongs to"
+        },
+        "price": {
+          "type": "number",
+          "format": "double",
+          "description": "Price of the product"
+        },
+        "productId": {
+          "type": "string",
+          "description": "Unique identifier for the product"
+        },
+        "quantity": {
+          "type": "number",
+          "format": "double",
+          "description": "Quantity of the product"
+        },
+        "variantId": {
+          "type": "string",
+          "description": "Identifier for the product variant"
+        }
+      },
+      "title": "LoyaltyOfferProgramsPidRewardsRedeemPostRequestBodyContentApplicationJsonSchemaOrderProductsItems"
+    }
+  }
+}

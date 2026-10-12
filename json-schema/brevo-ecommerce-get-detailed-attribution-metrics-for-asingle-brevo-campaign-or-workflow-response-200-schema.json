@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-ecommerce-get-detailed-attribution-metrics-for-asingle-brevo-campaign-or-workflow-response-200-schema.json",
+  "title": "Ecommerce_getDetailedAttributionMetricsForASingleBrevoCampaignOrWorkflow_Response_200",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-ecommerce-api-openapi.yml#/components/schemas/Ecommerce_getDetailedAttributionMetricsForASingleBrevoCampaignOrWorkflow_Response_200",
+  "type": "object",
+  "properties": {
+    "averageBasket": {
+      "type": "string",
+      "title": "float"
+    },
+    "conversionSource": {
+      "$ref": "#/$defs/EcommerceAttributionMetricsConversionSourceConversionSourceIdGetResponsesContentApplicationJsonSchemaConversionSource"
+    },
+    "id": {
+      "type": "number",
+      "format": "double"
+    },
+    "ordersCount": {
+      "type": "number",
+      "format": "double"
+    },
+    "revenue": {
+      "type": "string",
+      "title": "float"
+    },
+    "newCustomersCount": {
+      "type": "number",
+      "format": "double"
+    }
+  },
+  "required": [
+    "averageBasket",
+    "conversionSource",
+    "id",
+    "ordersCount",
+    "revenue",
+    "newCustomersCount"
+  ],
+  "$defs": {
+    "EcommerceAttributionMetricsConversionSourceConversionSourceIdGetResponsesContentApplicationJsonSchemaConversionSource": {
+      "type": "string",
+      "enum": [
+        "email_campaign",
+        "sms_campaign",
+        "automation_workflow_email",
+        "automation_workflow_sms"
+      ],
+      "title": "EcommerceAttributionMetricsConversionSourceConversionSourceIdGetResponsesContentApplicationJsonSchemaConversionSource"
+    }
+  }
+}

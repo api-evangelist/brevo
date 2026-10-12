@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-user-get-user-permission-response-200-schema.json",
+  "title": "User_getUserPermission_Response_200",
+  "description": "Check user permission",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-user-api-openapi.yml#/components/schemas/User_getUserPermission_Response_200",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "description": "Email address of the user."
+    },
+    "privileges": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/OrganizationUserEmailPermissionsGetResponsesContentApplicationJsonSchemaPrivilegesItems"
+      },
+      "description": "Granular feature permissions given to the user."
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the invited user."
+    }
+  },
+  "required": [
+    "email",
+    "privileges",
+    "status"
+  ],
+  "$defs": {
+    "OrganizationUserEmailPermissionsGetResponsesContentApplicationJsonSchemaPrivilegesItems": {
+      "type": "object",
+      "properties": {
+        "feature": {
+          "type": "string"
+        },
+        "permissions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "feature",
+        "permissions"
+      ],
+      "title": "OrganizationUserEmailPermissionsGetResponsesContentApplicationJsonSchemaPrivilegesItems"
+    }
+  }
+}

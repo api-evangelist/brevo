@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-sms-event-report-schema.json",
+  "title": "SmsEventReport",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-sms-statistics-api-openapi.yml#/components/schemas/SmsEventReport",
+  "type": "object",
+  "properties": {
+    "events": {
+      "type": "array",
+      "description": "List of transactional SMS activity events.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "phoneNumber": {
+            "type": "string",
+            "description": "Recipient phone number."
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "UTC date-time when the event occurred."
+          },
+          "messageId": {
+            "type": "string",
+            "description": "Unique identifier of the SMS message."
+          },
+          "event": {
+            "type": "string",
+            "description": "Type of SMS event that occurred.",
+            "enum": [
+              "sent",
+              "accepted",
+              "delivered",
+              "replied",
+              "softBounce",
+              "hardBounce",
+              "subscribe",
+              "unsubscribe",
+              "skip",
+              "rejected"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "description": "Reason for the event if applicable."
+          },
+          "tag": {
+            "type": "string",
+            "description": "Tag assigned to the SMS."
+          }
+        }
+      }
+    }
+  }
+}

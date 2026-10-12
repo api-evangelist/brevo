@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-update-consent-group-request-schema.json",
+  "title": "UpdateConsentGroupRequest",
+  "description": "Request body for updating a consent group. At least one field must be provided.",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-consent-groups-api-openapi.yml#/components/schemas/UpdateConsentGroupRequest",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "New name for the consent group (max 255 characters)"
+    },
+    "description": {
+      "type": "string",
+      "description": "New description (max 500 characters)"
+    },
+    "signupMode": {
+      "$ref": "#/$defs/UpdateConsentGroupRequestSignupMode",
+      "description": "New signup mode"
+    }
+  },
+  "$defs": {
+    "UpdateConsentGroupRequestSignupMode": {
+      "type": "string",
+      "enum": [
+        "manual",
+        "automatic"
+      ],
+      "description": "New signup mode",
+      "title": "UpdateConsentGroupRequestSignupMode"
+    }
+  }
+}

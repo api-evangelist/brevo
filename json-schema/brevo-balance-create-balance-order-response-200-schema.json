@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-balance-create-balance-order-response-200-schema.json",
+  "title": "Balance_createBalanceOrder_Response_200",
+  "description": "Represents an order linked to a balance definition, including amount, due date, and transaction details.",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-balance-api-openapi.yml#/components/schemas/Balance_createBalanceOrder_Response_200",
+  "type": "object",
+  "properties": {
+    "amount": {
+      "type": "number",
+      "format": "double",
+      "description": "Order amount (must not be zero)."
+    },
+    "balanceDefinitionId": {
+      "type": "string",
+      "description": "Optional unique identifier (UUID) of the associated balance definition."
+    },
+    "contactId": {
+      "type": "integer",
+      "description": "Unique identifier of the contact placing the order (must be ≥ 1)."
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "RFC3339 timestamp indicating when the order was created."
+    },
+    "dueAt": {
+      "type": "string",
+      "description": "RFC3339 timestamp specifying when the order is due in the future."
+    },
+    "expiresAt": {
+      "type": "string",
+      "description": "Optional RFC3339 timestamp defining order expiration in the future."
+    },
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the balance order."
+    },
+    "loyaltyProgramId": {
+      "type": "string",
+      "description": "Unique identifier of the loyalty program associated with the order."
+    },
+    "meta": {
+      "type": "object",
+      "additionalProperties": {
+        "description": "Any type"
+      },
+      "description": "Optional metadata associated with the order."
+    },
+    "processedAt": {
+      "type": "string",
+      "description": "Optional RFC3339 timestamp indicating when the order was processed."
+    },
+    "transactionid": {
+      "type": "string",
+      "description": "Optional reference to the associated transaction ID."
+    },
+    "updatedAt": {
+      "type": "string",
+      "description": "RFC3339 timestamp indicating the last update to the order."
+    }
+  },
+  "required": [
+    "amount",
+    "contactId",
+    "createdAt",
+    "dueAt",
+    "loyaltyProgramId",
+    "updatedAt"
+  ]
+}

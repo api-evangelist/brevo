@@ -1,0 +1,83 @@
+arazzo: 1.0.1
+info:
+  title: Brevo Klaviyo profile migration
+  summary: Brevo Klaviyo profile migration
+  description: Brevo lists Klaviyo as a migration ("Transfer your data"). Reads one Klaviyo profile and upserts it into a
+    Brevo list.
+  version: 1.0.0
+sourceDescriptions:
+- name: klaviyoProfiles
+  url: https://raw.githubusercontent.com/api-evangelist/klaviyo/refs/heads/main/openapi/klaviyo-profiles-api-openapi.yml
+  type: openapi
+- name: brevoContacts
+  url: https://raw.githubusercontent.com/api-evangelist/brevo/refs/heads/main/openapi/brevo-contacts-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: klaviyo-profile-to-brevo-contact
+  summary: Brevo Klaviyo profile migration
+  description: Brevo lists Klaviyo as a migration ("Transfer your data"). Reads one Klaviyo profile and upserts it into a
+    Brevo list.
+  inputs:
+    type: object
+    properties:
+      profileId:
+        type: string
+        description: Klaviyo profile id
+      listId:
+        type: string
+        description: Brevo list id
+  steps:
+  - stepId: get-profile
+    description: Read the Klaviyo profile.
+    operationId: $sourceDescriptions.klaviyoProfiles.get_profile
+    parameters:
+    - name: id
+      in: path
+      value: $inputs.profileId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      email: $response.body#/data/attributes/email
+      firstName: $response.body#/data/attributes/first_name
+      lastName: $response.body#/data/attributes/last_name
+  - stepId: create-contact
+    description: Create or update the Brevo contact (updateEnabled upserts by email).
+    operationId: $sourceDescriptions.brevoContacts.createContact
+    requestBody:
+      contentType: application/json
+      payload:
+        email: $steps.get-profile.outputs.email
+        attributes:
+          FIRSTNAME: $steps.get-profile.outputs.firstName
+          LASTNAME: $steps.get-profile.outputs.lastName
+        updateEnabled: true
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      contactId: $response.body#/id
+  - stepId: add-to-list
+    description: Add the contact to the Brevo list by email.
+    operationId: $sourceDescriptions.brevoContacts.addContactToList
+    parameters:
+    - name: listId
+      in: path
+      value: $inputs.listId
+    requestBody:
+      contentType: application/json
+      payload:
+        emails:
+        - $steps.get-profile.outputs.email
+    successCriteria:
+    - condition: $statusCode == 201
+  outputs:
+    contactId: $steps.create-contact.outputs.contactId
+x-integration:
+  partner: klaviyo
+  template: null
+  edge_evidence: https://www.brevo.com/integrations/
+  edge_type: claimed
+  edge_direction: provider-built
+  method: generated
+  generated: '2026-10-12'
+  generator: enrichment pass local-v5 (provider-integrations-arazzo)
+  guessed_steps: []

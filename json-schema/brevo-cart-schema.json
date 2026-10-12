@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-cart-schema.json",
+  "title": "cart",
+  "description": "Specify the payment currency and amount.\n",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-payments-api-openapi.yml#/components/schemas/cart",
+  "type": "object",
+  "properties": {
+    "currency": {
+      "$ref": "#/$defs/CartCurrency",
+      "description": "Currency code for the payment amount.\n"
+    },
+    "specificAmount": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Payment amount, in cents. e.g. if you want to request €12.00, then the amount in cents is 1200.\n"
+    }
+  },
+  "required": [
+    "currency",
+    "specificAmount"
+  ],
+  "$defs": {
+    "CartCurrency": {
+      "type": "string",
+      "enum": [
+        "EUR"
+      ],
+      "description": "Currency code for the payment amount.\n",
+      "title": "CartCurrency"
+    }
+  }
+}

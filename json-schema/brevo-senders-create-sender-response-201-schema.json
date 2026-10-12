@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-senders-create-sender-response-201-schema.json",
+  "title": "Senders_createSender_Response_201",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-senders-api-openapi.yml#/components/schemas/Senders_createSender_Response_201",
+  "type": "object",
+  "properties": {
+    "dkimError": {
+      "type": "boolean",
+      "description": "Status of DKIM configuration for the sender (true = DKIM not\nwell configured, false = DKIM well configured)"
+    },
+    "id": {
+      "type": "integer",
+      "format": "int64",
+      "description": "ID of the Sender created"
+    },
+    "spfError": {
+      "type": "boolean",
+      "description": "Status of SPF configuration for the sender (true = SPF not\nwell configured, false = SPF well configured)"
+    }
+  },
+  "required": [
+    "id"
+  ]
+}

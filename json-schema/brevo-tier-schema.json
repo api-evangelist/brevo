@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-tier-schema.json",
+  "title": "tier",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-tier-api-openapi.yml#/components/schemas/tier",
+  "type": "object",
+  "properties": {
+    "accessConditions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/TierAccessConditionsItems"
+      },
+      "description": "Conditions required to access this tier"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "groupId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Associated group Id"
+    },
+    "imageRef": {
+      "type": "string",
+      "description": "Tier image reference"
+    },
+    "loyaltyProgramId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Associated loyalty program Id"
+    },
+    "name": {
+      "type": "string",
+      "description": "Tier name"
+    },
+    "tierId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Tier id"
+    },
+    "tierRewards": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/TierTierRewardsItems"
+      },
+      "description": "Rewards associated with this tier"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "$defs": {
+    "TierAccessConditionsItems": {
+      "type": "object",
+      "properties": {
+        "balanceDefinitionId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Balance definition identifier"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "minimumValue": {
+          "type": "integer",
+          "description": "Minimum value required to access this tier"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "title": "TierAccessConditionsItems"
+    },
+    "TierTierRewardsItems": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "rewardId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Reward to be attributed on tier assignment"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "title": "TierTierRewardsItems"
+    }
+  }
+}

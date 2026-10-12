@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-transactional-sms-get-sms-events-response-200-schema.json",
+  "title": "Transactional SMS_getSmsEvents_Response_200",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-transactional-sms-api-openapi.yml#/components/schemas/Transactional_SMS_getSmsEvents_Response_200",
+  "type": "object",
+  "properties": {
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/TransactionalSmsStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItems"
+      }
+    }
+  },
+  "$defs": {
+    "TransactionalSmsStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItems": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string",
+          "description": "UTC date-time on which the event has been generated"
+        },
+        "event": {
+          "$ref": "#/$defs/TransactionalSmsStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItemsEvent",
+          "description": "Event which occurred"
+        },
+        "messageId": {
+          "type": "string",
+          "description": "Message ID which generated the event"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "Phone number which has generated the event"
+        },
+        "reason": {
+          "type": "string",
+          "description": "Reason of bounce (only available if the event is hardbounce or softbounce)"
+        },
+        "reply": {
+          "type": "string"
+        },
+        "tag": {
+          "type": "string",
+          "description": "Tag of the SMS which generated the event"
+        }
+      },
+      "title": "TransactionalSmsStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItems"
+    },
+    "TransactionalSmsStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItemsEvent": {
+      "type": "string",
+      "enum": [
+        "bounces",
+        "hardBounces",
+        "softBounces",
+        "delivered",
+        "sent",
+        "accepted",
+        "unsubscription",
+        "replies",
+        "blocked",
+        "rejected",
+        "skipped"
+      ],
+      "description": "Event which occurred",
+      "title": "TransactionalSmsStatisticsEventsGetResponsesContentApplicationJsonSchemaEventsItemsEvent"
+    }
+  }
+}

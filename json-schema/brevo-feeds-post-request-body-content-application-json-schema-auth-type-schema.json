@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-feeds-post-request-body-content-application-json-schema-auth-type-schema.json",
+  "title": "FeedsPostRequestBodyContentApplicationJsonSchemaAuthType",
+  "description": "Authentication type for accessing the feed",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-external-feeds-api-openapi.yml#/components/schemas/FeedsPostRequestBodyContentApplicationJsonSchemaAuthType",
+  "type": "string",
+  "enum": [
+    "basic",
+    "token",
+    "noAuth"
+  ],
+  "default": "noAuth"
+}

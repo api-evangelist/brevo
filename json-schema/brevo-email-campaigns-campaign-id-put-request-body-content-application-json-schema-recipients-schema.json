@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-email-campaigns-campaign-id-put-request-body-content-application-json-schema-recipients-schema.json",
+  "title": "EmailCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaRecipients",
+  "description": "Segment ids and List ids to include/exclude from campaign",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-email-campaigns-api-openapi.yml#/components/schemas/EmailCampaignsCampaignIdPutRequestBodyContentApplicationJsonSchemaRecipients",
+  "type": "object",
+  "properties": {
+    "exclusionListIds": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "description": "List ids which have to be excluded from a campaign"
+    },
+    "exclusionSegmentIds": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "description": "Segment ids which have to be excluded from a campaign.\n"
+    },
+    "listIds": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "description": "Lists Ids to send the campaign to. **Campaign should only be updated with listIds if listIds were used to create it. REQUIRED if already not present in campaign and scheduledAt is not empty**\n"
+    },
+    "segmentIds": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "description": "**Mandatory if listIds are not used. Campaign should only be updated with segmentIds if segmentIds were used to create it.** Segment ids to send the campaign to.\n"
+    }
+  }
+}

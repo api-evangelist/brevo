@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-whats-app-campaigns-get-whats-app-config-response-200-schema.json",
+  "title": "WhatsApp Campaigns_getWhatsAppConfig_Response_200",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-whatsapp-campaigns-api-openapi.yml#/components/schemas/WhatsApp_Campaigns_getWhatsAppConfig_Response_200",
+  "type": "object",
+  "properties": {
+    "businessStatus": {
+      "type": "string",
+      "description": "Verification status information of the Business account"
+    },
+    "phoneNumberNameStatus": {
+      "$ref": "#/$defs/WhatsappCampaignsConfigGetResponsesContentApplicationJsonSchemaPhoneNumberNameStatus",
+      "description": "Status of the name associated with WhatsApp Phone number"
+    },
+    "phoneNumberQuality": {
+      "$ref": "#/$defs/WhatsappCampaignsConfigGetResponsesContentApplicationJsonSchemaPhoneNumberQuality",
+      "description": "Quality status of phone number associated with WhatsApp account. There are three quality ratings. example - **High (GREEN) , Medium (YELLOW) and Low(RED)**"
+    },
+    "sendingLimit": {
+      "type": "string",
+      "description": "Sending limit of the WhatsApp account"
+    },
+    "whatsappBusinessAccountId": {
+      "type": "string",
+      "description": "Id of the WhatsApp business account"
+    },
+    "whatsappBusinessAccountStatus": {
+      "$ref": "#/$defs/WhatsappCampaignsConfigGetResponsesContentApplicationJsonSchemaWhatsappBusinessAccountStatus",
+      "description": "Status information related to WhatsApp Api account"
+    }
+  },
+  "$defs": {
+    "WhatsappCampaignsConfigGetResponsesContentApplicationJsonSchemaPhoneNumberNameStatus": {
+      "type": "string",
+      "enum": [
+        "APPROVED",
+        "PENDING",
+        "REJECTED"
+      ],
+      "description": "Status of the name associated with WhatsApp Phone number",
+      "title": "WhatsappCampaignsConfigGetResponsesContentApplicationJsonSchemaPhoneNumberNameStatus"
+    },
+    "WhatsappCampaignsConfigGetResponsesContentApplicationJsonSchemaPhoneNumberQuality": {
+      "type": "string",
+      "enum": [
+        "GREEN",
+        "YELLOW",
+        "RED"
+      ],
+      "description": "Quality status of phone number associated with WhatsApp account. There are three quality ratings. example - **High (GREEN) , Medium (YELLOW) and Low(RED)**",
+      "title": "WhatsappCampaignsConfigGetResponsesContentApplicationJsonSchemaPhoneNumberQuality"
+    },
+    "WhatsappCampaignsConfigGetResponsesContentApplicationJsonSchemaWhatsappBusinessAccountStatus": {
+      "type": "string",
+      "enum": [
+        "APPROVED",
+        "PENDING",
+        "REJECTED"
+      ],
+      "description": "Status information related to WhatsApp Api account",
+      "title": "WhatsappCampaignsConfigGetResponsesContentApplicationJsonSchemaWhatsappBusinessAccountStatus"
+    }
+  }
+}

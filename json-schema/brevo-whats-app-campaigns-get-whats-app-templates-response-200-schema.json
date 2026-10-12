@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-whats-app-campaigns-get-whats-app-templates-response-200-schema.json",
+  "title": "WhatsApp Campaigns_getWhatsAppTemplates_Response_200",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-whatsapp-campaigns-api-openapi.yml#/components/schemas/WhatsApp_Campaigns_getWhatsAppTemplates_Response_200",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Number of whatsApp templates retrieved"
+    },
+    "templates": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/WhatsappCampaignsTemplateListGetResponsesContentApplicationJsonSchemaTemplatesItems"
+      }
+    }
+  },
+  "$defs": {
+    "WhatsappCampaignsTemplateListGetResponsesContentApplicationJsonSchemaTemplatesItems": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string",
+          "description": "category of the template"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation UTC date-time of the whatsApp template (YYYY-MM-DDTHH:mm:ss.SSSZ)"
+        },
+        "errorReason": {
+          "type": "string",
+          "description": "Error reason in the template creation"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "ID of the whatsApp template"
+        },
+        "language": {
+          "type": "string",
+          "description": "Language in which template exists"
+        },
+        "modifiedAt": {
+          "type": "string",
+          "description": "UTC date-time of last modification of the whatsApp template (YYYY-MM-DDTHH:mm:ss.SSSZ)"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the whatsApp template"
+        },
+        "status": {
+          "type": "string",
+          "description": "Status of the whatsApp template"
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of the whatsApp template"
+        }
+      },
+      "required": [
+        "category",
+        "createdAt",
+        "id",
+        "language",
+        "modifiedAt",
+        "name",
+        "status",
+        "type"
+      ],
+      "title": "WhatsappCampaignsTemplateListGetResponsesContentApplicationJsonSchemaTemplatesItems"
+    }
+  }
+}

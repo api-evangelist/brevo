@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-create-update-category-schema.json",
+  "title": "CreateUpdateCategory",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-categories-api-openapi.yml#/components/schemas/CreateUpdateCategory",
+  "type": "object",
+  "required": [
+    "id",
+    "name"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the category."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the category."
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL of the category page."
+    }
+  }
+}

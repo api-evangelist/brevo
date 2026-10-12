@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-senders-get-ips-from-sender-response-200-schema.json",
+  "title": "Senders_getIpsFromSender_Response_200",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-senders-api-openapi.yml#/components/schemas/Senders_getIpsFromSender_Response_200",
+  "type": "object",
+  "properties": {
+    "ips": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SendersSenderIdIpsGetResponsesContentApplicationJsonSchemaIpsItems"
+      },
+      "description": "Dedicated IP(s) linked to a sender. Returns empty array for standard accounts\nwithout dedicated IPs."
+    }
+  },
+  "required": [
+    "ips"
+  ],
+  "$defs": {
+    "SendersSenderIdIpsGetResponsesContentApplicationJsonSchemaIpsItems": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": "string",
+          "description": "Domain associated to the IP"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "ID of the dedicated IP"
+        },
+        "ip": {
+          "type": "string",
+          "description": "Dedicated IP address"
+        },
+        "weight": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Weight of the IP for this sender"
+        }
+      },
+      "required": [
+        "domain",
+        "id",
+        "ip",
+        "weight"
+      ],
+      "title": "SendersSenderIdIpsGetResponsesContentApplicationJsonSchemaIpsItems"
+    }
+  }
+}

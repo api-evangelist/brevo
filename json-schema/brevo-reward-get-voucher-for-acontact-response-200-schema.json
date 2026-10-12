@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-reward-get-voucher-for-acontact-response-200-schema.json",
+  "title": "Reward_getVoucherForAContact_Response_200",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-reward-api-openapi.yml#/components/schemas/Reward_getVoucherForAContact_Response_200",
+  "type": "object",
+  "properties": {
+    "contactId": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Contact id associated with the current reward"
+    },
+    "contactRewards": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/LoyaltyOfferProgramsPidVouchersGetResponsesContentApplicationJsonSchemaContactRewardsItems"
+      },
+      "description": "List of all the rewards for current contact"
+    },
+    "count": {
+      "type": "integer",
+      "description": "Count of the rewards associated with the current contact"
+    },
+    "loyaltyProgramId": {
+      "type": "string",
+      "description": "Loyalty Program Id for the contact"
+    },
+    "loyaltySubscriptionId": {
+      "type": "string",
+      "description": "Loyalty Subscription Id for the contact"
+    }
+  },
+  "$defs": {
+    "LoyaltyOfferProgramsPidVouchersGetResponsesContentApplicationJsonSchemaContactRewardsItems": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Generated code"
+        },
+        "consumedAt": {
+          "type": "string",
+          "description": "Timestamp when the reward limit was consumed"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp when the reward limit was created"
+        },
+        "expirationDate": {
+          "type": "string",
+          "description": "Reward expiration date"
+        },
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the contact"
+        },
+        "meta": {
+          "type": "object",
+          "additionalProperties": {
+            "description": "Any type"
+          },
+          "description": "Additional data for the reward"
+        },
+        "rewardId": {
+          "type": "string",
+          "description": "Unique identifier for the reward"
+        },
+        "unit": {
+          "type": "string",
+          "description": "Unit of the balance selected in the reward definition"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp when the reward limit was updated"
+        },
+        "value": {
+          "type": "number",
+          "format": "double",
+          "description": "Value of the selected reward config"
+        },
+        "validFrom": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date from which the voucher becomes valid"
+        }
+      },
+      "title": "LoyaltyOfferProgramsPidVouchersGetResponsesContentApplicationJsonSchemaContactRewardsItems"
+    }
+  }
+}

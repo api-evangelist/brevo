@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-inbound-parsing-get-inbound-email-events-response-200-schema.json",
+  "title": "Inbound Parsing_getInboundEmailEvents_Response_200",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-inboundparsing-api-openapi.yml#/components/schemas/Inbound_Parsing_getInboundEmailEvents_Response_200",
+  "type": "object",
+  "properties": {
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/InboundEventsGetResponsesContentApplicationJsonSchemaEventsItems"
+      }
+    }
+  },
+  "$defs": {
+    "InboundEventsGetResponsesContentApplicationJsonSchemaEventsItems": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date when email was received on SMTP relay"
+        },
+        "recipient": {
+          "type": "string",
+          "format": "email",
+          "description": "Recipient’s email address"
+        },
+        "sender": {
+          "type": "string",
+          "format": "email",
+          "description": "Sender’s email address"
+        },
+        "uuid": {
+          "type": "string",
+          "format": "uuid",
+          "description": "UUID that can be used to fetch additional data"
+        }
+      },
+      "required": [
+        "date",
+        "recipient",
+        "sender",
+        "uuid"
+      ],
+      "title": "InboundEventsGetResponsesContentApplicationJsonSchemaEventsItems"
+    }
+  }
+}

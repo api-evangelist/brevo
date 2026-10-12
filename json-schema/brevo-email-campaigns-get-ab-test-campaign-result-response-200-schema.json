@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-email-campaigns-get-ab-test-campaign-result-response-200-schema.json",
+  "title": "Email Campaigns_getAbTestCampaignResult_Response_200",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-email-campaigns-api-openapi.yml#/components/schemas/Email_Campaigns_getAbTestCampaignResult_Response_200",
+  "type": "object",
+  "properties": {
+    "clickRate": {
+      "type": "string",
+      "description": "Click rate for current winning version"
+    },
+    "clickedLinks": {
+      "$ref": "#/$defs/EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaClickedLinks"
+    },
+    "openRate": {
+      "type": "string",
+      "description": "Open rate for current winning version"
+    },
+    "statistics": {
+      "$ref": "#/$defs/EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaStatistics"
+    },
+    "winningCriteria": {
+      "$ref": "#/$defs/EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaWinningCriteria",
+      "description": "Criteria chosen for winning version (Open/Click)"
+    },
+    "winningSubjectLine": {
+      "type": "string",
+      "description": "Subject Line of current winning version"
+    },
+    "winningVersion": {
+      "$ref": "#/$defs/EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaWinningVersion",
+      "description": "Winning Campaign Info. pending = Campaign has been picked for sending and winning version is yet to be decided, tie = A tie happened between both the versions, notAvailable = Campaign has not yet been picked for sending."
+    },
+    "winningVersionRate": {
+      "type": "string",
+      "description": "Open/Click rate for the winner version"
+    }
+  },
+  "$defs": {
+    "AbTestVersionClicksItems": {
+      "type": "object",
+      "properties": {
+        "clickRate": {
+          "type": "string",
+          "description": "Percentage of clicks of link with respect to total clicks"
+        },
+        "clicksCount": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of times a link is clicked"
+        },
+        "link": {
+          "type": "string",
+          "description": "URL of the link"
+        }
+      },
+      "required": [
+        "clickRate",
+        "clicksCount",
+        "link"
+      ],
+      "title": "AbTestVersionClicksItems"
+    },
+    "EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaClickedLinks": {
+      "type": "object",
+      "properties": {
+        "Version A": {
+          "$ref": "#/$defs/abTestVersionClicks"
+        },
+        "Version B": {
+          "$ref": "#/$defs/abTestVersionClicks"
+        }
+      },
+      "required": [
+        "Version A",
+        "Version B"
+      ],
+      "title": "EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaClickedLinks"
+    },
+    "EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaStatistics": {
+      "type": "object",
+      "properties": {
+        "clicks": {
+          "$ref": "#/$defs/abTestVersionStats"
+        },
+        "complaints": {
+          "$ref": "#/$defs/abTestVersionStats"
+        },
+        "hardBounces": {
+          "$ref": "#/$defs/abTestVersionStats"
+        },
+        "openers": {
+          "$ref": "#/$defs/abTestVersionStats"
+        },
+        "softBounces": {
+          "$ref": "#/$defs/abTestVersionStats"
+        },
+        "unsubscribed": {
+          "$ref": "#/$defs/abTestVersionStats"
+        }
+      },
+      "required": [
+        "clicks",
+        "complaints",
+        "hardBounces",
+        "openers",
+        "softBounces",
+        "unsubscribed"
+      ],
+      "title": "EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaStatistics"
+    },
+    "EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaWinningCriteria": {
+      "type": "string",
+      "enum": [
+        "Open",
+        "Click"
+      ],
+      "description": "Criteria chosen for winning version (Open/Click)",
+      "title": "EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaWinningCriteria"
+    },
+    "EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaWinningVersion": {
+      "type": "string",
+      "enum": [
+        "notAvailable",
+        "pending",
+        "tie",
+        "A",
+        "B"
+      ],
+      "description": "Winning Campaign Info. pending = Campaign has been picked for sending and winning version is yet to be decided, tie = A tie happened between both the versions, notAvailable = Campaign has not yet been picked for sending.",
+      "title": "EmailCampaignsCampaignIdAbTestCampaignResultGetResponsesContentApplicationJsonSchemaWinningVersion"
+    },
+    "abTestVersionClicks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/AbTestVersionClicksItems"
+      },
+      "description": "Information on clicked links for a particular version",
+      "title": "abTestVersionClicks"
+    },
+    "abTestVersionStats": {
+      "type": "object",
+      "properties": {
+        "Version A": {
+          "type": "string",
+          "description": "percentage of an event for version A"
+        },
+        "Version B": {
+          "type": "string",
+          "description": "percentage of an event for version B"
+        }
+      },
+      "required": [
+        "Version A",
+        "Version B"
+      ],
+      "description": "Percentage of a particular event for both versions",
+      "title": "abTestVersionStats"
+    }
+  }
+}

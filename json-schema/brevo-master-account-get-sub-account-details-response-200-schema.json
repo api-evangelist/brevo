@@ -1,0 +1,273 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-master-account-get-sub-account-details-response-200-schema.json",
+  "title": "Master account_getSubAccountDetails_Response_200",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-master-account-api-openapi.yml#/components/schemas/Master_account_getSubAccountDetails_Response_200",
+  "type": "object",
+  "properties": {
+    "companyName": {
+      "type": "string",
+      "description": "Sub-account company name"
+    },
+    "email": {
+      "type": "string",
+      "description": "Email id of the sub-account organization"
+    },
+    "groups": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaGroupsItems"
+      },
+      "description": "List of groups associated with the sub-account"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the sub-account user"
+    },
+    "planInfo": {
+      "$ref": "#/$defs/CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfo",
+      "description": "Sub-account plan details"
+    }
+  },
+  "$defs": {
+    "CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaGroupsItems": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Group id"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the group"
+        }
+      },
+      "title": "CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaGroupsItems"
+    },
+    "CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfo": {
+      "type": "object",
+      "properties": {
+        "credits": {
+          "$ref": "#/$defs/CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCredits",
+          "description": "Credits quota and remaining credits on the sub-account"
+        },
+        "features": {
+          "$ref": "#/$defs/CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeatures",
+          "description": "Features available on the sub-account"
+        },
+        "planType": {
+          "type": "string",
+          "description": "type of the plan"
+        }
+      },
+      "description": "Sub-account plan details",
+      "title": "CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfo"
+    },
+    "CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCredits": {
+      "type": "object",
+      "properties": {
+        "emails": {
+          "$ref": "#/$defs/CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsEmails",
+          "description": "Email credits remaining on the sub-account"
+        },
+        "externalFeeds": {
+          "$ref": "#/$defs/CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsExternalFeeds",
+          "description": "externalFeeds credits remaining on the sub-account"
+        },
+        "sms": {
+          "$ref": "#/$defs/CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsSms",
+          "description": "SMS credits remaining on the sub-account"
+        },
+        "whatsapp": {
+          "$ref": "#/$defs/CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsWhatsapp",
+          "description": "Whatsapp credits remaining on the sub-account"
+        },
+        "wpSubscribers": {
+          "$ref": "#/$defs/CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsWpSubscribers",
+          "description": "Push credits remaining on the sub-account"
+        }
+      },
+      "description": "Credits quota and remaining credits on the sub-account",
+      "title": "CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCredits"
+    },
+    "CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsEmails": {
+      "type": "object",
+      "properties": {
+        "quantity": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Quantity of email messaging limits provided"
+        },
+        "remaining": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Available email messaging limits for use"
+        }
+      },
+      "description": "Email credits remaining on the sub-account",
+      "title": "CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsEmails"
+    },
+    "CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsExternalFeeds": {
+      "type": "object",
+      "properties": {
+        "quantity": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Quantity of externalFeeds messaging limits\nprovided"
+        },
+        "remaining": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Available externalFeeds messaging limits for use"
+        }
+      },
+      "description": "externalFeeds credits remaining on the sub-account",
+      "title": "CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsExternalFeeds"
+    },
+    "CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsSms": {
+      "type": "object",
+      "properties": {
+        "quantity": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Quantity of SMS messaging limits provided"
+        },
+        "remaining": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Available SMS messaging limits for use"
+        }
+      },
+      "description": "SMS credits remaining on the sub-account",
+      "title": "CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsSms"
+    },
+    "CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsWhatsapp": {
+      "type": "object",
+      "properties": {
+        "quantity": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Quantity of whatsapp messaging limits provided"
+        },
+        "remaining": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Available whatsapp messaging limits for use"
+        }
+      },
+      "description": "Whatsapp credits remaining on the sub-account",
+      "title": "CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsWhatsapp"
+    },
+    "CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsWpSubscribers": {
+      "type": "object",
+      "properties": {
+        "quantity": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Quantity of Push sending limits provided"
+        },
+        "remaining": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Available Push sending limits for use"
+        }
+      },
+      "description": "Push credits remaining on the sub-account",
+      "title": "CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoCreditsWpSubscribers"
+    },
+    "CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeatures": {
+      "type": "object",
+      "properties": {
+        "inbox": {
+          "$ref": "#/$defs/CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeaturesInbox",
+          "description": "Inbox details / Not applicable on ENTv2"
+        },
+        "landingPage": {
+          "$ref": "#/$defs/CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeaturesLandingPage",
+          "description": "Landing page details / Not applicable on ENTv2"
+        },
+        "salesUsers": {
+          "$ref": "#/$defs/CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeaturesSalesUsers",
+          "description": "Sales and service users to use phone, sales and\nconversations"
+        },
+        "users": {
+          "$ref": "#/$defs/CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeaturesUsers",
+          "description": "Marketing users to manage the marketing channels"
+        }
+      },
+      "description": "Features available on the sub-account",
+      "title": "CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeatures"
+    },
+    "CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeaturesInbox": {
+      "type": "object",
+      "properties": {
+        "quantity": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Quantity of inbox provided"
+        },
+        "remaining": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Available inboxes for use"
+        }
+      },
+      "description": "Inbox details / Not applicable on ENTv2",
+      "title": "CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeaturesInbox"
+    },
+    "CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeaturesLandingPage": {
+      "type": "object",
+      "properties": {
+        "quantity": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Quantity of landing pages provided"
+        },
+        "remaining": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Available landing pages for use"
+        }
+      },
+      "description": "Landing page details / Not applicable on ENTv2",
+      "title": "CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeaturesLandingPage"
+    },
+    "CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeaturesSalesUsers": {
+      "type": "object",
+      "properties": {
+        "quantity": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Quantity of sales users provided"
+        },
+        "remaining": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Available sales users for use"
+        }
+      },
+      "description": "Sales and service users to use phone, sales and\nconversations",
+      "title": "CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeaturesSalesUsers"
+    },
+    "CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeaturesUsers": {
+      "type": "object",
+      "properties": {
+        "quantity": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Quantity of marketing users provided"
+        },
+        "remaining": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Available marketing users for use"
+        }
+      },
+      "description": "Marketing users to manage the marketing channels",
+      "title": "CorporateSubAccountIdGetResponsesContentApplicationJsonSchemaPlanInfoFeaturesUsers"
+    }
+  }
+}

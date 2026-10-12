@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-contacts-attributes-attribute-category-attribute-name-post-request-body-content-application-json-schema-type-schema.json",
+  "title": "ContactsAttributesAttributeCategoryAttributeNamePostRequestBodyContentApplicationJsonSchemaType",
+  "description": "Type of the attribute. **Use only if the attribute's category is 'normal', 'category' or 'transactional'** Type **user and multiple-choice** is only available if the category is **normal** attribute Type **id** is only available if the category is **transactional** attribute Type **category** is only available if the category is **category** attribute\n",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-contacts-api-openapi.yml#/components/schemas/ContactsAttributesAttributeCategoryAttributeNamePostRequestBodyContentApplicationJsonSchemaType",
+  "type": "string",
+  "enum": [
+    "text",
+    "date",
+    "float",
+    "boolean",
+    "id",
+    "category",
+    "multiple-choice",
+    "user"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-crm-attributes-post-request-body-content-application-json-schema-attribute-type-schema.json",
+  "title": "CrmAttributesPostRequestBodyContentApplicationJsonSchemaAttributeType",
+  "description": "The type of attribute (must be one of the defined enums)",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-companies-api-openapi.yml#/components/schemas/CrmAttributesPostRequestBodyContentApplicationJsonSchemaAttributeType",
+  "type": "string",
+  "enum": [
+    "text",
+    "user",
+    "number",
+    "single-select",
+    "date",
+    "boolean",
+    "multi-choice"
+  ]
+}

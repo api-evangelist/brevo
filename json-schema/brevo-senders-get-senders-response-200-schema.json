@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-senders-get-senders-response-200-schema.json",
+  "title": "Senders_getSenders_Response_200",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-senders-api-openapi.yml#/components/schemas/Senders_getSenders_Response_200",
+  "type": "object",
+  "properties": {
+    "senders": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SendersGetResponsesContentApplicationJsonSchemaSendersItems"
+      },
+      "description": "List of the senders available in your account"
+    }
+  },
+  "$defs": {
+    "SendersGetResponsesContentApplicationJsonSchemaSendersItems": {
+      "type": "object",
+      "properties": {
+        "active": {
+          "type": "boolean",
+          "description": "Status of sender (true=activated, false=deactivated)"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "From Email associated to the sender"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Id of the sender"
+        },
+        "ips": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SendersGetResponsesContentApplicationJsonSchemaSendersItemsIpsItems"
+          },
+          "description": "List of dedicated IP(s) available in the account. This\ndata is displayed only for dedicated IPs. For standard accounts,\nthis will be an empty array."
+        },
+        "name": {
+          "type": "string",
+          "description": "From Name associated to the sender"
+        }
+      },
+      "required": [
+        "active",
+        "email",
+        "id",
+        "ips",
+        "name"
+      ],
+      "title": "SendersGetResponsesContentApplicationJsonSchemaSendersItems"
+    },
+    "SendersGetResponsesContentApplicationJsonSchemaSendersItemsIpsItems": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": "string",
+          "description": "Domain of the IP"
+        },
+        "ip": {
+          "type": "string",
+          "description": "Dedicated IP available in your account"
+        },
+        "weight": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Weight of the IP for this sender"
+        }
+      },
+      "required": [
+        "domain",
+        "ip",
+        "weight"
+      ],
+      "title": "SendersGetResponsesContentApplicationJsonSchemaSendersItemsIpsItems"
+    }
+  }
+}

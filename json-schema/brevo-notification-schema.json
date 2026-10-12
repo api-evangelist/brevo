@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-notification-schema.json",
+  "title": "notification",
+  "description": "Optional. Use this object if you want to let Brevo send an email to the contact, with the payment request URL. If empty, no notifications (message and reminders) will be sent.\n",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-payments-api-openapi.yml#/components/schemas/notification",
+  "type": "object",
+  "properties": {
+    "channel": {
+      "$ref": "#/$defs/NotificationChannel",
+      "description": "Channel used to send the notifications.\n"
+    },
+    "text": {
+      "type": "string",
+      "description": "Use this field if you want to give more context to your contact about the payment request.\n"
+    }
+  },
+  "required": [
+    "channel",
+    "text"
+  ],
+  "$defs": {
+    "NotificationChannel": {
+      "type": "string",
+      "enum": [
+        "email"
+      ],
+      "description": "Channel used to send the notifications.\n",
+      "title": "NotificationChannel"
+    }
+  }
+}

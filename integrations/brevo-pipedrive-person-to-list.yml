@@ -1,0 +1,87 @@
+arazzo: 1.0.1
+info:
+  title: Brevo Pipedrive person to email list
+  summary: Brevo Pipedrive person to email list
+  description: Brevo lists Pipedrive as "Pipedrive leads sync straight to email lists". Reads a Pipedrive person, upserts
+    it as a Brevo contact and adds it to a Brevo list.
+  version: 1.0.0
+sourceDescriptions:
+- name: pipedrivePersons
+  url: https://raw.githubusercontent.com/api-evangelist/pipedrive/refs/heads/main/openapi/pipedrive-persons-api-openapi.yml
+  type: openapi
+- name: brevoContacts
+  url: https://raw.githubusercontent.com/api-evangelist/brevo/refs/heads/main/openapi/brevo-contacts-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: pipedrive-person-to-brevo-list
+  summary: Brevo Pipedrive person to email list
+  description: Brevo lists Pipedrive as "Pipedrive leads sync straight to email lists". Reads a Pipedrive person, upserts
+    it as a Brevo contact and adds it to a Brevo list.
+  inputs:
+    type: object
+    properties:
+      personId:
+        type: string
+        description: Pipedrive person id
+      listId:
+        type: string
+        description: Brevo list id
+  steps:
+  - stepId: get-person
+    description: Read the Pipedrive person.
+    operationId: $sourceDescriptions.pipedrivePersons.getPerson
+    parameters:
+    - name: id
+      in: path
+      value: $inputs.personId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      email: $response.body#/data/email/0/value
+      name: $response.body#/data/name
+  - stepId: create-contact
+    description: Create or update the Brevo contact (updateEnabled upserts by email).
+    operationId: $sourceDescriptions.brevoContacts.createContact
+    requestBody:
+      contentType: application/json
+      payload:
+        email: $steps.get-person.outputs.email
+        attributes:
+          FIRSTNAME: $steps.get-person.outputs.name
+        updateEnabled: true
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      contactId: $response.body#/id
+  - stepId: add-to-list
+    description: Add the contact to the Brevo list by email.
+    operationId: $sourceDescriptions.brevoContacts.addContactToList
+    parameters:
+    - name: listId
+      in: path
+      value: $inputs.listId
+    requestBody:
+      contentType: application/json
+      payload:
+        emails:
+        - $steps.get-person.outputs.email
+    successCriteria:
+    - condition: $statusCode == 201
+  outputs:
+    contactId: $steps.create-contact.outputs.contactId
+x-integration:
+  partner: pipedrive
+  template: null
+  edge_evidence: https://www.brevo.com/integrations/
+  edge_type: claimed
+  edge_direction: unknown
+  method: generated
+  generated: '2026-10-12'
+  generator: enrichment pass local-v5 (provider-integrations-arazzo)
+  guessed_steps:
+  - step: get-person
+    cause: partner-contract
+    why: output path data/email/0/value follows the persons v1 response shape; not re-verified against the schema
+  - step: create-contact
+    cause: provider-contract
+    why: Brevo attribute names (FIRSTNAME) are account-defined, not declared in the contract

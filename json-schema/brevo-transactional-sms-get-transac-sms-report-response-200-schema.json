@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-transactional-sms-get-transac-sms-report-response-200-schema.json",
+  "title": "Transactional SMS_getTransacSmsReport_Response_200",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-transactional-sms-api-openapi.yml#/components/schemas/Transactional_SMS_getTransacSmsReport_Response_200",
+  "type": "object",
+  "properties": {
+    "reports": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/TransactionalSmsStatisticsReportsGetResponsesContentApplicationJsonSchemaReportsItems"
+      }
+    }
+  },
+  "$defs": {
+    "TransactionalSmsStatisticsReportsGetResponsesContentApplicationJsonSchemaReportsItems": {
+      "type": "object",
+      "properties": {
+        "accepted": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of accepted SMS for the date"
+        },
+        "blocked": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of blocked contact for the date"
+        },
+        "date": {
+          "type": "string",
+          "format": "date",
+          "description": "Date for which statistics are retrieved"
+        },
+        "delivered": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of delivered SMS for the date"
+        },
+        "hardBounces": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of hardbounces for the date"
+        },
+        "rejected": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of rejected SMS for the date"
+        },
+        "replied": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of answered SMS for the date"
+        },
+        "requests": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of requests for the date"
+        },
+        "skipped": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of skipped SMS for the date"
+        },
+        "softBounces": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of softbounces for the date"
+        },
+        "unsubscribed": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of unsubscription for the date"
+        }
+      },
+      "title": "TransactionalSmsStatisticsReportsGetResponsesContentApplicationJsonSchemaReportsItems"
+    }
+  }
+}

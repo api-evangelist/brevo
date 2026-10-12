@@ -1,25 +1,28 @@
 ---
-name: Run a Brevo loyalty program
-description: Stand up a Brevo loyalty program end to end — create and publish the program, define a points balance, enroll a contact, credit and debit points through the two-phase transaction lifecycle, and issue and redeem a voucher.
+name: brevo-run-a-loyalty-program
+description: Stand up a Brevo loyalty program end to end — create and publish the program, define a points balance,
+  enroll a contact, credit and debit points through the two-phase transaction lifecycle, and issue and redeem a
+  voucher.
 api: openapi/brevo-loyalty-openapi.yml
 operations:
-  - createNewLP
-  - publishLoyaltyProgram
-  - createBalanceDefinition
-  - subscribeToLoyaltyProgram
-  - beginTransaction
-  - completeTransaction
-  - cancelTransaction
-  - getContactBalances
-  - createReward
-  - createVoucher
-  - redeemVoucher
-  - completeRedeemTransaction
-  - createTierGroup
-  - addSubscriptionToTier
+- createNewLP
+- publishLoyaltyProgram
+- createBalanceDefinition
+- subscribeToLoyaltyProgram
+- beginTransaction
+- completeTransaction
+- cancelTransaction
+- getContactBalances
+- createReward
+- createVoucher
+- redeemVoucher
+- completeRedeemTransaction
+- createTierGroup
+- addSubscriptionToTier
 generated: '2026-08-13'
 method: generated
 source: openapi/brevo-loyalty-openapi.yml + conventions/brevo-conventions.yml
+title: Run a Brevo loyalty program
 ---
 
 # Run a Brevo loyalty program

@@ -1,0 +1,1256 @@
+generated: '2026-10-12'
+method: searched
+source:
+- https://n8n.io/integrations/brevo/
+- https://composio.dev/toolkits/brevo
+checked:
+- https://apps.shopify.com/sendinblue
+- https://composio.dev/toolkits/brevo
+- https://monid.ai/tools/brevo
+- https://n8n.io/integrations/brevo/
+- https://www.brevo.com/integrations/
+- https://www.brevo.com/partners/
+- https://www.make.com/en/integrations/brevo
+- https://zapier.com/apps/brevo/integrations
+summary: 'Brevo runs its own integrations marketplace at brevo.com/integrations (browser-rendered; read 2026-10-12):
+  51 named apps, 13 marked as developed by Brevo. The Zapier app exists but still declares sendinblue.com (301 ->
+  brevo.com, the 2023 rebrand), so the sweep rejected it as a name collision; make.com answered 403 to our crawler.'
+marketplace_apps:
+- marketplace: n8n
+  channel: open-source-node
+  app: brevo
+  url: https://n8n.io/integrations/brevo/
+  identity: title
+  pair_pages: 686
+  pairs:
+  - brex
+  - browse-ai
+  - browserstack
+  - bubble
+  - bugbug
+  - bugfender
+  - bugherd
+  - bugpilot
+  - bugreplay
+  - bugshot
+  - buildkite
+  - bunnycdn
+  - calendarhero
+  - calendly
+  - canvas
+  - capsule
+  - carbon-black
+  - chaindesk
+  - chargebee
+  - chargeover
+  - chargify
+  - chatbase
+  - chatling
+  - chatmasters
+  - chatrace
+  - chatsonic
+  - check-credential-status
+  - chekhub
+  - circleci
+  - cisco-meraki
+  - cisco-secure-endpoint
+  - cisco-umbrella
+  - cisco-webex
+  - citrix-adc
+  - clappia
+  - clarifai
+  - claude
+  - clearbit
+  - cleverreach
+  - clickup
+  - clockify
+  - cloozo
+  - cloud-66
+  - cloudboost
+  - cloudflare
+  - cloudlayer
+  - cloudshare
+  - cloze
+  - cockpit
+  - coda
+  - code-climate
+  - codefresh
+  - cody
+  - coingecko
+  - college-football-data
+  - configcat
+  - confluence
+  - confluent
+  - contentful
+  - convertapi
+  - convertkit
+  - convi
+  - copper
+  - copyai
+  - corsizio
+  - cortex
+  - craftdraft
+  - cratedb
+  - crisp
+  - cronly
+  - crossmint
+  - crowddev
+  - crowdin
+  - crowdpower
+  - crowdstrike
+  - cryptolens
+  - currents
+  - customer-datastore-n8n-training
+  - customer-messenger-n8n-training
+  - customerio
+  - customeriq
+  - daffy
+  - dante-ai
+  - darksky-api
+  - dasha
+  - data-soap
+  - databox
+  - databricks
+  - datadog
+  - datarobot
+  - datumbox
+  - dayschedule
+  - deepgram
+  - deepl
+  - deepseek-chat-model
+  - demio
+  - descript
+  - detrack
+  - devcycle
+  - dhl
+  - dialzara
+  - diddo-ai
+  - diffy
+  - digicert
+  - discord
+  - discourse
+  - disqus
+  - dock-certs
+  - docparser
+  - docsbot-ai
+  - docupilot
+  - docuwriter
+  - dokan
+  - domo
+  - draftable
+  - drift
+  - dropbox
+  - dropcontact
+  - droxy
+  - dynatrace
+  - e-goi
+  - easyship
+  - echowin
+  - ecwid
+  - elastic-security
+  - elasticsearch
+  - elmah
+  - embedai
+  - emelia
+  - empsing
+  - engati
+  - enormail
+  - enterpret
+  - envoy
+  - erpnext
+  - esendex
+  - evervault
+  - evolphin-zoom
+  - f5-big-ip
+  - facebook-graph-api
+  - faraday
+  - faros
+  - fastbots
+  - fathom
+  - filemaker
+  - filescan
+  - firmao
+  - fitbit
+  - flagship
+  - float
+  - flotiq
+  - flow
+  - fluent-support
+  - focuster
+  - formcarry
+  - formdesk
+  - forms-on-fire
+  - formsite
+  - formstack-documents
+  - fortinet-fortigate
+  - foursquare
+  - free-dictionary
+  - freshdesk
+  - freshping
+  - freshservice
+  - freshworks-crm
+  - fullcontact
+  - fusioo
+  - gali
+  - gatekeeper
+  - gender-api
+  - getresponse
+  - getscreenshot
+  - ghost
+  - giphy
+  - gitea
+  - github
+  - gitlab
+  - gleap
+  - gmail
+  - gocanvas
+  - godaddy
+  - gong
+  - google-ads
+  - google-ai-studio-gemini
+  - google-analytics
+  - google-bigquery
+  - google-books
+  - google-business-profile
+  - google-calendar
+  - google-chat
+  - google-cloud
+  - google-cloud-firestore
+  - google-cloud-natural-language
+  - google-cloud-realtime-database
+  - google-cloud-storage
+  - google-contacts
+  - google-docs
+  - google-drive
+  - google-forms
+  - google-gemini-chat-model
+  - google-perspective
+  - google-sheets
+  - google-slides
+  - google-tables
+  - google-tasks
+  - google-translate
+  - google-vertex-ai
+  - google-workspace-admin
+  - gotify
+  - gotowebinar
+  - gptea
+  - grafana
+  - grain
+  - graphql
+  - gravity-forms
+  - grid
+  - grist
+  - growbots
+  - gumroad
+  - gupshup
+  - guru
+  - hacker-news
+  - halopsa
+  - handwrytten
+  - hansei
+  - harry-potter-api
+  - harvest
+  - headless-testing
+  - helcim
+  - helpscout
+  - heysummit
+  - highlevel
+  - home-assistant
+  - http-request
+  - hub-planner
+  - hubspot
+  - hugging-face
+  - humantic-ai
+  - hunter
+  - hybrid-analysis
+  - iauditor-by-safetyculture
+  - idealpostcodes
+  - idealspot
+  - ideta
+  - imgbb
+  - imgur
+  - imperva-waf
+  - impira
+  - industryselect
+  - influxdb-cloud
+  - infolobby
+  - instabot
+  - instabug
+  - intakeq
+  - intercom
+  - invoice-ninja
+  - invoiced
+  - ip2location
+  - ipinfo
+  - ipregistry
+  - iris-dfir
+  - isn
+  - iterable
+  - jama
+  - jasper
+  - jenkins
+  - jina-ai
+  - jira-software
+  - jwt
+  - kadoa
+  - kafka
+  - kaggle
+  - kanban-tool
+  - karbon
+  - keap
+  - keygen
+  - keyzy
+  - kibana
+  - kitemaker
+  - klaviyo
+  - klazify
+  - knack
+  - knowbe4
+  - kobotoolbox
+  - kraftful
+  - lagrowthmachine
+  - lambdatest
+  - landbot
+  - laposta
+  - launch27
+  - launchdarkly
+  - ldap
+  - leadboxer
+  - leadpops
+  - lemlist
+  - lets-enhance
+  - libraria
+  - lighthouse
+  - lime-go
+  - line
+  - linear
+  - lingvanex
+  - linkedin
+  - linkish
+  - linode
+  - liveagent
+  - localazy
+  - loginradius
+  - lokalise
+  - lonescale
+  - lucidchart
+  - magento-2
+  - mailcheck
+  - mailchimp
+  - mailerlite
+  - mailersend
+  - mailgun
+  - mailify
+  - mailjet
+  - mailmodo
+  - malcore
+  - mandrill
+  - marcom-robot
+  - marketing-master-io
+  - marketplacer
+  - marketstack
+  - mastodon
+  - matrix
+  - mattermost
+  - mautic
+  - mav
+  - maverick
+  - medium
+  - mem
+  - messagebird
+  - metabase
+  - metatextai-inference-api
+  - mews
+  - microsoft-azure-monitor
+  - microsoft-dynamics-365-business-central-api
+  - microsoft-dynamics-crm
+  - microsoft-entra-id
+  - microsoft-entra-id-azure-active-directory
+  - microsoft-excel
+  - microsoft-graph-security
+  - microsoft-onedrive
+  - microsoft-outlook
+  - microsoft-sharepoint
+  - microsoft-sql
+  - microsoft-teams
+  - microsoft-teams-admin
+  - microsoft-to-do
+  - miestro
+  - mindee
+  - miro
+  - misp
+  - missive
+  - mist
+  - mistral-ai
+  - mixpanel
+  - mocean
+  - mondaycom
+  - mongodb
+  - monica-crm
+  - moonclerk
+  - moonmail
+  - morph
+  - mqtt
+  - msg91
+  - mux
+  - mx-toolbox
+  - my-askai
+  - myphoner
+  - mysql
+  - nanonets-ocr
+  - nasa
+  - ncscale
+  - netlify
+  - nextcloud
+  - nightfallai
+  - ninox
+  - nmkr
+  - nocodb
+  - notion
+  - nozbe-teams
+  - npm
+  - nuclia
+  - nusii-proposals
+  - nyckel
+  - nyota
+  - occasion
+  - ocrspace
+  - odoo
+  - offalerts
+  - okta
+  - omeda
+  - omniconvert
+  - omnimind
+  - on2air
+  - one-ai
+  - one-simple-api
+  - onfleet
+  - openai
+  - opencti
+  - openthesaurus
+  - openweathermap
+  - opn-formerly-omise
+  - oracle-database
+  - orbit
+  - order-desk
+  - ortto
+  - oura
+  - paddle
+  - pagerduty
+  - paperform
+  - papyrs
+  - parsehub
+  - parseprompt
+  - passcreator
+  - passslot
+  - patreon
+  - paymo
+  - paypal
+  - peekalink
+  - perplexity
+  - persio
+  - personal-ai
+  - phantombuster
+  - philips-hue
+  - phrase
+  - pinata
+  - pinboard
+  - pinterest
+  - pipedrive
+  - pipefy
+  - pirate-weather
+  - pitchly
+  - pivotal-tracker
+  - planview-leankit
+  - planyo-online-booking
+  - platformly
+  - plecto
+  - plivo
+  - postbin
+  - postgres
+  - posthog
+  - practitest
+  - predisai
+  - prodia
+  - product-hunt
+  - profitwell
+  - project-bubble-proprofs-project
+  - prompthub
+  - prospe-ai
+  - pushbullet
+  - pushcut
+  - pusher
+  - pushover
+  - qradar
+  - qualaroo
+  - qualys
+  - quentn
+  - questdb
+  - quick-base
+  - quickbooks-online
+  - quickchart
+  - quintadb
+  - rabbitmq
+  - radar
+  - raindrop
+  - rapid7-insightvm
+  - raven-tools
+  - rawg-video-games-database
+  - read-ai
+  - realphonevalidation
+  - recharge
+  - recorded-future
+  - redash
+  - reddit
+  - redis
+  - relevance-ai
+  - relink-url-shortener
+  - relysia
+  - replyio
+  - retable
+  - reverse-contact
+  - rewardful
+  - ritekit
+  - roboflow
+  - robolytix
+  - roboresponseai
+  - rocketchat
+  - rollbar
+  - rootly
+  - route4me
+  - rundeck
+  - s3
+  - sales-simplify
+  - salesforce
+  - salesmaa
+  - salesmate
+  - salesmsg
+  - salesrocks
+  - samsung-smartthings
+  - scrape-itcloud
+  - scrapeninja
+  - seamless-ai
+  - search-and-save
+  - seatable
+  - securityscorecard
+  - segment
+  - sekoia
+  - sellix
+  - sembly-ai
+  - sendgrid
+  - sendy
+  - sentryio
+  - servicenow
+  - sharly-ai
+  - shiphero
+  - shipstation
+  - shopify
+  - shortio
+  - shuffler
+  - sierra-interactive
+  - sifter
+  - signaturit
+  - signl4
+  - signrequest
+  - simpleem
+  - simplehash
+  - simplekpi
+  - simplelocalize
+  - simplero
+  - simpletexting
+  - sitecreatorio
+  - sitespeakai
+  - slack
+  - smaily
+  - smartreach
+  - smartsuite
+  - sms-it
+  - sms-magic
+  - sms77
+  - snapdocs
+  - snatchbot
+  - snipcart
+  - snowflake
+  - solve-data
+  - specter
+  - splunk
+  - spondyr
+  - spontit
+  - sportsdata
+  - spotify
+  - spydra
+  - sslmate-cert-spotter-api
+  - stackby
+  - stammerai
+  - starton
+  - statuscake
+  - storyblok
+  - strapi
+  - strava
+  - stripe
+  - studio-by-ai21-labs
+  - suitedash
+  - supabase
+  - supernormal
+  - superpowered
+  - supportivekoala
+  - survicate
+  - swagup
+  - switchboard
+  - syncly
+  - syncromsp
+  - synthesia
+  - taiga
+  - talentlms
+  - talknotes
+  - tapfiliate
+  - td-ameritrade
+  - teachable
+  - team-up
+  - teamdeck
+  - teamgate
+  - teknoir
+  - telegram
+  - testmonitor
+  - textcortex-ai
+  - textgain
+  - textkit
+  - textmagic
+  - thankster
+  - the-customer-factor
+  - the-leap
+  - thehive
+  - thehive-5
+  - thoughtfulgpt
+  - thrivecart
+  - tidb-cloud
+  - tierion
+  - tilda
+  - timescaledb
+  - timetonic
+  - tinyurl
+  - tisane-labs
+  - todoist
+  - token-metrics
+  - toket
+  - totango
+  - trackvia
+  - transifex
+  - travisci
+  - trellix-epo
+  - trello
+  - trengo
+  - trevorio
+  - turbohire
+  - tuskr
+  - tuulio
+  - twake
+  - twilio
+  - twist
+  - twitter
+  - unbounce
+  - unisender
+  - unleashed-software
+  - upkeep
+  - uplead
+  - uproc
+  - uptimerobot
+  - uptimetoolbox
+  - urlscanio
+  - uservoice
+  - venafi-tls-protect-cloud
+  - venafi-tls-protect-datacenter
+  - venly
+  - verifalia
+  - vero
+  - vimeo
+  - virustotal
+  - vivifyscrum
+  - voicit
+  - vonage
+  - vowel
+  - watchsignals
+  - waveline-extract
+  - webex-by-cisco
+  - webflow
+  - webscraperio
+  - wekan
+  - whal3s
+  - whatconverts
+  - whatsapp-business-cloud
+  - wise
+  - wizychat
+  - wonderchat
+  - wondercraft
+  - woocommerce
+  - woodpeckerco
+  - wordpress
+  - workast
+  - workboard
+  - woxo
+  - writesonic
+  - wubook-ratechecker
+  - xero
+  - xtractly
+  - ybug
+  - ycode
+  - yodiz
+  - yourls
+  - youtube
+  - zabbix
+  - zammad
+  - zendesk
+  - zenrows
+  - zoho-books
+  - zoho-crm
+  - zoho-desk
+  - zonka-feedback
+  - zoom
+  - zscaler-zia
+  - zulip
+- marketplace: composio
+  channel: agent-gateway
+  app: brevo
+  url: https://composio.dev/toolkits/brevo
+  identity: action-prefix
+  actions:
+  - key: BREVO_CREATE_A_COMPANY
+  - key: BREVO_CREATE_CONTACT_LIST
+  - key: BREVO_CREATE_OR_UPDATE_EMAIL_TEMPLATE
+  - key: BREVO_CREATE_SMS_CAMPAIGN
+  - key: BREVO_DELETE_COMPANY
+  - key: BREVO_DELETE_CONTACT
+  - key: BREVO_DELETE_EMAIL_TEMPLATE
+  - key: BREVO_DELETE_SMS_CAMPAIGN
+  - key: BREVO_GET_ACCOUNT_INFO
+  - key: BREVO_GET_ALL_CONTACTS
+  - key: BREVO_GET_ALL_EMAIL_TEMPLATES
+  - key: BREVO_GET_ALL_SENDERS
+  - key: BREVO_GET_COMPANY_DETAILS
+  - key: BREVO_GET_CONTACT_DETAILS
+  - key: BREVO_GET_CONTACT_LISTS
+  - key: BREVO_GET_EMAIL_CAMPAIGN_DETAILS
+  - key: BREVO_GET_SMS_CAMPAIGNS
+  - key: BREVO_GET_SMS_CAMPAIGN_DETAILS
+  - key: BREVO_LIST_ALL_COMPANIES
+  - key: BREVO_LIST_EMAIL_CAMPAIGNS
+  - key: BREVO_UPDATE_EMAIL_CAMPAIGN
+edges:
+- partner_name: WordPress
+  partner: wordpress
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: provider-built
+  category: CMS + Email Marketing
+  relationship: workflow
+- partner_name: WooCommerce
+  partner: woocommerce
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: provider-built
+  category: CMS + Ecommerce + Email Marketing
+  relationship: workflow
+- partner_name: Shopify
+  partner: shopify
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: provider-built
+  category: CMS + Ecommerce + Marketing Automation
+  relationship: workflow
+- partner_name: Supabase
+  partner: supabase
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: Developer Tools
+  relationship: workflow
+- partner_name: Gmail
+  partner: gmail
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: provider-built
+  category: CDP + Contact management + Email Marketing
+  relationship: workflow
+- partner_name: n8n
+  partner: n8n
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: CDP + Marketing Automation + No-code
+  relationship: connector-listing
+- partner_name: Google Forms
+  partner: google-forms
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: CDP + Lead Generation & Forms
+  relationship: workflow
+- partner_name: Make
+  partner: make
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: Marketing Automation + No-code
+  relationship: connector-listing
+- partner_name: Missive
+  partner: missive
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: CDP + Contact management + Productivity
+  relationship: workflow
+- partner_name: HubSpot
+  partner: hubspot
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: provider-built
+  category: CDP + CRM + Marketing Automation
+  relationship: workflow
+- partner_name: Pipedrive
+  partner: pipedrive
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: CDP + CRM
+  relationship: workflow
+- partner_name: Lovable
+  partner: lovable
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: Developer Tools + No-code
+  relationship: agent-tooling
+- partner_name: Salesforce
+  partner: salesforce
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: provider-built
+  category: CRM
+  relationship: workflow
+- partner_name: Claude
+  partner: null
+  partner_match: null
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: AI + Marketing Automation
+  relationship: agent-tooling
+- partner_name: Gravity Forms
+  partner: gravity-forms
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: Contact management + Lead Generation & Forms
+  relationship: workflow
+- partner_name: Zapier
+  partner: zapier
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: provider-built
+  category: CDP + No-code
+  relationship: connector-listing
+- partner_name: Tally
+  partner: tally
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: Lead Generation & Forms
+  relationship: workflow
+- partner_name: Google Contacts
+  partner: null
+  partner_match: null
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: provider-built
+  category: Contact management
+  relationship: workflow
+- partner_name: Elementor
+  partner: elementor
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: CMS + Marketing Automation
+  relationship: workflow
+- partner_name: Mailchimp
+  partner: mailchimp
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: provider-built
+  category: CDP + Email Marketing
+  relationship: workflow
+- partner_name: Google Sheets
+  partner: google-sheets
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: Marketing Automation + Productivity
+  relationship: workflow
+- partner_name: bubble
+  partner: bubble
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: No-code
+  relationship: workflow
+- partner_name: Microsoft Outlook
+  partner: microsoft-outlook
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: Contact management + Productivity
+  relationship: workflow
+- partner_name: Convex
+  partner: convex
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: Developer Tools
+  relationship: workflow
+- partner_name: Facebook Messenger
+  partner: null
+  partner_match: null
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: provider-built
+  category: CRM + Helpdesk
+  relationship: workflow
+- partner_name: Klaviyo
+  partner: klaviyo
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: provider-built
+  category: CDP + Email Marketing
+  relationship: workflow
+- partner_name: Contact Form 7
+  partner: null
+  partner_match: null
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: Lead Generation & Forms
+  relationship: workflow
+- partner_name: Retool
+  partner: retool
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: Developer Tools
+  relationship: workflow
+- partner_name: Canva
+  partner: canva
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: Email Creation + Email Marketing
+  relationship: workflow
+- partner_name: Vercel
+  partner: vercel
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: Developer Tools
+  relationship: workflow
+- partner_name: Google Analytics
+  partner: google-analytics
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: provider-built
+  category: Analytics + CDP
+  relationship: workflow
+- partner_name: Google Meet
+  partner: google-meet
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: Productivity
+  relationship: workflow
+- partner_name: LinkedIn
+  partner: null
+  partner_match: null
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: CDP + Lead Generation & Forms
+  relationship: workflow
+- partner_name: Adalo
+  partner: adalo
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: No-code
+  relationship: workflow
+- partner_name: WhatsApp Business
+  partner: null
+  partner_match: null
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: Marketing Automation
+  relationship: workflow
+- partner_name: Odoo
+  partner: odoo
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: Marketing Automation
+  relationship: workflow
+- partner_name: ChatGPT (OpenAI)
+  partner: null
+  partner_match: null
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: AI
+  relationship: agent-tooling
+- partner_name: Cursor
+  partner: cursor
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: AI + Developer Tools
+  relationship: agent-tooling
+- partner_name: Claude Code
+  partner: null
+  partner_match: null
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: AI + Developer Tools
+  relationship: agent-tooling
+- partner_name: Google Gemini
+  partner: google-gemini
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: Marketing Automation
+  relationship: agent-tooling
+- partner_name: Codex
+  partner: null
+  partner_match: null
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: AI + Developer Tools
+  relationship: agent-tooling
+- partner_name: Perplexity
+  partner: perplexity
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: AI
+  relationship: agent-tooling
+- partner_name: Mistral
+  partner: mistral
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: AI + Marketing Automation
+  relationship: agent-tooling
+- partner_name: Grok
+  partner: null
+  partner_match: null
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: AI + Developer Tools
+  relationship: agent-tooling
+- partner_name: Grok Bot
+  partner: null
+  partner_match: null
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: AI + Productivity
+  relationship: agent-tooling
+- partner_name: VS Code
+  partner: null
+  partner_match: null
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: AI + Developer Tools
+  relationship: agent-tooling
+- partner_name: Windsurf
+  partner: windsurf
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: AI + Developer Tools
+  relationship: agent-tooling
+- partner_name: Bolt
+  partner: null
+  partner_match: null
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: AI + Developer Tools
+  relationship: agent-tooling
+- partner_name: v0
+  partner: v0
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: AI + Developer Tools
+  relationship: agent-tooling
+- partner_name: Replit
+  partner: replit
+  partner_match: name-exact
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: AI + Developer Tools
+  relationship: agent-tooling
+- partner_name: Base44
+  partner: null
+  partner_match: null
+  type: claimed
+  evidence: https://www.brevo.com/integrations/
+  marketplace: brevo-marketplace
+  direction: unknown
+  category: AI + No-code
+  relationship: agent-tooling
+templates: []
+skips:
+- label: zapier:brevo
+  cause: catalog
+  why: sweep identity check compares the Zapier externalUrl (https://www.sendinblue.com) to brevo.com and does not
+    follow the 301 rebrand redirect; app is Brevo, edges not harvested
+- label: hubspot
+  cause: catalog
+  why: the HubSpot contact read operation in hubspot-basic-api-openapi.yml carries a path-shaped operationId (get-/crm/objects/2026-03/contacts/{contactId}_getById)
+    from refine; not authored until it is renamed
+- label: supabase
+  cause: catalog
+  why: not authored this run (cap of 8 per run; CRM/e-commerce partners prioritised)
+- label: google-forms
+  cause: catalog
+  why: not authored this run (cap of 8 per run; CRM/e-commerce partners prioritised)
+- label: missive
+  cause: catalog
+  why: not authored this run (cap of 8 per run; CRM/e-commerce partners prioritised)
+- label: gravity-forms
+  cause: catalog
+  why: not authored this run (cap of 8 per run; CRM/e-commerce partners prioritised)
+- label: tally
+  cause: catalog
+  why: not authored this run (cap of 8 per run; CRM/e-commerce partners prioritised)
+- label: bubble
+  cause: catalog
+  why: not authored this run (cap of 8 per run; CRM/e-commerce partners prioritised)
+- label: microsoft-outlook
+  cause: catalog
+  why: not authored this run (cap of 8 per run; CRM/e-commerce partners prioritised)
+- label: convex
+  cause: catalog
+  why: not authored this run (cap of 8 per run; CRM/e-commerce partners prioritised)
+- label: retool
+  cause: catalog
+  why: not authored this run (cap of 8 per run; CRM/e-commerce partners prioritised)
+- label: canva
+  cause: catalog
+  why: not authored this run (cap of 8 per run; CRM/e-commerce partners prioritised)
+- label: vercel
+  cause: catalog
+  why: not authored this run (cap of 8 per run; CRM/e-commerce partners prioritised)
+- label: google-analytics
+  cause: catalog
+  why: not authored this run (cap of 8 per run; CRM/e-commerce partners prioritised)
+- label: google-meet
+  cause: catalog
+  why: not authored this run (cap of 8 per run; CRM/e-commerce partners prioritised)
+- label: linkedin
+  cause: catalog
+  why: not authored this run (cap of 8 per run; CRM/e-commerce partners prioritised)
+- label: odoo
+  cause: catalog
+  why: not authored this run (cap of 8 per run; CRM/e-commerce partners prioritised)
+- label: wordpress
+  cause: catalog
+  why: not authored this run (cap of 8 per run; CRM/e-commerce partners prioritised)

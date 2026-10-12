@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-transactional-whats-app-send-whatsapp-message-response-201-schema.json",
+  "title": "Transactional WhatsApp_sendWhatsappMessage_Response_201",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-transactionalwhatsapp-api-openapi.yml#/components/schemas/Transactional_WhatsApp_sendWhatsappMessage_Response_201",
+  "type": "object",
+  "properties": {
+    "messageId": {
+      "type": "string",
+      "format": "uuidv4",
+      "description": "messageId of sent message"
+    }
+  },
+  "required": [
+    "messageId"
+  ]
+}

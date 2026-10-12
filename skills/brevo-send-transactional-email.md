@@ -1,17 +1,20 @@
 ---
-name: Send a transactional email with Brevo
-description: Send a single or batched transactional email through the Brevo Email API, safely — with sandbox mode for testing, an idempotency key so a retry cannot double-send, and the right handling for suppressed recipients and rate limits.
+name: brevo-send-transactional-email
+description: Send a single or batched transactional email through the Brevo Email API, safely — with sandbox mode
+  for testing, an idempotency key so a retry cannot double-send, and the right handling for suppressed recipients
+  and rate limits.
 api: openapi/brevo-email-api-openapi.yml
 operations:
-  - sendTransacEmail
-  - getScheduledEmailById
-  - deleteScheduledEmailById
-  - getTransacEmailsList
-  - getTransacBlockedContacts
-  - unblockOrResubscribeATransactionalContact
+- sendTransacEmail
+- getScheduledEmailById
+- deleteScheduledEmailById
+- getTransacEmailsList
+- getTransacBlockedContacts
+- unblockOrResubscribeATransactionalContact
 generated: '2026-08-13'
 method: generated
 source: openapi/brevo-email-api-openapi.yml + conventions/brevo-conventions.yml + sandbox/brevo-sandbox.yml
+title: Send a transactional email with Brevo
 ---
 
 # Send a transactional email with Brevo

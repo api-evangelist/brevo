@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-contacts-export-post-request-body-content-application-json-schema-custom-contact-filter-schema.json",
+  "title": "ContactsExportPostRequestBodyContentApplicationJsonSchemaCustomContactFilter",
+  "description": "Set the filter for the contacts to be exported.\n",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-contacts-api-openapi.yml#/components/schemas/ContactsExportPostRequestBodyContentApplicationJsonSchemaCustomContactFilter",
+  "type": "object",
+  "properties": {
+    "actionForContacts": {
+      "$ref": "#/$defs/ContactsExportPostRequestBodyContentApplicationJsonSchemaCustomContactFilterActionForContacts",
+      "description": "**Mandatory if neither actionForEmailCampaigns nor actionForSmsCampaigns is passed.** This will export the contacts on the basis of provided action applied on contacts as per the list id. * **allContacts** - Fetch the list of all contacts for a particular list. * **subscribed & unsubscribed** - Fetch the list of subscribed / unsubscribed (blacklisted via any means) contacts for a particular list. * **unsubscribedPerList** - Fetch the list of contacts that are unsubscribed from a particular list only.\n"
+    },
+    "actionForEmailCampaigns": {
+      "$ref": "#/$defs/ContactsExportPostRequestBodyContentApplicationJsonSchemaCustomContactFilterActionForEmailCampaigns",
+      "description": "**Mandatory if neither actionForContacts nor actionForSmsCampaigns is passed.** This will export the contacts on the basis of provided action applied on email campaigns. * **openers & nonOpeners** - emailCampaignId is mandatory. Fetch the list of readers / non-readers for a particular email campaign. * **clickers & nonClickers** - emailCampaignId is mandatory. Fetch the list of clickers / non-clickers for a particular email campaign. * **unsubscribed** - emailCampaignId is mandatory. Fetch the list of all unsubscribed (blacklisted via any means) contacts for a particular email campaign. * **hardBounces & softBounces** - emailCampaignId is optional. Fetch the list of hard bounces / soft bounces for a particular / all email campaign(s).\n"
+    },
+    "actionForSmsCampaigns": {
+      "$ref": "#/$defs/ContactsExportPostRequestBodyContentApplicationJsonSchemaCustomContactFilterActionForSmsCampaigns",
+      "description": "**Mandatory if neither actionForContacts nor actionForEmailCampaigns is passed.** This will export the contacts on the basis of provided action applied on sms campaigns. * **unsubscribed** - Fetch the list of all unsubscribed (blacklisted via any means) contacts for all / particular sms campaigns. * **hardBounces & softBounces** - Fetch the list of hard bounces / soft bounces for all / particular sms campaigns.\n"
+    },
+    "emailCampaignId": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Considered only if **actionForEmailCampaigns** is passed, ignored otherwise. **Mandatory if action is one of the following - openers, nonOpeners, clickers, nonClickers, unsubscribed.** The id of the email campaign for which the corresponding action shall be applied in the filter.\n"
+    },
+    "listId": {
+      "type": "integer",
+      "format": "int64",
+      "description": "ID of the list. This is mandatory if actionForContacts is specified and segmentId is not provided. Either segmentId or listId must be included.\n"
+    },
+    "segmentId": {
+      "type": "integer",
+      "format": "int64",
+      "description": "ID of the segment. This is mandatory if actionForContacts is specified and listId is not provided. Either segmentId or listId must be included.\n"
+    },
+    "smsCampaignId": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Considered only if **actionForSmsCampaigns** is passed, ignored otherwise. The id of sms campaign for which the corresponding action shall be applied in the filter.\n"
+    }
+  },
+  "$defs": {
+    "ContactsExportPostRequestBodyContentApplicationJsonSchemaCustomContactFilterActionForContacts": {
+      "type": "string",
+      "enum": [
+        "allContacts",
+        "subscribed",
+        "unsubscribed",
+        "unsubscribedPerList"
+      ],
+      "description": "**Mandatory if neither actionForEmailCampaigns nor actionForSmsCampaigns is passed.** This will export the contacts on the basis of provided action applied on contacts as per the list id. * **allContacts** - Fetch the list of all contacts for a particular list. * **subscribed & unsubscribed** - Fetch the list of subscribed / unsubscribed (blacklisted via any means) contacts for a particular list. * **unsubscribedPerList** - Fetch the list of contacts that are unsubscribed from a particular list only.\n",
+      "title": "ContactsExportPostRequestBodyContentApplicationJsonSchemaCustomContactFilterActionForContacts"
+    },
+    "ContactsExportPostRequestBodyContentApplicationJsonSchemaCustomContactFilterActionForEmailCampaigns": {
+      "type": "string",
+      "enum": [
+        "openers",
+        "nonOpeners",
+        "clickers",
+        "nonClickers",
+        "unsubscribed",
+        "hardBounces",
+        "softBounces"
+      ],
+      "description": "**Mandatory if neither actionForContacts nor actionForSmsCampaigns is passed.** This will export the contacts on the basis of provided action applied on email campaigns. * **openers & nonOpeners** - emailCampaignId is mandatory. Fetch the list of readers / non-readers for a particular email campaign. * **clickers & nonClickers** - emailCampaignId is mandatory. Fetch the list of clickers / non-clickers for a particular email campaign. * **unsubscribed** - emailCampaignId is mandatory. Fetch the list of all unsubscribed (blacklisted via any means) contacts for a particular email campaign. * **hardBounces & softBounces** - emailCampaignId is optional. Fetch the list of hard bounces / soft bounces for a particular / all email campaign(s).\n",
+      "title": "ContactsExportPostRequestBodyContentApplicationJsonSchemaCustomContactFilterActionForEmailCampaigns"
+    },
+    "ContactsExportPostRequestBodyContentApplicationJsonSchemaCustomContactFilterActionForSmsCampaigns": {
+      "type": "string",
+      "enum": [
+        "hardBounces",
+        "softBounces",
+        "unsubscribed"
+      ],
+      "description": "**Mandatory if neither actionForContacts nor actionForEmailCampaigns is passed.** This will export the contacts on the basis of provided action applied on sms campaigns. * **unsubscribed** - Fetch the list of all unsubscribed (blacklisted via any means) contacts for all / particular sms campaigns. * **hardBounces & softBounces** - Fetch the list of hard bounces / soft bounces for all / particular sms campaigns.\n",
+      "title": "ContactsExportPostRequestBodyContentApplicationJsonSchemaCustomContactFilterActionForSmsCampaigns"
+    }
+  }
+}

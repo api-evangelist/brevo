@@ -1,0 +1,89 @@
+arazzo: 1.0.1
+info:
+  title: Brevo Salesforce contact sync
+  summary: Brevo Salesforce contact sync
+  description: Brevo-built Salesforce integration. Reads a Salesforce Contact record through the generic sObject rows operation
+    and upserts it as a Brevo contact.
+  version: 1.0.0
+sourceDescriptions:
+- name: salesforceRows
+  url: https://raw.githubusercontent.com/api-evangelist/salesforce/refs/heads/main/openapi/salesforce-rows-api-openapi.yml
+  type: openapi
+- name: brevoContacts
+  url: https://raw.githubusercontent.com/api-evangelist/brevo/refs/heads/main/openapi/brevo-contacts-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: salesforce-contact-to-brevo-contact
+  summary: Brevo Salesforce contact sync
+  description: Brevo-built Salesforce integration. Reads a Salesforce Contact record through the generic sObject rows operation
+    and upserts it as a Brevo contact.
+  inputs:
+    type: object
+    properties:
+      recordId:
+        type: string
+        description: Salesforce Contact id
+      listId:
+        type: string
+        description: Brevo list id
+  steps:
+  - stepId: get-record
+    description: Read the Salesforce Contact.
+    operationId: $sourceDescriptions.salesforceRows.SObjectRows
+    parameters:
+    - name: SOBJECT_API_NAME
+      in: path
+      value: Contact
+    - name: RECORD_ID
+      in: path
+      value: $inputs.recordId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      email: $response.body#/Email
+      firstName: $response.body#/FirstName
+      lastName: $response.body#/LastName
+  - stepId: create-contact
+    description: Create or update the Brevo contact (updateEnabled upserts by email).
+    operationId: $sourceDescriptions.brevoContacts.createContact
+    requestBody:
+      contentType: application/json
+      payload:
+        email: $steps.get-record.outputs.email
+        attributes:
+          FIRSTNAME: $steps.get-record.outputs.firstName
+          LASTNAME: $steps.get-record.outputs.lastName
+        updateEnabled: true
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      contactId: $response.body#/id
+  - stepId: add-to-list
+    description: Add the contact to the Brevo list by email.
+    operationId: $sourceDescriptions.brevoContacts.addContactToList
+    parameters:
+    - name: listId
+      in: path
+      value: $inputs.listId
+    requestBody:
+      contentType: application/json
+      payload:
+        emails:
+        - $steps.get-record.outputs.email
+    successCriteria:
+    - condition: $statusCode == 201
+  outputs:
+    contactId: $steps.create-contact.outputs.contactId
+x-integration:
+  partner: salesforce
+  template: null
+  edge_evidence: https://www.brevo.com/integrations/
+  edge_type: claimed
+  edge_direction: provider-built
+  method: generated
+  generated: '2026-10-12'
+  generator: enrichment pass local-v5 (provider-integrations-arazzo)
+  guessed_steps:
+  - step: get-record
+    cause: partner-contract
+    why: generic sObject rows operation returns an untyped record; Email/FirstName are Contact standard fields

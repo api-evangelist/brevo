@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-file-data-schema.json",
+  "title": "FileData",
+  "description": "File data that is uploaded",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-files-api-openapi.yml#/components/schemas/FileData",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique file id"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of uploaded file"
+    },
+    "authorId": {
+      "type": "string",
+      "description": "Account id of user which created the file"
+    },
+    "contactId": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Contact id of contact on which file is uploaded"
+    },
+    "dealId": {
+      "type": "string",
+      "description": "Deal id linked to a file"
+    },
+    "companyId": {
+      "type": "string",
+      "description": "Company id linked to a file"
+    },
+    "size": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Size of file in bytes"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "File created date/time"
+    }
+  }
+}

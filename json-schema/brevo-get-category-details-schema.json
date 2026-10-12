@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-get-category-details-schema.json",
+  "title": "getCategoryDetails",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-ecommerce-api-openapi.yml#/components/schemas/getCategoryDetails",
+  "type": "object",
+  "properties": {
+    "createdAt": {
+      "type": "string",
+      "description": "Creation UTC date-time of the category (YYYY-MM-DDTHH:mm:ss.SSSZ)"
+    },
+    "id": {
+      "type": "string",
+      "format": "string",
+      "description": "Category ID for which you requested the details"
+    },
+    "isDeleted": {
+      "type": "boolean",
+      "description": "category deleted from the shop's database"
+    },
+    "modifiedAt": {
+      "type": "string",
+      "description": "Last modification UTC date-time of the category (YYYY-MM-DDTHH:mm:ss.SSSZ)"
+    },
+    "name": {
+      "type": "string",
+      "format": "string",
+      "description": "Name of the category for which you requested the details"
+    },
+    "url": {
+      "type": "string",
+      "format": "string",
+      "description": "URL to the category"
+    }
+  },
+  "required": [
+    "createdAt",
+    "id",
+    "isDeleted",
+    "modifiedAt",
+    "name"
+  ]
+}

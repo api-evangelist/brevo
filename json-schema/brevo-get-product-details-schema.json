@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-get-product-details-schema.json",
+  "title": "getProductDetails",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-ecommerce-api-openapi.yml#/components/schemas/getProductDetails",
+  "type": "object",
+  "properties": {
+    "brand": {
+      "type": "string",
+      "description": "Brand of the product"
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Category ID-s of the product"
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Creation UTC date-time of the product (YYYY-MM-DDTHH:mm:ss.SSSZ)"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the product"
+    },
+    "id": {
+      "type": "string",
+      "format": "string",
+      "description": "Product ID for which you requested the details"
+    },
+    "imageUrl": {
+      "type": "string",
+      "format": "string",
+      "description": "Absolute URL to the cover image of the product"
+    },
+    "isDeleted": {
+      "type": "boolean",
+      "description": "Product deleted from the shop's database but not from Brevo"
+    },
+    "metaInfo": {
+      "$ref": "#/$defs/GetProductDetailsMetaInfo",
+      "description": "Meta data of product such as description, vendor, producer, stock level, etc."
+    },
+    "modifiedAt": {
+      "type": "string",
+      "description": "Last modification UTC date-time of the product (YYYY-MM-DDTHH:mm:ss.SSSZ)"
+    },
+    "name": {
+      "type": "string",
+      "format": "string",
+      "description": "Name of the product for which you requested the details"
+    },
+    "parentId": {
+      "type": "string",
+      "format": "string",
+      "description": "Parent product id of the product"
+    },
+    "price": {
+      "type": "string",
+      "title": "float",
+      "description": "Price of the product"
+    },
+    "alternativePrice": {
+      "type": "string",
+      "title": "float",
+      "description": "Alternative price of the product"
+    },
+    "s3Original": {
+      "type": "string",
+      "format": "string",
+      "description": "S3 url of original image"
+    },
+    "s3ThumbAnalytics": {
+      "type": "string",
+      "format": "string",
+      "description": "S3 thumbnail url of original image in 120x120 dimension for analytics section"
+    },
+    "s3ThumbEditor": {
+      "type": "string",
+      "format": "string",
+      "description": "S3 thumbnail url of original image in 600x400 dimension for editor section"
+    },
+    "sku": {
+      "type": "string",
+      "format": "string",
+      "description": "Product identifier from the shop"
+    },
+    "stock": {
+      "type": "number",
+      "format": "double",
+      "description": "Current stock value of the product from the shop's database"
+    },
+    "url": {
+      "type": "string",
+      "format": "string",
+      "description": "URL to the product"
+    }
+  },
+  "required": [
+    "createdAt",
+    "id",
+    "modifiedAt",
+    "name",
+    "s3ThumbAnalytics",
+    "s3ThumbEditor"
+  ],
+  "$defs": {
+    "GetProductDetailsMetaInfo": {
+      "type": "object",
+      "properties": {},
+      "description": "Meta data of product such as description, vendor, producer, stock level, etc.",
+      "title": "GetProductDetailsMetaInfo"
+    }
+  }
+}

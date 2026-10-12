@@ -1,23 +1,25 @@
 ---
-name: Sync contacts and lists into Brevo
-description: Create, update and bulk-import contacts into Brevo lists without tripping the hourly rate limit or the retired batch endpoint — including custom attributes, list membership and the consent-group surface.
+name: brevo-sync-contacts-and-lists
+description: Create, update and bulk-import contacts into Brevo lists without tripping the hourly rate limit or
+  the retired batch endpoint — including custom attributes, list membership and the consent-group surface.
 api: openapi/brevo-contact-management-openapi.yml
 operations:
-  - getContacts
-  - createContact
-  - getContactInfo
-  - updateContact
-  - importContacts
-  - requestContactExport
-  - getLists
-  - createList
-  - addContactToList
-  - removeContactFromList
-  - getAttributes
-  - createAttribute
+- getContacts
+- createContact
+- getContactInfo
+- updateContact
+- importContacts
+- requestContactExport
+- getLists
+- createList
+- addContactToList
+- removeContactFromList
+- getAttributes
+- createAttribute
 generated: '2026-08-13'
 method: generated
 source: openapi/brevo-contact-management-openapi.yml + conventions/brevo-conventions.yml + lifecycle/brevo-lifecycle.yml
+title: Sync contacts and lists into Brevo
 ---
 
 # Sync contacts and lists into Brevo

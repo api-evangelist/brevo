@@ -1,0 +1,196 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-sms-campaigns-get-sms-campaigns-response-200-schema.json",
+  "title": "SMS Campaigns_getSmsCampaigns_Response_200",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-sms-campaigns-api-openapi.yml#/components/schemas/SMS_Campaigns_getSmsCampaigns_Response_200",
+  "type": "object",
+  "properties": {
+    "campaigns": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SmsCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItems"
+      }
+    },
+    "count": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Number of SMS campaigns retrieved"
+    }
+  },
+  "$defs": {
+    "SmsCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItems": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string",
+          "description": "Content of the SMS Campaign"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation UTC date-time of the SMS campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "ID of the SMS Campaign"
+        },
+        "modifiedAt": {
+          "type": "string",
+          "description": "UTC date-time of last modification of the SMS campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the SMS Campaign"
+        },
+        "organisationPrefix": {
+          "type": "string",
+          "description": "A recognizable prefix added as the Brand Name before the message content. Empty string if not set."
+        },
+        "scheduledAt": {
+          "type": "string",
+          "description": "UTC date-time on which SMS campaign is scheduled. Should be in YYYY-MM-DDTHH:mm:ss.SSSZ format. Empty string if not scheduled."
+        },
+        "sender": {
+          "type": "string",
+          "description": "Sender of the SMS Campaign"
+        },
+        "sentDate": {
+          "type": "string",
+          "description": "UTC date-time on which the SMS campaign was sent (YYYY-MM-DDTHH:mm:ss.SSSZ). Only available if the campaign status is 'sent'."
+        },
+        "status": {
+          "$ref": "#/$defs/SmsCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsStatus",
+          "description": "Status of the SMS Campaign"
+        },
+        "unsubscribeInstruction": {
+          "type": "string",
+          "description": "Instructions to unsubscribe from future communications. Empty string if not set."
+        },
+        "recipients": {
+          "$ref": "#/$defs/getCampaignRecipients"
+        },
+        "statistics": {
+          "$ref": "#/$defs/getSmsCampaignStats"
+        }
+      },
+      "required": [
+        "content",
+        "createdAt",
+        "id",
+        "modifiedAt",
+        "name",
+        "sender",
+        "status",
+        "recipients",
+        "statistics"
+      ],
+      "title": "SmsCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItems"
+    },
+    "SmsCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsStatus": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "sent",
+        "archive",
+        "queued",
+        "suspended",
+        "inProcess"
+      ],
+      "description": "Status of the SMS Campaign",
+      "title": "SmsCampaignsGetResponsesContentApplicationJsonSchemaCampaignsItemsStatus"
+    },
+    "getCampaignRecipients": {
+      "type": "object",
+      "properties": {
+        "excludedSegments": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "description": "Segment IDs excluded from the campaign"
+        },
+        "exclusionLists": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "lists": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "segments": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "description": "Segment IDs included in the campaign"
+        }
+      },
+      "required": [
+        "exclusionLists",
+        "lists"
+      ],
+      "title": "getCampaignRecipients"
+    },
+    "getSmsCampaignStats": {
+      "type": "object",
+      "properties": {
+        "answered": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of replies to the SMS"
+        },
+        "delivered": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of delivered SMS"
+        },
+        "hardBounces": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of hardbounced SMS"
+        },
+        "processing": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of processing SMS"
+        },
+        "sent": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of sent SMS"
+        },
+        "softBounces": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of softbounced SMS"
+        },
+        "unsubscriptions": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of unsubscription SMS"
+        }
+      },
+      "required": [
+        "answered",
+        "delivered",
+        "hardBounces",
+        "processing",
+        "sent",
+        "softBounces",
+        "unsubscriptions"
+      ],
+      "title": "getSmsCampaignStats"
+    }
+  }
+}

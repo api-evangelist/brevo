@@ -1,0 +1,92 @@
+arazzo: 1.0.1
+info:
+  title: Brevo Mailchimp audience member migration
+  summary: Brevo Mailchimp audience member migration
+  description: Brevo lists Mailchimp as a migration ("Moving on from Mailchimp?"). Reads one Mailchimp audience member and
+    upserts it into a Brevo list.
+  version: 1.0.0
+sourceDescriptions:
+- name: mailchimpLists
+  url: https://raw.githubusercontent.com/api-evangelist/mailchimp/refs/heads/main/openapi/mailchimp-lists-api-openapi.yml
+  type: openapi
+- name: brevoContacts
+  url: https://raw.githubusercontent.com/api-evangelist/brevo/refs/heads/main/openapi/brevo-contacts-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: mailchimp-member-to-brevo-contact
+  summary: Brevo Mailchimp audience member migration
+  description: Brevo lists Mailchimp as a migration ("Moving on from Mailchimp?"). Reads one Mailchimp audience member and
+    upserts it into a Brevo list.
+  inputs:
+    type: object
+    properties:
+      mailchimpListId:
+        type: string
+        description: Mailchimp audience id
+      subscriberHash:
+        type: string
+        description: MD5 of the lowercase email
+      listId:
+        type: string
+        description: Brevo list id
+  steps:
+  - stepId: get-member
+    description: Read the Mailchimp member.
+    operationId: $sourceDescriptions.mailchimpLists.getListsIdMembersId
+    parameters:
+    - name: list_id
+      in: path
+      value: $inputs.mailchimpListId
+    - name: subscriber_hash
+      in: path
+      value: $inputs.subscriberHash
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      email: $response.body#/email_address
+      firstName: $response.body#/merge_fields/FNAME
+      lastName: $response.body#/merge_fields/LNAME
+  - stepId: create-contact
+    description: Create or update the Brevo contact (updateEnabled upserts by email).
+    operationId: $sourceDescriptions.brevoContacts.createContact
+    requestBody:
+      contentType: application/json
+      payload:
+        email: $steps.get-member.outputs.email
+        attributes:
+          FIRSTNAME: $steps.get-member.outputs.firstName
+          LASTNAME: $steps.get-member.outputs.lastName
+        updateEnabled: true
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      contactId: $response.body#/id
+  - stepId: add-to-list
+    description: Add the contact to the Brevo list by email.
+    operationId: $sourceDescriptions.brevoContacts.addContactToList
+    parameters:
+    - name: listId
+      in: path
+      value: $inputs.listId
+    requestBody:
+      contentType: application/json
+      payload:
+        emails:
+        - $steps.get-member.outputs.email
+    successCriteria:
+    - condition: $statusCode == 201
+  outputs:
+    contactId: $steps.create-contact.outputs.contactId
+x-integration:
+  partner: mailchimp
+  template: null
+  edge_evidence: https://www.brevo.com/integrations/
+  edge_type: claimed
+  edge_direction: provider-built
+  method: generated
+  generated: '2026-10-12'
+  generator: enrichment pass local-v5 (provider-integrations-arazzo)
+  guessed_steps:
+  - step: get-member
+    cause: partner-contract
+    why: merge_fields keys FNAME/LNAME are audience-defined defaults

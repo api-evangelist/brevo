@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-crm-deals-import-post-request-body-content-multipart-form-data-schema-mapping-schema.json",
+  "title": "CrmDealsImportPostRequestBodyContentMultipartFormDataSchemaMapping",
+  "description": "The mapping options in JSON format. Here is an example of the JSON structure: ```json {\n  \"link_entities\": true, // Determines whether to link related entities during the import process\n  \"unlink_entities\": false, // Determines whether to unlink related entities during the import process\n  \"update_existing_records\": true, // Determines whether to update based on deal ID or treat every row as create\n  \"unset_empty_attributes\": false // Determines whether to unset a specific attribute during update if the values input is blank\n} ```\n",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-deals-api-openapi.yml#/components/schemas/CrmDealsImportPostRequestBodyContentMultipartFormDataSchemaMapping",
+  "type": "object",
+  "properties": {}
+}

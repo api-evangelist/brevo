@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-get-events-list-schema.json",
+  "title": "getEventsList",
+  "description": "Response containing a list of events and the total count for pagination",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-event-api-openapi.yml#/components/schemas/getEventsList",
+  "type": "object",
+  "properties": {
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/GetEventsListEventsItems"
+      },
+      "description": "List of matching events ordered by event_date descending"
+    },
+    "count": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total count of events matching the filters (use for pagination)"
+    }
+  },
+  "required": [
+    "count"
+  ],
+  "$defs": {
+    "GetEventsListEventsItems": {
+      "type": "object",
+      "properties": {
+        "contact_id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Contact ID associated with the event"
+        },
+        "event_date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date and time of the event"
+        },
+        "event_name": {
+          "type": "string",
+          "description": "Name of the event"
+        },
+        "event_filter_id": {
+          "type": "string",
+          "description": "Filter ID of the event"
+        },
+        "object_type": {
+          "type": "string",
+          "description": "Object type associated with the event"
+        },
+        "event_properties": {
+          "type": "object",
+          "additionalProperties": {
+            "description": "Any type"
+          },
+          "description": "Event-level custom properties"
+        },
+        "contact_properties": {
+          "type": "object",
+          "additionalProperties": {
+            "description": "Any type"
+          },
+          "description": "Contact-level properties at time of event"
+        }
+      },
+      "title": "GetEventsListEventsItems"
+    }
+  }
+}

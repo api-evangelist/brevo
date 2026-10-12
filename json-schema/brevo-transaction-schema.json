@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-transaction-schema.json",
+  "title": "transaction",
+  "description": "Represents a transaction involving a balance, including status and timestamps.",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-balance-api-openapi.yml#/components/schemas/transaction",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier (UUID) of the transaction."
+    },
+    "amount": {
+      "type": "string",
+      "title": "float",
+      "description": "The transaction amount."
+    },
+    "transactionType": {
+      "$ref": "#/$defs/TransactionTransactionType",
+      "description": "The type of the transaction."
+    },
+    "meta": {
+      "type": "object",
+      "additionalProperties": {
+        "description": "Any type"
+      },
+      "description": "Optional metadata associated with the transaction."
+    },
+    "status": {
+      "$ref": "#/$defs/TransactionStatus",
+      "description": "The current status of the transaction."
+    },
+    "loyaltyProgramId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier (UUID) of the associated loyalty program."
+    },
+    "balanceDefinitionId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier (UUID) of the associated balance definition."
+    },
+    "contactId": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unique identifier of the contact associated with the transaction."
+    },
+    "eventTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Optional timestamp indicating when the transaction event occurred (ISO 8601 format)."
+    },
+    "rejectReason": {
+      "type": "string",
+      "description": "Reason for rejection if the transaction was declined (nullable)."
+    },
+    "rejectedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the transaction was rejected (nullable)."
+    },
+    "expirationDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Expiry date of the transaction (nullable)."
+    },
+    "completedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the transaction was completed (nullable)."
+    },
+    "cancelledAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the transaction was canceled (nullable)."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the transaction was created."
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the transaction was last updated."
+    }
+  },
+  "$defs": {
+    "TransactionStatus": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "complete",
+        "rejected",
+        "cancelled",
+        "expired"
+      ],
+      "description": "The current status of the transaction.",
+      "title": "TransactionStatus"
+    },
+    "TransactionTransactionType": {
+      "type": "string",
+      "enum": [
+        "credit",
+        "debit"
+      ],
+      "description": "The type of the transaction.",
+      "title": "TransactionTransactionType"
+    }
+  }
+}

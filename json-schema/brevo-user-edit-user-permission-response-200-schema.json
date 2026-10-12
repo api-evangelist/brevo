@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-user-edit-user-permission-response-200-schema.json",
+  "title": "User_EditUserPermission_Response_200",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-user-api-openapi.yml#/components/schemas/User_EditUserPermission_Response_200",
+  "type": "object",
+  "properties": {
+    "credit_notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Credit note"
+    },
+    "invoice_id": {
+      "type": "string",
+      "description": "Invoice id"
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the API operation."
+    }
+  },
+  "required": [
+    "status"
+  ]
+}

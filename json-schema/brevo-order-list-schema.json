@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-order-list-schema.json",
+  "title": "OrderList",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-orders-api-openapi.yml#/components/schemas/OrderList",
+  "type": "object",
+  "properties": {
+    "orders": {
+      "type": "array",
+      "description": "List of order records.",
+      "items": {
+        "$ref": "#/$defs/Order"
+      }
+    }
+  },
+  "$defs": {
+    "Order": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of the order."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Email address of the customer."
+        },
+        "amount": {
+          "type": "number",
+          "format": "float",
+          "description": "Total order amount."
+        },
+        "status": {
+          "type": "string",
+          "description": "Current status of the order."
+        },
+        "products": {
+          "type": "array",
+          "description": "Products included in the order.",
+          "items": {
+            "$ref": "#/$defs/OrderProduct"
+          }
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "UTC date-time when the order was created."
+        }
+      }
+    },
+    "OrderProduct": {
+      "type": "object",
+      "required": [
+        "productId",
+        "quantity",
+        "price"
+      ],
+      "properties": {
+        "productId": {
+          "type": "string",
+          "description": "Unique identifier of the product."
+        },
+        "quantity": {
+          "type": "integer",
+          "description": "Quantity of the product ordered.",
+          "minimum": 1
+        },
+        "price": {
+          "type": "number",
+          "format": "float",
+          "description": "Price of the product at the time of order."
+        },
+        "variantId": {
+          "type": "string",
+          "description": "Variant identifier if the product has variants."
+        }
+      }
+    }
+  }
+}

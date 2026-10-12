@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-categories-batch-post-request-body-content-application-json-schema-categories-items-schema.json",
+  "title": "CategoriesBatchPostRequestBodyContentApplicationJsonSchemaCategoriesItems",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-ecommerce-api-openapi.yml#/components/schemas/CategoriesBatchPostRequestBodyContentApplicationJsonSchemaCategoriesItems",
+  "type": "object",
+  "properties": {
+    "deletedAt": {
+      "type": "string",
+      "description": "UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) of the category deleted from the shop's database"
+    },
+    "id": {
+      "type": "string",
+      "description": "Unique Category ID as saved in the shop\n"
+    },
+    "isDeleted": {
+      "type": "boolean",
+      "description": "category deleted from the shop's database"
+    },
+    "name": {
+      "type": "string",
+      "description": "**Mandatory in case of creation**. Name of the Category, as displayed in the shop\n"
+    },
+    "url": {
+      "type": "string",
+      "description": "URL to the category"
+    }
+  },
+  "required": [
+    "id"
+  ]
+}

@@ -1,0 +1,74 @@
+arazzo: 1.0.1
+info:
+  title: Brevo Shopify order to ecommerce order
+  summary: Brevo Shopify order to ecommerce order
+  description: Brevo-built Shopify integration ("Sync customer purchase data"). Reads a Shopify order and records it in Brevo
+    ecommerce against the buyer email.
+  version: 1.0.0
+sourceDescriptions:
+- name: shopifyOrders
+  url: https://raw.githubusercontent.com/api-evangelist/shopify/refs/heads/main/openapi/shopify-orders-api-openapi.yml
+  type: openapi
+- name: brevoEcommerce
+  url: https://raw.githubusercontent.com/api-evangelist/brevo/refs/heads/main/openapi/brevo-ecommerce-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: shopify-order-to-brevo-order
+  summary: Brevo Shopify order to ecommerce order
+  description: Brevo-built Shopify integration ("Sync customer purchase data"). Reads a Shopify order and records it in Brevo
+    ecommerce against the buyer email.
+  inputs:
+    type: object
+    properties:
+      orderId:
+        type: string
+        description: Shopify order id
+  steps:
+  - stepId: get-order
+    description: Read the Shopify order.
+    operationId: $sourceDescriptions.shopifyOrders.getOrder
+    parameters:
+    - name: order_id
+      in: path
+      value: $inputs.orderId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      id: $response.body#/order/id
+      email: $response.body#/order/email
+      createdAt: $response.body#/order/created_at
+      updatedAt: $response.body#/order/updated_at
+      status: $response.body#/order/financial_status
+      amount: $response.body#/order/total_price
+      lineItems: $response.body#/order/line_items
+  - stepId: record-order
+    description: Create the order in Brevo ecommerce.
+    operationId: $sourceDescriptions.brevoEcommerce.createOrder
+    requestBody:
+      contentType: application/json
+      payload:
+        id: $steps.get-order.outputs.id
+        createdAt: $steps.get-order.outputs.createdAt
+        updatedAt: $steps.get-order.outputs.updatedAt
+        status: $steps.get-order.outputs.status
+        amount: $steps.get-order.outputs.amount
+        identifiers:
+          email_id: $steps.get-order.outputs.email
+        products: $steps.get-order.outputs.lineItems
+    successCriteria:
+    - condition: $statusCode == 204
+  outputs: {}
+x-integration:
+  partner: shopify
+  template: null
+  edge_evidence: https://www.brevo.com/integrations/
+  edge_type: claimed
+  edge_direction: provider-built
+  method: generated
+  generated: '2026-10-12'
+  generator: enrichment pass local-v5 (provider-integrations-arazzo)
+  guessed_steps:
+  - step: record-order
+    cause: provider-contract
+    why: Brevo products[] items (productId, quantity, price) must be mapped from Shopify line_items element by element; the
+      contract leaves identifiers untyped, so email_id is taken from the docs naming

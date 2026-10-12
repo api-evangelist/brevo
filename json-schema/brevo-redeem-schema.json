@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-redeem-schema.json",
+  "title": "redeem",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-reward-api-openapi.yml#/components/schemas/redeem",
+  "type": "object",
+  "properties": {
+    "cancelledAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the redemption was cancelled"
+    },
+    "completedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the redemption was completed"
+    },
+    "contactId": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unique identifier for the contact"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the redemption was created"
+    },
+    "debitTransactionId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the debit transaction"
+    },
+    "expiresAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the redemption expires"
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the redemption"
+    },
+    "loyaltyProgramId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the loyalty program"
+    },
+    "meta": {
+      "type": "object",
+      "additionalProperties": {
+        "description": "Any type"
+      },
+      "description": "Additional metadata associated with the redemption"
+    },
+    "rejectReason": {
+      "type": "string",
+      "description": "Reason for rejection if the redemption was rejected"
+    },
+    "rejectedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the redemption was rejected"
+    },
+    "rewardAttributionId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the reward attribution"
+    },
+    "status": {
+      "type": "string",
+      "description": "Current status of the redemption"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the redemption was last updated"
+    }
+  }
+}

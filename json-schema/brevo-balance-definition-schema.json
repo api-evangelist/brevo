@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-balance-definition-schema.json",
+  "title": "balanceDefinition",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-balance-api-openapi.yml#/components/schemas/balanceDefinition",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the balance definition."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the balance definition."
+    },
+    "description": {
+      "type": "string",
+      "description": "Short description of the balance definition."
+    },
+    "imageRef": {
+      "type": "string",
+      "format": "uri",
+      "description": "Optional image reference URL."
+    },
+    "meta": {
+      "type": "object",
+      "additionalProperties": {
+        "description": "Any type"
+      },
+      "description": "Additional metadata for the balance definition."
+    },
+    "unit": {
+      "$ref": "#/$defs/BalanceDefinitionUnit",
+      "description": "Unit of balance measurement."
+    },
+    "minAmount": {
+      "type": "number",
+      "format": "double",
+      "description": "Minimum allowable balance."
+    },
+    "maxAmount": {
+      "type": "number",
+      "format": "double",
+      "description": "Maximum allowable balance."
+    },
+    "maxCreditAmountLimit": {
+      "type": "number",
+      "format": "double",
+      "description": "Maximum credit allowed per operation."
+    },
+    "maxDebitAmountLimit": {
+      "type": "number",
+      "format": "double",
+      "description": "Maximum debit allowed per operation."
+    },
+    "balanceOptionAmountOvertakingStrategy": {
+      "$ref": "#/$defs/BalanceDefinitionBalanceOptionAmountOvertakingStrategy",
+      "description": "Partial enables partial credit of balance if maximum balance limit is reached. Strict enables rejection of a transaction if it will breach the max balance limit."
+    },
+    "balanceOptionCreditRounding": {
+      "$ref": "#/$defs/BalanceDefinitionBalanceOptionCreditRounding",
+      "description": "Rounding strategy for credit transactions."
+    },
+    "balanceOptionDebitRounding": {
+      "$ref": "#/$defs/BalanceDefinitionBalanceOptionDebitRounding",
+      "description": "Rounding strategy for debit transactions."
+    },
+    "balanceAvailabilityDurationValue": {
+      "type": "integer",
+      "description": "Number of time units before the balance expires."
+    },
+    "balanceAvailabilityDurationUnit": {
+      "$ref": "#/$defs/BalanceDefinitionBalanceAvailabilityDurationUnit",
+      "description": "Unit of time for the balance availability duration."
+    },
+    "balanceAvailabilityDurationModifier": {
+      "$ref": "#/$defs/BalanceDefinitionBalanceAvailabilityDurationModifier",
+      "description": "Modifier for balance availability duration. startOfPeriod causes expiry at the start of the period, endOfPeriod at the end. noModification uses the exact duration from the credit date."
+    },
+    "balanceExpirationDate": {
+      "type": "string",
+      "description": "Fixed expiration date in dd/mm format. The balance expires when this date next appears in the calendar. Only one of balanceExpirationDate or balance availability duration fields can be used."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of balance definition creation."
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of the last update."
+    },
+    "deletedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of balance definition deletion (nullable)."
+    }
+  },
+  "$defs": {
+    "BalanceDefinitionBalanceAvailabilityDurationModifier": {
+      "type": "string",
+      "enum": [
+        "noModification",
+        "startOfPeriod",
+        "endOfPeriod"
+      ],
+      "description": "Modifier for balance availability duration. startOfPeriod causes expiry at the start of the period, endOfPeriod at the end. noModification uses the exact duration from the credit date.",
+      "title": "BalanceDefinitionBalanceAvailabilityDurationModifier"
+    },
+    "BalanceDefinitionBalanceAvailabilityDurationUnit": {
+      "type": "string",
+      "enum": [
+        "day",
+        "week",
+        "month",
+        "year"
+      ],
+      "description": "Unit of time for the balance availability duration.",
+      "title": "BalanceDefinitionBalanceAvailabilityDurationUnit"
+    },
+    "BalanceDefinitionBalanceOptionAmountOvertakingStrategy": {
+      "type": "string",
+      "enum": [
+        "strict",
+        "partial"
+      ],
+      "description": "Partial enables partial credit of balance if maximum balance limit is reached. Strict enables rejection of a transaction if it will breach the max balance limit.",
+      "title": "BalanceDefinitionBalanceOptionAmountOvertakingStrategy"
+    },
+    "BalanceDefinitionBalanceOptionCreditRounding": {
+      "type": "string",
+      "enum": [
+        "lower",
+        "upper",
+        "natural"
+      ],
+      "description": "Rounding strategy for credit transactions.",
+      "title": "BalanceDefinitionBalanceOptionCreditRounding"
+    },
+    "BalanceDefinitionBalanceOptionDebitRounding": {
+      "type": "string",
+      "enum": [
+        "lower",
+        "upper",
+        "natural"
+      ],
+      "description": "Rounding strategy for debit transactions.",
+      "title": "BalanceDefinitionBalanceOptionDebitRounding"
+    },
+    "BalanceDefinitionUnit": {
+      "type": "string",
+      "enum": [
+        "POINTS",
+        "EUR",
+        "USD",
+        "MXN",
+        "GBP",
+        "INR",
+        "CAD",
+        "SGD",
+        "RON",
+        "JPY",
+        "MYR",
+        "CLP",
+        "PEN",
+        "MAD",
+        "AUD",
+        "CHF",
+        "BRL"
+      ],
+      "description": "Unit of balance measurement.",
+      "title": "BalanceDefinitionUnit"
+    }
+  }
+}

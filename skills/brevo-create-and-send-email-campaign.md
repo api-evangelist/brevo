@@ -1,20 +1,23 @@
 ---
-name: Create and send a Brevo email campaign
-description: Build, test and send a marketing email campaign through the Brevo Marketing Campaigns API — including recipient targeting by list and segment, A/B tests, UTM customization, and the states in which a campaign can no longer be modified.
+name: brevo-create-and-send-email-campaign
+description: Build, test and send a marketing email campaign through the Brevo Marketing Campaigns API — including
+  recipient targeting by list and segment, A/B tests, UTM customization, and the states in which a campaign can
+  no longer be modified.
 api: openapi/brevo-marketing-campaigns-openapi.yml
 operations:
-  - createEmailCampaign
-  - getEmailCampaign
-  - updateEmailCampaign
-  - sendTestEmail
-  - sendEmailCampaignNow
-  - updateCampaignStatus
-  - getAbTestCampaignResult
-  - emailExportRecipients
-  - deleteEmailCampaign
+- createEmailCampaign
+- getEmailCampaign
+- updateEmailCampaign
+- sendTestEmail
+- sendEmailCampaignNow
+- updateCampaignStatus
+- getAbTestCampaignResult
+- emailExportRecipients
+- deleteEmailCampaign
 generated: '2026-08-13'
 method: generated
 source: openapi/brevo-marketing-campaigns-openapi.yml + changelog/brevo-changelog.yml + errors/brevo-problem-types.yml
+title: Create and send a Brevo email campaign
 ---
 
 # Create and send a Brevo email campaign

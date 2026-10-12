@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-domains-authenticate-domain-response-200-schema.json",
+  "title": "Domains_authenticateDomain_Response_200",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-domains-api-openapi.yml#/components/schemas/Domains_authenticateDomain_Response_200",
+  "type": "object",
+  "properties": {
+    "domain_name": {
+      "type": "string",
+      "description": "Domain name that was authenticated"
+    },
+    "message": {
+      "type": "string",
+      "description": "Success message confirming authentication"
+    }
+  },
+  "required": [
+    "domain_name",
+    "message"
+  ]
+}

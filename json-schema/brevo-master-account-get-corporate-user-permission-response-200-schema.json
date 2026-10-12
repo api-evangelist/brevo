@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-master-account-get-corporate-user-permission-response-200-schema.json",
+  "title": "Master account_getCorporateUserPermission_Response_200",
+  "description": "Check admin user permissions",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-master-account-api-openapi.yml#/components/schemas/Master_account_getCorporateUserPermission_Response_200",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "description": "Email address of the user."
+    },
+    "feature_access": {
+      "$ref": "#/$defs/CorporateUserEmailPermissionsGetResponsesContentApplicationJsonSchemaFeatureAccess",
+      "description": "Granular feature permissions given to the user."
+    },
+    "groups": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/CorporateUserEmailPermissionsGetResponsesContentApplicationJsonSchemaGroupsItems"
+      }
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the invited user."
+    }
+  },
+  "required": [
+    "email",
+    "feature_access",
+    "groups",
+    "status"
+  ],
+  "$defs": {
+    "CorporateUserEmailPermissionsGetResponsesContentApplicationJsonSchemaFeatureAccess": {
+      "type": "object",
+      "properties": {
+        "analytics": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Permission on analytics"
+        },
+        "api_keys": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Permission on api keys"
+        },
+        "apps_management": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Permission on apps management"
+        },
+        "create_sub_organizations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Permission on create sub-accounts"
+        },
+        "manage_sub_organizations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Permission on manage sub-accounts"
+        },
+        "my_plan": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Permission on my plan"
+        },
+        "sub_organization_groups": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Permission on groups"
+        },
+        "user_management": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Permission on user management"
+        }
+      },
+      "description": "Granular feature permissions given to the user.",
+      "title": "CorporateUserEmailPermissionsGetResponsesContentApplicationJsonSchemaFeatureAccess"
+    },
+    "CorporateUserEmailPermissionsGetResponsesContentApplicationJsonSchemaGroupsItems": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "group identifier"
+        },
+        "name": {
+          "type": "string",
+          "description": "Group name"
+        }
+      },
+      "description": "Groups details",
+      "title": "CorporateUserEmailPermissionsGetResponsesContentApplicationJsonSchemaGroupsItems"
+    }
+  }
+}

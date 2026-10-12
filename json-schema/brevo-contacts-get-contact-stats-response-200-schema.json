@@ -1,0 +1,334 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-contacts-get-contact-stats-response-200-schema.json",
+  "title": "Contacts_getContactStats_Response_200",
+  "description": "Campaign Statistics for the contact",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-contacts-api-openapi.yml#/components/schemas/Contacts_getContactStats_Response_200",
+  "type": "object",
+  "properties": {
+    "clicked": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaClickedItems"
+      }
+    },
+    "complaints": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaComplaintsItems"
+      }
+    },
+    "delivered": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaDeliveredItems"
+      }
+    },
+    "hardBounces": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaHardBouncesItems"
+      }
+    },
+    "messagesSent": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaMessagesSentItems"
+      }
+    },
+    "opened": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaOpenedItems"
+      }
+    },
+    "softBounces": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaSoftBouncesItems"
+      }
+    },
+    "transacAttributes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaTransacAttributesItems"
+      }
+    },
+    "unsubscriptions": {
+      "$ref": "#/$defs/ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaUnsubscriptions"
+    }
+  },
+  "$defs": {
+    "ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaClickedItems": {
+      "type": "object",
+      "properties": {
+        "campaignId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "ID of the campaign which generated the event"
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaClickedItemsLinksItems"
+          }
+        }
+      },
+      "required": [
+        "campaignId",
+        "links"
+      ],
+      "title": "ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaClickedItems"
+    },
+    "ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaClickedItemsLinksItems": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of clicks on this link for the campaign"
+        },
+        "eventTime": {
+          "type": "string",
+          "description": "UTC date-time of the event"
+        },
+        "ip": {
+          "type": "string",
+          "description": "IP from which the user has clicked on the link"
+        },
+        "url": {
+          "type": "string",
+          "description": "URL of the clicked link"
+        }
+      },
+      "required": [
+        "count",
+        "eventTime",
+        "ip",
+        "url"
+      ],
+      "title": "ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaClickedItemsLinksItems"
+    },
+    "ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaComplaintsItems": {
+      "type": "object",
+      "properties": {
+        "campaignId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "ID of the campaign which generated the event"
+        },
+        "eventTime": {
+          "type": "string",
+          "description": "UTC date-time of the event"
+        }
+      },
+      "required": [
+        "campaignId",
+        "eventTime"
+      ],
+      "title": "ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaComplaintsItems"
+    },
+    "ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaDeliveredItems": {
+      "type": "object",
+      "properties": {
+        "campaignId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "ID of the campaign which generated the event"
+        },
+        "eventTime": {
+          "type": "string",
+          "description": "UTC date-time of the event"
+        }
+      },
+      "required": [
+        "campaignId",
+        "eventTime"
+      ],
+      "title": "ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaDeliveredItems"
+    },
+    "ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaHardBouncesItems": {
+      "type": "object",
+      "properties": {
+        "campaignId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "ID of the campaign which generated the event"
+        },
+        "eventTime": {
+          "type": "string",
+          "description": "UTC date-time of the event"
+        }
+      },
+      "required": [
+        "campaignId",
+        "eventTime"
+      ],
+      "title": "ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaHardBouncesItems"
+    },
+    "ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaMessagesSentItems": {
+      "type": "object",
+      "properties": {
+        "campaignId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "ID of the campaign which generated the event"
+        },
+        "eventTime": {
+          "type": "string",
+          "description": "UTC date-time of the event"
+        }
+      },
+      "required": [
+        "campaignId",
+        "eventTime"
+      ],
+      "title": "ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaMessagesSentItems"
+    },
+    "ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaOpenedItems": {
+      "type": "object",
+      "properties": {
+        "campaignId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "ID of the campaign which generated the event"
+        },
+        "count": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of openings of the campaign"
+        },
+        "eventTime": {
+          "type": "string",
+          "description": "UTC date-time of the event"
+        },
+        "ip": {
+          "type": "string",
+          "description": "IP from which the user has opened the campaign"
+        }
+      },
+      "required": [
+        "campaignId",
+        "count",
+        "eventTime",
+        "ip"
+      ],
+      "title": "ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaOpenedItems"
+    },
+    "ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaSoftBouncesItems": {
+      "type": "object",
+      "properties": {
+        "campaignId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "ID of the campaign which generated the event"
+        },
+        "eventTime": {
+          "type": "string",
+          "description": "UTC date-time of the event"
+        }
+      },
+      "required": [
+        "campaignId",
+        "eventTime"
+      ],
+      "title": "ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaSoftBouncesItems"
+    },
+    "ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaTransacAttributesItems": {
+      "type": "object",
+      "properties": {
+        "orderDate": {
+          "type": "string",
+          "format": "date",
+          "description": "Date of the order"
+        },
+        "orderId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "ID of the order"
+        },
+        "orderPrice": {
+          "type": "string",
+          "title": "float",
+          "description": "Price of the order"
+        }
+      },
+      "required": [
+        "orderDate",
+        "orderId",
+        "orderPrice"
+      ],
+      "title": "ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaTransacAttributesItems"
+    },
+    "ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaUnsubscriptions": {
+      "type": "object",
+      "properties": {
+        "adminUnsubscription": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaUnsubscriptionsAdminUnsubscriptionItems"
+          },
+          "description": "Contact has been unsubscribed from the administrator"
+        },
+        "userUnsubscription": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaUnsubscriptionsUserUnsubscriptionItems"
+          },
+          "description": "Contact has unsubscribed via the unsubscription link in the email"
+        }
+      },
+      "required": [
+        "adminUnsubscription",
+        "userUnsubscription"
+      ],
+      "title": "ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaUnsubscriptions"
+    },
+    "ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaUnsubscriptionsAdminUnsubscriptionItems": {
+      "type": "object",
+      "properties": {
+        "eventTime": {
+          "type": "string",
+          "description": "UTC date-time of the event"
+        },
+        "ip": {
+          "type": "string",
+          "description": "IP from which the user has been unsubscribed"
+        }
+      },
+      "required": [
+        "eventTime"
+      ],
+      "title": "ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaUnsubscriptionsAdminUnsubscriptionItems"
+    },
+    "ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaUnsubscriptionsUserUnsubscriptionItems": {
+      "type": "object",
+      "properties": {
+        "campaignId": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int64",
+          "description": "ID of the campaign which generated the event"
+        },
+        "eventTime": {
+          "type": "string",
+          "description": "UTC date-time of the event"
+        },
+        "ip": {
+          "type": "string",
+          "description": "IP from which the user has unsubscribed"
+        }
+      },
+      "required": [
+        "campaignId",
+        "eventTime"
+      ],
+      "title": "ContactsIdentifierCampaignStatsGetResponsesContentApplicationJsonSchemaUnsubscriptionsUserUnsubscriptionItems"
+    }
+  }
+}

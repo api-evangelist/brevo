@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-payments-get-payment-request-response-200-schema.json",
+  "title": "Payments_getPaymentRequest_Response_200",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-payments-api-openapi.yml#/components/schemas/Payments_getPaymentRequest_Response_200",
+  "type": "object",
+  "properties": {
+    "cart": {
+      "$ref": "#/$defs/cart"
+    },
+    "configuration": {
+      "$ref": "#/$defs/configuration"
+    },
+    "contactId": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Brevo ID of the contact requested to pay.\n"
+    },
+    "notification": {
+      "$ref": "#/$defs/notification"
+    },
+    "numberOfRemindersSent": {
+      "type": "integer",
+      "format": "int64",
+      "description": "number of reminders sent.\n"
+    },
+    "reference": {
+      "type": "string",
+      "description": "Reference of the payment request, it will appear on the payment page.\n"
+    },
+    "status": {
+      "$ref": "#/$defs/PaymentsRequestsIdGetResponsesContentApplicationJsonSchemaStatus",
+      "description": "Status of the payment request."
+    }
+  },
+  "required": [
+    "cart",
+    "notification",
+    "reference",
+    "status"
+  ],
+  "$defs": {
+    "CartCurrency": {
+      "type": "string",
+      "enum": [
+        "EUR"
+      ],
+      "description": "Currency code for the payment amount.\n",
+      "title": "CartCurrency"
+    },
+    "NotificationChannel": {
+      "type": "string",
+      "enum": [
+        "email"
+      ],
+      "description": "Channel used to send the notifications.\n",
+      "title": "NotificationChannel"
+    },
+    "PaymentsRequestsIdGetResponsesContentApplicationJsonSchemaStatus": {
+      "type": "string",
+      "enum": [
+        "created",
+        "sent",
+        "reminderSent",
+        "paid"
+      ],
+      "description": "Status of the payment request.",
+      "title": "PaymentsRequestsIdGetResponsesContentApplicationJsonSchemaStatus"
+    },
+    "cart": {
+      "type": "object",
+      "properties": {
+        "currency": {
+          "$ref": "#/$defs/CartCurrency",
+          "description": "Currency code for the payment amount.\n"
+        },
+        "specificAmount": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Payment amount, in cents. e.g. if you want to request €12.00, then the amount in cents is 1200.\n"
+        }
+      },
+      "required": [
+        "currency",
+        "specificAmount"
+      ],
+      "description": "Specify the payment currency and amount.\n",
+      "title": "cart"
+    },
+    "configuration": {
+      "type": "object",
+      "properties": {
+        "customSuccessUrl": {
+          "type": "string",
+          "format": "url",
+          "description": "Absolute URL of the custom success page.\n"
+        }
+      },
+      "required": [
+        "customSuccessUrl"
+      ],
+      "description": "Optional. Redirect contact to a custom success page once payment is successful. If empty the default Brevo page will be displayed once a payment is validated\n",
+      "title": "configuration"
+    },
+    "notification": {
+      "type": "object",
+      "properties": {
+        "channel": {
+          "$ref": "#/$defs/NotificationChannel",
+          "description": "Channel used to send the notifications.\n"
+        },
+        "text": {
+          "type": "string",
+          "description": "Use this field if you want to give more context to your contact about the payment request.\n"
+        }
+      },
+      "required": [
+        "channel",
+        "text"
+      ],
+      "description": "Optional. Use this object if you want to let Brevo send an email to the contact, with the payment request URL. If empty, no notifications (message and reminders) will be sent.\n",
+      "title": "notification"
+    }
+  }
+}

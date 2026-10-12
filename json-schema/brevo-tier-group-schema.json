@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-tier-group-schema.json",
+  "title": "tierGroup",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-tier-api-openapi.yml#/components/schemas/tierGroup",
+  "type": "object",
+  "properties": {
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the tier group was created"
+    },
+    "downgradeStrategy": {
+      "$ref": "#/$defs/TierGroupDowngradeStrategy",
+      "default": "real_time",
+      "description": "Select real_time to downgrade tier on real time balance updates. Select membership_anniversary to downgrade tier on subscription anniversary. Select tier_anniversary to downgrade tier on tier anniversary."
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Tier group unique identifier"
+    },
+    "loyaltyProgramId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Associated loyalty program Id"
+    },
+    "name": {
+      "type": "string",
+      "description": "Tier group name"
+    },
+    "tierOrder": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uuid"
+      },
+      "description": "Order of the tiers in the group in ascending order"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the tier group was last updated"
+    },
+    "upgradeStrategy": {
+      "$ref": "#/$defs/TierGroupUpgradeStrategy",
+      "default": "real_time",
+      "description": "Select real_time to upgrade tier on real time balance updates. Select membership_anniversary to upgrade tier on subscription anniversary. Select tier_anniversary to upgrade tier on tier anniversary."
+    },
+    "upgradeSchedule": {
+      "$ref": "#/$defs/TierGroupUpgradeSchedule",
+      "description": "Schedule configuration for tier upgrades."
+    },
+    "downgradeSchedule": {
+      "$ref": "#/$defs/TierGroupDowngradeSchedule",
+      "description": "Schedule configuration for tier downgrades."
+    }
+  },
+  "$defs": {
+    "TierGroupDowngradeSchedule": {
+      "type": "object",
+      "properties": {
+        "strategy": {
+          "type": "string",
+          "description": "Schedule strategy type."
+        },
+        "durationValue": {
+          "type": "integer",
+          "description": "Duration value for the schedule."
+        },
+        "durationUnit": {
+          "$ref": "#/$defs/TierGroupDowngradeScheduleDurationUnit",
+          "description": "Duration unit for the schedule."
+        },
+        "durationModifier": {
+          "$ref": "#/$defs/TierGroupDowngradeScheduleDurationModifier",
+          "description": "Modifier for the duration."
+        },
+        "scheduledDate": {
+          "type": "string",
+          "description": "Scheduled date in DD/MM format."
+        }
+      },
+      "description": "Schedule configuration for tier downgrades.",
+      "title": "TierGroupDowngradeSchedule"
+    },
+    "TierGroupDowngradeScheduleDurationModifier": {
+      "type": "string",
+      "enum": [
+        "start_of_period",
+        "end_of_period"
+      ],
+      "description": "Modifier for the duration.",
+      "title": "TierGroupDowngradeScheduleDurationModifier"
+    },
+    "TierGroupDowngradeScheduleDurationUnit": {
+      "type": "string",
+      "enum": [
+        "day",
+        "week",
+        "month",
+        "year"
+      ],
+      "description": "Duration unit for the schedule.",
+      "title": "TierGroupDowngradeScheduleDurationUnit"
+    },
+    "TierGroupDowngradeStrategy": {
+      "type": "string",
+      "enum": [
+        "real_time",
+        "membership_anniversary",
+        "tier_anniversary"
+      ],
+      "default": "real_time",
+      "description": "Select real_time to downgrade tier on real time balance updates. Select membership_anniversary to downgrade tier on subscription anniversary. Select tier_anniversary to downgrade tier on tier anniversary.",
+      "title": "TierGroupDowngradeStrategy"
+    },
+    "TierGroupUpgradeSchedule": {
+      "type": "object",
+      "properties": {
+        "strategy": {
+          "type": "string",
+          "description": "Schedule strategy type."
+        },
+        "durationValue": {
+          "type": "integer",
+          "description": "Duration value for the schedule."
+        },
+        "durationUnit": {
+          "$ref": "#/$defs/TierGroupUpgradeScheduleDurationUnit",
+          "description": "Duration unit for the schedule."
+        },
+        "durationModifier": {
+          "$ref": "#/$defs/TierGroupUpgradeScheduleDurationModifier",
+          "description": "Modifier for the duration."
+        },
+        "scheduledDate": {
+          "type": "string",
+          "description": "Scheduled date in DD/MM format."
+        }
+      },
+      "description": "Schedule configuration for tier upgrades.",
+      "title": "TierGroupUpgradeSchedule"
+    },
+    "TierGroupUpgradeScheduleDurationModifier": {
+      "type": "string",
+      "enum": [
+        "start_of_period",
+        "end_of_period"
+      ],
+      "description": "Modifier for the duration.",
+      "title": "TierGroupUpgradeScheduleDurationModifier"
+    },
+    "TierGroupUpgradeScheduleDurationUnit": {
+      "type": "string",
+      "enum": [
+        "day",
+        "week",
+        "month",
+        "year"
+      ],
+      "description": "Duration unit for the schedule.",
+      "title": "TierGroupUpgradeScheduleDurationUnit"
+    },
+    "TierGroupUpgradeStrategy": {
+      "type": "string",
+      "enum": [
+        "real_time",
+        "membership_anniversary",
+        "tier_anniversary"
+      ],
+      "default": "real_time",
+      "description": "Select real_time to upgrade tier on real time balance updates. Select membership_anniversary to upgrade tier on subscription anniversary. Select tier_anniversary to upgrade tier on tier anniversary.",
+      "title": "TierGroupUpgradeStrategy"
+    }
+  }
+}

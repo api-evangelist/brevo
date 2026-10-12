@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-deal-schema.json",
+  "title": "Deal",
+  "description": "Deal Details",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-deals-api-openapi.yml#/components/schemas/Deal",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique deal id"
+    },
+    "attributes": {
+      "$ref": "#/$defs/DealAttributes",
+      "description": "Deal attributes with values"
+    },
+    "linkedContactsIds": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "Contact ids for contacts linked to this deal"
+    },
+    "linkedCompaniesIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Companies ids for companies linked to this deal"
+    }
+  },
+  "$defs": {
+    "DealAttributes": {
+      "type": "object",
+      "properties": {},
+      "description": "Deal attributes with values",
+      "title": "DealAttributes"
+    }
+  }
+}

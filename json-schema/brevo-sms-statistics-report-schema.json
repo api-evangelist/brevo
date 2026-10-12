@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/brevo/main/json-schema/brevo-sms-statistics-report-schema.json",
+  "title": "SmsStatisticsReport",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/brevo-sms-statistics-api-openapi.yml#/components/schemas/SmsStatisticsReport",
+  "type": "object",
+  "properties": {
+    "reports": {
+      "type": "array",
+      "description": "Daily SMS statistics reports.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "Date for the statistics."
+          },
+          "requests": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Number of SMS send requests."
+          },
+          "delivered": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Number of successfully delivered SMS."
+          },
+          "hardBounces": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Number of hard bounces."
+          },
+          "softBounces": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Number of soft bounces."
+          },
+          "blocked": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Number of blocked SMS."
+          },
+          "unsubscribed": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Number of unsubscribes."
+          }
+        }
+      }
+    }
+  }
+}

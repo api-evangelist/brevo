@@ -14,11 +14,8 @@
 - [Postman workspace](https://developers.brevo.com/docs/postman.md): Test and explore the Brevo API using our Postman collection
 - [Authentication schemes](https://developers.brevo.com/docs/authentication-schemes.md): Choose between API key and OAuth 2.0 authentication for the Brevo API
 - [API key authentication](https://developers.brevo.com/docs/api-key-authentication.md): Generate and use an API key to authenticate your Brevo API requests
-- [OAuth 2.0](https://developers.brevo.com/docs/oauth.md): Token-based authentication for Brevo integrations that act on behalf of a user
-- [Quickstart](https://developers.brevo.com/docs/oauth-quickstart.md): Go from zero to a working OAuth flow in under 5 minutes
-- [Integration guide](https://developers.brevo.com/docs/oauth-integration-guide.md): Implement the OAuth 2.0 authorization code flow in your application
-- [Scopes](https://developers.brevo.com/docs/oauth-scopes.md): Permissions your OAuth app requests from a Brevo user
-- [CLI reference](https://developers.brevo.com/docs/cli-reference.md): Complete reference for the Brevo CLI — install, authenticate, and manage OAuth apps
+- [OAuth 2.0](https://developers.brevo.com/docs/oauth.md): Token-based authentication — machine-to-machine or on behalf of a user
+- [Machine-to-machine (M2M)](https://developers.brevo.com/docs/oauth-m2m-authentication.md): Scoped, short-lived credentials for server-to-server calls — no user, no static key
 - [IP security & authorization](https://developers.brevo.com/docs/ip-security.md): Restrict API access to authorized IP addresses
 - [Rate limits](https://developers.brevo.com/docs/api-limits.md): Understand API rate limits and how to handle rate limit responses
 - [Rate limit headers](https://developers.brevo.com/docs/limit-headers.md): Understand and use rate limit response headers to manage API request throttling
@@ -32,6 +29,7 @@
 - [PHP SDK Changelog](https://developers.brevo.com/guides/php/changelog.md): Release history for the getbrevo/brevo-php SDK.
 - [Brevo MCP Server](https://developers.brevo.com/docs/mcp-protocol.md): Use AI assistants to interact with your Brevo account using natural language — no manual navigation required.
 - [Tool configuration](https://developers.brevo.com/docs/integration-guide.md): Detailed setup instructions for connecting each supported AI tool to the Brevo MCP server.
+- [Agent setup](https://developers.brevo.com/docs/agent-setup.md): Connect your AI coding agent to Brevo's docs so it always has current API, SDK, and CLI reference
 - [Connect to Cursor](https://developers.brevo.com/guides/connect-to-cursor.md): Learn how to connect the Brevo API documentation to Cursor via MCP server
 - [Send a transactional email](https://developers.brevo.com/docs/send-a-transactional-email.md): Send transactional emails with static or dynamic content using the Messaging API
 - [Batch send transactional emails](https://developers.brevo.com/docs/batch-send-transactional-emails.md): Send up to 1000 personalized email versions in a single API request
@@ -44,6 +42,12 @@
 - [Node.js example](https://developers.brevo.com/docs/node-smtp-relay-example.md)
 - [Delete transactional logs](https://developers.brevo.com/docs/deleting-transactional-logs-based-on-recipient-address-to.md)
 - [Parse inbound email](https://developers.brevo.com/docs/inbound-parse-webhooks.md)
+- [Send emails from your Base44 app with Brevo](https://developers.brevo.com/docs/base44-integration.md): Send transactional email from a Base44 app through Brevo, using a backend function and a stored API key.
+- [Send emails from Bolt.new with Brevo](https://developers.brevo.com/docs/bolt-new-integration.md): Use Brevo to send both app-triggered emails (order confirmations, notifications) and Supabase-powered authentication emails from a Bolt.new project.
+- [Send emails from your Lovable app with Brevo](https://developers.brevo.com/docs/lovable-integration.md): Connect the Brevo app + chat connector to your Lovable project so it can send transactional or marketing email, manage contacts and lists, and trigger automation workflows through your own Brevo account.
+- [Send email from n8n with Brevo](https://developers.brevo.com/docs/n8n-integration.md): Use the native Brevo node in n8n to send transactional emails and manage contacts as part of a workflow.
+- [Connect Brevo SMTP to Supabase: send your auth emails](https://developers.brevo.com/docs/supabase-smtp-integration.md): Configure Brevo as the custom SMTP provider for Supabase Auth so sign-up confirmations, magic links, password resets, and invites send from your own domain instead of Supabase's shared test server.
+- [Send emails from your v0 app with Brevo](https://developers.brevo.com/docs/v0-integration.md): Add Brevo transactional email sending to a Next.js app generated with v0, using a server-side API route and your Brevo API key.
 - [Send transactional SMS](https://developers.brevo.com/docs/transactional-sms-endpoints.md)
 - [WhatsApp messages](https://developers.brevo.com/docs/whatsapp-messages.md): Send transactional WhatsApp messages using the Brevo API
 - [Manage your contacts in Brevo](https://developers.brevo.com/docs/synchronise-contact-lists.md): Learn how to create and update contacts using the Brevo API
@@ -102,6 +106,15 @@
 - [Invited users](https://developers.brevo.com/docs/invited-users-management.md)
 - [Invited users management](https://developers.brevo.com/docs/invited-user-management.md)
 - [Getting started](https://developers.brevo.com/reference/quickstart-reference.md): Make your first API call in 3 steps
+- [What are Brevo app extensions?](https://developers.brevo.com/docs/apps.md): Customize your Brevo experience with your own app extensions
+- [Create your first app](https://developers.brevo.com/docs/apps-getting-started.md): Install the Brevo CLI and create your first app
+- [Quickstart](https://developers.brevo.com/docs/oauth-quickstart.md): Go from zero to a working OAuth flow in under 5 minutes
+- [Integration guide](https://developers.brevo.com/docs/oauth-integration-guide.md): Implement the OAuth 2.0 authorization code flow in your application
+- [Scopes](https://developers.brevo.com/docs/oauth-scopes.md): Permissions your OAuth app requests from a Brevo user
+- [Action links](https://developers.brevo.com/docs/apps-action-links.md): Open your website from a Brevo record, with the record's details as query parameters
+- [Brevo Functions](https://developers.brevo.com/docs/apps-brevo-functions.md): Define a custom formula to calculate contact attributes
+- [Iframe modals](https://developers.brevo.com/docs/apps-iframe-modals.md): Embed your website in a modal that opens on top of a Brevo record
+- [CLI reference](https://developers.brevo.com/docs/cli-reference.md): Complete reference for the Brevo CLI — install, authenticate, and manage OAuth apps
 - [Changelog](https://developers.brevo.com/changelog/llms.txt)
 
 ## API Docs
@@ -209,6 +222,7 @@
 - Object Management > Custom Objects [Create/Update object records in bulk](https://developers.brevo.com/reference/custom-objects/upsertrecords.md)
 - Object Management > Custom Objects [Get the list of object records and total records count for an object.](https://developers.brevo.com/reference/custom-objects/getrecords.md)
 - Object Management > Custom Objects [Delete multiple object records (up to 1000) asynchronously](https://developers.brevo.com/reference/custom-objects/batch-delete-object-records.md)
+- Object Management > Custom Objects [Get the records associated with an object record](https://developers.brevo.com/reference/custom-objects/get-associated-records.md)
 - Accounts and Settings > Senders [Get email senders](https://developers.brevo.com/reference/get-senders.md)
 - Accounts and Settings > Senders [Create email sender](https://developers.brevo.com/reference/create-sender.md)
 - Accounts and Settings > Senders [Update a sender](https://developers.brevo.com/reference/update-sender.md)
