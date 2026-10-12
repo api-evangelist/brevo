@@ -161,7 +161,6 @@
   status: arazzo
 - slug: brevo-claude
   label: Claude
-  partner: claude
   partner_name: Claude
   category: AI + Marketing Automation
   type: claimed
@@ -386,7 +385,6 @@
   arazzo: null
 - slug: brevo-linkedin
   label: LinkedIn
-  partner: linkedin
   partner_name: LinkedIn
   category: CDP + Lead Generation & Forms
   type: claimed
@@ -394,7 +392,7 @@
   evidence: https://www.brevo.com/integrations/
   source: edge
   relationship: workflow
-  status: pending-generation
+  status: pending-partner-spec
   arazzo: null
 - slug: brevo-adalo
   label: Adalo
@@ -620,5 +618,5 @@
     matched_domain: brevo.com
     detected_by: sweep-cpaas.py
     detected: '2026-10-12'
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
