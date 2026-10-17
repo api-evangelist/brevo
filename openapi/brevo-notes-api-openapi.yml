@@ -251,59 +251,11 @@ paths:
                 $ref: '#/components/schemas/errorModel'
 components:
   schemas:
-    CrmNotesGetParametersEntity:
-      type: string
-      enum:
-      - companies
-      - deals
-      - contacts
-      title: CrmNotesGetParametersEntity
-    CrmNotesPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: CrmNotesPostResponsesContentApplicationJsonSchemaCode
-    GetAllNotesRequestBadRequestError:
+    UpdateANoteRequestBadRequestError:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/CrmNotesGetResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/CrmNotesIdPatchResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
@@ -311,7 +263,20 @@ components:
       required:
       - code
       - message
-      title: GetAllNotesRequestBadRequestError
+      title: UpdateANoteRequestBadRequestError
+    DeleteANoteRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CrmNotesIdDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteANoteRequestBadRequestError
     NoteData:
       type: object
       properties:
@@ -337,19 +302,6 @@ components:
       - text
       description: Note data to be saved
       title: NoteData
-    CreateANoteRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/CrmNotesPostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: CreateANoteRequestBadRequestError
     Note:
       type: object
       properties:
@@ -389,26 +341,19 @@ components:
       - text
       description: Note Details
       title: Note
-    Notes_createANote_Response_200:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique note Id
-      description: Created Note ID
-      title: Notes_createANote_Response_200
-    errorModel:
+    CreateANoteRequestBadRequestError:
       type: object
       properties:
         code:
-          type: string
+          $ref: '#/components/schemas/CrmNotesPostResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
           description: Readable message associated to the failure
       required:
+      - code
       - message
-      title: errorModel
+      title: CreateANoteRequestBadRequestError
     CrmNotesGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -463,38 +408,18 @@ components:
       - code
       - message
       title: GetANoteRequestBadRequestError
-    CrmNotesGetParametersSort:
+    CrmNotesGetParametersEntity:
       type: string
       enum:
-      - asc
-      - desc
-      title: CrmNotesGetParametersSort
-    DeleteANoteRequestBadRequestError:
+      - companies
+      - deals
+      - contacts
+      title: CrmNotesGetParametersEntity
+    NoteAuthorId:
       type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/CrmNotesIdDeleteResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: DeleteANoteRequestBadRequestError
-    UpdateANoteRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/CrmNotesIdPatchResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: UpdateANoteRequestBadRequestError
+      properties: {}
+      description: Account details of user which created the note
+      title: NoteAuthorId
     CrmNotesIdGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -536,6 +461,86 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: CrmNotesIdGetResponsesContentApplicationJsonSchemaCode
+    GetAllNotesRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CrmNotesGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetAllNotesRequestBadRequestError
+    Notes_createANote_Response_200:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique note Id
+      description: Created Note ID
+      title: Notes_createANote_Response_200
+    CrmNotesPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: CrmNotesPostResponsesContentApplicationJsonSchemaCode
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
+    CrmNotesGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      title: CrmNotesGetParametersSort
     CrmNotesIdDeleteResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -618,11 +623,6 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: CrmNotesIdPatchResponsesContentApplicationJsonSchemaCode
-    NoteAuthorId:
-      type: object
-      properties: {}
-      description: Account details of user which created the note
-      title: NoteAuthorId
   securitySchemes:
     api-key:
       type: apiKey

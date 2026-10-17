@@ -292,93 +292,6 @@ paths:
                 $ref: '#/components/schemas/AuthenticateDomainRequestNotFoundError'
 components:
   schemas:
-    Domains_createDomain_Response_200:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          description: ID of the Domain created
-        domain_name:
-          type: string
-          description: Domain name
-        domain_provider:
-          type: string
-          description: Detected domain provider
-        message:
-          type: string
-          description: Success message with next steps
-        dns_records:
-          $ref: '#/components/schemas/SendersDomainsPostResponsesContentApplicationJsonSchemaDnsRecords'
-          description: DNS records required for domain authentication
-      required:
-      - id
-      - domain_name
-      - message
-      title: Domains_createDomain_Response_200
-    SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecordsDkimRecord:
-      type: object
-      properties:
-        host_name:
-          type: string
-          description: DNS record hostname
-        type:
-          type: string
-          description: DNS record type
-        value:
-          type: string
-          description: DNS record value
-        status:
-          type: boolean
-          description: Whether the record is properly configured
-      required:
-      - host_name
-      - type
-      - value
-      - status
-      description: DKIM authentication record
-      title: SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecordsDkimRecord
-    SendersDomainsDomainNameDeleteResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: SendersDomainsDomainNameDeleteResponsesContentApplicationJsonSchemaCode
     Domains_getDomainConfiguration_Response_200:
       type: object
       properties:
@@ -404,32 +317,6 @@ components:
       - authenticated
       - dns_records
       title: Domains_getDomainConfiguration_Response_200
-    Domains_authenticateDomain_Response_200:
-      type: object
-      properties:
-        domain_name:
-          type: string
-          description: Domain name that was authenticated
-        message:
-          type: string
-          description: Success message confirming authentication
-      required:
-      - domain_name
-      - message
-      title: Domains_authenticateDomain_Response_200
-    DeleteDomainRequestNotFoundError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/SendersDomainsDomainNameDeleteResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: DeleteDomainRequestNotFoundError
     SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecordsDmarcRecord:
       type: object
       properties:
@@ -452,24 +339,6 @@ components:
       - status
       description: DMARC policy record
       title: SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecordsDmarcRecord
-    SendersDomainsPostResponsesContentApplicationJsonSchemaDnsRecords:
-      type: object
-      properties:
-        brevo_code:
-          $ref: '#/components/schemas/SendersDomainsPostResponsesContentApplicationJsonSchemaDnsRecordsBrevoCode'
-          description: Brevo verification code record
-        dkim_record:
-          $ref: '#/components/schemas/SendersDomainsPostResponsesContentApplicationJsonSchemaDnsRecordsDkimRecord'
-          description: DKIM authentication record
-        dmarc_record:
-          $ref: '#/components/schemas/SendersDomainsPostResponsesContentApplicationJsonSchemaDnsRecordsDmarcRecord'
-          description: DMARC policy record
-      required:
-      - brevo_code
-      - dkim_record
-      - dmarc_record
-      description: DNS records required for domain authentication
-      title: SendersDomainsPostResponsesContentApplicationJsonSchemaDnsRecords
     SendersDomainsGetResponsesContentApplicationJsonSchemaDomainsItemsCreator:
       type: object
       properties:
@@ -530,81 +399,6 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaCode
-    SendersDomainsPostResponsesContentApplicationJsonSchemaDnsRecordsDmarcRecord:
-      type: object
-      properties:
-        host_name:
-          type: string
-          description: DNS record hostname
-        type:
-          type: string
-          description: DNS record type
-        value:
-          type: string
-          description: DNS record value
-        status:
-          type: boolean
-          description: Whether the record is properly configured
-      required:
-      - host_name
-      - type
-      - value
-      - status
-      description: DMARC policy record
-      title: SendersDomainsPostResponsesContentApplicationJsonSchemaDnsRecordsDmarcRecord
-    GetDomainConfigurationRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetDomainConfigurationRequestBadRequestError
-    SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecords:
-      type: object
-      properties:
-        brevo_code:
-          $ref: '#/components/schemas/SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecordsBrevoCode'
-          description: Brevo verification code record
-        dkim_record:
-          $ref: '#/components/schemas/SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecordsDkimRecord'
-          description: DKIM authentication record
-        dmarc_record:
-          $ref: '#/components/schemas/SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecordsDmarcRecord'
-          description: DMARC policy record
-      required:
-      - brevo_code
-      - dkim_record
-      - dmarc_record
-      description: DNS records configuration and status
-      title: SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecords
-    SendersDomainsPostResponsesContentApplicationJsonSchemaDnsRecordsDkimRecord:
-      type: object
-      properties:
-        host_name:
-          type: string
-          description: DNS record hostname
-        type:
-          type: string
-          description: DNS record type
-        value:
-          type: string
-          description: DNS record value
-        status:
-          type: boolean
-          description: Whether the record is properly configured
-      required:
-      - host_name
-      - type
-      - value
-      - status
-      description: DKIM authentication record
-      title: SendersDomainsPostResponsesContentApplicationJsonSchemaDnsRecordsDkimRecord
     GetDomainsRequestBadRequestError:
       type: object
       properties:
@@ -618,28 +412,19 @@ components:
       - code
       - message
       title: GetDomainsRequestBadRequestError
-    SendersDomainsPostResponsesContentApplicationJsonSchemaDnsRecordsBrevoCode:
+    GetDomainConfigurationRequestNotFoundError:
       type: object
       properties:
-        host_name:
+        code:
+          $ref: '#/components/schemas/SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
           type: string
-          description: DNS record hostname
-        type:
-          type: string
-          description: DNS record type
-        value:
-          type: string
-          description: DNS record value
-        status:
-          type: boolean
-          description: Whether the record is properly configured
+          description: Readable message associated to the failure
       required:
-      - host_name
-      - type
-      - value
-      - status
-      description: Brevo verification code record
-      title: SendersDomainsPostResponsesContentApplicationJsonSchemaDnsRecordsBrevoCode
+      - code
+      - message
+      title: GetDomainConfigurationRequestNotFoundError
     SendersDomainsPostResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -681,6 +466,19 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: SendersDomainsPostResponsesContentApplicationJsonSchemaCode
+    AuthenticateDomainRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SendersDomainsDomainNameAuthenticatePutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: AuthenticateDomainRequestNotFoundError
     SendersDomainsGetResponsesContentApplicationJsonSchemaDomainsItems:
       type: object
       properties:
@@ -719,7 +517,132 @@ components:
       - provider
       - creator
       title: SendersDomainsGetResponsesContentApplicationJsonSchemaDomainsItems
-    SendersDomainsGetResponsesContentApplicationJsonSchemaCode:
+    DeleteDomainRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SendersDomainsDomainNameDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteDomainRequestNotFoundError
+    Domains_deleteDomain_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Domains_deleteDomain_Response_200
+    SendersDomainsPostResponsesContentApplicationJsonSchemaDnsRecords:
+      type: object
+      properties:
+        brevo_code:
+          $ref: '#/components/schemas/SendersDomainsPostResponsesContentApplicationJsonSchemaDnsRecordsBrevoCode'
+          description: Brevo verification code record
+        dkim_record:
+          $ref: '#/components/schemas/SendersDomainsPostResponsesContentApplicationJsonSchemaDnsRecordsDkimRecord'
+          description: DKIM authentication record
+        dmarc_record:
+          $ref: '#/components/schemas/SendersDomainsPostResponsesContentApplicationJsonSchemaDnsRecordsDmarcRecord'
+          description: DMARC policy record
+      required:
+      - brevo_code
+      - dkim_record
+      - dmarc_record
+      description: DNS records required for domain authentication
+      title: SendersDomainsPostResponsesContentApplicationJsonSchemaDnsRecords
+    SendersDomainsPostResponsesContentApplicationJsonSchemaDnsRecordsDkimRecord:
+      type: object
+      properties:
+        host_name:
+          type: string
+          description: DNS record hostname
+        type:
+          type: string
+          description: DNS record type
+        value:
+          type: string
+          description: DNS record value
+        status:
+          type: boolean
+          description: Whether the record is properly configured
+      required:
+      - host_name
+      - type
+      - value
+      - status
+      description: DKIM authentication record
+      title: SendersDomainsPostResponsesContentApplicationJsonSchemaDnsRecordsDkimRecord
+    Domains_getDomains_Response_200:
+      type: object
+      properties:
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/SendersDomainsGetResponsesContentApplicationJsonSchemaDomainsItems'
+          description: List of the domains available in your account
+        count:
+          type: integer
+          description: Total number of domains
+        current_page:
+          type: integer
+          description: Current page number
+        total_pages:
+          type: integer
+          description: Total number of pages
+      required:
+      - domains
+      - count
+      - current_page
+      - total_pages
+      title: Domains_getDomains_Response_200
+    DeleteDomainRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SendersDomainsDomainNameDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteDomainRequestBadRequestError
+    AuthenticateDomainRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SendersDomainsDomainNameAuthenticatePutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: AuthenticateDomainRequestBadRequestError
+    SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecords:
+      type: object
+      properties:
+        brevo_code:
+          $ref: '#/components/schemas/SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecordsBrevoCode'
+          description: Brevo verification code record
+        dkim_record:
+          $ref: '#/components/schemas/SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecordsDkimRecord'
+          description: DKIM authentication record
+        dmarc_record:
+          $ref: '#/components/schemas/SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecordsDmarcRecord'
+          description: DMARC policy record
+      required:
+      - brevo_code
+      - dkim_record
+      - dmarc_record
+      description: DNS records configuration and status
+      title: SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecords
+    SendersDomainsDomainNameDeleteResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - invalid_parameter
@@ -759,51 +682,42 @@ components:
       - Insufficient credits
       - Request already processed
       description: Error code displayed in case of a failure
-      title: SendersDomainsGetResponsesContentApplicationJsonSchemaCode
-    AuthenticateDomainRequestBadRequestError:
+      title: SendersDomainsDomainNameDeleteResponsesContentApplicationJsonSchemaCode
+    Domains_authenticateDomain_Response_200:
       type: object
       properties:
-        code:
-          $ref: '#/components/schemas/SendersDomainsDomainNameAuthenticatePutResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
+        domain_name:
+          type: string
+          description: Domain name that was authenticated
         message:
           type: string
-          description: Readable message associated to the failure
+          description: Success message confirming authentication
       required:
-      - code
+      - domain_name
       - message
-      title: AuthenticateDomainRequestBadRequestError
-    Domains_deleteDomain_Response_200:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Domains_deleteDomain_Response_200
-    CreateDomainRequestBadRequestError:
+      title: Domains_authenticateDomain_Response_200
+    SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecordsBrevoCode:
       type: object
       properties:
-        code:
-          $ref: '#/components/schemas/SendersDomainsPostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
+        host_name:
           type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: CreateDomainRequestBadRequestError
-    DeleteDomainRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/SendersDomainsDomainNameDeleteResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
+          description: DNS record hostname
+        type:
           type: string
-          description: Readable message associated to the failure
+          description: DNS record type
+        value:
+          type: string
+          description: DNS record value
+        status:
+          type: boolean
+          description: Whether the record is properly configured
       required:
-      - code
-      - message
-      title: DeleteDomainRequestBadRequestError
+      - host_name
+      - type
+      - value
+      - status
+      description: Brevo verification code record
+      title: SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecordsBrevoCode
     SendersDomainsDomainNameAuthenticatePutResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -845,7 +759,66 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: SendersDomainsDomainNameAuthenticatePutResponsesContentApplicationJsonSchemaCode
-    SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecordsBrevoCode:
+    SendersDomainsPostResponsesContentApplicationJsonSchemaDnsRecordsDmarcRecord:
+      type: object
+      properties:
+        host_name:
+          type: string
+          description: DNS record hostname
+        type:
+          type: string
+          description: DNS record type
+        value:
+          type: string
+          description: DNS record value
+        status:
+          type: boolean
+          description: Whether the record is properly configured
+      required:
+      - host_name
+      - type
+      - value
+      - status
+      description: DMARC policy record
+      title: SendersDomainsPostResponsesContentApplicationJsonSchemaDnsRecordsDmarcRecord
+    Domains_createDomain_Response_200:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID of the Domain created
+        domain_name:
+          type: string
+          description: Domain name
+        domain_provider:
+          type: string
+          description: Detected domain provider
+        message:
+          type: string
+          description: Success message with next steps
+        dns_records:
+          $ref: '#/components/schemas/SendersDomainsPostResponsesContentApplicationJsonSchemaDnsRecords'
+          description: DNS records required for domain authentication
+      required:
+      - id
+      - domain_name
+      - message
+      title: Domains_createDomain_Response_200
+    CreateDomainRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/SendersDomainsPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: CreateDomainRequestBadRequestError
+    SendersDomainsPostResponsesContentApplicationJsonSchemaDnsRecordsBrevoCode:
       type: object
       properties:
         host_name:
@@ -866,44 +839,71 @@ components:
       - value
       - status
       description: Brevo verification code record
-      title: SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecordsBrevoCode
-    AuthenticateDomainRequestNotFoundError:
+      title: SendersDomainsPostResponsesContentApplicationJsonSchemaDnsRecordsBrevoCode
+    SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecordsDkimRecord:
       type: object
       properties:
-        code:
-          $ref: '#/components/schemas/SendersDomainsDomainNameAuthenticatePutResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
+        host_name:
           type: string
-          description: Readable message associated to the failure
+          description: DNS record hostname
+        type:
+          type: string
+          description: DNS record type
+        value:
+          type: string
+          description: DNS record value
+        status:
+          type: boolean
+          description: Whether the record is properly configured
       required:
-      - code
-      - message
-      title: AuthenticateDomainRequestNotFoundError
-    Domains_getDomains_Response_200:
-      type: object
-      properties:
-        domains:
-          type: array
-          items:
-            $ref: '#/components/schemas/SendersDomainsGetResponsesContentApplicationJsonSchemaDomainsItems'
-          description: List of the domains available in your account
-        count:
-          type: integer
-          description: Total number of domains
-        current_page:
-          type: integer
-          description: Current page number
-        total_pages:
-          type: integer
-          description: Total number of pages
-      required:
-      - domains
-      - count
-      - current_page
-      - total_pages
-      title: Domains_getDomains_Response_200
-    GetDomainConfigurationRequestNotFoundError:
+      - host_name
+      - type
+      - value
+      - status
+      description: DKIM authentication record
+      title: SendersDomainsDomainNameGetResponsesContentApplicationJsonSchemaDnsRecordsDkimRecord
+    SendersDomainsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: SendersDomainsGetResponsesContentApplicationJsonSchemaCode
+    GetDomainConfigurationRequestBadRequestError:
       type: object
       properties:
         code:
@@ -915,7 +915,7 @@ components:
       required:
       - code
       - message
-      title: GetDomainConfigurationRequestNotFoundError
+      title: GetDomainConfigurationRequestBadRequestError
   securitySchemes:
     api-key:
       type: apiKey

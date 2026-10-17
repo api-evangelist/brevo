@@ -180,15 +180,6 @@ components:
                 type: integer
                 format: int64
                 description: Template ID used for the email if applicable.
-    ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code identifying the type of error.
-        message:
-          type: string
-          description: Human-readable description of the error.
     AggregatedEmailReport:
       type: object
       properties:
@@ -243,6 +234,15 @@ components:
           type: integer
           format: int64
           description: Total number of unsubscribes.
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code identifying the type of error.
+        message:
+          type: string
+          description: Human-readable description of the error.
   parameters:
     limitParam:
       name: limit

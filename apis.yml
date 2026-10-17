@@ -358,7 +358,8 @@ apis:
   - type: AsyncAPI
     url: asyncapi/brevo-webhooks-asyncapi.yml
   - type: JSONSchema
-    url: json-schema/brevo-contacts-export-post-request-body-content-application-json-schema-custom-contact-filter-schema.json
+    url: >-
+      json-schema/brevo-contacts-export-post-request-body-content-application-json-schema-custom-contact-filter-schema.json
   - type: JSONSchema
     url: json-schema/brevo-contacts-get-contact-info-response-200-schema.json
   - type: JSONSchema
@@ -368,10 +369,12 @@ apis:
   - type: JSONSchema
     url: json-schema/brevo-get-folder-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-contacts-attributes-attribute-category-attribute-name-post-request-body-content-application-json-schema-type-schema.json
+    url: >-
+      json-schema/brevo-contacts-attributes-attribute-category-attribute-name-post-request-body-content-application-json-schema-type-schema.json
 - aid: brevo:brevo-email-activity-api
   name: brevo Email Activity API
-  description: Track and retrieve transactional email activity including delivery status, opens, clicks, and bounces.
+  description: >-
+    Track and retrieve transactional email activity including delivery status, opens, clicks, and bounces.
   humanURL: https://developers.brevo.com/reference
   baseURL: https://api.brevo.com/v3
   tags:
@@ -560,9 +563,11 @@ apis:
   - type: AsyncAPI
     url: asyncapi/brevo-webhooks-asyncapi.yml
   - type: JSONSchema
-    url: json-schema/brevo-senders-sender-id-put-request-body-content-application-json-schema-ips-items-schema.json
+    url: >-
+      json-schema/brevo-senders-sender-id-put-request-body-content-application-json-schema-ips-items-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-senders-post-request-body-content-application-json-schema-ips-items-schema.json
+    url: >-
+      json-schema/brevo-senders-post-request-body-content-application-json-schema-ips-items-schema.json
   - type: JSONSchema
     url: json-schema/brevo-senders-create-sender-response-201-schema.json
   - type: JSONSchema
@@ -605,7 +610,8 @@ apis:
     url: json-schema/brevo-aggregated-sms-report-schema.json
 - aid: brevo:brevo-transactional-emails-api
   name: brevo Transactional Emails API
-  description: Send and manage transactional emails including order confirmations, password resets, and account notifications.
+  description: >-
+    Send and manage transactional emails including order confirmations, password resets, and account notifications.
   humanURL: https://developers.brevo.com/reference
   baseURL: https://api.brevo.com/v3
   tags:
@@ -634,13 +640,17 @@ apis:
   - type: JSONSchema
     url: json-schema/brevo-get-smtp-template-overview-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-transactional-emails-get-aggregated-smtp-report-response-200-schema.json
+    url: >-
+      json-schema/brevo-transactional-emails-get-aggregated-smtp-report-response-200-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-transactional-emails-get-transac-email-content-response-200-schema.json
+    url: >-
+      json-schema/brevo-transactional-emails-get-transac-email-content-response-200-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-smtp-templates-post-request-body-content-application-json-schema-sender-schema.json
+    url: >-
+      json-schema/brevo-smtp-templates-post-request-body-content-application-json-schema-sender-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-smtp-templates-template-id-put-request-body-content-application-json-schema-sender-schema.json
+    url: >-
+      json-schema/brevo-smtp-templates-template-id-put-request-body-content-application-json-schema-sender-schema.json
 - aid: brevo:brevo-transactional-sms-api
   name: brevo Transactional SMS API
   description: Send transactional SMS messages for notifications, verifications, and alerts.
@@ -670,7 +680,8 @@ apis:
   - type: JSONSchema
     url: json-schema/brevo-send-transac-sms-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-transactional-sms-get-transac-aggregated-sms-report-response-200-schema.json
+    url: >-
+      json-schema/brevo-transactional-sms-get-transac-aggregated-sms-report-response-200-schema.json
   - type: JSONSchema
     url: json-schema/brevo-send-transactional-sms-schema.json
   - type: JSONSchema
@@ -681,7 +692,8 @@ apis:
     url: json-schema/brevo-transactional-sms-get-sms-events-response-200-schema.json
 - aid: brevo:brevo-webhooks-api
   name: brevo Webhooks API
-  description: Create, manage, and configure webhook subscriptions for receiving real-time event notifications.
+  description: >-
+    Create, manage, and configure webhook subscriptions for receiving real-time event notifications.
   humanURL: https://developers.brevo.com/reference
   baseURL: https://api.brevo.com/v3
   tags:
@@ -710,15 +722,20 @@ apis:
   - type: JSONSchema
     url: json-schema/brevo-get-webhook-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-webhooks-webhook-id-put-request-body-content-application-json-schema-events-items-schema.json
+    url: >-
+      json-schema/brevo-webhooks-webhook-id-put-request-body-content-application-json-schema-events-items-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-webhooks-post-request-body-content-application-json-schema-events-items-schema.json
+    url: >-
+      json-schema/brevo-webhooks-post-request-body-content-application-json-schema-events-items-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-webhooks-webhook-id-put-request-body-content-application-json-schema-auth-schema.json
+    url: >-
+      json-schema/brevo-webhooks-webhook-id-put-request-body-content-application-json-schema-auth-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-webhooks-post-request-body-content-application-json-schema-auth-schema.json
+    url: >-
+      json-schema/brevo-webhooks-post-request-body-content-application-json-schema-auth-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-webhooks-webhook-id-put-request-body-content-application-json-schema-headers-items-schema.json
+    url: >-
+      json-schema/brevo-webhooks-webhook-id-put-request-body-content-application-json-schema-headers-items-schema.json
 - aid: brevo:brevo-whatsapp-campaigns-api
   name: brevo WhatsApp Campaigns API
   description: Create, manage, and send WhatsApp marketing campaigns.
@@ -759,7 +776,8 @@ apis:
     url: json-schema/brevo-whats-app-campaign-list-schema.json
 - aid: brevo:brevo-whatsapp-messages-api
   name: brevo WhatsApp Messages API
-  description: Send transactional WhatsApp messages to recipients using approved templates or plain text.
+  description: >-
+    Send transactional WhatsApp messages to recipients using approved templates or plain text.
   humanURL: https://developers.brevo.com/reference
   baseURL: https://api.brevo.com/v3
   tags:
@@ -920,17 +938,21 @@ apis:
   - type: Documentation
     url: https://developers.brevo.com/reference/get-wallet-pass-install-url
   - type: JSONSchema
-    url: json-schema/brevo-crm-attributes-companies-get-responses-content-application-json-schema-items-schema.json
+    url: >-
+      json-schema/brevo-crm-attributes-companies-get-responses-content-application-json-schema-items-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-companies-import-post-request-body-content-multipart-form-data-schema-mapping-schema.json
+    url: >-
+      json-schema/brevo-companies-import-post-request-body-content-multipart-form-data-schema-mapping-schema.json
   - type: JSONSchema
     url: json-schema/brevo-company-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-crm-attributes-post-request-body-content-application-json-schema-attribute-type-schema.json
+    url: >-
+      json-schema/brevo-crm-attributes-post-request-body-content-application-json-schema-attribute-type-schema.json
   - type: JSONSchema
     url: json-schema/brevo-companies-get-all-companies-response-200-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-crm-attributes-post-request-body-content-application-json-schema-object-type-schema.json
+    url: >-
+      json-schema/brevo-crm-attributes-post-request-body-content-application-json-schema-object-type-schema.json
 - aid: brevo:brevo-conversations-api
   name: Brevo Conversations API
   description: The conversations API from Brevo — 6 operation(s) for conversations.
@@ -964,7 +986,8 @@ apis:
   - type: JSONSchema
     url: json-schema/brevo-conversations-set-visitor-group-assignment-response-200-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-conversations-sets-agents-status-to-online-for23-minutes-response-201-schema.json
+    url: >-
+      json-schema/brevo-conversations-sets-agents-status-to-online-for23-minutes-response-201-schema.json
 - aid: brevo:brevo-coupons-api
   name: Brevo Coupons API
   description: The coupons API from Brevo — 3 operation(s) for coupons.
@@ -1028,15 +1051,19 @@ apis:
   - type: Documentation
     url: https://developers.brevo.com/reference/get-wallet-pass-install-url
   - type: JSONSchema
-    url: json-schema/brevo-crm-attributes-deals-get-responses-content-application-json-schema-items-schema.json
+    url: >-
+      json-schema/brevo-crm-attributes-deals-get-responses-content-application-json-schema-items-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-crm-deals-import-post-request-body-content-multipart-form-data-schema-mapping-schema.json
+    url: >-
+      json-schema/brevo-crm-deals-import-post-request-body-content-multipart-form-data-schema-mapping-schema.json
   - type: JSONSchema
     url: json-schema/brevo-deal-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-crm-deals-post-request-body-content-application-json-schema-attributes-schema.json
+    url: >-
+      json-schema/brevo-crm-deals-post-request-body-content-application-json-schema-attributes-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-crm-deals-id-patch-request-body-content-application-json-schema-attributes-schema.json
+    url: >-
+      json-schema/brevo-crm-deals-id-patch-request-body-content-application-json-schema-attributes-schema.json
   - type: JSONSchema
     url: json-schema/brevo-pipeline-schema.json
 - aid: brevo:brevo-domains-api
@@ -1108,15 +1135,18 @@ apis:
   - type: JSONSchema
     url: json-schema/brevo-get-product-details-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-products-batch-post-request-body-content-application-json-schema-products-items-schema.json
+    url: >-
+      json-schema/brevo-products-batch-post-request-body-content-application-json-schema-products-items-schema.json
   - type: JSONSchema
     url: json-schema/brevo-order-schema.json
   - type: JSONSchema
     url: json-schema/brevo-get-category-details-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-ecommerce-get-detailed-attribution-metrics-for-asingle-brevo-campaign-or-workflow-response-200-schema.json
+    url: >-
+      json-schema/brevo-ecommerce-get-detailed-attribution-metrics-for-asingle-brevo-campaign-or-workflow-response-200-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-categories-batch-post-request-body-content-application-json-schema-categories-items-schema.json
+    url: >-
+      json-schema/brevo-categories-batch-post-request-body-content-application-json-schema-categories-items-schema.json
 - aid: brevo:brevo-event-api
   name: Brevo Event API
   description: The event API from Brevo — 2 operation(s) for event.
@@ -1146,17 +1176,21 @@ apis:
   - type: Documentation
     url: https://developers.brevo.com/reference/get-wallet-pass-install-url
   - type: JSONSchema
-    url: json-schema/brevo-events-batch-post-request-body-content-application-json-schema-events-items-schema.json
+    url: >-
+      json-schema/brevo-events-batch-post-request-body-content-application-json-schema-events-items-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-events-post-request-body-content-application-json-schema-identifiers-schema.json
+    url: >-
+      json-schema/brevo-events-post-request-body-content-application-json-schema-identifiers-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-events-post-request-body-content-application-json-schema-object-schema.json
+    url: >-
+      json-schema/brevo-events-post-request-body-content-application-json-schema-object-schema.json
   - type: JSONSchema
     url: json-schema/brevo-get-events-list-schema.json
   - type: JSONSchema
     url: json-schema/brevo-batch-accepted-response-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-events-post-request-body-content-application-json-schema-event-properties-schema.json
+    url: >-
+      json-schema/brevo-events-post-request-body-content-application-json-schema-event-properties-schema.json
 - aid: brevo:brevo-files-api
   name: Brevo Files API
   description: The files API from Brevo — 3 operation(s) for files.
@@ -1218,7 +1252,8 @@ apis:
   - type: Documentation
     url: https://developers.brevo.com/reference/get-wallet-pass-install-url
   - type: JSONSchema
-    url: json-schema/brevo-inbound-parsing-get-inbound-email-events-by-uuid-response-200-schema.json
+    url: >-
+      json-schema/brevo-inbound-parsing-get-inbound-email-events-by-uuid-response-200-schema.json
   - type: JSONSchema
     url: json-schema/brevo-inbound-parsing-get-inbound-email-events-response-200-schema.json
 - aid: brevo:brevo-notes-api
@@ -1386,7 +1421,8 @@ apis:
   - type: JSONSchema
     url: json-schema/brevo-reward-get-reward-information-response-200-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-loyalty-offer-programs-pid-rewards-redeem-post-request-body-content-application-json-schema-order-schema.json
+    url: >-
+      json-schema/brevo-loyalty-offer-programs-pid-rewards-redeem-post-request-body-content-application-json-schema-order-schema.json
   - type: JSONSchema
     url: json-schema/brevo-redeem-schema.json
   - type: JSONSchema
@@ -1428,7 +1464,8 @@ apis:
   - type: JSONSchema
     url: json-schema/brevo-task-reminder-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-crm-tasktypes-get-responses-content-application-json-schema-items-schema.json
+    url: >-
+      json-schema/brevo-crm-tasktypes-get-responses-content-application-json-schema-items-schema.json
   - type: JSONSchema
     url: json-schema/brevo-tasks-get-all-tasks-response-200-schema.json
   - type: JSONSchema
@@ -1466,13 +1503,16 @@ apis:
   - type: JSONSchema
     url: json-schema/brevo-tier-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-loyalty-tier-programs-pid-tier-groups-post-request-body-content-application-json-schema-downgrade-schedule-schema.json
+    url: >-
+      json-schema/brevo-loyalty-tier-programs-pid-tier-groups-post-request-body-content-application-json-schema-downgrade-schedule-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-loyalty-tier-programs-pid-tier-groups-post-request-body-content-application-json-schema-upgrade-schedule-schema.json
+    url: >-
+      json-schema/brevo-loyalty-tier-programs-pid-tier-groups-post-request-body-content-application-json-schema-upgrade-schedule-schema.json
   - type: JSONSchema
     url: json-schema/brevo-tier-add-subscription-to-tier-response-200-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-loyalty-tier-programs-pid-tier-groups-gid-put-request-body-content-application-json-schema-downgrade-strategy-schema.json
+    url: >-
+      json-schema/brevo-loyalty-tier-programs-pid-tier-groups-gid-put-request-body-content-application-json-schema-downgrade-strategy-schema.json
 - aid: brevo:brevo-transactionalwhatsapp-api
   name: Brevo Transactional Whats App API
   description: The transactionalWhatsApp API from Brevo — 2 operation(s) for transactionalwhatsapp.
@@ -1501,7 +1541,8 @@ apis:
   - type: Documentation
     url: https://developers.brevo.com/reference/get-wallet-pass-install-url
   - type: JSONSchema
-    url: json-schema/brevo-transactional-whats-app-get-whatsapp-event-report-response-200-schema.json
+    url: >-
+      json-schema/brevo-transactional-whats-app-get-whatsapp-event-report-response-200-schema.json
   - type: JSONSchema
     url: json-schema/brevo-transactional-whats-app-send-whatsapp-message-request-schema.json
   - type: JSONSchema
@@ -1610,6 +1651,80 @@ apis:
     url: json-schema/brevo-consent-groups-list-response-schema.json
   - type: JSONSchema
     url: json-schema/brevo-update-consent-group-request-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-custom-objects-upsertrecords-response-202-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-objects-object-type-batch-delete-post-request-body-content-application-json-schema-identifiers-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-custom-objects-getrecords-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-custom-objects-batch-delete-object-records-response-202-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-objects-object-type-batch-upsert-post-request-body-content-application-json-schema-records-items-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-email-campaigns-get-email-campaign-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-email-campaigns-get-ab-test-campaign-result-response-200-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-email-campaigns-campaign-id-put-request-body-content-application-json-schema-recipients-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-email-campaigns-post-request-body-content-application-json-schema-sender-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-email-campaigns-campaign-id-put-request-body-content-application-json-schema-sender-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-email-campaigns-post-request-body-content-application-json-schema-recipients-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-external-feeds-get-external-feed-by-uuid-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-external-feeds-get-all-external-feeds-response-200-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-feeds-uuid-put-request-body-content-application-json-schema-headers-items-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-feeds-post-request-body-content-application-json-schema-headers-items-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-feeds-post-request-body-content-application-json-schema-auth-type-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-external-feeds-create-external-feed-response-201-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-master-account-get-the-details-of-requested-master-account-response-200-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-corporate-sub-account-id-plan-put-request-body-content-application-json-schema-credits-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-corporate-sub-accounts-plan-put-request-body-content-application-json-schema-credits-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-corporate-sub-account-sso-token-post-request-body-content-application-json-schema-target-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-master-account-get-corporate-user-permission-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-master-account-get-sub-account-details-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-sms-campaigns-get-sms-campaign-response-200-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-sms-campaigns-campaign-id-put-request-body-content-application-json-schema-recipients-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-sms-campaigns-post-request-body-content-application-json-schema-recipients-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-send-report-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-sms-campaigns-get-sms-campaigns-response-200-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-sms-campaigns-campaign-id-export-recipients-post-request-body-content-application-json-schema-recipients-type-schema.json
 - aid: brevo:brevo-custom-objects-api
   name: Brevo Custom Objects API
   description: The Custom Objects API from Brevo — 3 operation(s) for custom objects.
@@ -1637,15 +1752,87 @@ apis:
   - type: Documentation
     url: https://developers.brevo.com/reference/get-wallet-pass-install-url
   - type: JSONSchema
+    url: json-schema/brevo-consent-group-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-create-consent-group-request-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-consent-groups-list-response-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-update-consent-group-request-schema.json
+  - type: JSONSchema
     url: json-schema/brevo-custom-objects-upsertrecords-response-202-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-objects-object-type-batch-delete-post-request-body-content-application-json-schema-identifiers-schema.json
+    url: >-
+      json-schema/brevo-objects-object-type-batch-delete-post-request-body-content-application-json-schema-identifiers-schema.json
   - type: JSONSchema
     url: json-schema/brevo-custom-objects-getrecords-response-200-schema.json
   - type: JSONSchema
     url: json-schema/brevo-custom-objects-batch-delete-object-records-response-202-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-objects-object-type-batch-upsert-post-request-body-content-application-json-schema-records-items-schema.json
+    url: >-
+      json-schema/brevo-objects-object-type-batch-upsert-post-request-body-content-application-json-schema-records-items-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-email-campaigns-get-email-campaign-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-email-campaigns-get-ab-test-campaign-result-response-200-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-email-campaigns-campaign-id-put-request-body-content-application-json-schema-recipients-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-email-campaigns-post-request-body-content-application-json-schema-sender-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-email-campaigns-campaign-id-put-request-body-content-application-json-schema-sender-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-email-campaigns-post-request-body-content-application-json-schema-recipients-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-external-feeds-get-external-feed-by-uuid-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-external-feeds-get-all-external-feeds-response-200-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-feeds-uuid-put-request-body-content-application-json-schema-headers-items-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-feeds-post-request-body-content-application-json-schema-headers-items-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-feeds-post-request-body-content-application-json-schema-auth-type-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-external-feeds-create-external-feed-response-201-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-master-account-get-the-details-of-requested-master-account-response-200-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-corporate-sub-account-id-plan-put-request-body-content-application-json-schema-credits-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-corporate-sub-accounts-plan-put-request-body-content-application-json-schema-credits-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-corporate-sub-account-sso-token-post-request-body-content-application-json-schema-target-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-master-account-get-corporate-user-permission-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-master-account-get-sub-account-details-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-sms-campaigns-get-sms-campaign-response-200-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-sms-campaigns-campaign-id-put-request-body-content-application-json-schema-recipients-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-sms-campaigns-post-request-body-content-application-json-schema-recipients-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-send-report-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-sms-campaigns-get-sms-campaigns-response-200-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-sms-campaigns-campaign-id-export-recipients-post-request-body-content-application-json-schema-recipients-type-schema.json
 - aid: brevo:brevo-email-campaigns-api
   name: Brevo Email Campaigns API
   description: The Email Campaigns API from Brevo — 10 operation(s) for email campaigns.
@@ -1673,17 +1860,87 @@ apis:
   - type: Documentation
     url: https://developers.brevo.com/reference/get-wallet-pass-install-url
   - type: JSONSchema
+    url: json-schema/brevo-consent-group-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-create-consent-group-request-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-consent-groups-list-response-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-update-consent-group-request-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-custom-objects-upsertrecords-response-202-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-objects-object-type-batch-delete-post-request-body-content-application-json-schema-identifiers-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-custom-objects-getrecords-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-custom-objects-batch-delete-object-records-response-202-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-objects-object-type-batch-upsert-post-request-body-content-application-json-schema-records-items-schema.json
+  - type: JSONSchema
     url: json-schema/brevo-email-campaigns-get-email-campaign-response-200-schema.json
   - type: JSONSchema
     url: json-schema/brevo-email-campaigns-get-ab-test-campaign-result-response-200-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-email-campaigns-campaign-id-put-request-body-content-application-json-schema-recipients-schema.json
+    url: >-
+      json-schema/brevo-email-campaigns-campaign-id-put-request-body-content-application-json-schema-recipients-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-email-campaigns-post-request-body-content-application-json-schema-sender-schema.json
+    url: >-
+      json-schema/brevo-email-campaigns-post-request-body-content-application-json-schema-sender-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-email-campaigns-campaign-id-put-request-body-content-application-json-schema-sender-schema.json
+    url: >-
+      json-schema/brevo-email-campaigns-campaign-id-put-request-body-content-application-json-schema-sender-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-email-campaigns-post-request-body-content-application-json-schema-recipients-schema.json
+    url: >-
+      json-schema/brevo-email-campaigns-post-request-body-content-application-json-schema-recipients-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-external-feeds-get-external-feed-by-uuid-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-external-feeds-get-all-external-feeds-response-200-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-feeds-uuid-put-request-body-content-application-json-schema-headers-items-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-feeds-post-request-body-content-application-json-schema-headers-items-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-feeds-post-request-body-content-application-json-schema-auth-type-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-external-feeds-create-external-feed-response-201-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-master-account-get-the-details-of-requested-master-account-response-200-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-corporate-sub-account-id-plan-put-request-body-content-application-json-schema-credits-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-corporate-sub-accounts-plan-put-request-body-content-application-json-schema-credits-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-corporate-sub-account-sso-token-post-request-body-content-application-json-schema-target-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-master-account-get-corporate-user-permission-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-master-account-get-sub-account-details-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-sms-campaigns-get-sms-campaign-response-200-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-sms-campaigns-campaign-id-put-request-body-content-application-json-schema-recipients-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-sms-campaigns-post-request-body-content-application-json-schema-recipients-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-send-report-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-sms-campaigns-get-sms-campaigns-response-200-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-sms-campaigns-campaign-id-export-recipients-post-request-body-content-application-json-schema-recipients-type-schema.json
 - aid: brevo:brevo-external-feeds-api
   name: Brevo External Feeds API
   description: The External Feeds API from Brevo — 2 operation(s) for external feeds.
@@ -1711,17 +1968,87 @@ apis:
   - type: Documentation
     url: https://developers.brevo.com/reference/get-wallet-pass-install-url
   - type: JSONSchema
+    url: json-schema/brevo-consent-group-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-create-consent-group-request-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-consent-groups-list-response-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-update-consent-group-request-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-custom-objects-upsertrecords-response-202-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-objects-object-type-batch-delete-post-request-body-content-application-json-schema-identifiers-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-custom-objects-getrecords-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-custom-objects-batch-delete-object-records-response-202-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-objects-object-type-batch-upsert-post-request-body-content-application-json-schema-records-items-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-email-campaigns-get-email-campaign-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-email-campaigns-get-ab-test-campaign-result-response-200-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-email-campaigns-campaign-id-put-request-body-content-application-json-schema-recipients-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-email-campaigns-post-request-body-content-application-json-schema-sender-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-email-campaigns-campaign-id-put-request-body-content-application-json-schema-sender-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-email-campaigns-post-request-body-content-application-json-schema-recipients-schema.json
+  - type: JSONSchema
     url: json-schema/brevo-external-feeds-get-external-feed-by-uuid-response-200-schema.json
   - type: JSONSchema
     url: json-schema/brevo-external-feeds-get-all-external-feeds-response-200-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-feeds-uuid-put-request-body-content-application-json-schema-headers-items-schema.json
+    url: >-
+      json-schema/brevo-feeds-uuid-put-request-body-content-application-json-schema-headers-items-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-feeds-post-request-body-content-application-json-schema-headers-items-schema.json
+    url: >-
+      json-schema/brevo-feeds-post-request-body-content-application-json-schema-headers-items-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-feeds-post-request-body-content-application-json-schema-auth-type-schema.json
+    url: >-
+      json-schema/brevo-feeds-post-request-body-content-application-json-schema-auth-type-schema.json
   - type: JSONSchema
     url: json-schema/brevo-external-feeds-create-external-feed-response-201-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-master-account-get-the-details-of-requested-master-account-response-200-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-corporate-sub-account-id-plan-put-request-body-content-application-json-schema-credits-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-corporate-sub-accounts-plan-put-request-body-content-application-json-schema-credits-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-corporate-sub-account-sso-token-post-request-body-content-application-json-schema-target-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-master-account-get-corporate-user-permission-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-master-account-get-sub-account-details-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-sms-campaigns-get-sms-campaign-response-200-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-sms-campaigns-campaign-id-put-request-body-content-application-json-schema-recipients-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-sms-campaigns-post-request-body-content-application-json-schema-recipients-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-send-report-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-sms-campaigns-get-sms-campaigns-response-200-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-sms-campaigns-campaign-id-export-recipients-post-request-body-content-application-json-schema-recipients-type-schema.json
 - aid: brevo:brevo-master-account-api
   name: Brevo Master Account API
   description: The Master Account API from Brevo — 21 operation(s) for master account.
@@ -1749,17 +2076,87 @@ apis:
   - type: Documentation
     url: https://developers.brevo.com/reference/get-wallet-pass-install-url
   - type: JSONSchema
-    url: json-schema/brevo-master-account-get-the-details-of-requested-master-account-response-200-schema.json
+    url: json-schema/brevo-consent-group-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-corporate-sub-account-id-plan-put-request-body-content-application-json-schema-credits-schema.json
+    url: json-schema/brevo-create-consent-group-request-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-corporate-sub-accounts-plan-put-request-body-content-application-json-schema-credits-schema.json
+    url: json-schema/brevo-consent-groups-list-response-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-corporate-sub-account-sso-token-post-request-body-content-application-json-schema-target-schema.json
+    url: json-schema/brevo-update-consent-group-request-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-custom-objects-upsertrecords-response-202-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-objects-object-type-batch-delete-post-request-body-content-application-json-schema-identifiers-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-custom-objects-getrecords-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-custom-objects-batch-delete-object-records-response-202-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-objects-object-type-batch-upsert-post-request-body-content-application-json-schema-records-items-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-email-campaigns-get-email-campaign-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-email-campaigns-get-ab-test-campaign-result-response-200-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-email-campaigns-campaign-id-put-request-body-content-application-json-schema-recipients-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-email-campaigns-post-request-body-content-application-json-schema-sender-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-email-campaigns-campaign-id-put-request-body-content-application-json-schema-sender-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-email-campaigns-post-request-body-content-application-json-schema-recipients-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-external-feeds-get-external-feed-by-uuid-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-external-feeds-get-all-external-feeds-response-200-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-feeds-uuid-put-request-body-content-application-json-schema-headers-items-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-feeds-post-request-body-content-application-json-schema-headers-items-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-feeds-post-request-body-content-application-json-schema-auth-type-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-external-feeds-create-external-feed-response-201-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-master-account-get-the-details-of-requested-master-account-response-200-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-corporate-sub-account-id-plan-put-request-body-content-application-json-schema-credits-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-corporate-sub-accounts-plan-put-request-body-content-application-json-schema-credits-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-corporate-sub-account-sso-token-post-request-body-content-application-json-schema-target-schema.json
   - type: JSONSchema
     url: json-schema/brevo-master-account-get-corporate-user-permission-response-200-schema.json
   - type: JSONSchema
     url: json-schema/brevo-master-account-get-sub-account-details-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-sms-campaigns-get-sms-campaign-response-200-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-sms-campaigns-campaign-id-put-request-body-content-application-json-schema-recipients-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-sms-campaigns-post-request-body-content-application-json-schema-recipients-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-send-report-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-sms-campaigns-get-sms-campaigns-response-200-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-sms-campaigns-campaign-id-export-recipients-post-request-body-content-application-json-schema-recipients-type-schema.json
 - aid: brevo:brevo-sms-campaigns-api
   name: Brevo SMS Campaigns API
   description: The SMS Campaigns API from Brevo — 7 operation(s) for sms campaigns.
@@ -1787,17 +2184,87 @@ apis:
   - type: Documentation
     url: https://developers.brevo.com/reference/get-wallet-pass-install-url
   - type: JSONSchema
+    url: json-schema/brevo-consent-group-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-create-consent-group-request-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-consent-groups-list-response-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-update-consent-group-request-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-custom-objects-upsertrecords-response-202-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-objects-object-type-batch-delete-post-request-body-content-application-json-schema-identifiers-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-custom-objects-getrecords-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-custom-objects-batch-delete-object-records-response-202-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-objects-object-type-batch-upsert-post-request-body-content-application-json-schema-records-items-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-email-campaigns-get-email-campaign-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-email-campaigns-get-ab-test-campaign-result-response-200-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-email-campaigns-campaign-id-put-request-body-content-application-json-schema-recipients-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-email-campaigns-post-request-body-content-application-json-schema-sender-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-email-campaigns-campaign-id-put-request-body-content-application-json-schema-sender-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-email-campaigns-post-request-body-content-application-json-schema-recipients-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-external-feeds-get-external-feed-by-uuid-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-external-feeds-get-all-external-feeds-response-200-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-feeds-uuid-put-request-body-content-application-json-schema-headers-items-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-feeds-post-request-body-content-application-json-schema-headers-items-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-feeds-post-request-body-content-application-json-schema-auth-type-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-external-feeds-create-external-feed-response-201-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-master-account-get-the-details-of-requested-master-account-response-200-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-corporate-sub-account-id-plan-put-request-body-content-application-json-schema-credits-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-corporate-sub-accounts-plan-put-request-body-content-application-json-schema-credits-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/brevo-corporate-sub-account-sso-token-post-request-body-content-application-json-schema-target-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-master-account-get-corporate-user-permission-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/brevo-master-account-get-sub-account-details-response-200-schema.json
+  - type: JSONSchema
     url: json-schema/brevo-sms-campaigns-get-sms-campaign-response-200-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-sms-campaigns-campaign-id-put-request-body-content-application-json-schema-recipients-schema.json
+    url: >-
+      json-schema/brevo-sms-campaigns-campaign-id-put-request-body-content-application-json-schema-recipients-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-sms-campaigns-post-request-body-content-application-json-schema-recipients-schema.json
+    url: >-
+      json-schema/brevo-sms-campaigns-post-request-body-content-application-json-schema-recipients-schema.json
   - type: JSONSchema
     url: json-schema/brevo-send-report-schema.json
   - type: JSONSchema
     url: json-schema/brevo-sms-campaigns-get-sms-campaigns-response-200-schema.json
   - type: JSONSchema
-    url: json-schema/brevo-sms-campaigns-campaign-id-export-recipients-post-request-body-content-application-json-schema-recipients-type-schema.json
+    url: >-
+      json-schema/brevo-sms-campaigns-campaign-id-export-recipients-post-request-body-content-application-json-schema-recipients-type-schema.json
 x-enrichment:
   date: '2026-10-12'
   status: enriched

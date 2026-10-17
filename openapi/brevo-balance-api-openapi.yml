@@ -1615,85 +1615,6 @@ paths:
                 $ref: '#/components/schemas/errorModel'
 components:
   schemas:
-    LoyaltyBalanceProgramsPidTransactionsPostRequestBodyContentApplicationJsonSchemaTransactionType:
-      type: string
-      enum:
-      - credit
-      - debit
-      description: Explicit transaction type. If not provided, the type is inferred from the sign of the amount (positive = credit, negative = debit).
-      title: LoyaltyBalanceProgramsPidTransactionsPostRequestBodyContentApplicationJsonSchemaTransactionType
-    Balance_getBalanceDefinitionList_Response_200:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/balanceDefinition'
-          description: list of balance definitions
-      title: Balance_getBalanceDefinitionList_Response_200
-    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsPostRequestBodyContentApplicationJsonSchemaConstraintType:
-      type: string
-      enum:
-      - transaction
-      - amount
-      description: Defines whether the limit applies to transaction count or amount.
-      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsPostRequestBodyContentApplicationJsonSchemaConstraintType
-    BalanceDefinitionBalanceOptionDebitRounding:
-      type: string
-      enum:
-      - lower
-      - upper
-      - natural
-      description: Rounding strategy for debit transactions.
-      title: BalanceDefinitionBalanceOptionDebitRounding
-    LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationUnit:
-      type: string
-      enum:
-      - day
-      - week
-      - month
-      - year
-      description: Unit of time for balance validity.
-      title: LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationUnit
-    errorModel:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - message
-      title: errorModel
-    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidPutRequestBodyContentApplicationJsonSchemaTransactionType:
-      type: string
-      enum:
-      - credit
-      - debit
-      description: Specifies whether the limit applies to credit or debit transactions.
-      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidPutRequestBodyContentApplicationJsonSchemaTransactionType
-    LoyaltyBalanceProgramsPidActiveBalanceGetResponsesContentApplicationJsonSchemaActiveBalancesItems:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique identifier of the balance entry.
-        amount:
-          type: string
-          title: float
-          description: Current balance amount.
-        createdAt:
-          type: string
-          format: date-time
-          description: Timestamp when the balance was created.
-        expiresAt:
-          type: string
-          format: date-time
-          description: Timestamp when the balance expires (if applicable).
-      title: LoyaltyBalanceProgramsPidActiveBalanceGetResponsesContentApplicationJsonSchemaActiveBalancesItems
     BalanceDefinitionBalanceAvailabilityDurationUnit:
       type: string
       enum:
@@ -1703,6 +1624,160 @@ components:
       - year
       description: Unit of time for the balance availability duration.
       title: BalanceDefinitionBalanceAvailabilityDurationUnit
+    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidPutRequestBodyContentApplicationJsonSchemaConstraintType:
+      type: string
+      enum:
+      - transaction
+      - amount
+      description: Defines whether the limit applies to transaction count or amount.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidPutRequestBodyContentApplicationJsonSchemaConstraintType
+    Balance_getActiveBalancesApi_Response_200:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: Total number of active balances.
+        loyaltyProgramId:
+          type: string
+          format: uuid
+          description: Unique identifier of the loyalty program.
+        contactId:
+          type: integer
+          format: int64
+          description: Unique identifier of the contact.
+        balanceDefinitionId:
+          type: string
+          format: uuid
+          description: Unique identifier of the balance definition.
+        activeBalances:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoyaltyBalanceProgramsPidActiveBalanceGetResponsesContentApplicationJsonSchemaActiveBalancesItems'
+          description: List of active balances.
+      description: Active balance response for a specific contact and balance definition.
+      title: Balance_getActiveBalancesApi_Response_200
+    Balance_getBalanceDefinitionList_Response_200:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/balanceDefinition'
+          description: list of balance definitions
+      title: Balance_getBalanceDefinitionList_Response_200
+    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsPostRequestBodyContentApplicationJsonSchemaTransactionType:
+      type: string
+      enum:
+      - credit
+      - debit
+      description: Specifies whether the limit applies to credit or debit transactions.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsPostRequestBodyContentApplicationJsonSchemaTransactionType
+    BalanceLimitDurationUnit:
+      type: string
+      enum:
+      - hour
+      - day
+      - week
+      - month
+      - year
+      description: Time unit for the balance limit.
+      title: BalanceLimitDurationUnit
+    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaUnit:
+      type: string
+      enum:
+      - POINTS
+      - EUR
+      - USD
+      - MXN
+      - GBP
+      - INR
+      - CAD
+      - SGD
+      - RON
+      - JPY
+      - MYR
+      - CLP
+      - PEN
+      - MAD
+      - AUD
+      - CHF
+      - BRL
+      description: Unit of balance measurement.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaUnit
+    LoyaltyBalanceProgramsPidTransactionHistoryGetParametersTransactionType:
+      type: string
+      enum:
+      - credit
+      - debit
+      title: LoyaltyBalanceProgramsPidTransactionHistoryGetParametersTransactionType
+    transaction:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier (UUID) of the transaction.
+        amount:
+          type: string
+          title: float
+          description: The transaction amount.
+        transactionType:
+          $ref: '#/components/schemas/TransactionTransactionType'
+          description: The type of the transaction.
+        meta:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Optional metadata associated with the transaction.
+        status:
+          $ref: '#/components/schemas/TransactionStatus'
+          description: The current status of the transaction.
+        loyaltyProgramId:
+          type: string
+          format: uuid
+          description: Unique identifier (UUID) of the associated loyalty program.
+        balanceDefinitionId:
+          type: string
+          format: uuid
+          description: Unique identifier (UUID) of the associated balance definition.
+        contactId:
+          type: integer
+          format: int64
+          description: Unique identifier of the contact associated with the transaction.
+        eventTime:
+          type: string
+          format: date-time
+          description: Optional timestamp indicating when the transaction event occurred (ISO 8601 format).
+        rejectReason:
+          type: string
+          description: Reason for rejection if the transaction was declined (nullable).
+        rejectedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the transaction was rejected (nullable).
+        expirationDate:
+          type: string
+          format: date-time
+          description: Expiry date of the transaction (nullable).
+        completedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the transaction was completed (nullable).
+        cancelledAt:
+          type: string
+          format: date-time
+          description: Timestamp when the transaction was canceled (nullable).
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the transaction was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the transaction was last updated.
+      description: Represents a transaction involving a balance, including status and timestamps.
+      title: transaction
     balanceLimit:
       type: object
       properties:
@@ -1742,22 +1817,283 @@ components:
           format: date-time
           description: Timestamp of the last update to the balance limit.
       title: balanceLimit
-    LoyaltyBalanceProgramsPidBalanceDefinitionsGetParametersSortField:
+    LoyaltyBalanceProgramsPidTransactionHistoryGetParametersStatus:
       type: string
       enum:
-      - name
-      - created_at
-      - updated_at
-      default: updated_at
-      title: LoyaltyBalanceProgramsPidBalanceDefinitionsGetParametersSortField
-    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceOptionDebitRounding:
+      - draft
+      - completed
+      - rejected
+      - cancelled
+      - expired
+      title: LoyaltyBalanceProgramsPidTransactionHistoryGetParametersStatus
+    LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationUnit:
+      type: string
+      enum:
+      - day
+      - week
+      - month
+      - year
+      description: Unit of time for balance validity.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationUnit
+    LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceOptionDebitRounding:
+      type: string
+      enum:
+      - lower
+      - upper
+      - natural
+      description: Defines rounding strategy for debit transactions.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceOptionDebitRounding
+    BalanceDefinitionBalanceOptionAmountOvertakingStrategy:
+      type: string
+      enum:
+      - strict
+      - partial
+      description: Partial enables partial credit of balance if maximum balance limit is reached. Strict enables rejection of a transaction if it will breach the max balance limit.
+      title: BalanceDefinitionBalanceOptionAmountOvertakingStrategy
+    LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaMeta:
+      type: object
+      properties:
+        isInternal:
+          type: boolean
+          description: Indicates whether the balance definition is internal.
+      description: Additional metadata for the balance definition.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaMeta
+    BalanceDefinitionBalanceAvailabilityDurationModifier:
+      type: string
+      enum:
+      - noModification
+      - startOfPeriod
+      - endOfPeriod
+      description: Modifier for balance availability duration. startOfPeriod causes expiry at the start of the period, endOfPeriod at the end. noModification uses the exact duration from the credit date.
+      title: BalanceDefinitionBalanceAvailabilityDurationModifier
+    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationUnit:
+      type: string
+      enum:
+      - day
+      - week
+      - month
+      - year
+      description: Unit of time for balance validity.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationUnit
+    Balance_createBalanceOrder_Response_200:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+          description: Order amount (must not be zero).
+        balanceDefinitionId:
+          type: string
+          description: Optional unique identifier (UUID) of the associated balance definition.
+        contactId:
+          type: integer
+          description: Unique identifier of the contact placing the order (must be ≥ 1).
+        createdAt:
+          type: string
+          description: RFC3339 timestamp indicating when the order was created.
+        dueAt:
+          type: string
+          description: RFC3339 timestamp specifying when the order is due in the future.
+        expiresAt:
+          type: string
+          description: Optional RFC3339 timestamp defining order expiration in the future.
+        id:
+          type: string
+          description: Unique identifier for the balance order.
+        loyaltyProgramId:
+          type: string
+          description: Unique identifier of the loyalty program associated with the order.
+        meta:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Optional metadata associated with the order.
+        processedAt:
+          type: string
+          description: Optional RFC3339 timestamp indicating when the order was processed.
+        transactionid:
+          type: string
+          description: Optional reference to the associated transaction ID.
+        updatedAt:
+          type: string
+          description: RFC3339 timestamp indicating the last update to the order.
+      required:
+      - amount
+      - contactId
+      - createdAt
+      - dueAt
+      - loyaltyProgramId
+      - updatedAt
+      description: Represents an order linked to a balance definition, including amount, due date, and transaction details.
+      title: Balance_createBalanceOrder_Response_200
+    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsPostRequestBodyContentApplicationJsonSchemaConstraintType:
+      type: string
+      enum:
+      - transaction
+      - amount
+      description: Defines whether the limit applies to transaction count or amount.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsPostRequestBodyContentApplicationJsonSchemaConstraintType
+    LoyaltyBalanceProgramsPidActiveBalanceGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      title: LoyaltyBalanceProgramsPidActiveBalanceGetParametersSort
+    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidGetParametersVersion:
+      type: string
+      enum:
+      - active
+      - draft
+      default: draft
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidGetParametersVersion
+    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidPutRequestBodyContentApplicationJsonSchemaDurationUnit:
+      type: string
+      enum:
+      - day
+      - week
+      - month
+      - year
+      description: Unit of time for which the limit is applicable.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidPutRequestBodyContentApplicationJsonSchemaDurationUnit
+    LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationModifier:
+      type: string
+      enum:
+      - noModification
+      - startOfPeriod
+      - endOfPeriod
+      description: Defines when the balance expires within the selected duration.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationModifier
+    BalanceDefinitionBalanceOptionDebitRounding:
       type: string
       enum:
       - lower
       - upper
       - natural
       description: Rounding strategy for debit transactions.
-      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceOptionDebitRounding
+      title: BalanceDefinitionBalanceOptionDebitRounding
+    LoyaltyBalanceProgramsPidSubscriptionsCidBalancesGetResponsesContentApplicationJsonSchemaBalanceItems:
+      type: object
+      properties:
+        balanceDefinitionId:
+          type: string
+          format: uuid
+          description: Balance definition ID.
+        value:
+          type: string
+          title: float
+          description: Aggregate balance value for this definition.
+      title: LoyaltyBalanceProgramsPidSubscriptionsCidBalancesGetResponsesContentApplicationJsonSchemaBalanceItems
+    LoyaltyBalanceProgramsPidTransactionHistoryGetResponsesContentApplicationJsonSchemaTransactionHistoryItems:
+      type: object
+      properties:
+        amount:
+          type: string
+          title: float
+          description: The transaction amount.
+        transactionType:
+          $ref: '#/components/schemas/LoyaltyBalanceProgramsPidTransactionHistoryGetResponsesContentApplicationJsonSchemaTransactionHistoryItemsTransactionType'
+          description: The type of the transaction.
+        balanceExpirationDate:
+          type: string
+          description: Expiration date of the balance associated with this transaction.
+        cancelledAt:
+          type: string
+          description: Timestamp when the transaction was canceled, if applicable.
+        completedAt:
+          type: string
+          description: Timestamp when the transaction was successfully completed.
+        createdAt:
+          type: string
+          description: Timestamp when the transaction was initiated.
+        id:
+          type: string
+          description: Unique identifier of the transaction.
+        meta:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Optional metadata associated with the transaction.
+        rejectReason:
+          type: string
+          description: Reason for rejection, if the transaction was declined.
+        rejectedAt:
+          type: string
+          description: Timestamp when the transaction was rejected.
+        status:
+          type: string
+          description: Current status of the transaction (e.g., pending, completed, rejected).
+      description: Represents a record of a past transaction, including status and key timestamps.
+      title: LoyaltyBalanceProgramsPidTransactionHistoryGetResponsesContentApplicationJsonSchemaTransactionHistoryItems
+    BalanceDefinitionBalanceOptionCreditRounding:
+      type: string
+      enum:
+      - lower
+      - upper
+      - natural
+      description: Rounding strategy for credit transactions.
+      title: BalanceDefinitionBalanceOptionCreditRounding
+    LoyaltyBalanceProgramsPidContactBalancesGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      title: LoyaltyBalanceProgramsPidContactBalancesGetParametersSort
+    TransactionStatus:
+      type: string
+      enum:
+      - pending
+      - complete
+      - rejected
+      - cancelled
+      - expired
+      description: The current status of the transaction.
+      title: TransactionStatus
+    LoyaltyBalanceProgramsPidTransactionsPostRequestBodyContentApplicationJsonSchemaTransactionType:
+      type: string
+      enum:
+      - credit
+      - debit
+      description: Explicit transaction type. If not provided, the type is inferred from the sign of the amount (positive = credit, negative = debit).
+      title: LoyaltyBalanceProgramsPidTransactionsPostRequestBodyContentApplicationJsonSchemaTransactionType
+    LoyaltyBalanceProgramsPidTransactionHistoryGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      title: LoyaltyBalanceProgramsPidTransactionHistoryGetParametersSort
+    Balance_getContactBalances_Response_200:
+      type: object
+      properties:
+        balanceDefinitionId:
+          type: string
+        balances:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoyaltyBalanceProgramsPidContactBalancesGetResponsesContentApplicationJsonSchemaBalancesItems'
+        count:
+          type: integer
+        loyaltyProgramId:
+          type: string
+      title: Balance_getContactBalances_Response_200
+    LoyaltyBalanceProgramsPidBalanceDefinitionsGetParametersSort:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsGetParametersSort
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
     balanceDefinition:
       type: object
       properties:
@@ -1833,14 +2169,140 @@ components:
           format: date-time
           description: Timestamp of balance definition deletion (nullable).
       title: balanceDefinition
-    LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaMeta:
+    LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaUnit:
+      type: string
+      enum:
+      - POINTS
+      - EUR
+      - USD
+      - MXN
+      - GBP
+      - INR
+      - CAD
+      - SGD
+      - RON
+      - JPY
+      - MYR
+      - CLP
+      - PEN
+      - MAD
+      - AUD
+      - CHF
+      - BRL
+      description: Unit of balance measurement.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaUnit
+    LoyaltyBalanceProgramsPidCreateOrderPostRequestBodyContentApplicationJsonSchemaSource:
+      type: string
+      enum:
+      - engine
+      - user
+      description: Specifies the origin of the order.
+      title: LoyaltyBalanceProgramsPidCreateOrderPostRequestBodyContentApplicationJsonSchemaSource
+    BalanceLimitTransactionType:
+      type: string
+      enum:
+      - credit
+      - debit
+      description: Specifies whether the limit applies to credit or debit transactions.
+      title: BalanceLimitTransactionType
+    LoyaltyBalanceProgramsPidActiveBalanceGetResponsesContentApplicationJsonSchemaActiveBalancesItems:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier of the balance entry.
+        amount:
+          type: string
+          title: float
+          description: Current balance amount.
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the balance was created.
+        expiresAt:
+          type: string
+          format: date-time
+          description: Timestamp when the balance expires (if applicable).
+      title: LoyaltyBalanceProgramsPidActiveBalanceGetResponsesContentApplicationJsonSchemaActiveBalancesItems
+    LoyaltyBalanceProgramsPidTransactionHistoryGetResponsesContentApplicationJsonSchemaTransactionHistoryItemsTransactionType:
+      type: string
+      enum:
+      - credit
+      - debit
+      description: The type of the transaction.
+      title: LoyaltyBalanceProgramsPidTransactionHistoryGetResponsesContentApplicationJsonSchemaTransactionHistoryItemsTransactionType
+    LoyaltyBalanceProgramsPidActiveBalanceGetParametersSortField:
+      type: string
+      enum:
+      - createdAt
+      title: LoyaltyBalanceProgramsPidActiveBalanceGetParametersSortField
+    LoyaltyBalanceProgramsPidContactBalancesGetParametersSortField:
+      type: string
+      enum:
+      - updatedAt
+      - value
+      title: LoyaltyBalanceProgramsPidContactBalancesGetParametersSortField
+    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaMeta:
       type: object
       properties:
         isInternal:
           type: boolean
           description: Indicates whether the balance definition is internal.
-      description: Additional metadata for the balance definition.
-      title: LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaMeta
+      description: Optional metadata for the balance definition.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaMeta
+    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceOptionCreditRounding:
+      type: string
+      enum:
+      - lower
+      - upper
+      - natural
+      description: Rounding strategy for credit transactions.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceOptionCreditRounding
+    ? LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceOptionAmountOvertakingStrategy
+    : type: string
+      enum:
+      - strict
+      - partial
+      description: Defines whether partial credit is allowed when reaching max balance.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceOptionAmountOvertakingStrategy
+    LoyaltyBalanceProgramsPidBalanceDefinitionsGetParametersSortField:
+      type: string
+      enum:
+      - name
+      - created_at
+      - updated_at
+      default: updated_at
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsGetParametersSortField
+    BalanceDefinitionUnit:
+      type: string
+      enum:
+      - POINTS
+      - EUR
+      - USD
+      - MXN
+      - GBP
+      - INR
+      - CAD
+      - SGD
+      - RON
+      - JPY
+      - MYR
+      - CLP
+      - PEN
+      - MAD
+      - AUD
+      - CHF
+      - BRL
+      description: Unit of balance measurement.
+      title: BalanceDefinitionUnit
+    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidGetParametersVersion:
+      type: string
+      enum:
+      - active
+      - draft
+      default: draft
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidGetParametersVersion
     Balance_getTransactionHistoryApi_Response_200:
       type: object
       properties:
@@ -1863,200 +2325,13 @@ components:
           description: List of past transactions associated with the balance.
       description: Response containing transaction history details for a specific balance and contact.
       title: Balance_getTransactionHistoryApi_Response_200
-    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationUnit:
-      type: string
-      enum:
-      - day
-      - week
-      - month
-      - year
-      description: Unit of time for balance validity.
-      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationUnit
-    LoyaltyBalanceProgramsPidTransactionHistoryGetParametersTransactionType:
-      type: string
-      enum:
-      - credit
-      - debit
-      title: LoyaltyBalanceProgramsPidTransactionHistoryGetParametersTransactionType
-    LoyaltyBalanceProgramsPidTransactionHistoryGetResponsesContentApplicationJsonSchemaTransactionHistoryItemsTransactionType:
+    TransactionTransactionType:
       type: string
       enum:
       - credit
       - debit
       description: The type of the transaction.
-      title: LoyaltyBalanceProgramsPidTransactionHistoryGetResponsesContentApplicationJsonSchemaTransactionHistoryItemsTransactionType
-    Balance_getContactBalances_Response_200:
-      type: object
-      properties:
-        balanceDefinitionId:
-          type: string
-        balances:
-          type: array
-          items:
-            $ref: '#/components/schemas/LoyaltyBalanceProgramsPidContactBalancesGetResponsesContentApplicationJsonSchemaBalancesItems'
-        count:
-          type: integer
-        loyaltyProgramId:
-          type: string
-      title: Balance_getContactBalances_Response_200
-    BalanceDefinitionBalanceOptionAmountOvertakingStrategy:
-      type: string
-      enum:
-      - strict
-      - partial
-      description: Partial enables partial credit of balance if maximum balance limit is reached. Strict enables rejection of a transaction if it will breach the max balance limit.
-      title: BalanceDefinitionBalanceOptionAmountOvertakingStrategy
-    LoyaltyBalanceProgramsPidTransactionHistoryGetParametersStatus:
-      type: string
-      enum:
-      - draft
-      - completed
-      - rejected
-      - cancelled
-      - expired
-      title: LoyaltyBalanceProgramsPidTransactionHistoryGetParametersStatus
-    LoyaltyBalanceProgramsPidTransactionHistoryGetParametersSortField:
-      type: string
-      enum:
-      - createdAt
-      default: createdAt
-      title: LoyaltyBalanceProgramsPidTransactionHistoryGetParametersSortField
-    BalanceLimitTransactionType:
-      type: string
-      enum:
-      - credit
-      - debit
-      description: Specifies whether the limit applies to credit or debit transactions.
-      title: BalanceLimitTransactionType
-    ? LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationModifier
-    : type: string
-      enum:
-      - noModification
-      - startOfPeriod
-      - endOfPeriod
-      description: Defines when the balance expires within the selected duration.
-      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationModifier
-    LoyaltyBalanceProgramsPidContactBalancesGetParametersSort:
-      type: string
-      enum:
-      - asc
-      - desc
-      title: LoyaltyBalanceProgramsPidContactBalancesGetParametersSort
-    BalanceDefinitionBalanceAvailabilityDurationModifier:
-      type: string
-      enum:
-      - noModification
-      - startOfPeriod
-      - endOfPeriod
-      description: Modifier for balance availability duration. startOfPeriod causes expiry at the start of the period, endOfPeriod at the end. noModification uses the exact duration from the credit date.
-      title: BalanceDefinitionBalanceAvailabilityDurationModifier
-    LoyaltyBalanceProgramsPidCreateOrderPostRequestBodyContentApplicationJsonSchemaSource:
-      type: string
-      enum:
-      - engine
-      - user
-      description: Specifies the origin of the order.
-      title: LoyaltyBalanceProgramsPidCreateOrderPostRequestBodyContentApplicationJsonSchemaSource
-    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidPutRequestBodyContentApplicationJsonSchemaDurationUnit:
-      type: string
-      enum:
-      - day
-      - week
-      - month
-      - year
-      description: Unit of time for which the limit is applicable.
-      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidPutRequestBodyContentApplicationJsonSchemaDurationUnit
-    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaUnit:
-      type: string
-      enum:
-      - POINTS
-      - EUR
-      - USD
-      - MXN
-      - GBP
-      - INR
-      - CAD
-      - SGD
-      - RON
-      - JPY
-      - MYR
-      - CLP
-      - PEN
-      - MAD
-      - AUD
-      - CHF
-      - BRL
-      description: Unit of balance measurement.
-      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaUnit
-    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceOptionCreditRounding:
-      type: string
-      enum:
-      - lower
-      - upper
-      - natural
-      description: Rounding strategy for credit transactions.
-      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceOptionCreditRounding
-    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsPostRequestBodyContentApplicationJsonSchemaTransactionType:
-      type: string
-      enum:
-      - credit
-      - debit
-      description: Specifies whether the limit applies to credit or debit transactions.
-      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsPostRequestBodyContentApplicationJsonSchemaTransactionType
-    LoyaltyBalanceProgramsPidContactBalancesGetParametersSortField:
-      type: string
-      enum:
-      - updatedAt
-      - value
-      title: LoyaltyBalanceProgramsPidContactBalancesGetParametersSortField
-    LoyaltyBalanceProgramsPidTransactionHistoryGetResponsesContentApplicationJsonSchemaTransactionHistoryItems:
-      type: object
-      properties:
-        amount:
-          type: string
-          title: float
-          description: The transaction amount.
-        transactionType:
-          $ref: '#/components/schemas/LoyaltyBalanceProgramsPidTransactionHistoryGetResponsesContentApplicationJsonSchemaTransactionHistoryItemsTransactionType'
-          description: The type of the transaction.
-        balanceExpirationDate:
-          type: string
-          description: Expiration date of the balance associated with this transaction.
-        cancelledAt:
-          type: string
-          description: Timestamp when the transaction was canceled, if applicable.
-        completedAt:
-          type: string
-          description: Timestamp when the transaction was successfully completed.
-        createdAt:
-          type: string
-          description: Timestamp when the transaction was initiated.
-        id:
-          type: string
-          description: Unique identifier of the transaction.
-        meta:
-          type: object
-          additionalProperties:
-            description: Any type
-          description: Optional metadata associated with the transaction.
-        rejectReason:
-          type: string
-          description: Reason for rejection, if the transaction was declined.
-        rejectedAt:
-          type: string
-          description: Timestamp when the transaction was rejected.
-        status:
-          type: string
-          description: Current status of the transaction (e.g., pending, completed, rejected).
-      description: Represents a record of a past transaction, including status and key timestamps.
-      title: LoyaltyBalanceProgramsPidTransactionHistoryGetResponsesContentApplicationJsonSchemaTransactionHistoryItems
-    ? LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceOptionAmountOvertakingStrategy
-    : type: string
-      enum:
-      - strict
-      - partial
-      description: Defines whether partial credit is allowed when reaching max balance.
-      title: LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceOptionAmountOvertakingStrategy
+      title: TransactionTransactionType
     LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsPostRequestBodyContentApplicationJsonSchemaDurationUnit:
       type: string
       enum:
@@ -2066,13 +2341,37 @@ components:
       - year
       description: Unit of time for which the limit is applicable.
       title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsPostRequestBodyContentApplicationJsonSchemaDurationUnit
-    ? LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceOptionAmountOvertakingStrategy
+    ? LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationModifier
     : type: string
       enum:
-      - strict
-      - partial
-      description: Defines whether partial credit is allowed when reaching max balance.
-      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceOptionAmountOvertakingStrategy
+      - noModification
+      - startOfPeriod
+      - endOfPeriod
+      description: Defines when the balance expires within the selected duration.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationModifier
+    LoyaltyBalanceProgramsPidBalanceDefinitionsGetParametersVersion:
+      type: string
+      enum:
+      - active
+      - draft
+      default: draft
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsGetParametersVersion
+    LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceOptionCreditRounding:
+      type: string
+      enum:
+      - lower
+      - upper
+      - natural
+      description: Defines rounding strategy for credit transactions.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceOptionCreditRounding
+    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceOptionDebitRounding:
+      type: string
+      enum:
+      - lower
+      - upper
+      - natural
+      description: Rounding strategy for debit transactions.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaBalanceOptionDebitRounding
     Balance_createSubscriptionBalances_Response_200:
       type: object
       properties:
@@ -2113,155 +2412,39 @@ components:
           format: date-time
           description: Timestamp of when the balance was last consumed.
       title: Balance_createSubscriptionBalances_Response_200
-    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidGetParametersVersion:
-      type: string
-      enum:
-      - active
-      - draft
-      default: draft
-      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidGetParametersVersion
-    BalanceLimitConstraintType:
-      type: string
-      enum:
-      - transaction
-      - amount
-      description: Defines the type of constraint (transaction count or amount).
-      title: BalanceLimitConstraintType
-    TransactionStatus:
-      type: string
-      enum:
-      - pending
-      - complete
-      - rejected
-      - cancelled
-      - expired
-      description: The current status of the transaction.
-      title: TransactionStatus
-    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidPutRequestBodyContentApplicationJsonSchemaConstraintType:
-      type: string
-      enum:
-      - transaction
-      - amount
-      description: Defines whether the limit applies to transaction count or amount.
-      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidPutRequestBodyContentApplicationJsonSchemaConstraintType
-    LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaUnit:
-      type: string
-      enum:
-      - POINTS
-      - EUR
-      - USD
-      - MXN
-      - GBP
-      - INR
-      - CAD
-      - SGD
-      - RON
-      - JPY
-      - MYR
-      - CLP
-      - PEN
-      - MAD
-      - AUD
-      - CHF
-      - BRL
-      description: Unit of balance measurement.
-      title: LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaUnit
-    BalanceLimitDurationUnit:
-      type: string
-      enum:
-      - hour
-      - day
-      - week
-      - month
-      - year
-      description: Time unit for the balance limit.
-      title: BalanceLimitDurationUnit
-    LoyaltyBalanceProgramsPidActiveBalanceGetParametersSort:
-      type: string
-      enum:
-      - asc
-      - desc
-      title: LoyaltyBalanceProgramsPidActiveBalanceGetParametersSort
-    LoyaltyBalanceProgramsPidActiveBalanceGetParametersSortField:
+    LoyaltyBalanceProgramsPidTransactionHistoryGetParametersSortField:
       type: string
       enum:
       - createdAt
-      title: LoyaltyBalanceProgramsPidActiveBalanceGetParametersSortField
-    BalanceDefinitionBalanceOptionCreditRounding:
+      default: createdAt
+      title: LoyaltyBalanceProgramsPidTransactionHistoryGetParametersSortField
+    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidPutRequestBodyContentApplicationJsonSchemaTransactionType:
       type: string
       enum:
-      - lower
-      - upper
-      - natural
-      description: Rounding strategy for credit transactions.
-      title: BalanceDefinitionBalanceOptionCreditRounding
-    transaction:
+      - credit
+      - debit
+      description: Specifies whether the limit applies to credit or debit transactions.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidPutRequestBodyContentApplicationJsonSchemaTransactionType
+    LoyaltyBalanceProgramsPidContactBalancesGetResponsesContentApplicationJsonSchemaBalancesItems:
       type: object
       properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique identifier (UUID) of the transaction.
-        amount:
-          type: string
-          title: float
-          description: The transaction amount.
-        transactionType:
-          $ref: '#/components/schemas/TransactionTransactionType'
-          description: The type of the transaction.
-        meta:
-          type: object
-          additionalProperties:
-            description: Any type
-          description: Optional metadata associated with the transaction.
-        status:
-          $ref: '#/components/schemas/TransactionStatus'
-          description: The current status of the transaction.
-        loyaltyProgramId:
-          type: string
-          format: uuid
-          description: Unique identifier (UUID) of the associated loyalty program.
-        balanceDefinitionId:
-          type: string
-          format: uuid
-          description: Unique identifier (UUID) of the associated balance definition.
         contactId:
           type: integer
-          format: int64
-          description: Unique identifier of the contact associated with the transaction.
-        eventTime:
+        loyaltySubscriptionId:
           type: string
-          format: date-time
-          description: Optional timestamp indicating when the transaction event occurred (ISO 8601 format).
-        rejectReason:
-          type: string
-          description: Reason for rejection if the transaction was declined (nullable).
-        rejectedAt:
-          type: string
-          format: date-time
-          description: Timestamp when the transaction was rejected (nullable).
-        expirationDate:
-          type: string
-          format: date-time
-          description: Expiry date of the transaction (nullable).
-        completedAt:
-          type: string
-          format: date-time
-          description: Timestamp when the transaction was completed (nullable).
-        cancelledAt:
-          type: string
-          format: date-time
-          description: Timestamp when the transaction was canceled (nullable).
-        createdAt:
-          type: string
-          format: date-time
-          description: Timestamp when the transaction was created.
         updatedAt:
           type: string
-          format: date-time
-          description: Timestamp when the transaction was last updated.
-      description: Represents a transaction involving a balance, including status and timestamps.
-      title: transaction
+        value:
+          type: number
+          format: double
+      title: LoyaltyBalanceProgramsPidContactBalancesGetResponsesContentApplicationJsonSchemaBalancesItems
+    ? LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceOptionAmountOvertakingStrategy
+    : type: string
+      enum:
+      - strict
+      - partial
+      description: Defines whether partial credit is allowed when reaching max balance.
+      title: LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceOptionAmountOvertakingStrategy
     Balance_getSubscriptionBalances_Response_200:
       type: object
       properties:
@@ -2279,196 +2462,13 @@ components:
             $ref: '#/components/schemas/LoyaltyBalanceProgramsPidSubscriptionsCidBalancesGetResponsesContentApplicationJsonSchemaBalanceItems'
           description: Aggregate balance per balance definition.
       title: Balance_getSubscriptionBalances_Response_200
-    TransactionTransactionType:
+    BalanceLimitConstraintType:
       type: string
       enum:
-      - credit
-      - debit
-      description: The type of the transaction.
-      title: TransactionTransactionType
-    Balance_getActiveBalancesApi_Response_200:
-      type: object
-      properties:
-        count:
-          type: integer
-          format: int64
-          description: Total number of active balances.
-        loyaltyProgramId:
-          type: string
-          format: uuid
-          description: Unique identifier of the loyalty program.
-        contactId:
-          type: integer
-          format: int64
-          description: Unique identifier of the contact.
-        balanceDefinitionId:
-          type: string
-          format: uuid
-          description: Unique identifier of the balance definition.
-        activeBalances:
-          type: array
-          items:
-            $ref: '#/components/schemas/LoyaltyBalanceProgramsPidActiveBalanceGetResponsesContentApplicationJsonSchemaActiveBalancesItems'
-          description: List of active balances.
-      description: Active balance response for a specific contact and balance definition.
-      title: Balance_getActiveBalancesApi_Response_200
-    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaMeta:
-      type: object
-      properties:
-        isInternal:
-          type: boolean
-          description: Indicates whether the balance definition is internal.
-      description: Optional metadata for the balance definition.
-      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidPutRequestBodyContentApplicationJsonSchemaMeta
-    Balance_createBalanceOrder_Response_200:
-      type: object
-      properties:
-        amount:
-          type: number
-          format: double
-          description: Order amount (must not be zero).
-        balanceDefinitionId:
-          type: string
-          description: Optional unique identifier (UUID) of the associated balance definition.
-        contactId:
-          type: integer
-          description: Unique identifier of the contact placing the order (must be ≥ 1).
-        createdAt:
-          type: string
-          description: RFC3339 timestamp indicating when the order was created.
-        dueAt:
-          type: string
-          description: RFC3339 timestamp specifying when the order is due in the future.
-        expiresAt:
-          type: string
-          description: Optional RFC3339 timestamp defining order expiration in the future.
-        id:
-          type: string
-          description: Unique identifier for the balance order.
-        loyaltyProgramId:
-          type: string
-          description: Unique identifier of the loyalty program associated with the order.
-        meta:
-          type: object
-          additionalProperties:
-            description: Any type
-          description: Optional metadata associated with the order.
-        processedAt:
-          type: string
-          description: Optional RFC3339 timestamp indicating when the order was processed.
-        transactionid:
-          type: string
-          description: Optional reference to the associated transaction ID.
-        updatedAt:
-          type: string
-          description: RFC3339 timestamp indicating the last update to the order.
-      required:
+      - transaction
       - amount
-      - contactId
-      - createdAt
-      - dueAt
-      - loyaltyProgramId
-      - updatedAt
-      description: Represents an order linked to a balance definition, including amount, due date, and transaction details.
-      title: Balance_createBalanceOrder_Response_200
-    LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceOptionCreditRounding:
-      type: string
-      enum:
-      - lower
-      - upper
-      - natural
-      description: Defines rounding strategy for credit transactions.
-      title: LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceOptionCreditRounding
-    BalanceDefinitionUnit:
-      type: string
-      enum:
-      - POINTS
-      - EUR
-      - USD
-      - MXN
-      - GBP
-      - INR
-      - CAD
-      - SGD
-      - RON
-      - JPY
-      - MYR
-      - CLP
-      - PEN
-      - MAD
-      - AUD
-      - CHF
-      - BRL
-      description: Unit of balance measurement.
-      title: BalanceDefinitionUnit
-    LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationModifier:
-      type: string
-      enum:
-      - noModification
-      - startOfPeriod
-      - endOfPeriod
-      description: Defines when the balance expires within the selected duration.
-      title: LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceAvailabilityDurationModifier
-    LoyaltyBalanceProgramsPidBalanceDefinitionsGetParametersVersion:
-      type: string
-      enum:
-      - active
-      - draft
-      default: draft
-      title: LoyaltyBalanceProgramsPidBalanceDefinitionsGetParametersVersion
-    LoyaltyBalanceProgramsPidBalanceDefinitionsGetParametersSort:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: desc
-      title: LoyaltyBalanceProgramsPidBalanceDefinitionsGetParametersSort
-    LoyaltyBalanceProgramsPidTransactionHistoryGetParametersSort:
-      type: string
-      enum:
-      - asc
-      - desc
-      title: LoyaltyBalanceProgramsPidTransactionHistoryGetParametersSort
-    LoyaltyBalanceProgramsPidSubscriptionsCidBalancesGetResponsesContentApplicationJsonSchemaBalanceItems:
-      type: object
-      properties:
-        balanceDefinitionId:
-          type: string
-          format: uuid
-          description: Balance definition ID.
-        value:
-          type: string
-          title: float
-          description: Aggregate balance value for this definition.
-      title: LoyaltyBalanceProgramsPidSubscriptionsCidBalancesGetResponsesContentApplicationJsonSchemaBalanceItems
-    LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidGetParametersVersion:
-      type: string
-      enum:
-      - active
-      - draft
-      default: draft
-      title: LoyaltyBalanceProgramsPidBalanceDefinitionsBdidLimitsBlidGetParametersVersion
-    LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceOptionDebitRounding:
-      type: string
-      enum:
-      - lower
-      - upper
-      - natural
-      description: Defines rounding strategy for debit transactions.
-      title: LoyaltyBalanceProgramsPidBalanceDefinitionsPostRequestBodyContentApplicationJsonSchemaBalanceOptionDebitRounding
-    LoyaltyBalanceProgramsPidContactBalancesGetResponsesContentApplicationJsonSchemaBalancesItems:
-      type: object
-      properties:
-        contactId:
-          type: integer
-        loyaltySubscriptionId:
-          type: string
-        updatedAt:
-          type: string
-        value:
-          type: number
-          format: double
-      title: LoyaltyBalanceProgramsPidContactBalancesGetResponsesContentApplicationJsonSchemaBalancesItems
+      description: Defines the type of constraint (transaction count or amount).
+      title: BalanceLimitConstraintType
   securitySchemes:
     api-key:
       type: apiKey

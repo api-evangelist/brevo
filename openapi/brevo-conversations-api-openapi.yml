@@ -456,38 +456,11 @@ paths:
               - groupId
 components:
   schemas:
-    ConversationsMessageReplyTo:
-      type: object
-      properties:
-        email:
-          type: string
-        name:
-          type: string
-      description: An object containing details of the reply-to email address (applicable only to messages in email threads).
-      title: ConversationsMessageReplyTo
-    ConversationsMessageSource:
-      type: object
-      properties: {}
-      description: Source information for the message.
-      title: ConversationsMessageSource
-    ConversationsMessageIntegrations:
-      type: object
-      properties: {}
-      description: Integration details.
-      title: ConversationsMessageIntegrations
-    Conversations_setVisitorGroupAssignment_Response_200:
-      type: object
-      properties:
-        groupId:
-          description: group ID the visitor was assigned to
-        visitorId:
-          description: visitor ID
-      title: Conversations_setVisitorGroupAssignment_Response_200
-    GetAnAutomatedMessageRequestBadRequestError:
+    GetAMessageRequestBadRequestError:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/ConversationsPushedMessagesIdGetResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/ConversationsMessagesIdGetResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
@@ -495,65 +468,12 @@ components:
       required:
       - code
       - message
-      title: GetAnAutomatedMessageRequestBadRequestError
-    ConversationsVisitorGroupPutResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: ConversationsVisitorGroupPutResponsesContentApplicationJsonSchemaCode
-    errorModel:
+      title: GetAMessageRequestBadRequestError
+    SetVisitorGroupAssignmentRequestBadRequestError:
       type: object
       properties:
         code:
-          type: string
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - message
-      title: errorModel
-    UpdateAMessageSentByAnAgentRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/ConversationsMessagesIdPutResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/ConversationsVisitorGroupPutResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
@@ -561,132 +481,20 @@ components:
       required:
       - code
       - message
-      title: UpdateAMessageSentByAnAgentRequestBadRequestError
-    ConversationsMessageToItems:
+      title: SetVisitorGroupAssignmentRequestBadRequestError
+    DeleteAnAutomatedMessageRequestBadRequestError:
       type: object
       properties:
-        email:
+        code:
+          $ref: '#/components/schemas/ConversationsPushedMessagesIdDeleteResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
           type: string
-        name:
-          type: string
-      title: ConversationsMessageToItems
-    ConversationsMessageForwardedToSourceStatus:
-      type: object
-      properties:
-        error:
-          type: string
-        isSuccess:
-          type: boolean
-      description: Status of the message forwarding to the source.
-      title: ConversationsMessageForwardedToSourceStatus
-    ConversationsMessageBccItems:
-      type: object
-      properties:
-        email:
-          type: string
-        name:
-          type: string
-      title: ConversationsMessageBccItems
-    ConversationsMessageFile:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the file.
-        link:
-          type: string
-          description: URL of the file.
-        mimeType:
-          type: string
-          description: MIME type of the file.
-        isImage:
-          type: boolean
-          description: Whether the file is an image.
-        isSticker:
-          type: boolean
-          description: Whether the file is a sticker.
-        isInline:
-          type: boolean
-          description: Whether the file is inline.
-        inlineId:
-          type: string
-          description: The ID of the inline file.
-        size:
-          type: integer
-          format: int64
-          description: Size in bytes.
-        imageInfo:
-          $ref: '#/components/schemas/ConversationsMessageFileImageInfo'
-          description: Image info, present when the file is an image.
-        isAllowedFileType:
-          type: boolean
-          description: Whether the file extension is allowed for download.
-      title: ConversationsMessageFile
-    ConversationsMessageCcItems:
-      type: object
-      properties:
-        email:
-          type: string
-        name:
-          type: string
-      title: ConversationsMessageCcItems
-    ConversationsMessageAttachmentsItemsImageInfo:
-      type: object
-      properties:
-        width:
-          type: integer
-          format: int64
-          description: Width of the image in pixels.
-        height:
-          type: integer
-          format: int64
-          description: Height of the image in pixels.
-        previewLink:
-          type: string
-          description: URL of the image preview.
-      description: Image information (only present for image files).
-      title: ConversationsMessageAttachmentsItemsImageInfo
-    ConversationsMessagesIdPutResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: ConversationsMessagesIdPutResponsesContentApplicationJsonSchemaCode
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: DeleteAnAutomatedMessageRequestBadRequestError
     DeleteAMessageSentByAnAgentRequestBadRequestError:
       type: object
       properties:
@@ -700,11 +508,32 @@ components:
       - code
       - message
       title: DeleteAMessageSentByAnAgentRequestBadRequestError
-    SendAMessageAsAnAgentRequestBadRequestError:
+    ConversationsMessageToItems:
+      type: object
+      properties:
+        email:
+          type: string
+        name:
+          type: string
+      title: ConversationsMessageToItems
+    ConversationsMessageSource:
+      type: object
+      properties: {}
+      description: Source information for the message.
+      title: ConversationsMessageSource
+    ConversationsMessageCcItems:
+      type: object
+      properties:
+        email:
+          type: string
+        name:
+          type: string
+      title: ConversationsMessageCcItems
+    UpdateAnAutomatedMessageRequestBadRequestError:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/ConversationsMessagesPostResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/ConversationsPushedMessagesIdPutResponsesContentApplicationJsonSchemaCode'
           description: Error code displayed in case of a failure
         message:
           type: string
@@ -712,8 +541,17 @@ components:
       required:
       - code
       - message
-      title: SendAMessageAsAnAgentRequestBadRequestError
-    ConversationsMessagesIdDeleteResponsesContentApplicationJsonSchemaCode:
+      title: UpdateAnAutomatedMessageRequestBadRequestError
+    ConversationsMessageReplyTo:
+      type: object
+      properties:
+        email:
+          type: string
+        name:
+          type: string
+      description: An object containing details of the reply-to email address (applicable only to messages in email threads).
+      title: ConversationsMessageReplyTo
+    ConversationsAgentOnlinePingPostResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - invalid_parameter
@@ -753,7 +591,29 @@ components:
       - Insufficient credits
       - Request already processed
       description: Error code displayed in case of a failure
-      title: ConversationsMessagesIdDeleteResponsesContentApplicationJsonSchemaCode
+      title: ConversationsAgentOnlinePingPostResponsesContentApplicationJsonSchemaCode
+    ConversationsMessageForwardedToSourceStatus:
+      type: object
+      properties:
+        error:
+          type: string
+        isSuccess:
+          type: boolean
+      description: Status of the message forwarding to the source.
+      title: ConversationsMessageForwardedToSourceStatus
+    SendAMessageAsAnAgentRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ConversationsMessagesPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: SendAMessageAsAnAgentRequestBadRequestError
     ConversationsMessage:
       type: object
       properties:
@@ -860,354 +720,6 @@ components:
           description: visitor’s ID
       description: a Conversations message
       title: ConversationsMessage
-    ConversationsMessagesPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: ConversationsMessagesPostResponsesContentApplicationJsonSchemaCode
-    ConversationsPushedMessagesIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: ConversationsPushedMessagesIdGetResponsesContentApplicationJsonSchemaCode
-    ConversationsMessageType:
-      type: string
-      enum:
-      - agent
-      - visitor
-      description: '`"agent"` for agents’ messages, `"visitor"` for visitors’ messages.'
-      title: ConversationsMessageType
-    ConversationsPushedMessagesIdDeleteResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: ConversationsPushedMessagesIdDeleteResponsesContentApplicationJsonSchemaCode
-    SendAnAutomatedMessageToAVisitorRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/ConversationsPushedMessagesPostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: SendAnAutomatedMessageToAVisitorRequestBadRequestError
-    ConversationsAgentOnlinePingPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: ConversationsAgentOnlinePingPostResponsesContentApplicationJsonSchemaCode
-    ConversationsPushedMessagesPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: ConversationsPushedMessagesPostResponsesContentApplicationJsonSchemaCode
-    SetVisitorGroupAssignmentRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/ConversationsVisitorGroupPutResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: SetVisitorGroupAssignmentRequestBadRequestError
-    Conversations_setsAgentsStatusToOnlineFor23Minutes_Response_201:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Conversations_setsAgentsStatusToOnlineFor23Minutes_Response_201
-    SetsAgentsStatusToOnlineFor23MinutesRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/ConversationsAgentOnlinePingPostResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: SetsAgentsStatusToOnlineFor23MinutesRequestBadRequestError
-    UpdateAnAutomatedMessageRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/ConversationsPushedMessagesIdPutResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: UpdateAnAutomatedMessageRequestBadRequestError
-    ConversationsMessageFrom:
-      type: object
-      properties:
-        email:
-          type: string
-        name:
-          type: string
-      description: An object containing details about the email sender (applicable only to messages in email threads).
-      title: ConversationsMessageFrom
-    ConversationsMessageFileImageInfo:
-      type: object
-      properties:
-        width:
-          type: integer
-          format: int64
-          description: Width of the image in pixels.
-        height:
-          type: integer
-          format: int64
-          description: Height of the image in pixels.
-        previewLink:
-          type: string
-          description: URL of the image preview.
-      description: Image info, present when the file is an image.
-      title: ConversationsMessageFileImageInfo
-    ConversationsMessagesIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - invalid_parameter
-      - missing_parameter
-      - out_of_range
-      - campaign_processing
-      - campaign_sent
-      - document_not_found
-      - not_enough_credits
-      - permission_denied
-      - duplicate_parameter
-      - duplicate_request
-      - method_not_allowed
-      - unauthorized
-      - account_under_validation
-      - not_acceptable
-      - bad_request
-      - unprocessable_entity
-      - Domain does not exist
-      - Contact email not found
-      - Attribute not found
-      - Category id not found
-      - Invalid parameters passed
-      - Record(s) for identifier not found
-      - Returned when query params are invalid
-      - Returned when invalid data posted
-      - Feed not found
-      - Campaign ID not found
-      - api-key not found
-      - DMARC policy requires domain authentication
-      - DNS records not properly configured
-      - Invalid OTP code provided
-      - OTP code has expired
-      - Domain already exists in your account
-      - The sum of all IP weights must equal 100
-      - Authentication failed
-      - Insufficient credits
-      - Request already processed
-      description: Error code displayed in case of a failure
-      title: ConversationsMessagesIdGetResponsesContentApplicationJsonSchemaCode
-    GetAMessageRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/ConversationsMessagesIdGetResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: GetAMessageRequestBadRequestError
     ConversationsPushedMessagesIdPutResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -1249,19 +761,6 @@ components:
       - Request already processed
       description: Error code displayed in case of a failure
       title: ConversationsPushedMessagesIdPutResponsesContentApplicationJsonSchemaCode
-    DeleteAnAutomatedMessageRequestBadRequestError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/ConversationsPushedMessagesIdDeleteResponsesContentApplicationJsonSchemaCode'
-          description: Error code displayed in case of a failure
-        message:
-          type: string
-          description: Readable message associated to the failure
-      required:
-      - code
-      - message
-      title: DeleteAnAutomatedMessageRequestBadRequestError
     ConversationsMessageAttachmentsItems:
       type: object
       properties:
@@ -1297,6 +796,507 @@ components:
           type: boolean
           description: Whether the file extension is allowed for download.
       title: ConversationsMessageAttachmentsItems
+    ConversationsMessageFileImageInfo:
+      type: object
+      properties:
+        width:
+          type: integer
+          format: int64
+          description: Width of the image in pixels.
+        height:
+          type: integer
+          format: int64
+          description: Height of the image in pixels.
+        previewLink:
+          type: string
+          description: URL of the image preview.
+      description: Image info, present when the file is an image.
+      title: ConversationsMessageFileImageInfo
+    errorModel:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - message
+      title: errorModel
+    ConversationsPushedMessagesIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ConversationsPushedMessagesIdGetResponsesContentApplicationJsonSchemaCode
+    ConversationsMessageFrom:
+      type: object
+      properties:
+        email:
+          type: string
+        name:
+          type: string
+      description: An object containing details about the email sender (applicable only to messages in email threads).
+      title: ConversationsMessageFrom
+    ConversationsMessagesPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ConversationsMessagesPostResponsesContentApplicationJsonSchemaCode
+    ConversationsPushedMessagesIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ConversationsPushedMessagesIdDeleteResponsesContentApplicationJsonSchemaCode
+    ConversationsVisitorGroupPutResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ConversationsVisitorGroupPutResponsesContentApplicationJsonSchemaCode
+    ConversationsMessageType:
+      type: string
+      enum:
+      - agent
+      - visitor
+      description: '`"agent"` for agents’ messages, `"visitor"` for visitors’ messages.'
+      title: ConversationsMessageType
+    Conversations_setsAgentsStatusToOnlineFor23Minutes_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Conversations_setsAgentsStatusToOnlineFor23Minutes_Response_201
+    SendAnAutomatedMessageToAVisitorRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ConversationsPushedMessagesPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: SendAnAutomatedMessageToAVisitorRequestBadRequestError
+    GetAnAutomatedMessageRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ConversationsPushedMessagesIdGetResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: GetAnAutomatedMessageRequestBadRequestError
+    ConversationsPushedMessagesPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ConversationsPushedMessagesPostResponsesContentApplicationJsonSchemaCode
+    ConversationsMessagesIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ConversationsMessagesIdDeleteResponsesContentApplicationJsonSchemaCode
+    Conversations_setVisitorGroupAssignment_Response_200:
+      type: object
+      properties:
+        groupId:
+          description: group ID the visitor was assigned to
+        visitorId:
+          description: visitor ID
+      title: Conversations_setVisitorGroupAssignment_Response_200
+    UpdateAMessageSentByAnAgentRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ConversationsMessagesIdPutResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: UpdateAMessageSentByAnAgentRequestBadRequestError
+    ConversationsMessageIntegrations:
+      type: object
+      properties: {}
+      description: Integration details.
+      title: ConversationsMessageIntegrations
+    ConversationsMessagesIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ConversationsMessagesIdGetResponsesContentApplicationJsonSchemaCode
+    ConversationsMessageFile:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the file.
+        link:
+          type: string
+          description: URL of the file.
+        mimeType:
+          type: string
+          description: MIME type of the file.
+        isImage:
+          type: boolean
+          description: Whether the file is an image.
+        isSticker:
+          type: boolean
+          description: Whether the file is a sticker.
+        isInline:
+          type: boolean
+          description: Whether the file is inline.
+        inlineId:
+          type: string
+          description: The ID of the inline file.
+        size:
+          type: integer
+          format: int64
+          description: Size in bytes.
+        imageInfo:
+          $ref: '#/components/schemas/ConversationsMessageFileImageInfo'
+          description: Image info, present when the file is an image.
+        isAllowedFileType:
+          type: boolean
+          description: Whether the file extension is allowed for download.
+      title: ConversationsMessageFile
+    ConversationsMessagesIdPutResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - invalid_parameter
+      - missing_parameter
+      - out_of_range
+      - campaign_processing
+      - campaign_sent
+      - document_not_found
+      - not_enough_credits
+      - permission_denied
+      - duplicate_parameter
+      - duplicate_request
+      - method_not_allowed
+      - unauthorized
+      - account_under_validation
+      - not_acceptable
+      - bad_request
+      - unprocessable_entity
+      - Domain does not exist
+      - Contact email not found
+      - Attribute not found
+      - Category id not found
+      - Invalid parameters passed
+      - Record(s) for identifier not found
+      - Returned when query params are invalid
+      - Returned when invalid data posted
+      - Feed not found
+      - Campaign ID not found
+      - api-key not found
+      - DMARC policy requires domain authentication
+      - DNS records not properly configured
+      - Invalid OTP code provided
+      - OTP code has expired
+      - Domain already exists in your account
+      - The sum of all IP weights must equal 100
+      - Authentication failed
+      - Insufficient credits
+      - Request already processed
+      description: Error code displayed in case of a failure
+      title: ConversationsMessagesIdPutResponsesContentApplicationJsonSchemaCode
+    SetsAgentsStatusToOnlineFor23MinutesRequestBadRequestError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ConversationsAgentOnlinePingPostResponsesContentApplicationJsonSchemaCode'
+          description: Error code displayed in case of a failure
+        message:
+          type: string
+          description: Readable message associated to the failure
+      required:
+      - code
+      - message
+      title: SetsAgentsStatusToOnlineFor23MinutesRequestBadRequestError
+    ConversationsMessageAttachmentsItemsImageInfo:
+      type: object
+      properties:
+        width:
+          type: integer
+          format: int64
+          description: Width of the image in pixels.
+        height:
+          type: integer
+          format: int64
+          description: Height of the image in pixels.
+        previewLink:
+          type: string
+          description: URL of the image preview.
+      description: Image information (only present for image files).
+      title: ConversationsMessageAttachmentsItemsImageInfo
+    ConversationsMessageBccItems:
+      type: object
+      properties:
+        email:
+          type: string
+        name:
+          type: string
+      title: ConversationsMessageBccItems
   securitySchemes:
     api-key:
       type: apiKey

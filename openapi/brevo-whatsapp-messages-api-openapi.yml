@@ -50,6 +50,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    SendWhatsAppResponse:
+      type: object
+      properties:
+        messageId:
+          type: string
+          description: Unique identifier assigned to the sent WhatsApp message.
     ErrorResponse:
       type: object
       properties:
@@ -59,12 +65,6 @@ components:
         message:
           type: string
           description: Human-readable description of the error.
-    SendWhatsAppResponse:
-      type: object
-      properties:
-        messageId:
-          type: string
-          description: Unique identifier assigned to the sent WhatsApp message.
     SendWhatsAppMessage:
       type: object
       required:
