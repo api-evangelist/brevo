@@ -6,19 +6,14 @@ source:
 checked:
 - https://api.nuget.org/v3
 - https://apps.shopify.com/sendinblue
-- https://cdn.winget.microsoft.com/cache
 - https://composio.dev/toolkits/brevo
 - https://connectors.airbyte.com/files/registries/v0/cloud_registry.json
 - https://connectors.airbyte.com/files/registries/v0/oss_registry.json
 - https://crates.io/api/v1
 - https://fivetran.com/docs-sitemap.xml
 - https://fivetran.com/docs/connectors/partner-built-program
-- https://formulae.brew.sh/api/cask.json
-- https://formulae.brew.sh/api/formula.json
 - https://github.com/PipedreamHQ/pipedream/tree/94800dd6de6640b942c65ea7ee655f71ac56d438/components/
 - https://github.com/PipedreamHQ/pipedream/tree/d5872355ef27b4efa769f05352f2820c299a456e/components/
-- https://github.com/ScoopInstaller/Extras
-- https://github.com/ScoopInstaller/Main
 - https://github.com/n8n-io/n8n/tree/860f1273ebd73fabbd668cbec2c49ed9b48a286d/packages/nodes-base/nodes/
 - https://github.com/n8n-io/n8n/tree/f73dc337f8dc61a4fd44aebe41c55faafe4f53a4/packages/nodes-base/nodes/
 - https://hightouch.com/docs/destinations/brevo
@@ -36,6 +31,12 @@ checked:
 - https://zapier.com/apps/brevo/integrations
 - wordpress/integrations/wordpress-integration-edges.yml
 - zoom/integrations/zoom-integration-edges.yml
+- https://cdn.winget.microsoft.com/cache
+- https://formulae.brew.sh/api/cask.json
+- https://formulae.brew.sh/api/formula.json
+- https://github.com/ScoopInstaller/Extras
+- https://github.com/ScoopInstaller/Main
+- bigcommerce/integrations/bigcommerce-integration-edges.yml
 summary: 'Brevo runs its own integrations marketplace at brevo.com/integrations (browser-rendered; read 2026-10-12):
   51 named apps, 13 marked as developed by Brevo. The Zapier app exists but still declares sendinblue.com (301 ->
   brevo.com, the 2023 rebrand), so the sweep rejected it as a name collision; make.com answered 403 to our crawler.'
@@ -585,40 +586,6 @@ edges:
     matched_domain: brevo.com
     detected_by: sweep-cpaas.py
     detected: '2026-10-13'
-- partner_name: WordPress (own)
-  partner: wordpress
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://wordpress.org/plugins/mailin/
-  mirror_of: wordpress/integrations/wordpress-integration-edges.yml
-  apps:
-  - Brevo – Email, SMS, Web Push, Chat, and more.
-  listing_count: 1
-  detected: '2026-10-15'
-  detected_by: mirror-platform-listings.py
-  category: WordPress plugin
-- partner_name: Zoom (own)
-  partner: zoom
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://marketplace.zoom.us/apps/FpZwl7AsQCGaQPr_BjsL9Q
-  mirror_of: zoom/integrations/zoom-integration-edges.yml
-  apps:
-  - Brevo Meetings
-  listing_count: 1
-  detected: '2026-10-18'
-  detected_by: mirror-platform-listings.py
-  category: Zoom app
 - partner_name: Go module proxy
   partner: null
   partner_match: null
@@ -905,6 +872,57 @@ edges:
     detected: '2026-10-20'
   detected_by: sweep-official-clis.py
   first_seen: '2026-10-20'
+- partner_name: WordPress (own)
+  partner: wordpress
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://wordpress.org/plugins/mailin/
+  mirror_of: wordpress/integrations/wordpress-integration-edges.yml
+  apps:
+  - Brevo – Email, SMS, Web Push, Chat, and more.
+  listing_count: 1
+  detected: '2026-10-15'
+  detected_by: mirror-platform-listings.py
+  category: WordPress plugin
+- partner_name: Zoom (own)
+  partner: zoom
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://marketplace.zoom.us/apps/FpZwl7AsQCGaQPr_BjsL9Q
+  mirror_of: zoom/integrations/zoom-integration-edges.yml
+  apps:
+  - Brevo Meetings
+  listing_count: 1
+  detected: '2026-10-18'
+  detected_by: mirror-platform-listings.py
+  category: Zoom app
+- partner_name: BigCommerce (own)
+  partner: bigcommerce
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.bigcommerce.com/apps/brevo/
+  mirror_of: bigcommerce/integrations/bigcommerce-integration-edges.yml
+  apps:
+  - Brevo
+  listing_count: 1
+  detected: '2026-10-20'
+  detected_by: mirror-platform-listings.py
+  category: Marketing, Email Marketing
 templates: []
 skips:
 - label: zapier:brevo
