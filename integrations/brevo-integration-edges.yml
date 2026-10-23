@@ -48,6 +48,9 @@ checked:
 - https://packagist.org/packages
 - https://pub.dev/api
 - drupal/integrations/drupal-integration-edges.yml
+- https://ifttt.com/brevo
+- https://ifttt.com/explore/services
+- https://ifttt.com/sitemap_services.xml
 summary: 'Brevo runs its own integrations marketplace at brevo.com/integrations (browser-rendered; read 2026-10-12):
   51 named apps, 13 marked as developed by Brevo. The Zapier app exists but still declares sendinblue.com (301 ->
   brevo.com, the 2023 rebrand), so the sweep rejected it as a name collision; make.com answered 403 to our crawler.'
@@ -1035,6 +1038,31 @@ edges:
   detected: '2026-10-22'
   detected_by: mirror-platform-listings.py
   category: Drupal contributed module
+- partner_name: IFTTT
+  partner: ifttt
+  partner_match: aggregator
+  type: marketplace
+  marketplace: ifttt-services
+  channel: ipaas-listing
+  relationship: ipaas-bridge
+  direction: third-party
+  evidence: https://ifttt.com/brevo
+  category: null
+  contract_reference:
+    register: IFTTT service directory (ifttt.com/explore/services; ifttt.com/<service>)
+    spec_file: null
+    role: ipaas-connector:ifttt
+    registered_name: Brevo
+    matched_domain: brevo.com
+    matched_by: domain
+    app_slug: brevo
+    ifttt_category: Business tools
+    builder: unknown (the service page does not say who built it)
+    detected_by: sweep-ifttt-services.py
+    detected: '2026-10-23'
+    signal_note: one edge per (provider, platform); triggers, actions and applet counts are context, never read
+  detected_by: sweep-ifttt-services.py
+  first_seen: '2026-10-23'
 templates: []
 skips:
 - label: zapier:brevo
