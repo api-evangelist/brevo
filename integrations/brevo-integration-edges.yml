@@ -44,6 +44,9 @@ checked:
 - https://developer.salesforce.com/docs/atlas.en-us.packagingGuide.meta/packagingGuide/security_review_overview.htm
 - https://slack.com/marketplace
 - salesforce/integrations/salesforce-integration-edges.yml
+- https://hex.pm/api
+- https://packagist.org/packages
+- https://pub.dev/api
 summary: 'Brevo runs its own integrations marketplace at brevo.com/integrations (browser-rendered; read 2026-10-12):
   51 named apps, 13 marked as developed by Brevo. The Zapier app exists but still declares sendinblue.com (301 ->
   brevo.com, the 2023 rebrand), so the sweep rejected it as a name collision; make.com answered 403 to our crawler.'
@@ -984,6 +987,36 @@ edges:
   detected: '2026-10-21'
   detected_by: mirror-platform-listings.py
   category: marketingAutomation
+- partner_name: Packagist
+  partner: packagist
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (PHP)
+  evidence: https://packagist.org/packages/getbrevo/brevo-php
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Packagist (public registry JSON)
+    spec_file: null
+    language: PHP
+    packages:
+    - name: getbrevo/brevo-php
+      version: 6.0.0
+      released: '2026-10-13'
+      released_field: time
+      lapsed: false
+      page: https://packagist.org/packages/getbrevo/brevo-php
+      repo_leg: github-org:getbrevo
+      publisher_leg: org:getbrevo
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-php-dart-elixir-package-registries.py
+    detected: '2026-10-22'
+  detected_by: sweep-php-dart-elixir-package-registries.py
+  first_seen: '2026-10-22'
 templates: []
 skips:
 - label: zapier:brevo
