@@ -47,6 +47,7 @@ checked:
 - https://hex.pm/api
 - https://packagist.org/packages
 - https://pub.dev/api
+- drupal/integrations/drupal-integration-edges.yml
 summary: 'Brevo runs its own integrations marketplace at brevo.com/integrations (browser-rendered; read 2026-10-12):
   51 named apps, 13 marked as developed by Brevo. The Zapier app exists but still declares sendinblue.com (301 ->
   brevo.com, the 2023 rebrand), so the sweep rejected it as a name collision; make.com answered 403 to our crawler.'
@@ -919,6 +920,36 @@ edges:
     detected: '2026-10-21'
   detected_by: sweep-salesforce-appexchange.py
   first_seen: '2026-10-21'
+- partner_name: Packagist
+  partner: packagist
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (PHP)
+  evidence: https://packagist.org/packages/getbrevo/brevo-php
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Packagist (public registry JSON)
+    spec_file: null
+    language: PHP
+    packages:
+    - name: getbrevo/brevo-php
+      version: 6.0.0
+      released: '2026-10-13'
+      released_field: time
+      lapsed: false
+      page: https://packagist.org/packages/getbrevo/brevo-php
+      repo_leg: github-org:getbrevo
+      publisher_leg: org:getbrevo
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-php-dart-elixir-package-registries.py
+    detected: '2026-10-22'
+  detected_by: sweep-php-dart-elixir-package-registries.py
+  first_seen: '2026-10-22'
 - partner_name: WordPress (own)
   partner: wordpress
   partner_match: mirror
@@ -987,36 +1018,23 @@ edges:
   detected: '2026-10-21'
   detected_by: mirror-platform-listings.py
   category: marketingAutomation
-- partner_name: Packagist
-  partner: packagist
-  partner_match: register
-  type: register
-  direction: provider-built
-  category: official SDK (PHP)
-  evidence: https://packagist.org/packages/getbrevo/brevo-php
-  channel: package-registry
-  relationship: distribution-channel
-  contract_reference:
-    register: Packagist (public registry JSON)
-    spec_file: null
-    language: PHP
-    packages:
-    - name: getbrevo/brevo-php
-      version: 6.0.0
-      released: '2026-10-13'
-      released_field: time
-      lapsed: false
-      page: https://packagist.org/packages/getbrevo/brevo-php
-      repo_leg: github-org:getbrevo
-      publisher_leg: org:getbrevo
-      matched_by: github-org
-    current: true
-    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
-      24 months'
-    detected_by: sweep-php-dart-elixir-package-registries.py
-    detected: '2026-10-22'
-  detected_by: sweep-php-dart-elixir-package-registries.py
-  first_seen: '2026-10-22'
+- partner_name: Drupal (own)
+  partner: drupal
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.drupal.org/project/brevo
+  mirror_of: drupal/integrations/drupal-integration-edges.yml
+  apps:
+  - Brevo (formerly Sendinblue)
+  listing_count: 1
+  detected: '2026-10-22'
+  detected_by: mirror-platform-listings.py
+  category: Drupal contributed module
 templates: []
 skips:
 - label: zapier:brevo
