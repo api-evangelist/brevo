@@ -8,6 +8,9 @@ artifacts:
   agents-md/brevo-cli-AGENTS.md:
     method: unknown
     evidence: no authorship recorded
+  ai-preferences/brevo-ai-preferences.yml:
+    method: harvested
+    evidence: declared in the artifact
   asyncapi/brevo-webhooks-asyncapi.yml:
     method: unknown
     evidence: no authorship recorded
@@ -15,6 +18,12 @@ artifacts:
     method: searched
     evidence: declared in the artifact
   capabilities/brevo-capability-edges.yml:
+    method: unknown
+    evidence: no authorship recorded
+  certification/observations-2026-11-11.jsonl:
+    method: unknown
+    evidence: no authorship recorded
+  certification/status.yml:
     method: unknown
     evidence: no authorship recorded
   changelog/brevo-changelog.yml:
@@ -269,6 +278,9 @@ artifacts:
   collections/brevo-whatsapp.postman_collection.json:
     method: derived
     evidence: openapi/brevo-whatsapp
+  compliance/brevo-compliance.yml:
+    method: harvested
+    evidence: declared in the artifact
   components/brevo-components.yml:
     method: searched
     evidence: declared in the artifact
@@ -278,8 +290,17 @@ artifacts:
   conventions/brevo-conventions.yml:
     method: searched
     evidence: declared in the artifact
+  data-license/brevo-data-license.yml:
+    method: harvested
+    evidence: declared in the artifact
   data-model/brevo-data-model.yml:
     method: derived
+    evidence: declared in the artifact
+  deprecation/brevo-deprecation-policy.yml:
+    method: harvested
+    evidence: declared in the artifact
+  eligibility/brevo-eligibility.yml:
+    method: harvested
     evidence: declared in the artifact
   errors/brevo-problem-types.yml:
     method: derived
@@ -294,6 +315,9 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   heartbeat/2026-11-06.yml:
+    method: unknown
+    evidence: no authorship recorded
+  heartbeat/2026-11-13.yml:
     method: unknown
     evidence: no authorship recorded
   hosts/brevo-hosts.yml:
@@ -1082,7 +1106,7 @@ artifacts:
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  kin/checks-2026-11-02T082323.yml:
+  kin/checks-2026-11-06T143934.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-23T000603.yml:
@@ -1146,6 +1170,9 @@ artifacts:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-11-02T082323.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-06T143934.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   lifecycle/brevo-lifecycle.yml:
@@ -1379,6 +1406,9 @@ artifacts:
   openapi/brevo-whatsapp-templates-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  overlays/brevo-account-api-certification-overlay.yaml:
+    method: derived
+    evidence: declared in the artifact
   overlays/brevo-account-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
@@ -1397,8 +1427,14 @@ artifacts:
   overlays/brevo-categories-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
+  overlays/brevo-companies-api-certification-overlay.yaml:
+    method: derived
+    evidence: declared in the artifact
   overlays/brevo-companies-api-phrasing-overlay.yaml:
     method: generated
+    evidence: declared in the artifact
+  overlays/brevo-consent-groups-api-certification-overlay.yaml:
+    method: derived
     evidence: declared in the artifact
   overlays/brevo-consent-groups-api-phrasing-overlay.yaml:
     method: generated
@@ -1406,6 +1442,9 @@ artifacts:
   overlays/brevo-contact-management-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/brevo-contacts-api-certification-overlay.yaml:
+    method: derived
+    evidence: declared in the artifact
   overlays/brevo-contacts-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
@@ -1415,17 +1454,29 @@ artifacts:
   overlays/brevo-conversations-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/brevo-coupons-api-certification-overlay.yaml:
+    method: derived
+    evidence: declared in the artifact
   overlays/brevo-coupons-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/brevo-custom-objects-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
+  overlays/brevo-deals-api-certification-overlay.yaml:
+    method: derived
+    evidence: declared in the artifact
   overlays/brevo-deals-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
+  overlays/brevo-domains-api-certification-overlay.yaml:
+    method: derived
+    evidence: declared in the artifact
   overlays/brevo-domains-api-phrasing-overlay.yaml:
     method: generated
+    evidence: declared in the artifact
+  overlays/brevo-ecommerce-api-certification-overlay.yaml:
+    method: derived
     evidence: declared in the artifact
   overlays/brevo-ecommerce-api-phrasing-overlay.yaml:
     method: generated
@@ -1439,11 +1490,17 @@ artifacts:
   overlays/brevo-email-api-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/brevo-email-campaigns-api-certification-overlay.yaml:
+    method: derived
+    evidence: declared in the artifact
   overlays/brevo-email-campaigns-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/brevo-email-templates-api-phrasing-overlay.yaml:
     method: generated
+    evidence: declared in the artifact
+  overlays/brevo-event-api-certification-overlay.yaml:
+    method: derived
     evidence: declared in the artifact
   overlays/brevo-event-api-phrasing-overlay.yaml:
     method: generated
@@ -1451,11 +1508,20 @@ artifacts:
   overlays/brevo-events-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/brevo-external-feeds-api-certification-overlay.yaml:
+    method: derived
+    evidence: declared in the artifact
   overlays/brevo-external-feeds-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
+  overlays/brevo-files-api-certification-overlay.yaml:
+    method: derived
+    evidence: declared in the artifact
   overlays/brevo-files-api-phrasing-overlay.yaml:
     method: generated
+    evidence: declared in the artifact
+  overlays/brevo-inboundparsing-api-certification-overlay.yaml:
+    method: derived
     evidence: declared in the artifact
   overlays/brevo-inboundparsing-api-phrasing-overlay.yaml:
     method: generated
@@ -1466,11 +1532,17 @@ artifacts:
   overlays/brevo-marketing-campaigns-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/brevo-master-account-api-certification-overlay.yaml:
+    method: derived
+    evidence: declared in the artifact
   overlays/brevo-master-account-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/brevo-messages-api-phrasing-overlay.yaml:
     method: generated
+    evidence: declared in the artifact
+  overlays/brevo-notes-api-certification-overlay.yaml:
+    method: derived
     evidence: declared in the artifact
   overlays/brevo-notes-api-phrasing-overlay.yaml:
     method: generated
@@ -1484,11 +1556,17 @@ artifacts:
   overlays/brevo-payments-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
+  overlays/brevo-process-api-certification-overlay.yaml:
+    method: derived
+    evidence: declared in the artifact
   overlays/brevo-process-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/brevo-products-api-phrasing-overlay.yaml:
     method: generated
+    evidence: declared in the artifact
+  overlays/brevo-program-api-certification-overlay.yaml:
+    method: derived
     evidence: declared in the artifact
   overlays/brevo-program-api-phrasing-overlay.yaml:
     method: generated
@@ -1499,6 +1577,9 @@ artifacts:
   overlays/brevo-sales-crm-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/brevo-senders-api-certification-overlay.yaml:
+    method: derived
+    evidence: declared in the artifact
   overlays/brevo-senders-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
@@ -1559,6 +1640,9 @@ artifacts:
   plans/brevo-price-estimates.yml:
     method: unknown
     evidence: no authorship recorded
+  privacy/brevo-privacy-policy.yml:
+    method: harvested
+    evidence: declared in the artifact
   rate-limits/brevo-rate-limits.yml:
     method: searched
     evidence: declared in the artifact
@@ -1606,6 +1690,9 @@ artifacts:
     evidence: declared in the artifact
   sla/brevo-sla.yml:
     method: generated
+    evidence: declared in the artifact
+  terms/brevo-terms-of-service.yml:
+    method: harvested
     evidence: declared in the artifact
   vendors/brevo-vendors.yml:
     method: unknown
